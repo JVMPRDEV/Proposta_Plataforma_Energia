@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Criar Conta · Plataforma de Gestão de Energia Solar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/auth.css" />
+</head>
+<body>
+  <main class="auth-shell">
+    <aside class="auth-hero">
+      <div class="auth-brand">
+        <div class="mark">⚡</div>
+        <div class="name">
+          Plataforma Solar
+          <span>Gestão de Energia · Multitenant</span>
+        </div>
+      </div>
+
+      <div class="auth-headline">
+        <h1>Cada novo cadastro <span class="accent">provisiona um banco dedicado.</span></h1>
+        <p>Aqui não tem schema compartilhado nem tenant lógico que um dia pode vazar. Cada operação ganha sua própria base de dados, isolada e auditável.</p>
+
+        <ul class="auth-features">
+          <li>
+            <div class="icon">🏛️</div>
+            <div>
+              <div class="label">Provisionamento automático</div>
+              <div class="desc">Banco de dados, schema e credenciais criados em segundos.</div>
+            </div>
+          </li>
+          <li>
+            <div class="icon">🔐</div>
+            <div>
+              <div class="label">Identity via Keycloak + SSO</div>
+              <div class="desc">Autenticação enterprise-grade desde o primeiro acesso.</div>
+            </div>
+          </li>
+          <li>
+            <div class="icon">💎</div>
+            <div>
+              <div class="label">Sem mensalidade. Para sempre.</div>
+              <div class="desc">Pague o setup uma vez e seja dono da sua operação digital.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="auth-footer-hero">
+        <span>© 2026 · Protótipo de demonstração</span>
+        <span>Autoria: <strong>João Rocha &amp; José Ambrozi</strong></span>
+      </div>
+    </aside>
+
+    <section class="auth-form-panel">
+      <div class="auth-form">
+        <div class="eyebrow">Cadastro corporativo</div>
+        <h2>Crie sua conta</h2>
+        <p class="subtitle">Provisione sua operação na plataforma em menos de um minuto.</p>
+
+        <div id="signupMsg" class="auth-msg"></div>
+
+        <form id="signupForm" autocomplete="on" novalidate>
+          <div class="auth-field">
+            <label for="nome">Nome completo</label>
+            <div class="input-wrap">
+              <input type="text" id="nome" name="nome" placeholder="Seu nome" required autofocus />
+              <span class="icon">👤</span>
+            </div>
+          </div>
+
+          <div class="auth-field">
+            <label for="empresa">Empresa / Operação</label>
+            <div class="input-wrap">
+              <input type="text" id="empresa" name="empresa" placeholder="Ex.: Energia Solar Ltda." required />
+              <span class="icon">🏢</span>
+            </div>
+          </div>
+
+          <div class="auth-field">
+            <label for="email">E-mail corporativo</label>
+            <div class="input-wrap">
+              <input type="email" id="email" name="email" placeholder="voce@empresa.com.br" required />
+              <span class="icon">✉</span>
+            </div>
+          </div>
+
+          <div class="auth-field">
+            <label for="senha">Senha</label>
+            <div class="input-wrap">
+              <input type="password" id="senha" name="senha" placeholder="Mínimo 6 caracteres" required />
+              <span class="icon">🔒</span>
+              <button type="button" class="toggle-pw" id="togglePw" aria-label="Mostrar senha">👁</button>
+            </div>
+          </div>
+
+          <div class="auth-field">
+            <label for="senha2">Confirmar senha</label>
+            <div class="input-wrap">
+              <input type="password" id="senha2" name="senha2" placeholder="Repita a senha" required />
+              <span class="icon">🔒</span>
+            </div>
+          </div>
+
+          <div class="auth-options" style="margin-bottom: 24px;">
+            <label><input type="checkbox" id="aceito" required /> Aceito os <a href="#" style="text-decoration:underline;">termos</a> e a <a href="#" style="text-decoration:underline;">política de privacidade</a></label>
+          </div>
+
+          <button type="submit" class="btn-auth">
+            Provisionar minha operação <span class="arrow">→</span>
+          </button>
+        </form>
+
+        <div class="auth-divider">ou</div>
+
+        <div class="auth-alt-action">
+          Já tem conta? <a href="index.html">Fazer login</a>
+        </div>
+
+        <div class="auth-trust">
+          <span>🔐 SSL 256-bit</span>
+          <span>🛡️ LGPD compliant</span>
+          <span>🏛️ Banco dedicado</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    const msg = document.getElementById('signupMsg');
+    const senhaInput = document.getElementById('senha');
+    const togglePw = document.getElementById('togglePw');
+
+    togglePw.addEventListener('click', () => {
+      const newType = senhaInput.type === 'password' ? 'text' : 'password';
+      senhaInput.type = newType;
+      togglePw.textContent = newType === 'password' ? '👁' : '🙈';
+    });
+
+    function showMsg(type, text) {
+      msg.className = `auth-msg show ${type}`;
+      msg.innerHTML = `<span class="ico">${type === 'error' ? '⚠' : '✓'}</span><span>${text}</span>`;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value.trim();
+      const empresa = document.getElementById('empresa').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const senha = senhaInput.value;
+      const senha2 = document.getElementById('senha2').value;
+      const aceito = document.getElementById('aceito').checked;
+
+      if (!nome || nome.length < 3) return showMsg('error', 'Informe seu nome completo.');
+      if (!empresa) return showMsg('error', 'Informe o nome da empresa/operação.');
+      if (!email || !email.includes('@')) return showMsg('error', 'Informe um e-mail válido.');
+      if (!senha || senha.length < 6) return showMsg('error', 'A senha deve ter ao menos 6 caracteres.');
+      if (senha !== senha2) return showMsg('error', 'As senhas não conferem.');
+      if (!aceito) return showMsg('error', 'Você precisa aceitar os termos de uso.');
+
+      showMsg('success', 'Conta criada com sucesso! Provisionando seu banco de dados dedicado…');
+      const iniciais = nome.split(' ').map(p => p[0]).join('').slice(0, 2).toUpperCase();
+      sessionStorage.setItem('demoUser', JSON.stringify({ nome, email, empresa, iniciais }));
+      setTimeout(() => location.href = 'select-tenant.html', 1300);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entrar · Plataforma de Gestão de Energia Solar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/auth.css" />
+</head>
+<body>
+  <main class="auth-shell">
+    <!-- HERO -->
+    <aside class="auth-hero">
+      <div class="auth-brand">
+        <div class="mark">⚡</div>
+        <div class="name">
+          Plataforma Solar
+          <span>Gestão de Energia · Multitenant</span>
+        </div>
+      </div>
+
+      <div class="auth-headline">
+        <h1>Sua operação solar, <span class="accent">no padrão das gigantes do mercado.</span></h1>
+        <p>Plataforma white-label de gestão de energia solar — multibanco, multiempresa e 100% sua. Sem mensalidade, sem amarração, sem intermediários.</p>
+
+        <ul class="auth-features">
+          <li>
+            <div class="icon">🛡️</div>
+            <div>
+              <div class="label">Banco de dados dedicado por sócio</div>
+              <div class="desc">Isolamento físico total. Backup, restore e segurança independentes.</div>
+            </div>
+          </li>
+          <li>
+            <div class="icon">⚡</div>
+            <div>
+              <div class="label">Zero mensalidade. Zero amarração.</div>
+              <div class="desc">Você é dono da plataforma desde o Go-Live. AWS pago direto, sem markup.</div>
+            </div>
+          </li>
+          <li>
+            <div class="icon">📈</div>
+            <div>
+              <div class="label">Engine de créditos com state machine</div>
+              <div class="desc">Distribuição, faturamento e cobrança automatizados de ponta a ponta.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="auth-footer-hero">
+        <span>© 2026 · Protótipo de demonstração</span>
+        <span>Autoria: <strong>João Rocha &amp; José Ambrozi</strong></span>
+      </div>
+    </aside>
+
+    <!-- FORM -->
+    <section class="auth-form-panel">
+      <div class="auth-form">
+        <div class="eyebrow">Acesso à plataforma</div>
+        <h2>Bem-vindo de volta</h2>
+        <p class="subtitle">Entre com suas credenciais para acessar sua operação.</p>
+
+        <div id="loginMsg" class="auth-msg"></div>
+
+        <form id="loginForm" autocomplete="on" novalidate>
+          <div class="auth-field">
+            <label for="email">E-mail corporativo</label>
+            <div class="input-wrap">
+              <input type="email" id="email" name="email" placeholder="voce@empresa.com.br" required autofocus />
+              <span class="icon">✉</span>
+            </div>
+          </div>
+
+          <div class="auth-field">
+            <label for="senha">Senha</label>
+            <div class="input-wrap">
+              <input type="password" id="senha" name="senha" placeholder="••••••••" required />
+              <span class="icon">🔒</span>
+              <button type="button" class="toggle-pw" id="togglePw" aria-label="Mostrar/ocultar senha">👁</button>
+            </div>
+          </div>
+
+          <div class="auth-options">
+            <label><input type="checkbox" id="lembrar" /> Manter conectado</label>
+            <a href="forgot-password.html">Esqueceu a senha?</a>
+          </div>
+
+          <button type="submit" class="btn-auth">
+            Entrar na plataforma <span class="arrow">→</span>
+          </button>
+        </form>
+
+        <div class="auth-divider">ou</div>
+
+        <div class="auth-alt-action">
+          Ainda não tem conta? <a href="signup.html">Criar conta corporativa</a>
+        </div>
+
+        <div class="auth-trust">
+          <span>🔐 SSL 256-bit</span>
+          <span>🛡️ LGPD compliant</span>
+          <span>⚡ Multitenant</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const msg = document.getElementById('loginMsg');
+    const senhaInput = document.getElementById('senha');
+    const togglePw = document.getElementById('togglePw');
+
+    togglePw.addEventListener('click', () => {
+      senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
+      togglePw.textContent = senhaInput.type === 'password' ? '👁' : '🙈';
+    });
+
+    const remembered = localStorage.getItem('demoEmail');
+    if (remembered) {
+      document.getElementById('email').value = remembered;
+      document.getElementById('lembrar').checked = true;
+    }
+
+    function showMsg(type, text) {
+      msg.className = `auth-msg show ${type}`;
+      msg.innerHTML = `<span class="ico">${type === 'error' ? '⚠' : '✓'}</span><span>${text}</span>`;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const senha = senhaInput.value;
+      const lembrar = document.getElementById('lembrar').checked;
+
+      if (!email || !email.includes('@')) {
+        showMsg('error', 'Informe um e-mail válido.');
+        return;
+      }
+      if (!senha || senha.length < 4) {
+        showMsg('error', 'A senha deve ter ao menos 4 caracteres.');
+        return;
+      }
+
+      if (lembrar) localStorage.setItem('demoEmail', email);
+      else localStorage.removeItem('demoEmail');
+
+      const nome = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      const iniciais = nome.split(' ').map(p => p[0]).join('').slice(0, 2).toUpperCase();
+      sessionStorage.setItem('demoUser', JSON.stringify({ nome, email, iniciais }));
+
+      showMsg('success', 'Autenticado com sucesso. Redirecionando…');
+      setTimeout(() => location.href = 'select-tenant.html', 700);
+    });
+  </script>
+</body>
+</html>

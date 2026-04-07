@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plataforma de Gestão de Energia Solar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/layout.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/views.css" />
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo">⚡</div>
+        <div class="name">
+          Solar Platform
+          <small>Multitenant · Multibank</small>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle" title="Recolher / expandir menu">‹</button>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav"></nav>
+
+      <div class="sidebar-footer">
+        v0.1.0 · Protótipo
+      </div>
+    </aside>
+
+    <!-- ===== Topbar ===== -->
+    <header class="topbar">
+      <div class="breadcrumb">
+        <span>Plataforma</span> / <strong>Dashboard</strong>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="btn btn-ghost btn-sm" id="btnResetGlobal" title="Restaurar dados originais deste tenant" style="font-size: 1.1rem;">↻</button>
+        <div class="tenant-switcher" title="Trocar de sócio (multitenant)">
+          <div class="tenant-dot" id="tenantDot"></div>
+          <div class="tenant-info">
+            <span class="label">Tenant ativo</span>
+            <span class="name" id="tenantName">—</span>
+          </div>
+          <select id="tenantSelect"></select>
+        </div>
+        <div class="user-avatar" id="userAvatar" title="Menu do usuário">DA</div>
+      </div>
+    </header>
+
+    <!-- ===== Main ===== -->
+    <main class="main">
+      <div id="view"></div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/tenants.js"></script>
+  <script src="assets/js/mock-data.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/config-store.js"></script>
+  <script src="assets/js/data-store.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/crud-modals.js"></script>
+  <script src="assets/js/router.js"></script>
+
+  <script src="assets/js/views/dashboard.js"></script>
+  <script src="assets/js/views/clientes.js"></script>
+  <script src="assets/js/views/ucs.js"></script>
+  <script src="assets/js/views/contratos.js"></script>
+  <script src="assets/js/views/geracao.js"></script>
+  <script src="assets/js/views/creditos.js"></script>
+  <script src="assets/js/views/faturamento.js"></script>
+  <script src="assets/js/views/relatorios.js"></script>
+  <script src="assets/js/views/ajuda.js"></script>
+  <script src="assets/js/views/permissoes.js"></script>
+  <script src="assets/js/views/perfil.js"></script>
+  <script src="assets/js/views/configuracoes.js"></script>
+
+  <script>
+    // Constrói sidebar a partir do router
+    (function() {
+      const nav = document.getElementById('sidebarNav');
+      window.NAV_GROUPS.forEach(group => {
+        const h = document.createElement('div');
+        h.className = 'sidebar-section';
+        h.textContent = group.label;
+        nav.appendChild(h);
+        group.items.forEach(path => {
+          const route = window.ROUTES[path];
+          if (!route || route.hidden) return;
+          const link = document.createElement('a');
+          link.className = 'sidebar-link';
+          link.dataset.path = path;
+          link.href = '#' + path;
+          link.innerHTML = window.ICONS[route.icon] + '<span>' + route.title + '</span>';
+          link.setAttribute('data-label', route.title);
+          nav.appendChild(link);
+        });
+      });
+    })();
+
+    // ===== Toggle sidebar (recolhido / expandido) =====
+    (function() {
+      const SHELL = document.getElementById('appShell');
+      const BTN = document.getElementById('sidebarToggle');
+      const KEY = 'proto_sidebar';
+      function apply(state) {
+        if (state === 'collapsed') {
+          SHELL.classList.add('collapsed');
+          BTN.textContent = '›';
+          BTN.title = 'Expandir menu';
+        } else {
+          SHELL.classList.remove('collapsed');
+          BTN.textContent = '‹';
+          BTN.title = 'Recolher menu';
+        }
+      }
+      apply(localStorage.getItem(KEY) || 'expanded');
+      BTN.addEventListener('click', () => {
+        const next = SHELL.classList.contains('collapsed') ? 'expanded' : 'collapsed';
+        localStorage.setItem(KEY, next);
+        apply(next);
+      });
+    })();
+
+    // Tenant switcher
+    function refreshTenant() {
+      const t = window.store.tenant;
+      const cfg = window.configStore.get(t.id);
+      // Aplica tema salvo do tenant (sobrescreve variáveis CSS)
+      window.applyTenantTheme(cfg.tema);
+      document.getElementById('tenantName').textContent = t.nome;
+      document.getElementById('tenantDot').style.background = (cfg.tema && cfg.tema.primary) || t.cor;
+      const select = document.getElementById('tenantSelect');
+      select.innerHTML = '';
+      window.TENANTS.forEach(opt => {
+        const o = document.createElement('option');
+        o.value = opt.id;
+        o.textContent = opt.nome + ' (' + opt.ucs + ' UCs)';
+        if (opt.id === t.id) o.selected = true;
+        select.appendChild(o);
+      });
+      document.getElementById('userAvatar').textContent = window.store.user.iniciais;
+    }
+    document.getElementById('tenantSelect').addEventListener('change', (e) => {
+      window.store.tenantId = e.target.value;
+      refreshTenant();
+    });
+    window.addEventListener('tenant-changed', refreshTenant);
+    window.addEventListener('config-changed', () => {
+      // Mutações de dados (bancos, usuários, regras, integrações) → re-renderiza a view
+      const t = window.store.tenant;
+      const cfg = window.configStore.get(t.id);
+      window.applyTenantTheme(cfg.tema);
+      document.getElementById('tenantDot').style.background = (cfg.tema && cfg.tema.primary) || t.cor;
+      window.renderRoute();
+    });
+    window.addEventListener('data-changed', () => window.renderRoute());
+    // ===== Menu do avatar do usuário =====
+    document.getElementById('userAvatar').addEventListener('click', function(e) {
+      e.stopPropagation();
+      const av = e.currentTarget;
+      // Fecha menus existentes
+      document.querySelectorAll('.kebab-menu').forEach(m => m.remove());
+      const wasOpen = av.classList.contains('menu-open');
+      document.querySelectorAll('.user-avatar.menu-open, .kebab-btn.menu-open').forEach(b => b.classList.remove('menu-open'));
+      if (wasOpen) return;
+      av.classList.add('menu-open');
+
+      const t = window.store.tenant;
+      const cfg = window.configStore.get(t.id);
+      const usr = cfg.usuarios[0] || { nome: 'Demo Admin', email: '—' };
+      const perfil = window.configStore.getPerfil(usr.perfilId) || { nome: '—' };
+      const iniciais = (usr.nome || 'XX').split(' ').map(s => s[0]).slice(0, 2).join('').toUpperCase();
+
+      const menu = document.createElement('div');
+      menu.className = 'kebab-menu';
+      menu.style.minWidth = '260px';
+      menu.innerHTML = `
+        <div style="padding: 12px 14px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; gap: 12px;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--secondary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700;">${iniciais}</div>
+          <div style="min-width: 0; flex: 1;">
+            <div style="font-weight: 600; font-size: 0.9rem; color: var(--gray-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${usr.nome}</div>
+            <div style="font-size: 0.72rem; color: var(--gray-600); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${usr.email}</div>
+            <div style="font-size: 0.7rem; color: var(--primary-dark); font-weight: 600; margin-top: 2px;">${perfil.nome}</div>
+          </div>
+        </div>
+        <button class="item" data-act="perfil"><span class="icon">👤</span><span>Meu perfil</span></button>
+        <button class="item" data-act="config"><span class="icon">⚙</span><span>Configurações do tenant</span></button>
+        <button class="item" data-act="permissoes"><span class="icon">🛡</span><span>Perfis & permissões</span></button>
+        <div class="divider"></div>
+        <button class="item" data-act="ajuda"><span class="icon">❓</span><span>Ajuda &amp; documentação</span></button>
+        <div class="divider"></div>
+        <button class="item danger" data-act="sair"><span class="icon">🚪</span><span>Sair da plataforma</span></button>
+      `;
+      const rect = av.getBoundingClientRect();
+      document.body.appendChild(menu);
+      const mr = menu.getBoundingClientRect();
+      let top = rect.bottom + 8;
+      let left = rect.right - mr.width;
+      if (top + mr.height > window.innerHeight - 8) top = rect.top - mr.height - 8;
+      if (left < 8) left = 8;
+      menu.style.top = top + 'px';
+      menu.style.left = left + 'px';
+
+      menu.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', function(ev) {
+        ev.stopPropagation();
+        const a = b.dataset.act;
+        menu.remove();
+        av.classList.remove('menu-open');
+        if (a === 'perfil') location.hash = '/perfil';
+        else if (a === 'config') location.hash = '/configuracoes';
+        else if (a === 'permissoes') location.hash = '/permissoes';
+        else if (a === 'ajuda') location.hash = '/ajuda';
+        else if (a === 'sair') {
+          if (confirm('Sair da plataforma?')) {
+            window.store.logout();
+            location.replace('index.html');
+          }
+        }
+      }));
+
+      // Fechar ao clicar fora (delegado ao handler do components.js)
+    });
+
+    document.getElementById('btnResetGlobal').addEventListener('click', () => {
+      if (confirm('Restaurar dados originais deste tenant?\nTodas as edições (clientes, UCs, contratos, faturas, usinas, configurações) serão descartadas.')) {
+        window.dataStore.reset();
+        window.configStore.reset();
+        location.reload();
+      }
+    });
+    window.addEventListener('theme-changed', () => {
+      // Mudança de cor ao vivo: apenas atualiza o dot do header,
+      // sem re-renderizar a view (preserva foco do color picker).
+      const t = window.store.tenant;
+      const cfg = window.configStore.get(t.id);
+      document.getElementById('tenantDot').style.background = (cfg.tema && cfg.tema.primary) || t.cor;
+    });
+    refreshTenant();
+
+    // Inicia rota
+    if (!location.hash) location.hash = '/dashboard';
+    window.renderRoute();
+  </script>
+</body>
+</html>

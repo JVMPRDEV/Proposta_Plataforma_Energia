@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial - Plataforma Energia Solar</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">
+            <h2>Energia Solar</h2>
+            <span>Proposta Comercial</span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#resumo" class="active">Resumo Executivo</a></li>
+            <li><a href="#modulos">Módulos do Sistema</a></li>
+            <li><a href="#arquitetura">Arquitetura Técnica</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+            <li><a href="#investimento">Investimento</a></li>
+            <li><a href="#proximos-passos">Próximos Passos</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>Data: 05/04/2026</p>
+            <p>Validade: 30 dias</p>
+        </div>
+    </nav>
+
+    <main class="content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Proposta Técnica e Comercial</h1>
+                <p class="subtitle">Plataforma de Energia Solar - Multitenant - Multibank</p>
+            </div>
+            <div class="header-badge">
+                <span class="badge">Confidencial</span>
+            </div>
+        </header>
+
+        <!-- Resumo Executivo -->
+        <section id="resumo" class="section">
+            <h2 class="section-title">
+                <span class="section-number">01</span>
+                Resumo Executivo
+            </h2>
+
+            <div class="card" style="background: linear-gradient(135deg, rgba(212,168,73,0.15) 0%, rgba(212,168,73,0.05) 100%); border: 2px solid var(--primary); margin-bottom: 1.5rem;">
+                <div style="padding: 1rem;">
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">*</span> Escopo do Projeto
+                    </h4>
+                    <p style="font-size: 0.95rem; color: #555; line-height: 1.6;">
+                        Esta plataforma foi desenvolvida para atender operações de <strong>energia solar por assinatura</strong>,
+                        com gestão de créditos, faturamento e comunicação automatizada. Funcionalidades adicionais que fujam do escopo
+                        apresentado nesta documentação serão orçadas e desenvolvidas separadamente.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card highlight-card">
+                <div class="card-grid">
+                    <div class="info-item">
+                        <span class="label">Plataforma</span>
+                        <span class="value">Gestão de Energia Solar</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Modelo</span>
+                        <span class="value">Multitenant / Multibank</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Modelo de Negócio</span>
+                        <span class="value">Energia por Assinatura</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Concessionária</span>
+                        <span class="value">COELBA</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Clientes Ativos</span>
+                        <span class="value">27</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Gateway Pagamento</span>
+                        <span class="value">Asaas</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">%</div>
+                    <h4>Distribuição Percentual</h4>
+                    <p>X% da geração para cada unidade consumidora</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">#</div>
+                    <h4>Distribuição por Prioridade</h4>
+                    <p>Ordem de abatimento (1, 2, 3...)</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">$</div>
+                    <h4>Créditos Excedentes</h4>
+                    <p>Acumulação automática por unidade</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">W</div>
+                    <h4>WhatsApp Nativo</h4>
+                    <p>Envio de faturas, boletos e documentos via Cloud API (sem bot)</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h4>Notificações em Tempo Real</h4>
+                    <p>Push in-app via SignalR (sino, badge, toast e painel)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Módulos -->
+        <section id="modulos" class="section">
+            <h2 class="section-title">
+                <span class="section-number">02</span>
+                Módulos do Sistema
+            </h2>
+
+            <div class="context-map">
+                <h3>Mapa de Contextos (DDD)</h3>
+                <div class="map-container">
+                    <pre class="architecture-diagram">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         PLATAFORMA ENERGIA SOLAR                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐         │
+│  │   IDENTITY &    │    │    CADASTRO     │    │    GERAÇÃO      │         │
+│  │   MULTITENANCY  │◄──►│    (Clientes)   │◄──►│   (Produção)    │         │
+│  └────────┬────────┘    └────────┬────────┘    └────────┬────────┘         │
+│           │                      │                      │                   │
+│           ▼                      ▼                      ▼                   │
+│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐         │
+│  │   CONTRATOS &   │◄──►│   DISTRIBUIÇÃO  │◄──►│   FATURAMENTO   │         │
+│  │   FIDELIDADE    │    │   DE CRÉDITOS   │    │   & COBRANÇA    │         │
+│  └─────────────────┘    └────────┬────────┘    └────────┬────────┘         │
+│                                  │                      │                   │
+│                                  ▼                      ▼                   │
+│                         ┌─────────────────┐    ┌─────────────────┐         │
+│                         │   FINANCEIRO    │◄──►│  COMUNICAÇÃO    │         │
+│                         │  (Asaas + Pix)  │    │  (WhatsApp)     │         │
+│                         └────────┬────────┘    └─────────────────┘         │
+│                                  │                                          │
+│                                  ▼                                          │
+│                         ┌─────────────────┐                                │
+│                         │   DASHBOARDS    │                                │
+│                         │   & RELATÓRIOS  │                                │
+│                         └─────────────────┘                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+                    </pre>
+                </div>
+            </div>
+
+            <div class="modules-grid">
+                <!-- Módulo 1 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">01</span>
+                        <h3>Identity & Multitenancy</h3>
+                    </div>
+                    <ul class="module-features">
+                        <li>Autenticação via Keycloak (OpenSource)</li>
+                        <li>SSO, OAuth 2.0 e OpenID Connect</li>
+                        <li>Multitenancy Multibanco (1 database dedicado por sócio — isolamento físico total)</li>
+                        <li>Controle de Acesso (RBAC)</li>
+                        <li>Subdomínio dinâmico por sócio</li>
+                    </ul>
+                </div>
+
+                <!-- Módulo 2 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">02</span>
+                        <h3>Cadastro de Clientes</h3>
+                    </div>
+                    <ul class="module-features">
+                        <li>CRUD completo (CPF/CNPJ)</li>
+                        <li>Unidades Consumidoras (UC COELBA)</li>
+                        <li>Importação de base existente</li>
+                        <li>Histórico de alterações</li>
+                    </ul>
+                </div>
+
+                <!-- Módulo 3 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">03</span>
+                        <h3>Gestão de Contratos</h3>
+                    </div>
+                    <ul class="module-features">
+                        <li>Sem fidelidade / 1 ano / 2 anos</li>
+                        <li>Regras de cancelamento</li>
+                        <li>Vigência e renovação</li>
+                        <li>Multa por quebra contratual</li>
+                    </ul>
+                </div>
+
+                <!-- Módulo 4 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">04</span>
+                        <h3>Gestão de Geração</h3>
+                    </div>
+                    <ul class="module-features">
+                        <li>Cadastro de usinas solares</li>
+                        <li>Registro manual de produção (kWh)</li>
+                        <li>Parser de faturas COELBA (PDF)</li>
+                        <li>Histórico de geração</li>
+                    </ul>
+                </div>
+
+                <!-- Módulo 5 -->
+                <div class="module-card featured">
+                    <div class="module-header">
+                        <span class="module-number">05</span>
+                        <h3>Distribuição de Créditos</h3>
+                    </div>
+                    <ul class="module-features">
+                        <li>Modo Percentual (X% por unidade)</li>
+                        <li>Modo Prioridade (ordem de abatimento)</li>
+                        <li>Créditos excedentes acumulados</li>
+                        <li>Engine de rateio automático</li>
+                    </ul>
+                </div>
+
+                <!-- Módulo 6 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">06</span>
+                        <h3>Faturamento & Cobrança</h3>
+                    </div>
+                    <ul class="module-features">
+                        <li>Geração de faturas (sem gateway no Core)</li>
+                        <li>Template do cliente preenchido com dados do BD</li>
+                        <li>Por boleto: importação de QR Code, código de barras e print da conta de luz (S3)</li>
+                        <li>Envio e baixa manuais</li>
+                        <li>Juros: 2% + 0,033%/dia</li>
+                        <li>Máquina de estado: Gerada → Enviada → Paga</li>
+                    </ul>
+                </div>
+
+                <!-- Módulo 7 -->
+                <div class="module-card featured">
+                    <div class="module-header">
+                        <span class="module-number">07</span>
+                        <h3>Pagamento Automatizado (Asaas)</h3>
+                    </div>
+                    <ul class="module-features">
+                        <li>Emissão de boletos e Pix via API</li>
+                        <li>Webhook de baixa automática</li>
+                        <li>Conciliação bancária automatizada</li>
+                        <li>Padrão do mercado brasileiro</li>
+                    </ul>
+                </div>
+
+                <!-- Módulo 8 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">08</span>
+                        <h3>Comunicação WhatsApp</h3>
+                    </div>
+                    <ul class="module-features">
+                        <li>Envio de faturas e boletos (PDF anexo)</li>
+                        <li>Envio de documentos (relatórios, recibos)</li>
+                        <li>Mensagens curtas (lembretes, avisos)</li>
+                        <li>WhatsApp Cloud API + templates HSM</li>
+                        <li><em>Sem bot conversacional — canal unidirecional</em></li>
+                        <li><strong>Roadmap futuro:</strong> bot via n8n (escopo separado)</li>
+                    </ul>
+                </div>
+
+                <!-- Módulo 8b -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">8b</span>
+                        <h3>Notificações em Tempo Real</h3>
+                    </div>
+                    <ul class="module-features">
+                        <li>Push in-app via <strong>SignalR</strong> (WebSocket)</li>
+                        <li>Sino no topbar com badge de não lidas</li>
+                        <li>Toast no canto + painel dropdown</li>
+                        <li>Eventos: pagamento, faturamento, geração, cobrança, alertas</li>
+                        <li>Multitenant — cada sócio só recebe os próprios eventos</li>
+                    </ul>
+                </div>
+
+                <!-- Módulo 9 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">09</span>
+                        <h3>Dashboards & Relatórios</h3>
+                    </div>
+                    <ul class="module-features">
+                        <li>Dashboard financeiro</li>
+                        <li>Relatório de produção</li>
+                        <li>Aging de recebíveis</li>
+                        <li>Exportação PDF/Excel</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Arquitetura -->
+        <section id="arquitetura" class="section">
+            <h2 class="section-title">
+                <span class="section-number">03</span>
+                Arquitetura Técnica
+            </h2>
+
+            <div class="tech-stack">
+                <h3>Stack Tecnológico</h3>
+                <div class="stack-grid">
+                    <div class="stack-item">
+                        <span class="stack-label">Backend</span>
+                        <span class="stack-value">.NET 8 (C#) + Swagger</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-label">Frontend</span>
+                        <span class="stack-value">Vue 3 (SPA)</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-label">ORM / Data Access</span>
+                        <span class="stack-value">NHibernate + Dapper</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-label">Banco de Dados</span>
+                        <span class="stack-value">SQL Server (multibanco — 1 database por sócio) + Redis</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-label">Autenticação</span>
+                        <span class="stack-value">Keycloak (SSO/OAuth 2.0)</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-label">Reverse Proxy</span>
+                        <span class="stack-value">Nginx</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-label">Real-time</span>
+                        <span class="stack-value">SignalR</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-label">Infraestrutura</span>
+                        <span class="stack-value">Docker + AWS (EC2/ECS + RDS)</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-label">Armazenamento de Imagens</span>
+                        <span class="stack-value">AWS S3 (templates, logos, QR Code, código de barras, prints da conta de luz — versionados por tenant/fatura)</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-label">Mensageria / Eventos</span>
+                        <span class="stack-value">AWS SNS + SQS FIFO + Lambda (eventos de domínio com ordem garantida, deduplicação por tenant+fatura e DLQ)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="patterns-section">
+                <h3>Padrões Arquiteturais</h3>
+                <div class="patterns-grid">
+                    <div class="pattern-card">
+                        <h4>Monolito Modular</h4>
+                        <p>Aplicação única organizada em módulos independentes. Simplicidade de deploy com boa separação.</p>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>DDD (Domain-Driven Design)</h4>
+                        <p>Código organizado por domínio de negócio, com contextos delimitados bem definidos.</p>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>CQRS</h4>
+                        <p>NHibernate para escrita (commands) e Dapper para leitura (queries) - alta performance.</p>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Clean Architecture</h4>
+                        <p>Camadas bem definidas com inversão de dependência.</p>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Multitenancy Multibanco</h4>
+                        <p>Cada sócio com <strong>seu próprio banco de dados dedicado</strong>. Segurança, backup e restore totalmente independentes.</p>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Event-Driven Architecture</h4>
+                        <p>Arquitetura orientada a eventos: módulos comunicam-se de forma desacoplada via Domain Events e Integration Events, permitindo extensibilidade sem reescrita.</p>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Máquinas de Estado</h4>
+                        <p>Ciclos de vida críticos (Contrato, Fatura, Crédito, Cobrança) modelados como state machines explícitas — transições válidas, auditáveis e testáveis.</p>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>API REST + Swagger</h4>
+                        <p>Endpoints documentados automaticamente via OpenAPI/Swagger para fácil integração.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DECISÃO ARQUITETURAL: Segregação de Infraestrutura -->
+            <div class="card" style="margin-top: 2rem; border: 2px dashed #3498db; background: linear-gradient(135deg, rgba(52,152,219,0.06) 0%, #fff 100%);">
+                <div style="padding: 1.5rem;">
+                    <h3 style="color: #3498db; margin-bottom: 0.75rem;">🧭 Decisão Arquitetural: Segregação Completa da Infraestrutura?</h3>
+                    <p style="color: #555; line-height: 1.7; margin-bottom: 1rem;">
+                        Uma pergunta legítima a ser feita pelos sócios: <strong>cada operação deve ter sua própria infraestrutura (banco, app, ambiente) totalmente isolada</strong>, ou todos compartilham a mesma plataforma com isolamento físico via multitenancy multibanco (1 database dedicado por sócio)?
+                    </p>
+                    <div class="pricing-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="background: rgba(39,174,96,0.08); border-left: 4px solid #27ae60; padding: 1rem; border-radius: 6px;">
+                            <h4 style="color: #27ae60; margin-bottom: 0.5rem;">✅ Pontos Positivos da Segregação Total</h4>
+                            <ul style="font-size: 0.88rem; color: #555; line-height: 1.6; padding-left: 1.25rem; margin-left: 0.25rem;">
+                                <li><strong>Isolamento absoluto</strong> — falha, deploy ou bug em uma operação não afeta as demais</li>
+                                <li><strong>Soberania total</strong> — cada sócio decide janela de manutenção, versão, backup, retenção</li>
+                                <li><strong>Compliance simplificado</strong> — dados nunca compartilham hardware com terceiros</li>
+                                <li><strong>Portabilidade</strong> — saída de um sócio não impacta os outros (basta entregar a stack dele)</li>
+                            </ul>
+                        </div>
+                        <div style="background: rgba(231,76,60,0.06); border-left: 4px solid #e74c3c; padding: 1rem; border-radius: 6px;">
+                            <h4 style="color: #c0392b; margin-bottom: 0.5rem;">⚠️ Pontos Negativos da Segregação Total</h4>
+                            <ul style="font-size: 0.88rem; color: #555; line-height: 1.6; padding-left: 1.25rem; margin-left: 0.25rem;">
+                                <li><strong>Custo de infra multiplicado</strong> — N ambientes em vez de 1 (banco, app, observabilidade, backups)</li>
+                                <li><strong>Manutenção N vezes maior</strong> — cada deploy, patch e upgrade replicado por sócio</li>
+                                <li><strong>Sem economia de escala</strong> — cada sócio paga o "piso fixo" da infraestrutura</li>
+                                <li><strong>Consolidação de indicadores</strong> torna-se um projeto de integração à parte</li>
+                                <li><strong>Suporte mais caro</strong> — horas de sustentação proporcionais ao número de ambientes</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #555; margin-top: 1rem; padding: 0.75rem; background: rgba(212,168,73,0.08); border-radius: 6px;">
+                        <strong style="color: var(--primary);">Recomendação técnica:</strong> a arquitetura proposta (Multitenancy Multibanco) já entrega <strong>isolamento físico total de dados</strong> — cada sócio tem seu <strong>próprio banco de dados dedicado</strong>, com backup e segurança totalmente independentes — preservando a economia de escala compartilhada da camada de aplicação. A segregação completa de infraestrutura permanece como opção, mediante orçamento adicional, caso algum sócio tenha exigência regulatória específica.
+                    </p>
+                </div>
+            </div>
+
+            <div class="cqrs-diagram">
+                <h3>Arquitetura Monolito Modular + Multitenancy</h3>
+                <pre class="architecture-diagram">
+┌─────────────────────────────────────────────────────────────────┐
+│                   MONOLITO MODULAR + CQRS                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   ┌─────────────┐     ┌─────────────┐     ┌─────────────────┐  │
+│   │   NGINX     │     │  KEYCLOAK   │     │   SQL SERVER    │  │
+│   │ (Rev.Proxy) │     │ (SSO/OAuth) │     │  (Multibanco)   │  │
+│   └──────┬──────┘     └──────┬──────┘     └────────┬────────┘  │
+│          │                   │                     │           │
+│          ▼                   ▼                     ▼           │
+│   ┌─────────────────────────────────────────────────────────┐  │
+│   │              .NET 8 API (Monolito Modular)              │  │
+│   ├─────────────────────────────────────────────────────────┤  │
+│   │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐       │  │
+│   │  │Identity │ │Cadastro │ │Créditos │ │ Billing │  ...  │  │
+│   │  └─────────┘ └─────────┘ └─────────┘ └─────────┘       │  │
+│   ├─────────────────────────────────────────────────────────┤  │
+│   │   NHibernate (Commands/Escrita)  │  Dapper (Queries)   │  │
+│   └─────────────────────────────────────────────────────────┘  │
+│          │                                     │               │
+│          ▼                                     ▼               │
+│   ┌─────────────┐                     ┌─────────────────────┐  │
+│   │    Redis    │                     │  Swagger / OpenAPI  │  │
+│   │   (Cache)   │                     │  (Documentação)     │  │
+│   └─────────────┘                     └─────────────────────┘  │
+│                                                                 │
+│   VANTAGENS: Deploy simples | Módulos isolados | CQRS nativo   │
+└─────────────────────────────────────────────────────────────────┘
+                </pre>
+            </div>
+
+            <div class="solution-structure">
+                <h3>Estrutura da Solução</h3>
+                <pre class="code-block">
+src/
+├── Core/
+│   ├── SolarPlatform.Domain/           # Entidades, Value Objects, Domain Events
+│   └── SolarPlatform.Application/      # Use Cases, Commands, Queries (CQRS)
+│
+├── Infrastructure/
+│   ├── SolarPlatform.Persistence/      # NHibernate (Write) + Dapper (Read)
+│   ├── SolarPlatform.Integration.Asaas/ # Gateway de Pagamento (opcional)
+│   ├── SolarPlatform.Integration.WhatsApp/ # API WhatsApp (opcional)
+│   └── SolarPlatform.Integration.COELBA/   # Parser de Faturas (opcional)
+│
+├── Presentation/
+│   ├── SolarPlatform.API/              # Web API (Controllers + Swagger)
+│   └── SolarPlatform.WebApp/           # Vue 3 SPA (projeto separado)
+│
+├── CrossCutting/
+│   ├── SolarPlatform.Common/           # Shared Kernel
+│   └── SolarPlatform.IoC/              # Dependency Injection
+│
+└── docker/
+    ├── nginx/                       # Configuração Nginx (reverse proxy)
+    └── docker-compose.yml           # Orquestração dos containers
+                </pre>
+            </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section id="roadmap" class="section">
+            <h2 class="section-title">
+                <span class="section-number">04</span>
+                Roadmap do Projeto
+            </h2>
+
+            <div class="card" style="background: linear-gradient(135deg, rgba(52,152,219,0.1) 0%, rgba(52,152,219,0.05) 100%); border: 2px solid #3498db; margin-bottom: 2rem;">
+                <div style="padding: 1.5rem;">
+                    <h4 style="color: #3498db; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.3rem;">&#9881;</span> Roadmap com Trade-offs: Escolha seu Caminho
+                    </h4>
+                    <p style="font-size: 0.95rem; color: #555; line-height: 1.7;">
+                        O roadmap abaixo apresenta <strong>opções de escopo</strong> que permitem reduzir o investimento inicial
+                        no MVP e adicionar funcionalidades premium posteriormente. Cada escolha representa um trade-off entre
+                        <strong>custo imediato</strong> vs. <strong>automação/sofisticação</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FASE 1 -->
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Fase 1: Foundation + Assessment</h3>
+                            <span class="timeline-period">Sprint 1-2</span>
+                        </div>
+                        <ul>
+                            <li>Setup do Projeto (estrutura, CI/CD, ambientes)</li>
+                            <li>Identity & Auth (Keycloak + Multitenancy Multibanco — 1 DB por sócio)</li>
+                            <li>Assessment Individual do(s) sócio(s)</li>
+                            <li>Migração de Dados (planilha atual)</li>
+                        </ul>
+                        <div class="milestone">Milestone 1: Infraestrutura e dados migrados</div>
+                    </div>
+                </div>
+
+                <!-- FASE 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Fase 2: Core Business</h3>
+                            <span class="timeline-period">Sprint 3-4</span>
+                        </div>
+                        <ul>
+                            <li>Cadastro de Clientes & Unidades Consumidoras</li>
+                            <li>Gestão de Contratos (fidelidade, vigência)</li>
+                            <li>Engine de Distribuição de Créditos (% e Prioridade)</li>
+                            <li>Gestão de Créditos Excedentes</li>
+                        </ul>
+
+                        <!-- TRADE-OFF: FATURAS -->
+                        <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                            <h5 style="color: #856404; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span>&#9888;</span> Trade-off: Entrada de Produção/Faturas
+                            </h5>
+                            <table style="width: 100%; font-size: 0.85rem; margin-top: 0.5rem;">
+                                <tr>
+                                    <td style="padding: 0.5rem; background: #d4edda; border-radius: 4px;">
+                                        <strong style="color: #155724;">Opção A (MVP):</strong> Input manual simplificado de kWh
+                                        <span style="float: right; color: #155724;">Incluso no Core</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.5rem; background: #f8d7da; border-radius: 4px; margin-top: 0.25rem;">
+                                        <strong style="color: #721c24;">Opção B (Premium):</strong> Parser automático de PDF COELBA
+                                        <span style="float: right; color: #721c24;">+ R$ 3.500</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
+                                <em>Recomendação:</em> Comece com input manual. O parser pode ser adicionado quando o volume justificar.
+                            </p>
+                        </div>
+
+                        <div class="milestone">Milestone 2: Motor de créditos funcionando</div>
+                    </div>
+                </div>
+
+                <!-- FASE 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Fase 3: Billing & Cobrança</h3>
+                            <span class="timeline-period">Sprint 5-6</span>
+                        </div>
+                        <ul>
+                            <li>Geração Automática de Faturas</li>
+                            <li>Template de Cobrança Personalizado</li>
+                            <li>Controle de Juros e Multas</li>
+                            <li>Webhook de Baixa (confirmação de pagamento)</li>
+                        </ul>
+
+                        <!-- TRADE-OFF: INTEGRAÇÃO BANCÁRIA -->
+                        <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                            <h5 style="color: #856404; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span>&#9888;</span> Trade-off: Integração de Pagamentos
+                            </h5>
+                            <table style="width: 100%; font-size: 0.85rem; margin-top: 0.5rem;">
+                                <tr>
+                                    <td style="padding: 0.5rem; background: #d4edda; border-radius: 4px;">
+                                        <strong style="color: #155724;">Opção A (Core):</strong> Lançamento manual de recebíveis
+                                        <span style="float: right; color: #155724;">Incluso no Core</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.5rem; background: #f8d7da; border-radius: 4px; margin-top: 0.25rem;">
+                                        <strong style="color: #721c24;">Opção B (Recomendado):</strong> Gateway Asaas (Boleto + Pix + Webhook de baixa + Conciliação automática)
+                                        <span style="float: right; color: #721c24; font-weight: 700;">+ R$ 4.000</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
+                                <em>Recomendação:</em> O Core já entrega faturamento e baixa manual sem custo adicional. Para automação completa de cobrança, o <strong>Asaas</strong> é o gateway padrão e único de integração nativa — é a melhor relação custo-benefício no Brasil (Pix R$ 1,99, Boleto ~R$ 2,49, API e suporte em PT-BR), com webhook de baixa automática e conciliação bancária automatizada.
+                            </p>
+                        </div>
+
+                        <div class="milestone">Milestone 3: Faturamento e cobrança automatizados</div>
+                    </div>
+                </div>
+
+                <!-- FASE 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Fase 4: Comunicação</h3>
+                            <span class="timeline-period">Sprint 7</span>
+                        </div>
+                        <ul>
+                            <li>Envio Automático de Faturas</li>
+                            <li>Lembretes de Vencimento (D-3)</li>
+                            <li>Notificação de Inadimplência</li>
+                            <li>Recibo de Pagamento</li>
+                        </ul>
+
+                        <!-- TRADE-OFF: COMUNICAÇÃO -->
+                        <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                            <h5 style="color: #856404; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span>&#9888;</span> Trade-off: Canal de Comunicação
+                            </h5>
+                            <table style="width: 100%; font-size: 0.85rem; margin-top: 0.5rem;">
+                                <tr>
+                                    <td style="padding: 0.5rem; background: #d4edda; border-radius: 4px;">
+                                        <strong style="color: #155724;">Opção A (MVP):</strong> Alertas por E-mail (templates profissionais)
+                                        <span style="float: right; color: #155724;">Incluso no Core</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.5rem; background: #f8d7da; border-radius: 4px; margin-top: 0.25rem;">
+                                        <strong style="color: #721c24;">Opção B (Premium):</strong> WhatsApp Nativo (Cloud API oficial + templates HSM, envio unidirecional)
+                                        <span style="float: right; color: #721c24; font-weight: 700;">+ R$ 2.500</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
+                                <em>Recomendação:</em> E-mail funciona bem e tem custo zero de API. WhatsApp aumenta engajamento significativamente e pode ser adicionado depois. Escopo do módulo: <strong>envio de faturas, boletos, documentos e mensagens curtas</strong> via Cloud API + templates HSM. <strong>Bot conversacional (via n8n) é melhoria futura, fora do escopo deste módulo.</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FASE 5 -->
+                <div class="timeline-item final">
+                    <div class="timeline-marker">5</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Fase 5: Analytics & Go-Live</h3>
+                            <span class="timeline-period">Sprint 8</span>
+                        </div>
+                        <ul>
+                            <li>Dashboard Financeiro Operacional</li>
+                            <li>Visão de Produção vs. Consumo</li>
+                            <li>Ajustes Finais (UX, performance)</li>
+                            <li>Deploy em Produção</li>
+                        </ul>
+
+                        <div class="milestone success" style="display: inline-block; margin-top: 0.75rem;">🚀 GO-LIVE MVP</div>
+
+                        <!-- TRADE-OFF: RELATÓRIOS (pós Go-Live) -->
+                        <div style="background: #e7f3ff; border: 1px solid #3498db; border-radius: 8px; padding: 1rem; margin-top: 1.25rem;">
+                            <h5 style="color: #2980b9; margin-bottom: 0.5rem;">Expansão Futura (pós Go-Live): Relatórios Avançados</h5>
+                            <p style="font-size: 0.85rem; color: #555;">
+                                Aging de recebíveis, projeções, exportação PDF/Excel, relatórios customizados.
+                                <span style="float: right; color: #2980b9; font-weight: 600;">+ R$ 2.500</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESUMO DE TRADE-OFFS -->
+            <div class="card" style="margin-top: 2rem; border: 2px solid var(--primary);">
+                <div style="padding: 1.5rem;">
+                    <h4 style="color: var(--secondary); margin-bottom: 1rem;">Resumo: MVP vs. Full Platform</h4>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="background: var(--secondary); color: white;">
+                                <th style="padding: 0.75rem; text-align: left;">Funcionalidade</th>
+                                <th style="padding: 0.75rem; text-align: center;">MVP (Core)</th>
+                                <th style="padding: 0.75rem; text-align: center;">Full Platform</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.75rem;">Entrada de Produção</td>
+                                <td style="padding: 0.75rem; text-align: center; color: #27ae60;">Input Manual</td>
+                                <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Parser COELBA (+R$ 3.500)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.75rem;">Pagamentos</td>
+                                <td style="padding: 0.75rem; text-align: center; color: #27ae60;">Baixa Manual</td>
+                                <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Asaas Automatizado (+R$ 4.000)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.75rem;">Comunicação</td>
+                                <td style="padding: 0.75rem; text-align: center; color: #27ae60;">E-mail</td>
+                                <td style="padding: 0.75rem; text-align: center; color: var(--primary);">WhatsApp (+R$ 2.500)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.75rem;">Notificações</td>
+                                <td style="padding: 0.75rem; text-align: center; color: #27ae60;">—</td>
+                                <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Tempo real (SignalR)</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem;">Relatórios</td>
+                                <td style="padding: 0.75rem; text-align: center; color: #27ae60;">Dashboard Básico</td>
+                                <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Avançados (+R$ 2.500)</td>
+                            </tr>
+                            <tr style="background: var(--light); font-weight: 700;">
+                                <td style="padding: 0.75rem;">TOTAL (1 Sócio)</td>
+                                <td style="padding: 0.75rem; text-align: center; color: #27ae60;">R$ 28.500</td>
+                                <td style="padding: 0.75rem; text-align: center; color: var(--primary);">R$ 47.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="timeline-visual">
+                <h3>Cronograma Visual</h3>
+                <div class="gantt-simple">
+                    <div class="gantt-row">
+                        <span class="gantt-label">Mês 1</span>
+                        <div class="gantt-bar phase1">Foundation + Keycloak</div>
+                    </div>
+                    <div class="gantt-row">
+                        <span class="gantt-label">Mês 2</span>
+                        <div class="gantt-bar phase2">Core Business (Engine)</div>
+                    </div>
+                    <div class="gantt-row">
+                        <span class="gantt-label">Mês 3</span>
+                        <div class="gantt-bar phase3">Billing + Gateway</div>
+                    </div>
+                    <div class="gantt-row">
+                        <span class="gantt-label">Mês 4</span>
+                        <div class="gantt-bar phase4">Comunicação + Go-Live</div>
+                    </div>
+                </div>
+                <p style="font-size: 0.85rem; color: #666; margin-top: 1rem; text-align: center;">
+                    * Módulos de expansão (Asaas, WhatsApp, Parser, Relatórios) podem ser desenvolvidos em paralelo ou após o Go-Live
+                </p>
+            </div>
+        </section>
+
+        <!-- Investimento -->
+        <section id="investimento" class="section">
+            <h2 class="section-title">
+                <span class="section-number">05</span>
+                Investimento
+            </h2>
+
+            <div class="card" style="background: linear-gradient(135deg, rgba(39,174,96,0.1) 0%, rgba(39,174,96,0.05) 100%); border: 2px solid #27ae60; margin-bottom: 2rem;">
+                <div style="padding: 1.5rem;">
+                    <h4 style="color: #27ae60; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.3rem;">&#9432;</span> Modelo de Precificação Modular
+                    </h4>
+                    <p style="font-size: 0.95rem; color: #555; line-height: 1.7;">
+                        Para reduzir a barreira de entrada e permitir flexibilidade, o investimento foi estruturado em
+                        <strong>3 blocos independentes</strong>. Isso permite que um único sócio inicie o projeto com um MVP enxuto
+                        e adicione módulos conforme novos parceiros entrem ou a operação cresça.
+                    </p>
+                </div>
+            </div>
+
+            <!-- BLOCO 1: ASSESSMENT -->
+            <div class="pricing-options">
+                <h3 style="border-bottom: 3px solid var(--primary); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
+                    <span style="background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; margin-right: 0.75rem;">BLOCO 1</span>
+                    Assessment Individual
+                </h3>
+
+                <div class="card" style="background: linear-gradient(135deg, rgba(212,168,73,0.12) 0%, rgba(212,168,73,0.04) 100%); border: 2px solid var(--primary); margin-bottom: 1.5rem;">
+                    <div style="padding: 1rem;">
+                        <h4 style="color: var(--primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.2rem;">&#9888;</span> Assessment cobrado à parte para TODOS os sócios
+                        </h4>
+                        <p style="font-size: 0.95rem; color: #555; line-height: 1.6;">
+                            O Assessment é uma fase <strong>obrigatória e cobrada à parte para todos os sócios</strong> — inclusive a ESQ Energia (primeiro sócio).
+                            Não está incluso no valor do Core. O investimento varia entre <strong>R$ 2.500 e R$ 6.000 por sócio</strong>,
+                            conforme a complexidade da operação mapeada.
+                        </p>
+                    </div>
+                </div>
+
+                <p style="color: #555; margin-bottom: 1.5rem; line-height: 1.7;">
+                    <strong>Escopo do Assessment:</strong> fase obrigatória cobrada por sócio. Consiste no mapeamento
+                    da operação, migração de dados e adaptação às regras específicas de cada parceiro — do primeiro ao último.
+                </p>
+
+                <div class="pricing-grid" style="grid-template-columns: 1fr;">
+                    <div class="pricing-card recommended">
+                        <h4>Assessment Individual</h4>
+                        <p class="pricing-subtitle">Mapeamento e migração por sócio</p>
+                        <div class="price">
+                            <span class="currency">R$</span>
+                            <span class="amount">2.500 — 6.000</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; text-align: center;">
+                            Valor variável conforme a <strong>complexidade da operação</strong>
+                        </p>
+                        <ul class="pricing-features" style="margin-top: 1rem;">
+                            <li>Mapeamento de processos e rotinas atuais</li>
+                            <li>Análise de planilhas e sistemas legados</li>
+                            <li>Migração de dados (clientes, UCs, contratos)</li>
+                            <li>Workshop de requisitos com stakeholders</li>
+                            <li>Configuração de regras de rateio</li>
+                            <li>Adaptação às particularidades do sócio</li>
+                        </ul>
+                        <div style="margin-top: 1.25rem; padding: 1rem; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px;">
+                            <p style="font-size: 0.85rem; color: #856404; margin: 0; line-height: 1.6;">
+                                <strong>⚠ Importante:</strong> Operações de <strong>média/grande complexidade</strong> (múltiplas usinas, integrações com ERP, regras de negócio não-padrão, fluxos customizados) podem requerer <strong>orçamento de desenvolvimento individual</strong>, separado e adicional ao valor do Assessment, para implementar funcionalidades específicas que fogem do escopo do Core.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCO 2: CORE -->
+            <div class="pricing-options" style="margin-top: 3rem;">
+                <h3 style="border-bottom: 3px solid var(--primary); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
+                    <span style="background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; margin-right: 0.75rem;">BLOCO 2</span>
+                    Desenvolvimento do Core da Plataforma
+                </h3>
+                <p style="color: #555; margin-bottom: 1.5rem; line-height: 1.7;">
+                    <strong>Investimento fixo e único</strong> para construir o motor principal da plataforma. Este é o "coração" do sistema
+                    que será compartilhado por todos os sócios, com isolamento físico de dados via Multitenancy Multibanco (1 banco de dados dedicado por sócio).
+                </p>
+
+                <div class="pricing-grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="pricing-card recommended">
+                        <div class="pricing-badge">Core Obrigatório</div>
+                        <h4>Motor da Plataforma</h4>
+                        <p class="pricing-subtitle">Arquitetura Multitenant Completa</p>
+                        <div class="price">
+                            <span class="currency">R$</span>
+                            <span class="amount">28.500</span>
+                            <span class="period">,00</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><strong>Identity via Keycloak</strong> - SSO + Banco de dados dedicado por sócio (multibanco)</li>
+                            <li><strong>Cadastros Base</strong> - Clientes, UCs, Contratos</li>
+                            <li><strong>Engine de Distribuição</strong> - Rateio % e Prioridade</li>
+                            <li><strong>Faturamento Básico</strong> - Geração de faturas + template + baixa manual</li>
+                            <li><strong>Comunicação por E-mail</strong> - Envio de faturas e lembretes</li>
+                            <li><strong>Dashboard Operacional</strong> - Visão consolidada</li>
+                            <li><strong>Infraestrutura</strong> - Setup AWS + CI/CD</li>
+                        </ul>
+                        <div class="payment-terms">
+                            <h5>O que está incluso:</h5>
+                            <p>~382 horas de desenvolvimento | Documentação | Treinamento (2h)</p>
+                            <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;"><em>Gateway de pagamento (Asaas) disponível como módulo opcional - veja ao lado.</em></p>
+                        </div>
+                    </div>
+
+                    <div class="pricing-card" style="background: linear-gradient(135deg, rgba(212,168,73,0.08) 0%, #fff 100%);">
+                        <h4>Módulos de Expansão</h4>
+                        <p class="pricing-subtitle">Adicione conforme a necessidade</p>
+                        <div class="price small">
+                            <span class="estimate">Opcionais para MVP+</span>
+                        </div>
+                        <table style="width: 100%; font-size: 0.85rem; margin-top: 1rem;">
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.5rem 0;"><strong>Pagamento Automatizado (Asaas)</strong> — Boleto + Pix + Webhook de baixa + Conciliação automática <span style="color:#666;font-size:.78rem;">(~55h)</span></td>
+                                <td style="text-align: right; color: var(--primary); font-weight: 600;">+ R$ 4.000</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.5rem 0;"><strong>WhatsApp Nativo</strong> — envio unidirecional de faturas, boletos e documentos via Cloud API + templates HSM <span style="color:#666;font-size:.78rem;">(~33h)</span></td>
+                                <td style="text-align: right; color: var(--primary); font-weight: 600;">+ R$ 2.500</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.5rem 0;"><strong>Notificações em Tempo Real (SignalR)</strong> — push in-app, sino + toast + painel</td>
+                                <td style="text-align: right; color: var(--primary); font-weight: 600;">+ R$ 1.500</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.5rem 0;"><strong>Parser Faturas COELBA</strong></td>
+                                <td style="text-align: right; color: var(--primary); font-weight: 600;">+ R$ 3.500</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.5rem 0;"><strong>Relatórios Avançados</strong></td>
+                                <td style="text-align: right; color: var(--primary); font-weight: 600;">+ R$ 2.500</td>
+                            </tr>
+                        </table>
+                        <div class="payment-terms" style="margin-top: 1rem;">
+                            <h5>Nota:</h5>
+                            <p>Módulos podem ser contratados a qualquer momento após o Go-Live do Core.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENÁRIOS DE ENTRADA -->
+            <div class="card" style="margin-top: 2.5rem; border: 2px solid #3498db; background: linear-gradient(135deg, rgba(52,152,219,0.08) 0%, #fff 100%);">
+                <div style="padding: 1.5rem;">
+                    <h4 style="color: #3498db; margin-bottom: 1.5rem;">Planos e Preços</h4>
+
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #3498db; color: white;">
+                                <th style="padding: 1rem; text-align: left;">Plano</th>
+                                <th style="padding: 1rem; text-align: center;">O que inclui</th>
+                                <th style="padding: 1rem; text-align: center;">1 Sócio</th>
+                                <th style="padding: 1rem; text-align: center;">4 Sócios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 2px solid #eee; background: rgba(39,174,96,0.1);">
+                                <td style="padding: 1rem;">
+                                    <strong style="font-size: 1.1rem;">Básico</strong><br>
+                                    <span style="font-size: 0.8rem; color: #666;">Core MVP</span>
+                                </td>
+                                <td style="padding: 1rem; font-size: 0.85rem;">
+                                    Cadastros + Contratos + Engine de Créditos + Faturamento (baixa manual) + E-mail + Dashboard Básico
+                                </td>
+                                <td style="padding: 1rem; text-align: center;">
+                                    <strong style="font-size: 1.2rem; color: #27ae60;">R$ 28.500</strong><br>
+                                    <span style="font-size: 0.75rem; color: #666;">+ Assessment R$ 2,5k–6k</span>
+                                </td>
+                                <td style="padding: 1rem; text-align: center;">
+                                    <strong style="font-size: 1.2rem;">R$ 36.000</strong><br>
+                                    <span style="font-size: 0.75rem; color: #666;">R$ 9.000/sócio + Assessment</span>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 2px solid #eee; background: rgba(212,168,73,0.1);">
+                                <td style="padding: 1rem;">
+                                    <strong style="font-size: 1.1rem; color: var(--primary);">Médio</strong><br>
+                                    <span style="font-size: 0.8rem; color: #666;">Core + Asaas + WhatsApp + Notif. tempo real</span>
+                                </td>
+                                <td style="padding: 1rem; font-size: 0.85rem;">
+                                    Tudo do Básico + <strong>Pagamento Automatizado (Asaas)</strong> + <strong>WhatsApp Nativo</strong> (envio de faturas/boletos/documentos) + <strong>Notificações em Tempo Real (SignalR)</strong>
+                                </td>
+                                <td style="padding: 1rem; text-align: center;">
+                                    <strong style="font-size: 1.2rem; color: var(--primary);">R$ 35.000</strong><br>
+                                    <span style="font-size: 0.75rem; color: #666;">+ Assessment R$ 2,5k–6k</span>
+                                </td>
+                                <td style="padding: 1rem; text-align: center;">
+                                    <strong style="font-size: 1.2rem;">R$ 42.500</strong><br>
+                                    <span style="font-size: 0.75rem; color: #666;">R$ 10.625/sócio + Assessment</span>
+                                </td>
+                            </tr>
+                            <tr style="background: rgba(52,152,219,0.1);">
+                                <td style="padding: 1rem;">
+                                    <strong style="font-size: 1.1rem; color: #3498db;">Full</strong><br>
+                                    <span style="font-size: 0.8rem; color: #666;">Todas as expansões</span>
+                                </td>
+                                <td style="padding: 1rem; font-size: 0.85rem;">
+                                    Tudo do Médio + <strong>Parser COELBA</strong> + <strong>Relatórios Avançados</strong>
+                                </td>
+                                <td style="padding: 1rem; text-align: center;">
+                                    <strong style="font-size: 1.2rem; color: #3498db;">R$ 41.000</strong><br>
+                                    <span style="font-size: 0.75rem; color: #666;">+ Assessment R$ 2,5k–6k</span>
+                                </td>
+                                <td style="padding: 1rem; text-align: center;">
+                                    <strong style="font-size: 1.2rem;">R$ 48.500</strong><br>
+                                    <span style="font-size: 0.75rem; color: #666;">R$ 12.125/sócio + Assessment</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(212,168,73,0.1); border-radius: 8px; border-left: 4px solid var(--primary);">
+                        <p style="font-size: 0.9rem; margin: 0;">
+                            <strong style="color: var(--primary);">Assessment cobrado à parte para todos os sócios:</strong> R$ 2.500 a R$ 6.000 por sócio (variável conforme complexidade), incluindo o primeiro (ESQ Energia). Os valores dos planos acima <strong>não incluem</strong> o Assessment — ele é somado ao Core conforme o número de sócios ingressantes.
+                        </p>
+                    </div>
+
+                    <!-- PREVISIBILIDADE DE PRAZO -->
+                    <div style="margin-top: 1.5rem; padding: 1.25rem; background: #fff; border: 2px solid #3498db; border-radius: 8px;">
+                        <h4 style="color: #3498db; margin-bottom: 0.5rem;">⏱️ Previsibilidade de Prazo por Versão</h4>
+                        <p style="font-size: 0.88rem; color: #555; margin-bottom: 0.85rem; line-height: 1.6;">
+                            Estimativa baseada em dedicação de <strong>4 horas/dia</strong> em <strong>dias úteis</strong> (22 dias úteis por mês), execução sequencial e escopo fechado.
+                        </p>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+                            <thead>
+                                <tr style="background: var(--secondary); color: white;">
+                                    <th style="padding: 0.6rem; text-align: left;">Versão</th>
+                                    <th style="padding: 0.6rem; text-align: center;">Horas</th>
+                                    <th style="padding: 0.6rem; text-align: center;">Dias úteis</th>
+                                    <th style="padding: 0.6rem; text-align: center;">Equivalente</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background: rgba(39,174,96,0.10); border-bottom: 1px solid #eee;">
+                                    <td style="padding: 0.6rem;"><strong>Básico</strong><br><span style="font-size: 0.75rem; color: #666;">Core puro</span></td>
+                                    <td style="padding: 0.6rem; text-align: center;">382 h</td>
+                                    <td style="padding: 0.6rem; text-align: center;"><strong>~96 dias</strong></td>
+                                    <td style="padding: 0.6rem; text-align: center;">~4 meses e 8 dias úteis<br><span style="font-size: 0.75rem; color: #666;">(≈ 4,4 meses)</span></td>
+                                </tr>
+                                <tr style="background: rgba(212,168,73,0.10); border-bottom: 1px solid #eee;">
+                                    <td style="padding: 0.6rem;"><strong style="color: var(--primary);">Médio</strong><br><span style="font-size: 0.75rem; color: #666;">Core + Asaas + WhatsApp + Notif. SignalR</span></td>
+                                    <td style="padding: 0.6rem; text-align: center;">488 h</td>
+                                    <td style="padding: 0.6rem; text-align: center;"><strong>122 dias</strong></td>
+                                    <td style="padding: 0.6rem; text-align: center;">~5 meses e 12 dias úteis<br><span style="font-size: 0.75rem; color: #666;">(≈ 5,5 meses)</span></td>
+                                </tr>
+                                <tr style="background: rgba(52,152,219,0.10);">
+                                    <td style="padding: 0.6rem;"><strong style="color: #3498db;">Full</strong><br><span style="font-size: 0.75rem; color: #666;">Todas as expansões</span></td>
+                                    <td style="padding: 0.6rem; text-align: center;">568 h</td>
+                                    <td style="padding: 0.6rem; text-align: center;"><strong>142 dias</strong></td>
+                                    <td style="padding: 0.6rem; text-align: center;">~6 meses e 10 dias úteis<br><span style="font-size: 0.75rem; color: #666;">(≈ 6,5 meses)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="font-size: 0.8rem; color: #666; margin-top: 0.75rem; line-height: 1.6;">
+                            <strong>Premissas:</strong> 4 h/dia em dias úteis, sem feriados, execução sequencial sem paralelismo. Reuniões de alinhamento, retrabalho de feedback e refinamento de requisitos consomem horas dentro do próprio orçamento. <strong>Aumento de dedicação diária (ex.: 6 h ou 8 h/dia) reduz o prazo proporcionalmente.</strong>
+                        </p>
+                    </div>
+
+                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(52,152,219,0.08); border: 1px dashed #3498db; border-radius: 8px;">
+                        <p style="font-size: 0.85rem; margin: 0; color: #555; line-height: 1.6;">
+                            <strong style="color: #3498db;">📌 Nota de Transparência:</strong> A precificação apresentada baseia-se em <strong>dados reais do primeiro sócio (ESQ Energia)</strong> e em <strong>estimativa técnica</strong> para o cenário provável dos demais 3 sócios, dada a ausência de dados específicos de suas operações no momento. Os valores podem ser refinados após o Assessment individual de cada sócio adicional.
+                        </p>
+                    </div>
+
+                    <div style="margin-top: 1rem; padding: 1rem; background: linear-gradient(135deg, #D4A849, #B8923D); border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(212,168,73,0.3);">
+                        <p style="font-size: 0.95rem; margin: 0; color: #1a1a2e; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">
+                            ⚡ Investimento Sem Nenhum Módulo Premium Contratado
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONDIÇÕES DE PAGAMENTO -->
+            <div style="margin-top: 2.5rem;">
+                <h3 style="margin-bottom: 1rem; color: var(--secondary);">Condições de Pagamento</h3>
+                <div class="pricing-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="card" style="background: var(--light);">
+                        <div style="padding: 1.25rem;">
+                            <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">Assessment (todos os sócios)</h4>
+                            <ul style="font-size: 0.9rem; color: #555; line-height: 1.8;">
+                                <li><strong>100% na contratação</strong> - antes do início do mapeamento</li>
+                                <li><strong>R$ 2.500 a R$ 6.000 por sócio</strong> — cobrado à parte para todos, inclusive o primeiro (ESQ)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card" style="background: var(--light);">
+                        <div style="padding: 1.25rem;">
+                            <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">Core da Plataforma (R$ 28.500)</h4>
+                            <ul style="font-size: 0.9rem; color: #555; line-height: 1.8;">
+                                <li><strong>30%</strong> - Assinatura do contrato (R$ 8.550)</li>
+                                <li><strong>30%</strong> - Entrega do Core funcional (R$ 8.550)</li>
+                                <li><strong>40%</strong> - Go-Live em produção (R$ 11.400)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCO 3: EVOLUÇÃO E MANUTENÇÃO SOB DEMANDA -->
+            <div class="pricing-options" style="margin-top: 3rem;">
+                <h3 style="border-bottom: 3px solid var(--primary); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
+                    <span style="background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; margin-right: 0.75rem;">BLOCO 3</span>
+                    Evolução e Manutenção Sob Demanda <span style="font-size: 0.85rem; color: #666; font-weight: normal;">(Sem Recorrência)</span>
+                </h3>
+                <p style="color: #555; margin-bottom: 1rem; line-height: 1.7;">
+                    <strong>Sem fee mensal. Sem contrato recorrente.</strong> Após o Go-Live a plataforma roda em infraestrutura AWS contratada e paga <strong>diretamente pelo cliente</strong>, sem intermediação. Intervenções técnicas — correções, manutenção evolutiva, novas integrações (Asaas, COELBA, WhatsApp) e novas features — são <strong>orçadas de forma avulsa e pontual</strong>, sob demanda, mediante escopo específico aprovado a cada chamado.
+                </p>
+                <div style="padding: 0.85rem 1rem; background: rgba(39,174,96,0.08); border-left: 4px solid #27ae60; border-radius: 6px; margin-bottom: 1.5rem;">
+                    <p style="font-size: 0.9rem; color: #555; margin: 0; line-height: 1.6;">
+                        <strong style="color: #1e8449;">✓ Vantagem:</strong> você paga apenas pelo que efetivamente consome. Sem mensalidade travando caixa, sem horas não utilizadas evaporando no fim do mês. Cada demanda vira um orçamento transparente, com escopo e prazo fechados antes da execução.
+                    </p>
+                </div>
+            </div>
+
+            <div class="recurring-costs">
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: #2C3E50;">Infraestrutura Elástica (Estimativa Mensal)</h4>
+                <p style="font-size: 0.9rem; color: #555; margin-bottom: 1rem; line-height: 1.6;">
+                    A infraestrutura na nuvem (AWS) é <strong>elástica e escala proporcionalmente</strong> ao tamanho da operação. Vocês começam enxutos no MVP e o custo cresce junto com o volume — sem licenças fixas que viram desperdício.
+                </p>
+                <table class="simple-table">
+                    <tr>
+                        <td>Hospedagem Cloud (AWS)</td>
+                        <td>R$ 150 ~ 300/mês <em style="color:#27ae60">(elástico)</em></td>
+                    </tr>
+                    <tr>
+                        <td>Banco SQL Server gerenciado</td>
+                        <td>R$ 100 ~ 250/mês <em style="color:#27ae60">(escala com dados)</em></td>
+                    </tr>
+                    <tr>
+                        <td>Gateway Asaas (se contratado)</td>
+                        <td>Taxa por transação <em style="color:#27ae60">(pay-per-use)</em></td>
+                    </tr>
+                    <tr>
+                        <td>API WhatsApp (se contratado)</td>
+                        <td>R$ 100 ~ 200/mês <em style="color:#27ae60">(variável por mensagem)</em></td>
+                    </tr>
+                    <tr>
+                        <td>Certificado SSL</td>
+                        <td>Incluído</td>
+                    </tr>
+                </table>
+                <p style="font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem;">
+                    *Modelo <strong>pay-as-you-grow</strong>: a infra acompanha o crescimento da operação sem custo inicial inflado.
+                </p>
+
+                <h4 style="margin-top: 2rem; margin-bottom: 1rem; color: #2C3E50;">Modelo de Intervenções Pontuais</h4>
+                <div style="padding: 1.1rem 1.25rem; background: #fff; border: 1px solid #e5e5e5; border-left: 4px solid var(--primary); border-radius: 8px; line-height: 1.7;">
+                    <p style="font-size: 0.92rem; color: #444; margin: 0 0 0.6rem;">
+                        Não há pacotes mensais, fee fixo ou horas contratadas antecipadamente. Cada intervenção técnica pós Go-Live — seja <strong>correção de bug</strong>, <strong>manutenção evolutiva</strong>, <strong>integração com Asaas/COELBA</strong>, <strong>ajustes regulatórios</strong> ou <strong>desenvolvimento de novas features</strong> — é analisada, escopada e <strong>orçada de forma avulsa</strong> antes da execução.
+                    </p>
+                    <p style="font-size: 0.9rem; color: #555; margin: 0;">
+                        A infraestrutura AWS (hospedagem, banco, gateway, WhatsApp API) é contratada e paga <strong>diretamente pelo cliente</strong>, sem markup nem repasse. O cliente mantém total controle sobre os custos recorrentes e só aciona o time técnico quando há demanda real.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diferenciais -->
+        <section class="section differentials">
+            <h2 class="section-title">
+                <span class="section-number">06</span>
+                Diferenciais da Solução
+            </h2>
+
+            <div class="diff-grid">
+                <div class="diff-item">
+                    <span class="diff-icon">M</span>
+                    <h4>Multitenancy</h4>
+                    <p>Pronto para escalar com novos sócios/operações</p>
+                </div>
+                <div class="diff-item">
+                    <span class="diff-icon">C</span>
+                    <h4>CQRS</h4>
+                    <p>Performance em leitura sem impactar escrita</p>
+                </div>
+                <div class="diff-item">
+                    <span class="diff-icon">D</span>
+                    <h4>DDD</h4>
+                    <p>Código organizado por domínio de negócio</p>
+                </div>
+                <div class="diff-item">
+                    <span class="diff-icon">A</span>
+                    <h4>Pagamento Automatizado (Asaas)</h4>
+                    <p>Boleto, Pix e baixa automática via webhook</p>
+                </div>
+                <div class="diff-item">
+                    <span class="diff-icon">E</span>
+                    <h4>Créditos Inteligentes</h4>
+                    <p>Motor de rateio percentual/prioridade</p>
+                </div>
+                <div class="diff-item">
+                    <span class="diff-icon">W</span>
+                    <h4>WhatsApp Nativo</h4>
+                    <p>Envio de faturas, boletos e documentos via Cloud API oficial</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap / Melhorias Futuras -->
+        <section id="roadmap" class="section">
+            <h2 class="section-title">
+                <span class="section-number">06b</span>
+                Roadmap / Melhorias Futuras
+            </h2>
+            <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.25rem; line-height: 1.7;">
+                Funcionalidades fora do escopo dos planos atuais (Básico / Médio / Full), mapeadas como
+                <strong>desenvolvimentos independentes</strong> a serem orçados e contratados separadamente após o Go-Live.
+            </p>
+            <div class="card" style="border-left: 4px solid var(--primary);">
+                <div style="padding: 1.25rem;">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">🤖 Bot Conversacional WhatsApp via n8n</h4>
+                    <p style="font-size: 0.9rem; color: #555; line-height: 1.7;">
+                        Evolução do módulo WhatsApp para permitir <strong>fluxos automatizados de atendimento</strong>:
+                        respostas automáticas, consulta de 2ª via de fatura, status de pagamento, abertura de chamados,
+                        FAQs e roteamento para humano. Implementado via <strong>n8n</strong> como orquestrador de fluxos
+                        conectado à WhatsApp Cloud API. Escopo, prazo e custo orçados separadamente após validação
+                        de demanda real e definição dos fluxos prioritários.
+                    </p>
+                    <p style="font-size: 0.85rem; color: #888; margin-top: 0.6rem;">
+                        <em>Por que fora do escopo atual:</em> manter o módulo WhatsApp enxuto e com custo previsível.
+                        Bot conversacional exige descoberta de fluxos, treinamento, manutenção contínua e validação
+                        de templates específicos da Meta — atividades que merecem projeto próprio.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Próximos Passos -->
+        <section id="proximos-passos" class="section">
+            <h2 class="section-title">
+                <span class="section-number">07</span>
+                Próximos Passos
+            </h2>
+
+            <div class="steps-list">
+                <div class="step-item">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        <h4>Validação desta proposta</h4>
+                        <p>Reunião com o cliente para alinhamento</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        <h4>Refinamento de requisitos</h4>
+                        <p>Workshop de 2h para detalhamento</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        <h4>Assinatura do contrato</h4>
+                        <p>Formalização e início do projeto</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        <h4>Kickoff</h4>
+                        <p>Setup do ambiente de desenvolvimento</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="validity-notice">
+                <p><strong>Proposta válida por 30 dias</strong> a partir de 05/04/2026</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Documento Confidencial - Plataforma Energia Solar</p>
+            <p>Gerado em 05/04/2026</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.85;">Autoria: <strong>João Rocha</strong> &amp; <strong>José Ambrozi</strong></p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
