@@ -322,6 +322,47 @@
   .topbar { padding: 0 var(--sp-4); }
 }
 
+/* Sidebar colapsada com expansão no hover/tap (≤1024px) */
+@media (max-width: 1024px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 64px;
+    z-index: 50;
+    transition: width 200ms ease;
+    overflow: hidden;
+  }
+  .sidebar:hover,
+  .sidebar:focus-within,
+  .sidebar.expanded {
+    width: 230px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+  }
+  .sidebar:hover .sidebar-brand,
+  .sidebar:focus-within .sidebar-brand,
+  .sidebar.expanded .sidebar-brand {
+    padding: 0 var(--sp-5);
+    justify-content: flex-start;
+  }
+  .sidebar:hover .sidebar-brand .name,
+  .sidebar:focus-within .sidebar-brand .name,
+  .sidebar.expanded .sidebar-brand .name { display: block; }
+  .sidebar:hover .sidebar-link,
+  .sidebar:focus-within .sidebar-link,
+  .sidebar.expanded .sidebar-link {
+    justify-content: flex-start;
+    padding: var(--sp-3) var(--sp-4);
+  }
+  .sidebar:hover .sidebar-link span,
+  .sidebar:focus-within .sidebar-link span,
+  .sidebar.expanded .sidebar-link span { display: inline; }
+  .sidebar:hover .sidebar-section,
+  .sidebar:focus-within .sidebar-section,
+  .sidebar.expanded .sidebar-section { display: block; }
+}
+
 /* ===== Mobile (≤768px) ===== */
 @media (max-width: 768px) {
   .app-shell { grid-template-columns: 56px 1fr; }
