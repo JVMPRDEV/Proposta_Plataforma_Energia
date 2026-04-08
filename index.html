@@ -722,7 +722,7 @@ src/
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td style="padding: 0.75rem;">Notificações</td>
                                 <td style="padding: 0.75rem; text-align: center; color: #27ae60;">—</td>
-                                <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Tempo real / SignalR (+R$ 1.500)</td>
+                                <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Tempo real / SignalR (incluso no Médio)</td>
                             </tr>
                             <tr>
                                 <td style="padding: 0.75rem;">Relatórios</td>
@@ -730,9 +730,9 @@ src/
                                 <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Avançados (+R$ 2.500)</td>
                             </tr>
                             <tr style="background: var(--light); font-weight: 700;">
-                                <td style="padding: 0.75rem;">TOTAL (1 Sócio)</td>
+                                <td style="padding: 0.75rem;">TOTAL Desenvolvimento (1 Sócio)</td>
                                 <td style="padding: 0.75rem; text-align: center; color: #27ae60;">R$ 28.500</td>
-                                <td style="padding: 0.75rem; text-align: center; color: var(--primary);">R$ 42.500</td>
+                                <td style="padding: 0.75rem; text-align: center; color: var(--primary);">R$ 41.000</td>
                             </tr>
                         </tbody>
                     </table>
@@ -916,74 +916,129 @@ src/
                 <div style="padding: 1.5rem;">
                     <h4 style="color: #3498db; margin-bottom: 1.5rem;">Planos e Preços</h4>
 
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background: #3498db; color: white;">
-                                <th style="padding: 1rem; text-align: left;">Plano</th>
-                                <th style="padding: 1rem; text-align: center;">O que inclui</th>
-                                <th style="padding: 1rem; text-align: center;">1 Sócio</th>
-                                <th style="padding: 1rem; text-align: center;">4 Sócios</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 2px solid #eee; background: rgba(39,174,96,0.1);">
-                                <td style="padding: 1rem;">
-                                    <strong style="font-size: 1.1rem;">Básico</strong><br>
-                                    <span style="font-size: 0.8rem; color: #666;">Core MVP</span>
-                                </td>
-                                <td style="padding: 1rem; font-size: 0.85rem;">
-                                    Cadastros + Contratos + Engine de Créditos + Faturamento (baixa manual) + E-mail + Dashboard Básico
-                                </td>
-                                <td style="padding: 1rem; text-align: center;">
-                                    <strong style="font-size: 1.2rem; color: #27ae60;">R$ 28.500</strong><br>
-                                    <span style="font-size: 0.75rem; color: #666;">+ Assessment R$ 2,5k–6k</span>
-                                </td>
-                                <td style="padding: 1rem; text-align: center;">
-                                    <strong style="font-size: 1.2rem;">R$ 36.000</strong><br>
-                                    <span style="font-size: 0.75rem; color: #666;">R$ 9.000/sócio + Assessment</span>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 2px solid #eee; background: rgba(212,168,73,0.1);">
-                                <td style="padding: 1rem;">
-                                    <strong style="font-size: 1.1rem; color: var(--primary);">Médio</strong><br>
-                                    <span style="font-size: 0.8rem; color: #666;">Core + Asaas + WhatsApp + Notif. tempo real</span>
-                                </td>
-                                <td style="padding: 1rem; font-size: 0.85rem;">
-                                    Tudo do Básico + <strong>Pagamento Automatizado (Asaas)</strong> + <strong>WhatsApp Nativo</strong> (envio de faturas/boletos/documentos) + <strong>Notificações em Tempo Real (SignalR)</strong>
-                                </td>
-                                <td style="padding: 1rem; text-align: center;">
-                                    <strong style="font-size: 1.2rem; color: var(--primary);">R$ 36.500</strong><br>
-                                    <span style="font-size: 0.75rem; color: #666;">+ Assessment R$ 2,5k–6k</span>
-                                </td>
-                                <td style="padding: 1rem; text-align: center;">
-                                    <strong style="font-size: 1.2rem;">R$ 44.000</strong><br>
-                                    <span style="font-size: 0.75rem; color: #666;">R$ 11.000/sócio + Assessment</span>
-                                </td>
-                            </tr>
-                            <tr style="background: rgba(52,152,219,0.1);">
-                                <td style="padding: 1rem;">
-                                    <strong style="font-size: 1.1rem; color: #3498db;">Full</strong><br>
-                                    <span style="font-size: 0.8rem; color: #666;">Todas as expansões</span>
-                                </td>
-                                <td style="padding: 1rem; font-size: 0.85rem;">
-                                    Tudo do Médio + <strong>Parser COELBA</strong> + <strong>Relatórios Avançados</strong>
-                                </td>
-                                <td style="padding: 1rem; text-align: center;">
-                                    <strong style="font-size: 1.2rem; color: #3498db;">R$ 42.500</strong><br>
-                                    <span style="font-size: 0.75rem; color: #666;">+ Assessment R$ 2,5k–6k</span>
-                                </td>
-                                <td style="padding: 1rem; text-align: center;">
-                                    <strong style="font-size: 1.2rem;">R$ 50.000</strong><br>
-                                    <span style="font-size: 0.75rem; color: #666;">R$ 12.500/sócio + Assessment</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <p style="font-size: 0.9rem; color: #555; margin-bottom: 1.25rem; line-height: 1.6;">
+                        <strong style="color: #3498db;">Transparência total:</strong> cada plano abaixo mostra o <strong>custo do desenvolvimento</strong> separado dos custos acessórios (Assessment + Infra+APIs), e o <strong>total real do 1º ano</strong>. A partir do <strong>Ano 2</strong>, você só paga Infra+APIs — <strong>zero mensalidade de plataforma</strong>.
+                    </p>
 
-                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(212,168,73,0.1); border-radius: 8px; border-left: 4px solid var(--primary);">
-                        <p style="font-size: 0.9rem; margin: 0;">
-                            <strong style="color: var(--primary);">Assessment cobrado à parte para todos os sócios:</strong> R$ 2.500 a R$ 6.000 por sócio (variável conforme complexidade), incluindo o primeiro (ESQ Energia). Os valores dos planos acima <strong>não incluem</strong> o Assessment — ele é somado ao Core conforme o número de sócios ingressantes.
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;">
+                        <!-- BÁSICO -->
+                        <div style="background: #fff; border: 2px solid #27ae60; border-radius: 12px; padding: 1.25rem; box-shadow: 0 4px 14px rgba(39,174,96,0.18);">
+                            <div style="text-align: center; padding-bottom: 0.85rem; border-bottom: 2px dashed #e8e8e8;">
+                                <div style="background: #27ae60; color: #fff; display: inline-block; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.78rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">Básico</div>
+                                <div style="font-size: 0.78rem; color: #666; margin-top: 0.45rem;">Core MVP</div>
+                            </div>
+                            <div style="padding: 0.85rem 0; font-size: 0.82rem; color: #555; line-height: 1.55; min-height: 64px;">
+                                Cadastros + Contratos + Engine de Créditos + Faturamento (baixa manual) + E-mail + Dashboard
+                            </div>
+                            <div style="background: rgba(39,174,96,0.05); border-radius: 8px; padding: 0.9rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0;">
+                                    <span style="font-size: 0.82rem; color: #444;">💻 Desenvolvimento</span>
+                                    <strong style="font-size: 1.1rem; color: #27ae60;">R$ 28.500</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0; border-top: 1px solid rgba(0,0,0,0.06);">
+                                    <span style="font-size: 0.8rem; color: #555;">📋 Assessment <span style="font-size: 0.7rem; color: #888;">(piso)</span></span>
+                                    <strong style="font-size: 0.95rem; color: #555;">R$ 2.500</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0; border-top: 1px solid rgba(0,0,0,0.06);">
+                                    <span style="font-size: 0.8rem; color: #555;">☁️ Infra + APIs <span style="font-size: 0.7rem; color: #888;">(12m · ~R$ 200/mês)</span></span>
+                                    <strong style="font-size: 0.95rem; color: #555;">R$ 2.400</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.65rem 0 0.2rem; border-top: 2px solid #27ae60; margin-top: 0.4rem;">
+                                    <span style="font-size: 0.82rem; color: #1a1a2e; font-weight: 700;">Total 1º ano</span>
+                                    <strong style="font-size: 1.4rem; color: #27ae60;">R$ 33.400</strong>
+                                </div>
+                            </div>
+                            <div style="margin-top: 0.9rem; padding: 0.65rem; background: #f8f9fa; border-radius: 6px; text-align: center;">
+                                <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Cenário 4 sócios</div>
+                                <div style="font-size: 1rem; font-weight: 700; color: #1a1a2e; margin-top: 0.2rem;">R$ 45.100 <span style="font-size: 0.72rem; color: #666; font-weight: 400;">(R$ 11.275/sócio)</span></div>
+                            </div>
+                            <div style="margin-top: 0.6rem; text-align: center; font-size: 0.72rem; color: #27ae60; font-weight: 700;">
+                                ✓ Ano 2+: apenas Infra ~R$ 200/mês
+                            </div>
+                        </div>
+
+                        <!-- MÉDIO -->
+                        <div style="background: #fff; border: 2px solid var(--primary); border-radius: 12px; padding: 1.25rem; box-shadow: 0 4px 14px rgba(212,168,73,0.22); position: relative;">
+                            <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #1a1a2e; padding: 0.2rem 0.85rem; border-radius: 12px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">⭐ Recomendado</div>
+                            <div style="text-align: center; padding-bottom: 0.85rem; border-bottom: 2px dashed #e8e8e8;">
+                                <div style="background: var(--primary); color: #1a1a2e; display: inline-block; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.78rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">Médio</div>
+                                <div style="font-size: 0.78rem; color: #666; margin-top: 0.45rem;">Core + Asaas + WhatsApp + SignalR</div>
+                            </div>
+                            <div style="padding: 0.85rem 0; font-size: 0.82rem; color: #555; line-height: 1.55; min-height: 64px;">
+                                Tudo do Básico + <strong>Pagamento Automatizado (Asaas)</strong> + <strong>WhatsApp Nativo</strong> + <strong>Notificações em Tempo Real</strong>
+                            </div>
+                            <div style="background: rgba(212,168,73,0.06); border-radius: 8px; padding: 0.9rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0;">
+                                    <span style="font-size: 0.82rem; color: #444;">💻 Desenvolvimento</span>
+                                    <strong style="font-size: 1.1rem; color: var(--primary);">R$ 35.000</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0; border-top: 1px solid rgba(0,0,0,0.06);">
+                                    <span style="font-size: 0.8rem; color: #555;">📋 Assessment <span style="font-size: 0.7rem; color: #888;">(piso)</span></span>
+                                    <strong style="font-size: 0.95rem; color: #555;">R$ 2.500</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0; border-top: 1px solid rgba(0,0,0,0.06);">
+                                    <span style="font-size: 0.8rem; color: #555;">☁️ Infra + APIs <span style="font-size: 0.7rem; color: #888;">(12m · ~R$ 350/mês)</span></span>
+                                    <strong style="font-size: 0.95rem; color: #555;">R$ 4.200</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.65rem 0 0.2rem; border-top: 2px solid var(--primary); margin-top: 0.4rem;">
+                                    <span style="font-size: 0.82rem; color: #1a1a2e; font-weight: 700;">Total 1º ano</span>
+                                    <strong style="font-size: 1.4rem; color: var(--primary);">R$ 41.700</strong>
+                                </div>
+                            </div>
+                            <div style="margin-top: 0.9rem; padding: 0.65rem; background: #f8f9fa; border-radius: 6px; text-align: center;">
+                                <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Cenário 4 sócios</div>
+                                <div style="font-size: 1rem; font-weight: 700; color: #1a1a2e; margin-top: 0.2rem;">R$ 55.800 <span style="font-size: 0.72rem; color: #666; font-weight: 400;">(R$ 13.950/sócio)</span></div>
+                            </div>
+                            <div style="margin-top: 0.6rem; text-align: center; font-size: 0.72rem; color: var(--primary); font-weight: 700;">
+                                ✓ Ano 2+: apenas Infra ~R$ 350/mês
+                            </div>
+                        </div>
+
+                        <!-- FULL -->
+                        <div style="background: #fff; border: 2px solid #3498db; border-radius: 12px; padding: 1.25rem; box-shadow: 0 4px 14px rgba(52,152,219,0.18);">
+                            <div style="text-align: center; padding-bottom: 0.85rem; border-bottom: 2px dashed #e8e8e8;">
+                                <div style="background: #3498db; color: #fff; display: inline-block; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.78rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">Full</div>
+                                <div style="font-size: 0.78rem; color: #666; margin-top: 0.45rem;">Todas as expansões</div>
+                            </div>
+                            <div style="padding: 0.85rem 0; font-size: 0.82rem; color: #555; line-height: 1.55; min-height: 64px;">
+                                Tudo do Médio + <strong>Parser COELBA</strong> + <strong>Relatórios Avançados</strong>
+                            </div>
+                            <div style="background: rgba(52,152,219,0.05); border-radius: 8px; padding: 0.9rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0;">
+                                    <span style="font-size: 0.82rem; color: #444;">💻 Desenvolvimento</span>
+                                    <strong style="font-size: 1.1rem; color: #3498db;">R$ 41.000</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0; border-top: 1px solid rgba(0,0,0,0.06);">
+                                    <span style="font-size: 0.8rem; color: #555;">📋 Assessment <span style="font-size: 0.7rem; color: #888;">(piso)</span></span>
+                                    <strong style="font-size: 0.95rem; color: #555;">R$ 2.500</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0; border-top: 1px solid rgba(0,0,0,0.06);">
+                                    <span style="font-size: 0.8rem; color: #555;">☁️ Infra + APIs <span style="font-size: 0.7rem; color: #888;">(12m · ~R$ 450/mês)</span></span>
+                                    <strong style="font-size: 0.95rem; color: #555;">R$ 5.400</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.65rem 0 0.2rem; border-top: 2px solid #3498db; margin-top: 0.4rem;">
+                                    <span style="font-size: 0.82rem; color: #1a1a2e; font-weight: 700;">Total 1º ano</span>
+                                    <strong style="font-size: 1.4rem; color: #3498db;">R$ 48.900</strong>
+                                </div>
+                            </div>
+                            <div style="margin-top: 0.9rem; padding: 0.65rem; background: #f8f9fa; border-radius: 6px; text-align: center;">
+                                <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Cenário 4 sócios</div>
+                                <div style="font-size: 1rem; font-weight: 700; color: #1a1a2e; margin-top: 0.2rem;">R$ 64.800 <span style="font-size: 0.72rem; color: #666; font-weight: 400;">(R$ 16.200/sócio)</span></div>
+                            </div>
+                            <div style="margin-top: 0.6rem; text-align: center; font-size: 0.72rem; color: #3498db; font-weight: 700;">
+                                ✓ Ano 2+: apenas Infra ~R$ 450/mês
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem; padding: 1.1rem 1.25rem; background: #fafafa; border-left: 4px solid #3498db; border-radius: 8px; font-size: 0.87rem; color: #444; line-height: 1.7;">
+                        <p style="margin: 0 0 0.7rem 0;"><strong style="color: #3498db;">Como ler os planos:</strong> cada plano = <strong>Desenvolvimento</strong> (custo único do código) + <strong>Assessment por sócio</strong> (R$ 2.500 a R$ 6.000 — os cards consideram o piso de R$ 2.500; valor final é definido após o workshop, conforme a complexidade da operação) + <strong>Infra + APIs (12 meses)</strong> — AWS, WhatsApp Cloud API e processamento.</p>
+                        <p style="margin: 0 0 0.7rem 0;"><strong style="color: #3498db;">Custo mensal de Infra + APIs:</strong><br>
+                            • <strong>1 sócio</strong> → Básico R$ 200 · Médio R$ 350 · Full R$ 450<br>
+                            • <strong>4 sócios</strong> → Básico R$ 550 · Médio R$ 900 · Full R$ 1.150
                         </p>
+                        <p style="margin: 0 0 0.7rem 0;"><strong style="color: #3498db;">A partir do Ano 2:</strong> apenas Infra + APIs. <strong>Zero mensalidade de plataforma.</strong> Operações de alta complexidade podem exigir orçamento de desenvolvimento adicional após o Assessment.</p>
+                        <p style="margin: 0; padding-top: 0.7rem; border-top: 1px dashed #ddd;"><strong style="color: #3498db;">💾 Banco de dados:</strong> os valores acima consideram <strong>SQL Server Express</strong> (gratuito · limite de 10 GB por banco). Atende com folga o início da operação. <strong>Conforme o volume de dados crescer</strong> (próximo de 10 GB/sócio ou demanda por alta disponibilidade), pode ser necessário migrar para a edição paga (RDS SQL Server Standard, ~R$ 1.200–1.800/mês por sócio) — custo adicional, avaliado caso a caso.</p>
                     </div>
 
                     <!-- PREVISIBILIDADE DE PRAZO -->
@@ -1047,22 +1102,64 @@ src/
                 <div class="pricing-grid" style="grid-template-columns: repeat(2, 1fr);">
                     <div class="card" style="background: var(--light);">
                         <div style="padding: 1.25rem;">
-                            <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">Assessment (todos os sócios)</h4>
+                            <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">Assessment (por sócio)</h4>
                             <ul style="font-size: 0.9rem; color: #555; line-height: 1.8;">
-                                <li><strong>100% na contratação</strong> - antes do início do mapeamento</li>
-                                <li><strong>R$ 2.500 a R$ 6.000 por sócio</strong> — cobrado à parte para todos, inclusive o primeiro (ESQ)</li>
+                                <li><strong>100% na contratação</strong> — antes do início do mapeamento</li>
+                                <li><strong>R$ 2.500 a R$ 6.000 por sócio</strong> — valor final definido após o workshop, conforme complexidade</li>
                             </ul>
                         </div>
                     </div>
                     <div class="card" style="background: var(--light);">
                         <div style="padding: 1.25rem;">
-                            <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">Core da Plataforma (R$ 28.500)</h4>
+                            <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">Desenvolvimento (parcelado em 3)</h4>
                             <ul style="font-size: 0.9rem; color: #555; line-height: 1.8;">
-                                <li><strong>30%</strong> - Assinatura do contrato (R$ 8.550)</li>
-                                <li><strong>30%</strong> - Entrega do Core funcional (R$ 8.550)</li>
-                                <li><strong>40%</strong> - Go-Live em produção (R$ 11.400)</li>
+                                <li><strong>30%</strong> — Assinatura do contrato</li>
+                                <li><strong>30%</strong> — Entrega do Core funcional</li>
+                                <li><strong>40%</strong> — Go-Live em produção</li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+                <div class="card" style="background: #fff; margin-top: 1rem; border: 1px solid #e0e0e0;">
+                    <div style="padding: 1.25rem;">
+                        <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">Valor das parcelas por plano</h4>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+                            <thead>
+                                <tr style="background: var(--secondary); color: white;">
+                                    <th style="padding: 0.6rem; text-align: left;">Plano</th>
+                                    <th style="padding: 0.6rem; text-align: center;">Desenvolvimento</th>
+                                    <th style="padding: 0.6rem; text-align: center;">30% Assinatura</th>
+                                    <th style="padding: 0.6rem; text-align: center;">30% Core</th>
+                                    <th style="padding: 0.6rem; text-align: center;">40% Go-Live</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid #eee;">
+                                    <td style="padding: 0.6rem;"><strong>Básico</strong></td>
+                                    <td style="padding: 0.6rem; text-align: center;">R$ 28.500</td>
+                                    <td style="padding: 0.6rem; text-align: center;">R$ 8.550</td>
+                                    <td style="padding: 0.6rem; text-align: center;">R$ 8.550</td>
+                                    <td style="padding: 0.6rem; text-align: center; color: var(--success); font-weight: 700;">R$ 11.400</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #eee; background: rgba(212,168,73,0.06);">
+                                    <td style="padding: 0.6rem;"><strong style="color: var(--primary);">Médio</strong></td>
+                                    <td style="padding: 0.6rem; text-align: center;">R$ 35.000</td>
+                                    <td style="padding: 0.6rem; text-align: center;">R$ 10.500</td>
+                                    <td style="padding: 0.6rem; text-align: center;">R$ 10.500</td>
+                                    <td style="padding: 0.6rem; text-align: center; color: var(--success); font-weight: 700;">R$ 14.000</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem;"><strong style="color: #3498db;">Full</strong></td>
+                                    <td style="padding: 0.6rem; text-align: center;">R$ 41.000</td>
+                                    <td style="padding: 0.6rem; text-align: center;">R$ 12.300</td>
+                                    <td style="padding: 0.6rem; text-align: center;">R$ 12.300</td>
+                                    <td style="padding: 0.6rem; text-align: center; color: var(--success); font-weight: 700;">R$ 16.400</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="font-size: 0.8rem; color: #666; margin-top: 0.75rem; font-style: italic;">
+                            Parcelamento incide apenas sobre o <strong>Desenvolvimento</strong>. Assessment é cobrado 100% na contratação. Infra + APIs é paga diretamente pelo cliente conforme uso.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1090,12 +1187,12 @@ src/
                 </p>
                 <table class="simple-table">
                     <tr>
-                        <td>Hospedagem Cloud (AWS)</td>
-                        <td>R$ 150 ~ 300/mês <em style="color:#27ae60">(elástico)</em></td>
+                        <td>Infra + APIs (AWS + WhatsApp + processamento)</td>
+                        <td>R$ 200 ~ 1.150/mês <em style="color:#27ae60">(escala com uso e nº de sócios)</em></td>
                     </tr>
                     <tr>
-                        <td>Banco SQL Server gerenciado</td>
-                        <td>R$ 100 ~ 250/mês <em style="color:#27ae60">(escala com dados)</em></td>
+                        <td>Banco SQL Server <strong>Express</strong> (gratuito)</td>
+                        <td>R$ 0/mês <em style="color:#27ae60">(limite 10 GB/banco — atende o início; ao escalar, edição paga ~R$ 1.200–1.800/mês por sócio)</em></td>
                     </tr>
                     <tr>
                         <td>Gateway Asaas (se contratado)</td>
