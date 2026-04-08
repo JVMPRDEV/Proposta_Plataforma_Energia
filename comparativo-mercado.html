@@ -437,6 +437,86 @@
             color: var(--success);
             margin-bottom: 0.5rem;
         }
+
+        /* === Responsividade ampla (320px → 4K/cinema) === */
+        img, svg, video { max-width: 100%; height: auto; }
+        .container { max-width: 1200px; }
+
+        .comparison-table, .scenário-table, .partner-table {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            html { font-size: 15px; }
+            .container { padding: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            html { font-size: 14px; }
+            .container { padding: 1rem; }
+            .header { padding: 2rem 1rem; }
+            .header h1 { font-size: 1.6rem; }
+            .section { padding: 1.25rem; }
+            .section-title { font-size: 1.15rem; }
+            .section { overflow-x: hidden; }
+            table {
+                width: 100% !important;
+                max-width: 100% !important;
+                table-layout: fixed;
+                word-break: break-word;
+            }
+            table th, table td {
+                padding: 0.4rem 0.3rem !important;
+                font-size: 0.7rem !important;
+                word-break: break-word;
+                overflow-wrap: anywhere;
+            }
+            .cost-grid, .summary-grid, .advantages-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem;
+            }
+            /* Override de grids/flex inline */
+            [style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+            }
+            [style*="display: flex"][style*="justify-content: space-between"] {
+                flex-direction: column !important;
+            }
+            .highlight-box { padding: 1.25rem; }
+            .highlight-box .big-number { font-size: 2rem; }
+            .print-btn { padding: 8px 14px; font-size: 0.8rem; top: 10px; right: 10px; }
+        }
+
+        @media (max-width: 480px) {
+            html { font-size: 13px; }
+            body { padding: 0.75rem; }
+            .section { padding: 1rem; }
+            table { font-size: 0.72rem; }
+            th, td { padding: 0.4rem; }
+        }
+
+        /* iPhone 2 / ≤360px */
+        @media (max-width: 360px) {
+            html { font-size: 12px; }
+            body { padding: 0.5rem; }
+        }
+
+        /* Desktops grandes / TVs */
+        @media (min-width: 1600px) {
+            body { max-width: 1500px; margin: 0 auto; }
+        }
+
+        /* 4K / cinema */
+        @media (min-width: 2560px) {
+            html { font-size: 22px; }
+            body { max-width: 2200px; }
+        }
+
+        @media (min-width: 3200px) {
+            html { font-size: 28px; }
+            body { max-width: 2800px; }
+        }
     </style>
 </head>
 <body>

@@ -308,6 +308,54 @@
         .print-btn:hover {
             background: #b8923d;
         }
+
+        /* === Responsividade ampla (320px → 4K/cinema) === */
+        img, svg, video { max-width: 100%; height: auto; }
+        table { max-width: 100%; display: block; overflow-x: auto; }
+
+        @media (max-width: 1024px) {
+            body { padding: 15mm; max-width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; font-size: 14px; max-width: 100%; }
+            .doc-header h1 { font-size: 22px; }
+            .section-title { font-size: 16px; }
+            .grid, [class*="grid-"], [class*="cols-"] { grid-template-columns: 1fr !important; }
+            th, td { padding: 6px 8px; font-size: 12px; }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 8px; font-size: 13px; }
+            .doc-header h1 { font-size: 18px; }
+            .doc-header { padding-bottom: 18px; margin-bottom: 18px; }
+            .section { margin-bottom: 20px; }
+            .section-title { font-size: 14px; gap: 6px; }
+            th, td { padding: 4px 6px; font-size: 11px; }
+        }
+
+        /* iPhone 2 / ≤360px */
+        @media (max-width: 360px) {
+            body { padding: 6px; font-size: 12px; }
+            .doc-header h1 { font-size: 16px; }
+        }
+
+        /* Desktops grandes / TVs */
+        @media (min-width: 1600px) {
+            body { max-width: 1100px; padding: 30mm; }
+        }
+
+        /* 4K / cinema */
+        @media (min-width: 2560px) {
+            body { max-width: 1600px; font-size: 20px; padding: 50px; }
+            .doc-header h1 { font-size: 42px; }
+            .section-title { font-size: 26px; }
+        }
+
+        @media (min-width: 3200px) {
+            body { max-width: 2000px; font-size: 26px; }
+            .doc-header h1 { font-size: 54px; }
+        }
     </style>
 </head>
 <body>

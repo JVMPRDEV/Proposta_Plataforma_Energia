@@ -502,10 +502,65 @@ table.deck-table tr.total td {
   line-height: 1.4;
 }
 
+img, svg, video { max-width: 100%; height: auto; }
+.deck-table, table { max-width: 100%; }
+.slide { -webkit-overflow-scrolling: touch; }
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .slide { padding: 4vh 4vw; }
+  .cards.cols-3, .cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Telefones */
 @media (max-width: 768px) {
   .cards.cols-2, .cards.cols-3, .cards.cols-4,
   .timeline-grid, .steps-grid { grid-template-columns: 1fr; }
   .price-card.featured { transform: none; }
+  .slide { padding: 6vh 5vw; justify-content: flex-start; }
+  .slide-num { font-size: 0.7rem; top: 1vh; right: 2vw; }
+  .slide-tag { font-size: 0.65rem; margin-bottom: 1rem; padding: 0.3rem 0.75rem; }
+  .deck-table { font-size: 0.75rem; display: block; overflow-x: auto; white-space: nowrap; }
+  .takeaway { font-size: 0.85rem; padding: 0.75rem 1rem; }
+  .partnership-banner .text { font-size: 1rem; }
+  .hint { font-size: 0.7rem; padding: 0.4rem 0.75rem; }
+}
+
+/* Telas muito pequenas — iPhone SE / iPhone 5 (≤480px) */
+@media (max-width: 480px) {
+  .slide { padding: 5vh 4vw; }
+  .deck-table th, .deck-table td { padding: 0.4rem 0.5rem; font-size: 0.7rem; }
+}
+
+/* iPhone 2 / ≤360px */
+@media (max-width: 360px) {
+  .slide { padding: 4vh 3vw; }
+  .slide-tag { font-size: 0.6rem; letter-spacing: 1px; }
+}
+
+/* TVs / monitores grandes */
+@media (min-width: 1920px) {
+  h1 { max-width: 1400px; }
+  h2 { max-width: 1200px; }
+  .takeaway, .partnership-banner { max-width: 1200px; }
+}
+
+/* Cinema / 4K */
+@media (min-width: 2560px) {
+  html { font-size: 22px; }
+  .slide { padding: 6vh 10vw; }
+  h1 { max-width: 1800px; }
+}
+
+@media (min-width: 3200px) {
+  html { font-size: 28px; }
+}
+
+/* Telas em modo paisagem com pouca altura (celulares deitados) */
+@media (max-height: 480px) and (orientation: landscape) {
+  .slide { padding: 2vh 4vw; justify-content: flex-start; }
+  h1 { font-size: clamp(1.2rem, 3vw, 2rem); margin-bottom: 0.6rem; }
+  .slide-tag { margin-bottom: 0.5rem; }
 }
 </style>
 </head>
