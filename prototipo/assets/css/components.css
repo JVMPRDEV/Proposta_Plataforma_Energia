@@ -205,7 +205,21 @@
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
     width: 100%;
+    /* Indicador de scroll: sombras nas bordas que somem ao chegar no fim */
+    background:
+      linear-gradient(to right, var(--white) 30%, rgba(255,255,255,0)) left center,
+      linear-gradient(to right, rgba(255,255,255,0), var(--white) 70%) right center,
+      radial-gradient(farthest-side at 0% 50%, rgba(0,0,0,0.18), rgba(0,0,0,0)) left center,
+      radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.18), rgba(0,0,0,0)) right center;
+    background-repeat: no-repeat;
+    background-size: 32px 100%, 32px 100%, 16px 100%, 16px 100%;
+    background-attachment: local, local, scroll, scroll;
+    scroll-snap-type: x proximity;
   }
+  /* Scrollbar visível e estilizada */
+  table.data::-webkit-scrollbar { height: 8px; }
+  table.data::-webkit-scrollbar-track { background: var(--gray-100); border-radius: 4px; }
+  table.data::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
   table.data thead, table.data tbody { display: table; width: 100%; min-width: 640px; }
   table.data thead th, table.data tbody td { padding: var(--sp-2) var(--sp-3); font-size: 0.78rem; white-space: nowrap; }
   /* Card que envolve tabela permite scroll */
