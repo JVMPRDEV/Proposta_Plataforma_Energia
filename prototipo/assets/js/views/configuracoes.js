@@ -56,6 +56,29 @@ window.view_configuracoes = function(root) {
       <div style="margin-top: 1rem; padding: 0.85rem; background: var(--primary-light); border-radius: 6px; font-size: 0.8rem; color: var(--gray-700);">
         💡 As mudanças são aplicadas <strong>instantaneamente</strong> em toda a aplicação. Abra outras telas (Dashboard, Cobrança, Faturamento) para ver o efeito ao vivo.
       </div>
+
+      <h4 style="margin-top:1.25rem; font-size:.82rem; color:var(--gray-700);">Logo do tenant</h4>
+      <p style="font-size:.74rem; color:var(--gray-600); margin:.2rem 0 .6rem;">
+        Logo exibida no canto superior esquerdo da sidebar. Dimensão fixa <strong>32×32 px</strong>. Enquanto não houver upload, exibimos as iniciais do tenant sobre a cor principal.
+      </p>
+      <div style="display:flex; align-items:center; gap:1rem; padding:1rem; border:1px solid var(--gray-200); border-radius:8px; background:var(--white);">
+        <div id="logoPreview" style="width:64px; height:64px; border-radius:6px; display:flex; align-items:center; justify-content:center; background:var(--gray-100); overflow:hidden; flex-shrink:0; border:1px dashed var(--gray-300);"></div>
+        <div style="flex:1; min-width:0;">
+          <div style="font-size:.78rem; color:var(--gray-700); margin-bottom:.5rem;">
+            Tenant: <strong>${esc(t.nome)}</strong>
+          </div>
+          <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
+            <label class="btn btn-outline btn-sm" style="cursor:pointer; margin:0;">
+              ⬆ Importar logo
+              <input type="file" id="logoFile" accept="image/png,image/jpeg,image/svg+xml,image/webp" style="display:none;" />
+            </label>
+            <button class="btn btn-ghost btn-sm" id="logoRemove">Restaurar padrão</button>
+          </div>
+          <div style="font-size:.68rem; color:var(--gray-500); margin-top:.4rem;">
+            PNG, JPG, SVG ou WebP. Recomendado: 256×256 px, fundo transparente.
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ===== Bancos (Multibank) ===== -->
@@ -231,6 +254,42 @@ function papelBadge(papel) {
   return `<span class="badge ${map[papel] || 'gray'}">${esc(papel)}</span>`;
 }
 
+function renderLogoSection(root) {
+  const t = window.store.tenant;
+  const cfg = window.configStore.get(t.id);
+  const preview = root.querySelector('#logoPreview');
+  if (!preview) return;
+  function paint() {
+    const url = window.tenantLogoStore && window.tenantLogoStore.get(t.id);
+    if (url) {
+      preview.innerHTML = '<img src="' + url + '" alt="logo" style="max-width:100%; max-height:100%; object-fit:contain;" />';
+      preview.style.background = 'var(--white)';
+    } else {
+      const ini = (t.iniciais || (t.nome || '?').slice(0,2)).toString().toUpperCase();
+      preview.innerHTML = '<span style="font-weight:800; font-size:1.4rem; color:var(--dark);">' + ini + '</span>';
+      preview.style.background = (cfg.tema && cfg.tema.primary) || t.cor || 'var(--gray-100)';
+    }
+  }
+  paint();
+  const fileInput = root.querySelector('#logoFile');
+  if (fileInput) fileInput.addEventListener('change', (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      window.tenantLogoStore.set(t.id, ev.target.result);
+      paint();
+    };
+    reader.readAsDataURL(f);
+    e.target.value = '';
+  });
+  const rmBtn = root.querySelector('#logoRemove');
+  if (rmBtn) rmBtn.addEventListener('click', () => {
+    window.tenantLogoStore.clear(t.id);
+    paint();
+  });
+}
+
 function wireEventos(root, cfg) {
   // ----- Restaurar padrão do tenant -----
   root.querySelector('#btnResetConfig').addEventListener('click', () => {
@@ -253,6 +312,9 @@ function wireEventos(root, cfg) {
   root.querySelector('#btnResetTema').addEventListener('click', () => {
     window.configStore.resetTema();
   });
+
+  // ----- Logo do tenant -----
+  renderLogoSection(root);
 
   // Botões de adicionar (kebabs já tratam edit/delete via closures)
   root.querySelector('#btnAddBanco').addEventListener('click', () => abrirModalBanco());

@@ -15,11 +15,8 @@
     <!-- ===== Sidebar ===== -->
     <aside class="sidebar">
       <div class="sidebar-brand">
-        <div class="logo">⚡</div>
-        <div class="name">
-          Solar Platform
-          <small>Multitenant · Multibank</small>
-        </div>
+        <div class="logo" id="brandLogo"></div>
+        <div class="name" id="brandName">—</div>
         <button class="sidebar-toggle" id="sidebarToggle" title="Recolher / expandir menu">‹</button>
       </div>
 
@@ -38,10 +35,9 @@
 
       <div class="topbar-actions">
         <button class="btn btn-ghost btn-sm" id="btnResetGlobal" title="Restaurar dados originais deste tenant" style="font-size: 1.1rem;">↻</button>
-        <div class="tenant-switcher" title="Trocar de sócio (multitenant)">
+        <div class="tenant-switcher" title="Trocar de sócio">
           <div class="tenant-dot" id="tenantDot"></div>
           <div class="tenant-info">
-            <span class="label">Tenant ativo</span>
             <span class="name" id="tenantName">—</span>
           </div>
           <select id="tenantSelect"></select>
@@ -126,12 +122,39 @@
       });
     })();
 
+    // Store global de logos por tenant (data URL persistido em localStorage)
+    window.tenantLogoStore = window.tenantLogoStore || (function() {
+      const KEY = 'proto_tenant_logos';
+      let state;
+      try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { state = {}; }
+      return {
+        get: (id) => state[id] || null,
+        set: (id, dataUrl) => { state[id] = dataUrl; localStorage.setItem(KEY, JSON.stringify(state)); window.dispatchEvent(new CustomEvent('tenant-logo-changed')); },
+        clear: (id) => { delete state[id]; localStorage.setItem(KEY, JSON.stringify(state)); window.dispatchEvent(new CustomEvent('tenant-logo-changed')); }
+      };
+    })();
+
+    function applyBrand(t, cfg) {
+      const brandLogo = document.getElementById('brandLogo');
+      const brandName = document.getElementById('brandName');
+      const logo = window.tenantLogoStore.get(t.id);
+      if (logo) {
+        brandLogo.innerHTML = '<img src="' + logo + '" alt="' + (t.nome || '') + '" style="width:100%;height:100%;object-fit:contain;border-radius:inherit;display:block;" />';
+        brandLogo.style.background = 'transparent';
+      } else {
+        brandLogo.innerHTML = (t.iniciais || (t.nome || '?').slice(0,2).toUpperCase());
+        brandLogo.style.background = (cfg.tema && cfg.tema.primary) || t.cor;
+      }
+      brandName.textContent = t.nome;
+    }
+
     // Tenant switcher
     function refreshTenant() {
       const t = window.store.tenant;
       const cfg = window.configStore.get(t.id);
       // Aplica tema salvo do tenant (sobrescreve variáveis CSS)
       window.applyTenantTheme(cfg.tema);
+      applyBrand(t, cfg);
       document.getElementById('tenantName').textContent = t.nome;
       document.getElementById('tenantDot').style.background = (cfg.tema && cfg.tema.primary) || t.cor;
       const select = document.getElementById('tenantSelect');
@@ -155,8 +178,14 @@
       const t = window.store.tenant;
       const cfg = window.configStore.get(t.id);
       window.applyTenantTheme(cfg.tema);
+      applyBrand(t, cfg);
       document.getElementById('tenantDot').style.background = (cfg.tema && cfg.tema.primary) || t.cor;
       window.renderRoute();
+    });
+    window.addEventListener('tenant-logo-changed', () => {
+      const t = window.store.tenant;
+      const cfg = window.configStore.get(t.id);
+      applyBrand(t, cfg);
     });
     window.addEventListener('data-changed', () => window.renderRoute());
     // ===== Menu do avatar do usuário =====
