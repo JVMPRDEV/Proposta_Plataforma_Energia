@@ -423,6 +423,17 @@ table.data .num { font-variant-numeric: tabular-nums; }
 
 .step.done .connector { background: var(--success); }
 
+@media (max-width: 768px) {
+  .steps { flex-wrap: wrap; gap: var(--sp-1) var(--sp-2); }
+  .step { font-size: 0.7rem; gap: 4px; }
+  .step .dot { width: 18px; height: 18px; font-size: 0.62rem; }
+  .step .connector { width: 14px; }
+}
+@media (max-width: 480px) {
+  .step .connector { display: none; }
+  .steps { gap: var(--sp-2); justify-content: flex-start; }
+}
+
 /* ===== Kebab menu (ações em lista) ===== */
 .kebab-btn {
   width: 30px;
