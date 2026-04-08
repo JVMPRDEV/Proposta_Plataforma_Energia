@@ -127,11 +127,11 @@ PLANOS E PREÇOS:
 | BÁSICO   | Core MVP (Cadastros, Contratos,  | R$ 28.500 | R$ 36.000 |
 |          | Engine Créditos, baixa manual)   |           | R$ 9.000/s|
 +----------+----------------------------------+-----------+-----------+
-| MÉDIO    | Básico + Asaas + WhatsApp + Notif SignalR | R$ 35.000 | R$ 42.500 |
-|          |                                  |           | R$10.625/s|
+| MÉDIO    | Básico + Asaas + WhatsApp + Notif SignalR | R$ 36.500 | R$ 44.000 |
+|          |                                  |           | R$11.000/s|
 +----------+----------------------------------+-----------+-----------+
-| FULL     | Médio + Parser COELBA +          | R$ 41.000 | R$ 48.500 |
-|          | Relatórios Avançados             |           | R$12.125/s|
+| FULL     | Médio + Parser COELBA +          | R$ 42.500 | R$ 50.000 |
+|          | Relatórios Avançados             |           | R$12.500/s|
 +----------+----------------------------------+-----------+-----------+
 
 Todos os sócios: Assessment R$ 2.500 a R$ 6.000 + Core conforme plano
