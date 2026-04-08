@@ -81,6 +81,46 @@ window.view_configuracoes = function(root) {
       </div>
     </div>
 
+    <!-- ===== Layout do Login ===== -->
+    <div class="config-section">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h3>📝 Tela de Login</h3>
+          <p class="desc">Personalize os textos exibidos na tela de login deste tenant. A estrutura visual é fixa — apenas os textos são editáveis.</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <a class="btn btn-outline btn-sm" href="index.html?tenant=${esc(t.id)}" target="_blank">↗ Pré-visualizar</a>
+          <button class="btn btn-ghost btn-sm" id="btnResetLogin">↻ Restaurar padrão</button>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
+        ${[
+          { key: 'eyebrow',      label: 'Eyebrow (chamada pequena)',     ph: 'Acesso à plataforma',    max: 40 },
+          { key: 'formTitle',    label: 'Título do formulário',          ph: 'Bem-vindo de volta',     max: 60 },
+          { key: 'formSub',      label: 'Subtítulo do formulário',       ph: 'Entre com suas credenciais', max: 120, area: true },
+          { key: 'buttonLabel',  label: 'Texto do botão',                ph: 'Entrar na plataforma',   max: 32 },
+          { key: 'brandTagline', label: 'Tagline (abaixo da marca)',     ph: 'Salvador · 27 UCs',      max: 48 },
+          { key: 'heroTitle',    label: 'Título do painel esquerdo',     ph: 'Bem-vindo à ESQ',        max: 80, area: true },
+          { key: 'heroSub',      label: 'Subtítulo do painel esquerdo',  ph: 'Plataforma de gestão…',  max: 200, area: true },
+          { key: 'footerLeft',   label: 'Rodapé · esquerda',             ph: '© 2026 · ESQ Energia',   max: 60 },
+          { key: 'footerRight',  label: 'Rodapé · direita',              ph: 'Plataforma…',            max: 60 }
+        ].map(f => `
+          <label style="display: flex; flex-direction: column; gap: 6px;">
+            <span style="font-size: 0.72rem; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">${f.label}</span>
+            ${f.area
+              ? `<textarea data-login="${f.key}" maxlength="${f.max}" rows="2" placeholder="${esc(f.ph)}" style="padding: 8px 10px; border: 1px solid var(--gray-300); border-radius: 6px; font-family: inherit; font-size: 0.85rem; resize: vertical;">${esc((cfg.loginLayout || {})[f.key] || '')}</textarea>`
+              : `<input type="text" data-login="${f.key}" maxlength="${f.max}" placeholder="${esc(f.ph)}" value="${esc((cfg.loginLayout || {})[f.key] || '')}" style="padding: 8px 10px; border: 1px solid var(--gray-300); border-radius: 6px; font-family: inherit; font-size: 0.85rem;" />`
+            }
+          </label>
+        `).join('')}
+      </div>
+
+      <div style="margin-top: 1rem; padding: 0.85rem; background: var(--primary-light); border-radius: 6px; font-size: 0.8rem; color: var(--gray-700);">
+        💡 As alterações são salvas automaticamente. Use <strong>Pré-visualizar</strong> para abrir a tela de login deste tenant em uma nova aba.
+      </div>
+    </div>
+
     <!-- ===== Bancos (Multibank) ===== -->
     <div class="config-section">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
@@ -311,6 +351,20 @@ function wireEventos(root, cfg) {
   });
   root.querySelector('#btnResetTema').addEventListener('click', () => {
     window.configStore.resetTema();
+  });
+
+  // ----- Layout do Login -----
+  root.querySelectorAll('[data-login]').forEach(inp => {
+    inp.addEventListener('input', (e) => {
+      window.configStore.updateLoginLayout({ [e.target.dataset.login]: e.target.value });
+    });
+  });
+  const btnResetLogin = root.querySelector('#btnResetLogin');
+  if (btnResetLogin) btnResetLogin.addEventListener('click', () => {
+    if (confirm('Restaurar textos da tela de login ao padrão?')) {
+      window.configStore.resetLoginLayout();
+      window.router && window.router.refresh && window.router.refresh();
+    }
   });
 
   // ----- Logo do tenant -----

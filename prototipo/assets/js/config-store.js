@@ -172,7 +172,18 @@
         { id: 'int-3', nome: 'Parser COELBA',         descricao: 'Leitura automática das faturas',    status: t.parserCoelba ? 'ativo' : 'inativo',   categoria: 'dados' },
         { id: 'int-4', nome: 'SMTP',                  descricao: 'Envio transacional de e-mails',     status: 'ativo',                                categoria: 'comunicacao' }
       ],
-      tema: JSON.parse(JSON.stringify(t.tema || {}))
+      tema: JSON.parse(JSON.stringify(t.tema || {})),
+      loginLayout: {
+        eyebrow:      'Acesso à plataforma',
+        formTitle:    'Entrar em ' + t.nome,
+        formSub:      'Acesso restrito aos usuários da operação ' + t.cidade + '.',
+        heroTitle:    'Bem-vindo à ' + t.nome,
+        heroSub:      t.descricao || 'Plataforma de gestão de energia solar.',
+        brandTagline: t.cidade + ' · ' + t.ucs + ' UCs',
+        buttonLabel:  'Entrar na plataforma',
+        footerLeft:   '© 2026 · ' + t.nome,
+        footerRight:  'Plataforma de Gestão de Energia Solar'
+      }
     };
   }
 
@@ -180,6 +191,10 @@
     const all = loadAll();
     if (!all[tenantId]) {
       all[tenantId] = seed(tenantId);
+      saveAll(all);
+    } else if (!all[tenantId].loginLayout) {
+      // Migração: adiciona loginLayout em configs antigas
+      all[tenantId].loginLayout = seed(tenantId).loginLayout;
       saveAll(all);
     }
     return all[tenantId];
@@ -349,6 +364,21 @@
       const tid = window.store.tenantId;
       const cfg = getConfig(tid);
       cfg.integracoes = cfg.integracoes.filter(x => x.id !== id);
+      setConfig(tid, cfg);
+    },
+
+    // ----- Layout do Login -----
+    updateLoginLayout(patch) {
+      const tid = window.store.tenantId;
+      const cfg = getConfig(tid);
+      cfg.loginLayout = { ...(cfg.loginLayout || {}), ...patch };
+      setConfig(tid, cfg);
+    },
+    resetLoginLayout() {
+      const tid = window.store.tenantId;
+      const cfg = getConfig(tid);
+      const fresh = seed(tid).loginLayout;
+      cfg.loginLayout = fresh;
       setConfig(tid, cfg);
     },
 

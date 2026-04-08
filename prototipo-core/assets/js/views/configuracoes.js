@@ -81,6 +81,46 @@ window.view_configuracoes = function(root) {
       </div>
     </div>
 
+    <!-- ===== Layout do Login ===== -->
+    <div class="config-section">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h3>📝 Tela de Login</h3>
+          <p class="desc">Personalize os textos exibidos na tela de login deste tenant. A estrutura visual é fixa — apenas os textos são editáveis.</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <a class="btn btn-outline btn-sm" href="index.html?tenant=${esc(t.id)}" target="_blank">↗ Pré-visualizar</a>
+          <button class="btn btn-ghost btn-sm" id="btnResetLogin">↻ Restaurar padrão</button>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
+        ${[
+          { key: 'eyebrow',      label: 'Eyebrow (chamada pequena)',     ph: 'Acesso à plataforma',    max: 40 },
+          { key: 'formTitle',    label: 'Título do formulário',          ph: 'Bem-vindo de volta',     max: 60 },
+          { key: 'formSub',      label: 'Subtítulo do formulário',       ph: 'Entre com suas credenciais', max: 120, area: true },
+          { key: 'buttonLabel',  label: 'Texto do botão',                ph: 'Entrar na plataforma',   max: 32 },
+          { key: 'brandTagline', label: 'Tagline (abaixo da marca)',     ph: 'Salvador · 27 UCs',      max: 48 },
+          { key: 'heroTitle',    label: 'Título do painel esquerdo',     ph: 'Bem-vindo à ESQ',        max: 80, area: true },
+          { key: 'heroSub',      label: 'Subtítulo do painel esquerdo',  ph: 'Plataforma de gestão…',  max: 200, area: true },
+          { key: 'footerLeft',   label: 'Rodapé · esquerda',             ph: '© 2026 · ESQ Energia',   max: 60 },
+          { key: 'footerRight',  label: 'Rodapé · direita',              ph: 'Plataforma…',            max: 60 }
+        ].map(f => `
+          <label style="display: flex; flex-direction: column; gap: 6px;">
+            <span style="font-size: 0.72rem; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">${f.label}</span>
+            ${f.area
+              ? `<textarea data-login="${f.key}" maxlength="${f.max}" rows="2" placeholder="${esc(f.ph)}" style="padding: 8px 10px; border: 1px solid var(--gray-300); border-radius: 6px; font-family: inherit; font-size: 0.85rem; resize: vertical;">${esc((cfg.loginLayout || {})[f.key] || '')}</textarea>`
+              : `<input type="text" data-login="${f.key}" maxlength="${f.max}" placeholder="${esc(f.ph)}" value="${esc((cfg.loginLayout || {})[f.key] || '')}" style="padding: 8px 10px; border: 1px solid var(--gray-300); border-radius: 6px; font-family: inherit; font-size: 0.85rem;" />`
+            }
+          </label>
+        `).join('')}
+      </div>
+
+      <div style="margin-top: 1rem; padding: 0.85rem; background: var(--primary-light); border-radius: 6px; font-size: 0.8rem; color: var(--gray-700);">
+        💡 As alterações são salvas automaticamente. Use <strong>Pré-visualizar</strong> para abrir a tela de login deste tenant em uma nova aba.
+      </div>
+    </div>
+
     <!-- ===== Bancos (Multibank) ===== -->
     <div class="config-section">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
@@ -129,80 +169,6 @@ window.view_configuracoes = function(root) {
           }).join('')}
         </tbody>
       </table>
-    </div>
-
-    <!-- ===== Template de Fatura (Core sem gateway) ===== -->
-    <div class="config-section">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
-        <div>
-          <h3>🧾 Template de Fatura</h3>
-          <p class="desc">
-            Como esta versão Core opera <strong>sem gateway de pagamento</strong>, as faturas são geradas a partir
-            de um template fornecido pelo cliente. Os campos dinâmicos são preenchidos automaticamente com dados
-            da base e as imagens fixas (logo, QR estático, print COELBA) são importadas manualmente.
-          </p>
-        </div>
-        <button class="btn btn-outline btn-sm" onclick="alert('Preview do template preenchido com dados de exemplo.\\n(Mock)')">👁 Pré-visualizar</button>
-      </div>
-
-      <h4 style="margin-top:.85rem; font-size:.82rem; color:var(--gray-700);">Imagens fixas do template (importadas uma vez)</h4>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:.5rem;">
-        ${[
-          { k:'fundo',  l:'Template de fundo (PNG/PDF)', desc:'Layout fornecido pelo cliente' },
-          { k:'logo',   l:'Logo da empresa',              desc:'Aplicado no cabeçalho' },
-          { k:'assin',  l:'Assinatura digitalizada',      desc:'Opcional, no rodapé' }
-        ].map(img => `
-          <div style="border:1px dashed var(--gray-300); border-radius:8px; padding:1rem; background:var(--gray-50); text-align:center;">
-            <div style="font-size:1.6rem; margin-bottom:.4rem;">🖼</div>
-            <div style="font-size:.82rem; font-weight:600; color:var(--gray-800);">${img.l}</div>
-            <div style="font-size:.7rem; color:var(--gray-600); margin:.25rem 0 .6rem;">${img.desc}</div>
-            <button class="btn btn-outline btn-sm" onclick="alert('Upload simulado de ${img.l}.\\n(Mock)')">⬆ Importar imagem</button>
-          </div>
-        `).join('')}
-      </div>
-
-      <h4 style="margin-top:1.25rem; font-size:.82rem; color:var(--gray-700);">Imagens variáveis do boleto</h4>
-      <p style="font-size:.74rem; color:var(--gray-600); margin:.2rem 0 .6rem;">
-        Para cada uma das três imagens, defina se será usada uma <strong>imagem padrão</strong> (mesma em todas as
-        faturas, importada uma vez aqui) ou se será <strong>importada por fatura</strong> na tela de Faturamento
-        (uma versão diferente a cada boleto). Toggles independentes por imagem.
-      </p>
-      <div id="tplPadroesGrid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:.75rem; margin-top:.25rem;"></div>
-      <p style="font-size:.72rem; color:var(--gray-600); margin-top:.5rem;">
-        Imagens são armazenadas no <strong>S3</strong>: padrões em
-        <code>s3://faturas/{tenant}/_padroes/</code> e por boleto em
-        <code>s3://faturas/{tenant}/{fatura}/</code>.
-      </p>
-
-      <h4 style="margin-top:1.25rem; font-size:.85rem; color:var(--gray-700);">Campos dinâmicos preenchidos automaticamente do banco</h4>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:.5rem; margin-top:.5rem; font-size:.78rem;">
-        ${[
-          ['{{cliente.nome}}','Nome do cliente'],
-          ['{{cliente.documento}}','CPF/CNPJ'],
-          ['{{fatura.numero}}','Nº da fatura'],
-          ['{{fatura.competencia}}','Competência (mês/ano)'],
-          ['{{fatura.vencimento}}','Data de vencimento'],
-          ['{{fatura.consumo_kwh}}','Consumo em kWh'],
-          ['{{fatura.valor}}','Valor base'],
-          ['{{fatura.juros}}','Juros e multa'],
-          ['{{fatura.total}}','Total a pagar'],
-          ['{{contrato.tarifa}}','Tarifa contratada'],
-          ['{{contrato.desconto}}','% desconto'],
-          ['{{emissor.banco}}','Banco emissor'],
-          ['{{emissor.agencia}}','Agência'],
-          ['{{emissor.conta}}','Conta'],
-          ['{{emissor.carteira}}','Carteira']
-        ].map(([k,d]) => `
-          <div style="display:flex; justify-content:space-between; gap:.5rem; padding:.45rem .6rem; background:var(--white); border:1px solid var(--gray-200); border-radius:5px;">
-            <code style="color:var(--primary-dark); font-weight:600;">${k}</code>
-            <span style="color:var(--gray-600);">${d}</span>
-          </div>
-        `).join('')}
-      </div>
-
-      <div style="margin-top:1rem; padding:.75rem .9rem; background:var(--warning-bg); border-left:3px solid var(--warning); border-radius:6px; font-size:.78rem; color:var(--gray-800);">
-        ⚠️ Envio e baixa de pagamento são <strong>manuais</strong>. A integração com Asaas (boleto + Pix + webhook) está disponível como módulo de expansão.
-      </div>
     </div>
 
     <!-- ===== Usuários (RBAC) ===== -->
@@ -364,55 +330,6 @@ function renderLogoSection(root) {
   });
 }
 
-function renderTplPadroes(root) {
-  const grid = root.querySelector('#tplPadroesGrid');
-  if (!grid) return;
-  const itens = [
-    { k:'qrcode',     i:'▣',  l:'QR Code Pix',      d:'QR estático do banco' },
-    { k:'codbarras',  i:'|||',l:'Código de barras', d:'Linha digitável fixa' },
-    { k:'printConta', i:'📄',l:'Print conta luz',  d:'PDF/PNG da COELBA' }
-  ];
-  function paint() {
-    const tpl = window.faturaTemplateStore.get();
-    grid.innerHTML = itens.map(it => {
-      const usarPadrao = !!tpl[it.k];
-      return `
-        <div style="border:1px solid var(--gray-200); border-radius:8px; padding:.85rem; background:var(--white);">
-          <div style="display:flex; align-items:center; gap:.6rem;">
-            <div style="font-size:1.4rem;">${it.i}</div>
-            <div style="flex:1; min-width:0;">
-              <div style="font-size:.82rem; font-weight:600; color:var(--gray-800);">${it.l}</div>
-              <div style="font-size:.68rem; color:var(--gray-600);">${it.d}</div>
-            </div>
-            <label style="display:inline-flex; align-items:center; gap:.4rem; cursor:pointer; font-size:.7rem; color:var(--gray-700); white-space:nowrap;">
-              <input type="checkbox" data-tpl-toggle="${it.k}" ${usarPadrao?'checked':''} />
-              <span>Usar padrão</span>
-            </label>
-          </div>
-          <div style="margin-top:.6rem; padding-top:.55rem; border-top:1px dashed var(--gray-200);">
-            ${usarPadrao
-              ? `<div style="display:flex; align-items:center; justify-content:space-between; gap:.5rem;">
-                   <div style="font-size:.7rem; color:var(--gray-600);">Imagem padrão usada em todas as faturas</div>
-                   <button class="btn btn-outline btn-sm" data-tpl-up="${it.k}">⬆ Importar padrão</button>
-                 </div>`
-              : `<div style="font-size:.7rem; color:#b8740a; background:var(--warning-bg); padding:.45rem .55rem; border-radius:5px;">
-                   ⚠ Importação obrigatória <strong>em cada fatura</strong>, na tela de Faturamento.
-                 </div>`}
-          </div>
-        </div>
-      `;
-    }).join('');
-    grid.querySelectorAll('input[data-tpl-toggle]').forEach(inp => inp.addEventListener('change', e => {
-      window.faturaTemplateStore.set(e.target.dataset.tplToggle, e.target.checked);
-      paint();
-    }));
-    grid.querySelectorAll('[data-tpl-up]').forEach(b => b.addEventListener('click', () => {
-      alert('Upload simulado da imagem padrão.\n(Mock)');
-    }));
-  }
-  paint();
-}
-
 function wireEventos(root, cfg) {
   // ----- Restaurar padrão do tenant -----
   root.querySelector('#btnResetConfig').addEventListener('click', () => {
@@ -436,11 +353,22 @@ function wireEventos(root, cfg) {
     window.configStore.resetTema();
   });
 
+  // ----- Layout do Login -----
+  root.querySelectorAll('[data-login]').forEach(inp => {
+    inp.addEventListener('input', (e) => {
+      window.configStore.updateLoginLayout({ [e.target.dataset.login]: e.target.value });
+    });
+  });
+  const btnResetLogin = root.querySelector('#btnResetLogin');
+  if (btnResetLogin) btnResetLogin.addEventListener('click', () => {
+    if (confirm('Restaurar textos da tela de login ao padrão?')) {
+      window.configStore.resetLoginLayout();
+      window.router && window.router.refresh && window.router.refresh();
+    }
+  });
+
   // ----- Logo do tenant -----
   renderLogoSection(root);
-
-  // ----- Template de Fatura: toggles "padrão vs por boleto" -----
-  renderTplPadroes(root);
 
   // Botões de adicionar (kebabs já tratam edit/delete via closures)
   root.querySelector('#btnAddBanco').addEventListener('click', () => abrirModalBanco());
