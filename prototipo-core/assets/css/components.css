@@ -198,16 +198,19 @@
   .table-wrap .table-toolbar input[type="search"] { width: 100%; }
   .filter-chips { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
   .filter-chips .chip { flex-shrink: 0; }
-  /* Container scrollável para a tabela */
-  .table-wrap > .table-scroll,
-  .table-wrap > table.data {
+  /* Toda table.data vira scroll horizontal no mobile */
+  table.data {
     display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
+    width: 100%;
   }
-  table.data { min-width: 640px; }
+  table.data thead, table.data tbody { display: table; width: 100%; min-width: 640px; }
   table.data thead th, table.data tbody td { padding: var(--sp-2) var(--sp-3); font-size: 0.78rem; white-space: nowrap; }
+  /* Card que envolve tabela permite scroll */
+  .card { overflow-x: hidden; }
+  .card > table.data { margin: 0 calc(var(--sp-4) * -1); width: calc(100% + var(--sp-4) * 2); padding: 0 var(--sp-4); }
 }
 
 table.data {
