@@ -330,9 +330,7 @@
   .breadcrumb { display: none; }
   .topbar { justify-content: flex-end; }
   .topbar-actions { gap: var(--sp-2); margin-left: auto; }
-  .tenant-switcher { padding: var(--sp-1) var(--sp-2); gap: var(--sp-2); }
-  .tenant-info .label { display: none; }
-  .tenant-info .name { font-size: 0.78rem; max-width: 90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tenant-switcher { display: none; }
   .user-avatar { width: 32px; height: 32px; font-size: 0.72rem; }
   .view-header { flex-direction: column; align-items: stretch; gap: var(--sp-3); margin-bottom: var(--sp-4); }
   .view-header h1 { font-size: 1.25rem; }
