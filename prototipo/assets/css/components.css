@@ -211,6 +211,18 @@
   /* Card que envolve tabela permite scroll */
   .card { overflow-x: hidden; }
   .card > table.data { margin: 0 calc(var(--sp-4) * -1); width: calc(100% + var(--sp-4) * 2); padding: 0 var(--sp-4); }
+
+  /* Paginação compacta */
+  .pagination {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-2);
+    padding: var(--sp-3);
+  }
+  .pagination .info { text-align: center; font-size: 0.75rem; }
+  .pagination .controls { justify-content: center; flex-wrap: wrap; }
+  .pagination .pg-btn { min-width: 28px; height: 28px; padding: 0 6px; font-size: 0.75rem; }
+  .pagination .pg-size { justify-content: center; }
 }
 
 table.data {
