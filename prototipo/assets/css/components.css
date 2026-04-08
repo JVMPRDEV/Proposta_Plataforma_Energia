@@ -196,8 +196,8 @@
   .table-wrap { overflow: hidden; }
   .table-wrap .table-toolbar { flex-direction: column; align-items: stretch; padding: var(--sp-3); }
   .table-wrap .table-toolbar input[type="search"] { width: 100%; }
-  .filter-chips { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
-  .filter-chips .chip { flex-shrink: 0; }
+  .filter-chips { flex-wrap: wrap; gap: 0.35rem; }
+  .filter-chips .chip { flex-shrink: 0; font-size: 0.68rem; padding: 0.28rem 0.6rem; }
   /* Toda table.data vira scroll horizontal no mobile */
   table.data {
     display: block;
