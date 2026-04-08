@@ -836,3 +836,23 @@
 .usina-card .stats .stat { }
 .usina-card .stats .stat .label { font-size: var(--fs-xs); color: var(--gray-500); text-transform: uppercase; }
 .usina-card .stats .stat .val { font-size: var(--fs-lg); font-weight: 700; color: var(--gray-900); }
+
+/* ============================================================
+   Responsividade mobile global de views
+   ============================================================ */
+@media (max-width: 768px) {
+  .aging-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-3); }
+  .aging-card { padding: var(--sp-3); }
+  .aging-card .value { font-size: 1.1rem; }
+  .config-section { padding: var(--sp-4); }
+  .config-row { flex-direction: column; align-items: flex-start; gap: var(--sp-1); }
+  .usina-card { padding: var(--sp-4); }
+  .usina-card .head { flex-direction: column; align-items: flex-start; gap: var(--sp-1); }
+  .usina-card .stats { flex-wrap: wrap; gap: var(--sp-3); }
+  .sim-stats { grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
+}
+
+@media (max-width: 480px) {
+  .aging-grid { grid-template-columns: 1fr 1fr; }
+  .sim-stats { grid-template-columns: 1fr; }
+}

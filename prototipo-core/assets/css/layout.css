@@ -310,7 +310,7 @@
 /* Responsividade básica — força colapso em telas pequenas */
 @media (max-width: 1024px) {
   .app-shell {
-    grid-template-columns: 68px 1fr;
+    grid-template-columns: 64px 1fr;
   }
   .app-shell .sidebar-brand { padding: 0; justify-content: center; }
   .app-shell .sidebar-brand .name { display: none; }
@@ -319,4 +319,41 @@
   .app-shell .sidebar-section { display: none; }
   .app-shell .sidebar-toggle { display: none; }
   .main { padding: var(--sp-5); }
+  .topbar { padding: 0 var(--sp-4); }
+}
+
+/* ===== Mobile (≤768px) ===== */
+@media (max-width: 768px) {
+  .app-shell { grid-template-columns: 56px 1fr; }
+  .main { padding: var(--sp-4) var(--sp-3); overflow-x: hidden; }
+  .topbar { padding: 0 var(--sp-3); gap: var(--sp-2); }
+  .breadcrumb { display: none; }
+  .topbar-actions { gap: var(--sp-2); }
+  .tenant-switcher { padding: var(--sp-1) var(--sp-2); gap: var(--sp-2); }
+  .tenant-info .label { display: none; }
+  .tenant-info .name { font-size: 0.78rem; max-width: 90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .user-avatar { width: 32px; height: 32px; font-size: 0.72rem; }
+  .view-header { flex-direction: column; align-items: stretch; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+  .view-header h1 { font-size: 1.25rem; }
+  .view-actions { flex-wrap: wrap; }
+  .view-actions .btn { flex: 1 1 auto; justify-content: center; font-size: 0.8rem; padding: var(--sp-2) var(--sp-3); }
+}
+
+/* ===== Telas pequenas (≤480px / iPhone SE) ===== */
+@media (max-width: 480px) {
+  .app-shell { grid-template-columns: 52px 1fr; }
+  .main { padding: var(--sp-3) var(--sp-2); }
+  .topbar { padding: 0 var(--sp-2); }
+  .sidebar-brand .logo { width: 28px; height: 28px; font-size: 0.95rem; }
+  .sidebar-link svg { width: 16px; height: 16px; }
+  .tenant-info .name { max-width: 70px; }
+  .view-header h1 { font-size: 1.1rem; }
+}
+
+/* iPhone 2 / ≤360px */
+@media (max-width: 360px) {
+  .app-shell { grid-template-columns: 46px 1fr; }
+  .tenant-switcher { padding: 4px 6px; }
+  .tenant-info .name { max-width: 60px; font-size: 0.7rem; }
+  .user-avatar { width: 28px; height: 28px; }
 }
