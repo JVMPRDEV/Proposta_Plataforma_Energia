@@ -27,7 +27,14 @@
  max-width: 210mm;
  margin: 0 auto;
  padding: 20mm;
+ background: #f5f6f8;
+ }
+ @media screen {
+ body {
+ background: #eef0f3;
+ box-shadow: 0 0 40px rgba(0,0,0,0.08);
  background: white;
+ }
  }
 
  @media print {
@@ -45,61 +52,91 @@
  /* Header */
  .doc-header {
  text-align: center;
- padding-bottom: 30px;
- border-bottom: 3px solid var(--primary);
- margin-bottom: 30px;
+ padding: 32px 20px 28px;
+ margin-bottom: 32px;
+ background: linear-gradient(135deg, var(--secondary) 0%, #34495e 100%);
+ color: #fff;
+ border-radius: 10px;
+ position: relative;
+ overflow: hidden;
+ }
+
+ .doc-header::before {
+ content: '';
+ position: absolute;
+ left: 0; right: 0; bottom: 0;
+ height: 4px;
+ background: linear-gradient(90deg, var(--primary) 0%, #f0c674 50%, var(--primary) 100%);
  }
 
  .doc-header h1 {
- font-size: 28px;
- color: var(--secondary);
- margin-bottom: 5px;
+ font-size: 26px;
+ color: #fff;
+ margin-bottom: 6px;
+ letter-spacing: 0.5px;
  }
 
  .doc-header .subtitle {
- font-size: 14px;
+ font-size: 13px;
  color: var(--primary);
- font-weight: 500;
+ font-weight: 600;
+ text-transform: uppercase;
+ letter-spacing: 1.2px;
  }
 
  .doc-header .meta {
- margin-top: 20px;
- font-size: 12px;
- color: var(--gray);
+ margin-top: 18px;
+ font-size: 11px;
+ color: rgba(255,255,255,0.78);
  }
+ .doc-header .meta strong { color: #fff; }
 
  /* Section */
  .section {
- margin-bottom: 30px;
+ margin-bottom: 32px;
  }
 
  .section-title {
  font-size: 18px;
  color: var(--secondary);
- padding-bottom: 10px;
- border-bottom: 2px solid var(--primary);
- margin-bottom: 15px;
+ padding-bottom: 12px;
+ margin-bottom: 18px;
  display: flex;
  align-items: center;
- gap: 10px;
+ gap: 12px;
+ position: relative;
+ border-bottom: 1px solid #e5e7eb;
+ }
+ .section-title::after {
+ content: '';
+ position: absolute;
+ left: 0;
+ bottom: -1px;
+ width: 70px;
+ height: 3px;
+ background: var(--primary);
+ border-radius: 2px;
  }
 
  .section-num {
- background: var(--primary);
+ background: linear-gradient(135deg, var(--primary), #b8902f);
  color: white;
- width: 28px;
- height: 28px;
+ width: 30px;
+ height: 30px;
  border-radius: 50%;
  display: inline-flex;
  align-items: center;
  justify-content: center;
- font-size: 12px;
- font-weight: 700;
+ font-size: 13px;
+ font-weight: 800;
+ box-shadow: 0 2px 6px rgba(212,168,73,0.4);
  }
 
  /* Info Box */
  .info-box {
- background: var(--light);
+ background: linear-gradient(135deg, #f8f9fb 0%, #f1f3f5 100%);
+ border: 1px solid #e5e7eb;
+ border-left: 4px solid var(--primary);
  border-radius: 8px;
  padding: 20px;
  margin-bottom: 20px;
@@ -145,46 +182,58 @@
  }
 
  th {
- background: var(--secondary);
+ background: linear-gradient(180deg, #34495e 0%, var(--secondary) 100%);
  color: white;
- font-weight: 600;
+ font-weight: 700;
  text-transform: uppercase;
  font-size: 9px;
- letter-spacing: 0.3px;
+ letter-spacing: 0.4px;
+ padding: 10px;
  }
 
  tbody tr:nth-child(even) {
- background: var(--light);
+ background: #fafbfc;
  }
+ tbody tr:hover { background: rgba(212,168,73,0.06); }
 
  .total-row {
- background: var(--primary) !important;
+ background: linear-gradient(135deg, var(--primary), #b8902f) !important;
  color: white;
  font-weight: 700;
  }
 
  .total-row td {
  border-color: var(--primary);
+ color: #fff;
  }
 
  /* Module List */
  .module-list {
  display: grid;
  grid-template-columns: repeat(2, 1fr);
- gap: 15px;
+ gap: 12px;
  }
 
  .module-item {
- background: var(--light);
- border-radius: 6px;
- padding: 12px;
+ background: #fff;
+ border: 1px solid #e5e7eb;
+ border-radius: 8px;
+ padding: 14px 14px 12px;
  border-left: 4px solid var(--primary);
+ box-shadow: 0 1px 4px rgba(44,62,80,0.04);
+ transition: transform .15s ease, box-shadow .15s ease;
+ }
+ .module-item:hover {
+ transform: translateY(-1px);
+ box-shadow: 0 4px 12px rgba(44,62,80,0.08);
  }
 
  .module-item h4 {
  font-size: 12px;
  color: var(--secondary);
- margin-bottom: 5px;
+ margin-bottom: 6px;
+ padding-bottom: 5px;
+ border-bottom: 1px dashed #e5e7eb;
  }
 
  .module-item ul {
@@ -218,24 +267,28 @@
 
  .timeline-bar {
  flex: 1;
- height: 24px;
+ height: 26px;
  background: var(--primary);
- border-radius: 4px;
+ border-radius: 999px;
  display: flex;
  align-items: center;
- padding: 0 10px;
+ padding: 0 14px;
  color: white;
  font-size: 10px;
- font-weight: 500;
+ font-weight: 600;
+ box-shadow: 0 2px 6px rgba(0,0,0,0.1);
  }
 
  /* Pricing */
  .pricing-box {
- border: 2px solid var(--primary);
- border-radius: 8px;
- padding: 20px;
+ border: 1px solid #e5e7eb;
+ border-top: 4px solid var(--primary);
+ border-radius: 10px;
+ padding: 22px;
  text-align: center;
  margin: 20px 0;
+ background: linear-gradient(135deg, #fff 0%, #fafbfc 100%);
+ box-shadow: 0 4px 14px rgba(44,62,80,0.06);
  }
 
  .pricing-box h3 {
@@ -277,6 +330,184 @@
  .signature-box p {
  font-size: 12px;
  color: var(--gray);
+ }
+
+ /* Bloco header (BLOCO 1/2/3) */
+ .bloco-header {
+ background: linear-gradient(135deg, var(--primary), #b8902f);
+ color: #fff;
+ padding: 9px 14px;
+ border-radius: 6px;
+ font-size: 11px;
+ font-weight: 700;
+ letter-spacing: 0.5px;
+ text-transform: uppercase;
+ box-shadow: 0 2px 8px rgba(212,168,73,0.32);
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ margin-bottom: 12px;
+ }
+ .bloco-header.bloco-success {
+ background: linear-gradient(135deg, #27ae60, #1e8449);
+ box-shadow: 0 2px 8px rgba(39,174,96,0.32);
+ }
+ .bloco-header.bloco-dark {
+ background: linear-gradient(135deg, var(--secondary), #34495e);
+ box-shadow: 0 2px 8px rgba(44,62,80,0.32);
+ }
+ .bloco-header::before {
+ content: '';
+ width: 6px;
+ height: 6px;
+ background: #fff;
+ border-radius: 50%;
+ box-shadow: 0 0 0 2px rgba(255,255,255,0.4);
+ flex-shrink: 0;
+ }
+
+ /* Patterns grid (tags) */
+ .patterns-grid {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 6px;
+ margin: 8px 0 16px 0;
+ }
+ .pattern-tag {
+ display: inline-flex;
+ align-items: center;
+ background: #f1f3f5;
+ border: 1px solid #dde2e6;
+ color: var(--secondary);
+ font-size: 9.5px;
+ font-weight: 600;
+ padding: 5px 10px;
+ border-radius: 999px;
+ line-height: 1.3;
+ }
+ .pattern-tag em {
+ font-style: normal;
+ color: #888;
+ font-weight: 400;
+ margin-left: 4px;
+ font-size: 8.5px;
+ }
+ .pattern-tag.pattern-highlight {
+ background: linear-gradient(135deg, rgba(212,168,73,0.18), rgba(212,168,73,0.06));
+ border-color: var(--primary);
+ color: #8a6a1e;
+ }
+
+ /* Architectural decision card */
+ .arch-decision {
+ background: #fff;
+ border: 1px solid #e5e7eb;
+ border-left: 4px solid var(--secondary);
+ border-radius: 8px;
+ padding: 14px 16px;
+ margin-top: 14px;
+ box-shadow: 0 2px 8px rgba(44,62,80,0.05);
+ }
+ .arch-decision-header {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ font-size: 11px;
+ font-weight: 800;
+ color: var(--secondary);
+ text-transform: uppercase;
+ letter-spacing: 0.4px;
+ margin-bottom: 8px;
+ }
+ .arch-decision-icon {
+ width: 22px;
+ height: 22px;
+ border-radius: 50%;
+ background: var(--secondary);
+ color: #fff;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 11px;
+ font-weight: 800;
+ flex-shrink: 0;
+ }
+ .arch-decision-intro {
+ font-size: 10px;
+ color: #555;
+ line-height: 1.6;
+ margin: 0 0 10px 0;
+ }
+ .arch-pros-cons {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 10px;
+ }
+ .arch-col {
+ padding: 10px 12px;
+ border-radius: 6px;
+ border: 1px solid;
+ }
+ .arch-col h5 {
+ font-size: 10px;
+ font-weight: 800;
+ margin: 0 0 6px 0;
+ padding-bottom: 5px;
+ border-bottom: 1px dashed currentColor;
+ text-transform: uppercase;
+ letter-spacing: 0.3px;
+ }
+ .arch-col ul {
+ list-style: none;
+ margin: 0;
+ padding: 0;
+ font-size: 9px;
+ line-height: 1.55;
+ }
+ .arch-col li {
+ padding: 3px 0 3px 14px;
+ position: relative;
+ color: #444;
+ }
+ .arch-col li::before {
+ position: absolute;
+ left: 0;
+ top: 3px;
+ font-weight: 800;
+ font-size: 10px;
+ }
+ .arch-pros {
+ background: rgba(39,174,96,0.06);
+ border-color: rgba(39,174,96,0.35);
+ color: #1e8449;
+ }
+ .arch-pros li::before { content: '✓'; color: #27ae60; }
+ .arch-cons {
+ background: rgba(231,76,60,0.05);
+ border-color: rgba(231,76,60,0.3);
+ color: #c0392b;
+ }
+ .arch-cons li::before { content: '×'; color: #c0392b; font-size: 12px; top: 1px; }
+ .arch-recommendation {
+ margin-top: 10px;
+ padding: 9px 12px;
+ background: linear-gradient(135deg, rgba(212,168,73,0.14), rgba(212,168,73,0.04));
+ border-left: 3px solid var(--primary);
+ border-radius: 4px;
+ font-size: 9.5px;
+ color: #555;
+ line-height: 1.6;
+ }
+ .arch-recommendation strong:first-child { color: var(--primary); }
+
+ /* Section subtitle (h4 dentro de .section) */
+ .section-subtitle {
+ font-size: 11px;
+ margin: 16px 0 8px 0;
+ color: var(--secondary);
+ padding-left: 10px;
+ border-left: 3px solid var(--primary);
+ line-height: 1.3;
  }
 
  /* Footer */
@@ -587,39 +818,50 @@
  </tr>
  </table>
 
- <p class="mb-10"><strong>Padrões Arquiteturais:</strong> Monolito Modular, DDD, CQRS, Clean Architecture, API REST + Swagger, Multitenancy Multibanco (1 DB por sócio), <strong>Event-Driven Architecture (orientada a eventos)</strong>, <strong>Máquinas de Estado</strong> (state machines explícitas para Contrato, Fatura, Crédito e Cobrança).</p>
+ <h4 class="section-subtitle" style="margin-top: 14px;">Padrões Arquiteturais</h4>
+ <div class="patterns-grid">
+ <span class="pattern-tag">Monolito Modular</span>
+ <span class="pattern-tag">DDD</span>
+ <span class="pattern-tag">CQRS</span>
+ <span class="pattern-tag">Clean Architecture</span>
+ <span class="pattern-tag">API REST + Swagger</span>
+ <span class="pattern-tag">Multitenancy Multibanco <em>(1 DB por sócio)</em></span>
+ <span class="pattern-tag pattern-highlight">Event-Driven Architecture</span>
+ <span class="pattern-tag pattern-highlight">Máquinas de Estado <em>(Contrato · Fatura · Crédito · Cobrança)</em></span>
+ </div>
 
- <div style="background: rgba(52,152,219,0.06); border: 1px dashed #3498db; border-radius: 4px; padding: 8px 10px; margin-top: 10px;">
- <p style="font-size: 10px; color: #2C3E50; margin: 0 0 4px 0;"><strong style="color: #3498db;"> Decisão Arquitetural — Segregação Completa da Infraestrutura?</strong></p>
- <p style="font-size: 9px; color: #555; margin: 0 0 4px 0; line-height: 1.5;">
- Cada operação pode rodar em <strong>infraestrutura totalmente isolada</strong> (banco, app, ambiente próprios) ou compartilhar a mesma plataforma com isolamento físico total via multitenancy multibanco (1 database dedicado por sócio, padrão proposto).
+ <div class="arch-decision">
+ <div class="arch-decision-header">
+ <span class="arch-decision-icon">?</span>
+ <span>Decisão Arquitetural — Segregação Completa da Infraestrutura?</span>
+ </div>
+ <p class="arch-decision-intro">
+ Cada operação pode rodar em <strong>infraestrutura totalmente isolada</strong> (banco, app e ambiente próprios) ou compartilhar a mesma plataforma com <strong>isolamento físico total via multitenancy multibanco</strong> — 1 database dedicado por sócio (padrão proposto).
  </p>
- <table style="font-size: 8.5px; width: 100%; margin-top: 4px;">
- <tr>
- <td style="width: 50%; vertical-align: top; padding: 4px; background: rgba(39,174,96,0.08);">
- <strong style="color: #27ae60;">✅ Pontos Positivos da Segregação Total</strong>
- <ul style="margin: 4px 0 0 14px; line-height: 1.5;">
- <li>Isolamento absoluto entre sócios (falha/deploy/bug não propaga)</li>
+ <div class="arch-pros-cons">
+ <div class="arch-col arch-pros">
+ <h5>Pontos Positivos da Segregação Total</h5>
+ <ul>
+ <li>Isolamento absoluto entre sócios (falha, deploy ou bug não propaga)</li>
  <li>Soberania total: janela de manutenção, versão, backup e retenção próprios</li>
  <li>Compliance simplificado (sem hardware compartilhado)</li>
  <li>Portabilidade: saída de um sócio não afeta os demais</li>
  </ul>
- </td>
- <td style="width: 50%; vertical-align: top; padding: 4px; background: rgba(231,76,60,0.06);">
- <strong style="color: #c0392b;"> Pontos Negativos da Segregação Total</strong>
- <ul style="margin: 4px 0 0 14px; line-height: 1.5;">
+ </div>
+ <div class="arch-col arch-cons">
+ <h5>Pontos Negativos da Segregação Total</h5>
+ <ul>
  <li>Custo de infra multiplicado (N ambientes em vez de 1)</li>
  <li>Manutenção N× maior (deploys, patches, upgrades)</li>
  <li>Sem economia de escala — cada sócio paga o piso fixo</li>
  <li>Consolidação de indicadores vira projeto à parte</li>
  <li>Suporte mais caro (horas proporcionais ao nº de ambientes)</li>
  </ul>
- </td>
- </tr>
- </table>
- <p style="font-size: 9px; color: #555; margin: 6px 0 0 0; line-height: 1.5;">
- <strong style="color: var(--primary);">Recomendação técnica:</strong> Multitenancy Multibanco já entrega <strong>isolamento físico total de dados</strong> (banco de dados próprio por sócio, backup e segurança totalmente independentes), preservando a economia de escala da camada de aplicação. Segregação completa permanece disponível mediante orçamento adicional.
- </p>
+ </div>
+ </div>
+ <div class="arch-recommendation">
+ <strong>Recomendação técnica:</strong> Multitenancy Multibanco já entrega <strong>isolamento físico total de dados</strong> (banco próprio por sócio, backup e segurança independentes), preservando a economia de escala da camada de aplicação. Segregação completa permanece disponível mediante orçamento adicional.
+ </div>
  </div>
  </div>
 
@@ -909,9 +1151,7 @@
  </p>
 
  <!-- BLOCO 1 -->
- <h4 style="background: var(--primary); color: white; padding: 6px 12px; border-radius: 4px; font-size: 11px; margin-bottom: 10px;">
- BLOCO 1: Assessment Individual (por sócio)
- </h4>
+ <h4 class="bloco-header">BLOCO 1: Assessment Individual (por sócio)</h4>
  <table>
  <thead>
  <tr>
@@ -939,9 +1179,7 @@
  </div>
 
  <!-- BLOCO 2 -->
- <h4 style="background: var(--primary); color: white; padding: 6px 12px; border-radius: 4px; font-size: 11px; margin: 20px 0 10px 0;">
- BLOCO 2: Core da Plataforma (valor fixo, dividido entre sócios)
- </h4>
+ <h4 class="bloco-header" style="margin-top: 24px;">BLOCO 2: Core da Plataforma (valor fixo, dividido entre sócios)</h4>
 
  <div class="pricing-box" style="margin: 10px 0;">
  <h3 style="font-size: 11px;">MOTOR DA PLATAFORMA MULTITENANT</h3>
@@ -1118,9 +1356,7 @@
  <p style="font-size: 8px; color: #666; margin-top: 4px; font-style: italic;">Parcelamento incide apenas sobre o Desenvolvimento, dividido igualmente entre sócios (coluna considera 4 sócios). Assessment (R$ 2.500–6.000 por sócio) é cobrado 100% na contratação. Infra + APIs é paga diretamente pelo cliente conforme uso.</p>
 
  <!-- ECONOMIA vs LUMI -->
- <h4 style="background: #27ae60; color: white; padding: 6px 12px; border-radius: 4px; font-size: 11px; margin: 24px 0 10px 0;">
- Economia vs Lumi (cenário 4 sócios)
- </h4>
+ <h4 class="bloco-header bloco-success" style="margin-top: 24px;">Economia vs Lumi (cenário 4 sócios)</h4>
 
  <div style="background: rgba(39,174,96,0.08); border-left: 3px solid #27ae60; border-radius: 4px; padding: 10px 12px; margin-bottom: 10px;">
  <p style="font-size: 10px; color: #2c3e50; margin: 0 0 5px 0; line-height: 1.6;">
@@ -1204,9 +1440,7 @@
  </p>
 
  <!-- BLOCO 3 -->
- <h4 style="background: var(--primary); color: white; padding: 6px 12px; border-radius: 4px; font-size: 11px; margin: 20px 0 10px 0;">
- BLOCO 3: Evolução e Manutenção Sob Demanda (Sem Recorrência)
- </h4>
+ <h4 class="bloco-header" style="margin-top: 24px;">BLOCO 3: Evolução e Manutenção Sob Demanda (Sem Recorrência)</h4>
 
  <div style="background: rgba(39,174,96,0.08); border-left: 3px solid #27ae60; border-radius: 4px; padding: 10px 12px; margin-bottom: 8px;">
  <p style="font-size: 10px; color: #2c3e50; margin: 0 0 6px 0; line-height: 1.6;">
@@ -1218,9 +1452,7 @@
  </div>
 
  <!-- ROADMAP / MELHORIAS FUTURAS -->
- <h4 style="background: var(--secondary); color: white; padding: 6px 12px; border-radius: 4px; font-size: 11px; margin: 20px 0 10px 0;">
- ROADMAP — Melhorias Futuras (fora do escopo atual)
- </h4>
+ <h4 class="bloco-header bloco-dark" style="margin-top: 24px;">ROADMAP — Melhorias Futuras (fora do escopo atual)</h4>
  <p style="font-size: 10px; color: #555; margin-bottom: 8px; line-height: 1.5;">
  Funcionalidades mapeadas como <strong>desenvolvimentos independentes</strong>, a serem orçados e contratados separadamente após o Go-Live.
  </p>
