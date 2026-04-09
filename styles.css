@@ -412,6 +412,32 @@ body {
     line-height: 1;
 }
 
+/* Mobile: empilha o mapa DDD em uma unica coluna */
+@media (max-width: 720px) {
+    .map-container { padding: 0.85rem; overflow-x: hidden; }
+    .ddd-map { padding: 1rem; }
+    .ddd-grid {
+        display: flex !important;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.35rem;
+    }
+    .ddd-grid > .ddd-ctx,
+    .ddd-grid > .ddd-arrow,
+    .ddd-grid > .ddd-vert {
+        grid-column: auto !important;
+        grid-row: auto !important;
+        width: 100%;
+    }
+    .ddd-grid > .ddd-ctx { padding: 0.75rem 0.6rem; }
+    .ddd-grid > .ddd-arrow {
+        font-size: 1.2rem;
+        transform: rotate(90deg);
+        margin: 0.1rem 0;
+    }
+    .ddd-grid > .ddd-vert { font-size: 1.2rem; margin: 0.1rem 0; }
+}
+
 /* Architecture Diagram (Monolito Modular) */
 .arch-diagram {
     background: linear-gradient(180deg, #fafbfc 0%, #ffffff 100%);
