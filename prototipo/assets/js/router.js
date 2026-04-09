@@ -57,6 +57,10 @@
     const m = path.match(/^\/clientes\/([^/]+)$/);
     return m ? m[1] : null;
   }
+  function matchContratoDetail(path) {
+    const m = path.match(/^\/contratos\/([^/]+)$/);
+    return m ? m[1] : null;
+  }
 
   function navigate(path) {
     location.hash = path;
@@ -80,6 +84,18 @@
       document.querySelectorAll('.sidebar-link').forEach(l => l.classList.toggle('active', l.dataset.path === '/clientes'));
       viewEl.innerHTML = '';
       window.view_cliente_detalhe(viewEl, cliId);
+      document.querySelector('.main').scrollTop = 0;
+      return;
+    }
+    // Detalhe de contrato
+    const ctId = matchContratoDetail(path);
+    if (ctId && typeof window.view_contrato_detalhe === 'function') {
+      document.title = 'Contrato · ESQ Plataforma';
+      const bc = document.querySelector('.breadcrumb');
+      if (bc) bc.innerHTML = '<span>Plataforma</span> / <a href="#/contratos" style="color: inherit;">Contratos</a> / <strong>' + esc(ctId) + '</strong>';
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.toggle('active', l.dataset.path === '/contratos'));
+      viewEl.innerHTML = '';
+      window.view_contrato_detalhe(viewEl, ctId);
       document.querySelector('.main').scrollTop = 0;
       return;
     }

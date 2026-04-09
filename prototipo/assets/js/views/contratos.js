@@ -93,7 +93,7 @@ window.view_contratos = function(root) {
     });
     tbody.innerHTML = p.items.map(c => {
       const items = [
-        { icon: '👁', label: 'Ver detalhes', onClick: () => modalDetalhesContrato(c) },
+        { icon: '👁', label: 'Ver detalhes', onClick: () => { location.hash = '/contratos/' + c.id; } },
         { icon: '✎', label: 'Editar contrato', onClick: () => modalContrato(c) }
       ];
       if (c.status === 'ativo') {
@@ -111,8 +111,8 @@ window.view_contratos = function(root) {
       }});
       return `
         <tr>
-          <td><strong>${esc(c.id)}</strong></td>
-          <td>${esc(c.cliente)}</td>
+          <td><a href="#/contratos/${esc(c.id)}" style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">${esc(c.id)}</a></td>
+          <td><a href="#/clientes/${esc(c.clienteId)}" style="color: var(--gray-800); text-decoration: none;">${esc(c.cliente)}</a></td>
           <td>${esc(c.fidelidade)}</td>
           <td class="text-center"><strong style="color: var(--primary-dark)">${c.desconto}%</strong></td>
           <td><span style="font-size: 0.8rem; color: var(--gray-600)">${esc(c.vigenciaInicio)} → ${esc(c.vigenciaFim)}</span></td>
@@ -135,44 +135,205 @@ window.view_contratos = function(root) {
   }));
 };
 
-function modalDetalhesContrato(c) {
+// ============================================================
+// Detalhe do contrato — tela dedicada
+// ============================================================
+window.view_contrato_detalhe = function(root, id) {
+  const ds = window.store.dataset;
+  const c = ds.contratos.find(x => x.id === id);
+  if (!c) {
+    root.innerHTML = '<div class="empty"><div class="icon">🔍</div><h2>Contrato não encontrado</h2><p><a href="#/contratos" class="btn btn-outline btn-sm">← Voltar para Contratos</a></p></div>';
+    return;
+  }
+
+  const cliente = ds.clientes.find(x => x.id === c.clienteId) || { nome: c.cliente, id: c.clienteId };
+  const ucs = ds.ucs.filter(u => u.clienteId === c.clienteId);
+  const faturas = ds.faturas
+    .filter(f => f.clienteId === c.clienteId)
+    .sort((a, b) => (b.id || '').localeCompare(a.id || ''));
+  const totalFaturado = faturas.reduce((a, f) => a + f.valor, 0);
+  const totalPago = faturas.filter(f => f.status === 'paga').reduce((a, f) => a + f.valor, 0);
+  const totalAberto = faturas.filter(f => ['aberta','enviada','vencida'].includes(f.status)).reduce((a, f) => a + f.valor, 0);
+
+  function parseBR(s) {
+    if (!s) return null;
+    const m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null;
+  }
+  const dIni = parseBR(c.vigenciaInicio);
+  const dFim = parseBR(c.vigenciaFim);
+  const hoje = new Date();
+  let diasRestantes = null, diasTotal = null, pctVigencia = 0;
+  if (dIni && dFim) {
+    diasTotal = Math.max(1, Math.round((dFim - dIni) / 86400000));
+    diasRestantes = Math.max(0, Math.round((dFim - hoje) / 86400000));
+    const decorridos = Math.max(0, Math.min(diasTotal, Math.round((hoje - dIni) / 86400000)));
+    pctVigencia = Math.round((decorridos / diasTotal) * 100);
+  }
+  const valorTotalRestante = (diasRestantes != null) ? Math.round((diasRestantes / 30) * (c.valorMensal || 0)) : null;
+
   const stepIdx = c.status === 'pendente' ? 1
                 : c.status === 'ativo'    ? 2
                 : c.status === 'encerrado' ? 4
                 : 0;
-  openModal(`
-    <div class="modal" style="max-width: 640px;">
-      <div class="modal-header">
-        <h3>Detalhes do Contrato · ${esc(c.id)}</h3>
-        <button class="modal-close" onclick="closeModal()">×</button>
-      </div>
-      <div class="modal-body">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
-          <div>
-            <div style="font-size:1.05rem; font-weight:700; color:var(--gray-900);">${esc(c.cliente)}</div>
-            <div style="font-size:.78rem; color:var(--gray-600); margin-top:2px;">Contrato ${esc(c.id)}</div>
-          </div>
-          ${statusBadge(c.status)}
-        </div>
 
-        <div class="card" style="margin-bottom:1rem;">
-          <div class="card-header">
-            <h3 style="font-size:.9rem;">Ciclo de vida deste contrato</h3>
-          </div>
-          ${steps(['Rascunho','Em análise','Ativo','Renovação','Encerrado'], stepIdx)}
-        </div>
+  const timeline = [
+    { ts: c.vigenciaInicio, ev: 'Contrato criado', icon: '📝', cor: 'var(--gray-500)' },
+    { ts: c.vigenciaInicio, ev: 'Documentação validada', icon: '✓', cor: 'var(--info)' },
+    { ts: c.vigenciaInicio, ev: 'Contrato ativado', icon: '⚡', cor: 'var(--success)' }
+  ];
+  if (c.status === 'encerrado') timeline.push({ ts: c.vigenciaFim, ev: 'Contrato encerrado', icon: '⏸', cor: 'var(--gray-600)' });
 
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:.75rem; font-size:.85rem;">
-          <div><strong>Fidelidade:</strong> ${esc(c.fidelidade)}</div>
-          <div><strong>Desconto:</strong> ${c.desconto}%</div>
-          <div><strong>Vigência:</strong> ${esc(c.vigenciaInicio)} → ${esc(c.vigenciaFim)}</div>
-          <div><strong>Valor mensal:</strong> ${fmt.moeda(c.valorMensal)}</div>
-        </div>
+  root.innerHTML = `
+    <div class="view-header">
+      <div>
+        <a href="#/contratos" style="font-size: 0.8rem; color: var(--gray-600); text-decoration: none;">← Voltar para Contratos</a>
+        <h1 style="margin-top: 4px;">Contrato ${esc(c.id)}</h1>
+        <p>
+          <a href="#/clientes/${esc(c.clienteId)}" style="color: var(--primary-dark); font-weight: 600; text-decoration: none;">${esc(cliente.nome)}</a>
+          · ${esc(c.fidelidade)} · ${statusBadge(c.status)}
+        </p>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" onclick="closeModal()">Fechar</button>
+      <div class="view-actions">
+        <button class="btn btn-outline btn-sm" id="ctEditar">✎ Editar</button>
+        ${c.status === 'ativo'
+          ? '<button class="btn btn-outline btn-sm" id="ctEncerrar" style="color: var(--warning); border-color: var(--warning);">⏸ Encerrar</button>'
+          : '<button class="btn btn-outline btn-sm" id="ctRenovar" style="color: var(--success); border-color: var(--success);">↻ Renovar / Reativar</button>'}
+        <button class="btn btn-outline btn-sm" id="ctExcluir" style="color: var(--danger); border-color: var(--danger);">🗑 Excluir</button>
       </div>
     </div>
-  `);
-}
+
+    <div class="kpi-grid">
+      <div class="kpi info">
+        <div class="label">Valor mensal</div>
+        <div class="value">${fmt.moeda(c.valorMensal)}</div>
+        <div class="delta">Desconto ${c.desconto}%</div>
+      </div>
+      <div class="kpi success">
+        <div class="label">Total faturado</div>
+        <div class="value">${fmt.moedaCompact(totalFaturado)}</div>
+        <div class="delta up">${faturas.length} fatura${faturas.length === 1 ? '' : 's'}</div>
+      </div>
+      <div class="kpi ${totalAberto > 0 ? 'warning' : ''}">
+        <div class="label">Em aberto</div>
+        <div class="value">${fmt.moedaCompact(totalAberto)}</div>
+        <div class="delta">${faturas.filter(f => ['aberta','enviada','vencida'].includes(f.status)).length} pendente${faturas.filter(f => ['aberta','enviada','vencida'].includes(f.status)).length === 1 ? '' : 's'}</div>
+      </div>
+      <div class="kpi ${diasRestantes != null && diasRestantes < 60 ? 'danger' : ''}">
+        <div class="label">${c.status === 'encerrado' ? 'Vigência (encerrado)' : 'Dias restantes'}</div>
+        <div class="value">${diasRestantes != null ? diasRestantes + ' d' : '—'}</div>
+        <div class="delta">${valorTotalRestante != null ? '~' + fmt.moedaCompact(valorTotalRestante) + ' restantes' : ''}</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <div class="card-header">
+        <h3>Ciclo de vida</h3>
+        <span class="subtitle">Máquina de estado deste contrato</span>
+      </div>
+      ${steps(['Rascunho','Em análise','Ativo','Renovação','Encerrado'], stepIdx)}
+      ${diasTotal ? `
+        <div style="margin-top:1rem;">
+          <div style="display:flex; justify-content:space-between; font-size:.74rem; color:var(--gray-600); margin-bottom:4px;">
+            <span>${esc(c.vigenciaInicio)}</span>
+            <span><strong>${pctVigencia}%</strong> da vigência decorrida</span>
+            <span>${esc(c.vigenciaFim)}</span>
+          </div>
+          <div style="height:10px; background:var(--gray-100); border-radius:999px; overflow:hidden;">
+            <div style="width:${pctVigencia}%; height:100%; background:linear-gradient(90deg, var(--success), var(--primary)); border-radius:inherit;"></div>
+          </div>
+        </div>
+      ` : ''}
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>Dados do contrato</h3></div>
+        <div class="config-row"><span class="key">ID</span><span class="val" style="font-family:monospace;">${esc(c.id)}</span></div>
+        <div class="config-row"><span class="key">Cliente</span><span class="val"><a href="#/clientes/${esc(c.clienteId)}" style="color:var(--primary-dark); text-decoration:none; font-weight:600;">${esc(cliente.nome)}</a></span></div>
+        <div class="config-row"><span class="key">CNPJ do cliente</span><span class="val">${esc(cliente.cnpj || '—')}</span></div>
+        <div class="config-row"><span class="key">Fidelidade</span><span class="val">${esc(c.fidelidade)}</span></div>
+        <div class="config-row"><span class="key">Desconto</span><span class="val"><strong style="color:var(--primary-dark);">${c.desconto}%</strong></span></div>
+        <div class="config-row"><span class="key">Vigência</span><span class="val">${esc(c.vigenciaInicio)} → ${esc(c.vigenciaFim)}</span></div>
+        <div class="config-row"><span class="key">Duração total</span><span class="val">${diasTotal ? diasTotal + ' dias' : '—'}</span></div>
+        <div class="config-row"><span class="key">Valor mensal</span><span class="val"><strong>${fmt.moeda(c.valorMensal)}</strong></span></div>
+        <div class="config-row"><span class="key">Status</span><span class="val">${statusBadge(c.status)}</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>Histórico do contrato</h3><span class="subtitle">Eventos da máquina de estado</span></div>
+        <div style="position:relative; padding-left:1.5rem;">
+          <div style="position:absolute; left:.6rem; top:.3rem; bottom:.3rem; width:2px; background:var(--gray-200);"></div>
+          ${timeline.map(t => `
+            <div style="position:relative; padding:.5rem 0;">
+              <div style="position:absolute; left:-1.05rem; top:.7rem; width:14px; height:14px; border-radius:50%; background:${t.cor}; border:2px solid var(--white); box-shadow:0 0 0 2px ${t.cor};"></div>
+              <div style="font-size:.84rem; font-weight:600; color:var(--gray-800);">${t.icon} ${esc(t.ev)}</div>
+              <div style="font-size:.7rem; color:var(--gray-500);">${esc(t.ts || '—')}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 1.5rem;">
+      <div class="card-header">
+        <h3>UCs do cliente vinculadas ao consumo (${ucs.length})</h3>
+      </div>
+      ${ucs.length === 0 ? '<div class="empty">Nenhuma UC vinculada ao cliente</div>' : `
+        <table class="data">
+          <thead><tr><th>Nº Instalação</th><th>Tipo</th><th class="text-right">Consumo médio</th><th class="text-center">Status</th></tr></thead>
+          <tbody>
+            ${ucs.map(u => `
+              <tr>
+                <td><strong>${esc(u.numInstalacao)}</strong></td>
+                <td>${esc(u.tipo)}</td>
+                <td class="text-right num">${fmt.kwh(u.consumo)}</td>
+                <td class="text-center">${statusBadge(u.status)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `}
+    </div>
+
+    <div class="card" style="margin-top: 1.5rem;">
+      <div class="card-header">
+        <h3>Faturas relacionadas (${faturas.length})</h3>
+        <span class="subtitle">${fmt.moeda(totalPago)} pago · ${fmt.moeda(totalAberto)} em aberto</span>
+      </div>
+      ${faturas.length === 0 ? '<div class="empty">Nenhuma fatura emitida para este cliente</div>' : `
+        <table class="data">
+          <thead><tr><th>Fatura</th><th>Competência</th><th>Vencimento</th><th class="text-right">Consumo</th><th class="text-right">Valor</th><th class="text-center">Status</th></tr></thead>
+          <tbody>
+            ${faturas.slice(0, 12).map(f => `
+              <tr>
+                <td><strong>${esc(f.id)}</strong></td>
+                <td>${esc(f.competencia)}</td>
+                <td>${esc(f.vencimento)}</td>
+                <td class="text-right num">${fmt.kwh(f.consumo)}</td>
+                <td class="text-right num"><strong>${fmt.moeda(f.valor)}</strong></td>
+                <td class="text-center">${statusBadge(f.status)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        ${faturas.length > 12 ? `<div style="text-align:center; padding:.5rem; font-size:.75rem; color:var(--gray-500);">Mostrando 12 de ${faturas.length} · <a href="#/faturamento" style="color:var(--primary-dark);">ver todas →</a></div>` : ''}
+      `}
+    </div>
+  `;
+
+  root.querySelector('#ctEditar').addEventListener('click', () => modalContrato(c));
+  const enc = root.querySelector('#ctEncerrar');
+  if (enc) enc.addEventListener('click', () => {
+    if (confirm('Encerrar este contrato?')) window.dataStore.encerrarContrato(c.id);
+  });
+  const ren = root.querySelector('#ctRenovar');
+  if (ren) ren.addEventListener('click', () => window.dataStore.renovarContrato(c.id));
+  root.querySelector('#ctExcluir').addEventListener('click', () => {
+    if (confirm('Excluir este contrato?')) {
+      window.dataStore.removeContrato(c.id);
+      location.hash = '/contratos';
+    }
+  });
+};
 })();
