@@ -1,1334 +1,1334 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comparativo de Mercado - Solução Própria vs SaaS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #D4A849;
-            --primary-dark: #B8923D;
-            --secondary: #2C3E50;
-            --success: #27ae60;
-            --danger: #e74c3c;
-            --warning: #f39c12;
-            --dark: #1a1a2e;
-            --gray: #6c757d;
-            --light: #f8f9fa;
-            --white: #ffffff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--light);
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
-            color: var(--white);
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            color: var(--primary);
-        }
-
-        .section {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            color: var(--secondary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .section-title .icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        .comparison-table th {
-            background: var(--secondary);
-            color: var(--white);
-            font-weight: 600;
-        }
-
-        .comparison-table th:first-child {
-            border-radius: 8px 0 0 0;
-        }
-
-        .comparison-table th:last-child {
-            border-radius: 0 8px 0 0;
-        }
-
-        .comparison-table .header-ours {
-            background: var(--primary);
-            color: var(--dark);
-        }
-
-        .comparison-table .header-competitor {
-            background: #10B981;
-            color: var(--white);
-        }
-
-        .comparison-table tr:hover {
-            background: var(--light);
-        }
-
-        .comparison-table .feature-name {
-            font-weight: 500;
-            color: var(--secondary);
-        }
-
-        .check {
-            color: var(--success);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .cross {
-            color: var(--danger);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .partial {
-            color: var(--warning);
-            font-weight: 700;
-        }
-
-        .cost-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 1.5rem 0;
-        }
-
-        .cost-card {
-            background: var(--light);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 2px solid transparent;
-        }
-
-        .cost-card.ours {
-            border-color: var(--primary);
-            background: linear-gradient(180deg, rgba(212,168,73,0.1) 0%, var(--white) 100%);
-        }
-
-        .cost-card.competitor {
-            border-color: #10B981;
-        }
-
-        .cost-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .cost-card.ours h3 {
-            color: var(--primary-dark);
-        }
-
-        .cost-card.competitor h3 {
-            color: #10B981;
-        }
-
-        .cost-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cost-item:last-child {
-            border-bottom: none;
-        }
-
-        .cost-item.total {
-            font-weight: 700;
-            font-size: 1.1rem;
-            background: var(--light);
-            margin: 0.5rem -1rem;
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-        }
-
-        .cost-card.ours .cost-item.total {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .cost-card.competitor .cost-item.total {
-            background: #10B981;
-            color: var(--white);
-        }
-
-        .scenário-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-
-        .scenário-table th,
-        .scenário-table td {
-            padding: 1rem;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-
-        .scenário-table th {
-            background: var(--secondary);
-            color: var(--white);
-        }
-
-        .scenário-table th:first-child {
-            text-align: left;
-        }
-
-        .scenário-table td:first-child {
-            text-align: left;
-            font-weight: 500;
-        }
-
-        .scenário-table .winner {
-            background: rgba(39, 174, 96, 0.15);
-            font-weight: 700;
-            color: var(--success);
-        }
-
-        .scenário-table .loser {
-            background: rgba(231, 76, 60, 0.1);
-            color: var(--danger);
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, var(--success) 0%, #1e8449 100%);
-            color: var(--white);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            margin: 2rem 0;
-        }
-
-        .highlight-box.warning {
-            background: linear-gradient(135deg, var(--danger) 0%, #c0392b 100%);
-        }
-
-        .highlight-box h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .highlight-box .big-number {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        .highlight-box p {
-            margin-top: 0.5rem;
-            opacity: 0.9;
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .summary-item {
-            background: var(--light);
-            border-radius: 8px;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .summary-item .label {
-            font-size: 0.85rem;
-            color: var(--gray);
-            margin-bottom: 0.5rem;
-        }
-
-        .summary-item .value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--secondary);
-        }
-
-        .summary-item .value.success {
-            color: var(--success);
-        }
-
-        .summary-item .value.danger {
-            color: var(--danger);
-        }
-
-        .advantages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .advantage-card {
-            background: var(--light);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border-left: 4px solid var(--primary);
-        }
-
-        .advantage-card h4 {
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .advantage-card p {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-
-        .partner-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-        }
-
-        .partner-table th,
-        .partner-table td {
-            padding: 0.75rem 1rem;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        .partner-table th {
-            background: var(--secondary);
-            color: var(--white);
-            font-size: 0.85rem;
-        }
-
-        .partner-table td {
-            font-size: 0.9rem;
-        }
-
-        .partner-table .text-right {
-            text-align: right;
-        }
-
-        .partner-table .total-row {
-            background: var(--light);
-            font-weight: 700;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        @media print {
-            body {
-                background: white;
-            }
-            .section {
-                break-inside: avoid;
-            }
-            .print-btn {
-                display: none;
-            }
-        }
-
-        .print-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
-
-        .alert-box {
-            background: rgba(231, 76, 60, 0.1);
-            border: 2px solid var(--danger);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .alert-box h4 {
-            color: var(--danger);
-            margin-bottom: 0.5rem;
-        }
-
-        .savings-box {
-            background: rgba(39, 174, 96, 0.1);
-            border: 2px solid var(--success);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .savings-box h4 {
-            color: var(--success);
-            margin-bottom: 0.5rem;
-        }
-
-        /* === Responsividade ampla (320px → 4K/cinema) === */
-        img, svg, video { max-width: 100%; height: auto; }
-        .container { max-width: 1200px; }
-
-        .comparison-table, .scenário-table, .partner-table {
-            width: 100%;
-            max-width: 100%;
-        }
-
-        @media (max-width: 1024px) {
-            html { font-size: 15px; }
-            .container { padding: 1.5rem; }
-        }
-
-        @media (max-width: 768px) {
-            html { font-size: 14px; }
-            .container { padding: 1rem; }
-            .header { padding: 2rem 1rem; }
-            .header h1 { font-size: 1.6rem; }
-            .section { padding: 1.25rem; }
-            .section-title { font-size: 1.15rem; }
-            .section { overflow-x: hidden; }
-            table {
-                width: 100% !important;
-                max-width: 100% !important;
-                table-layout: fixed;
-                word-break: break-word;
-            }
-            table th, table td {
-                padding: 0.4rem 0.3rem !important;
-                font-size: 0.7rem !important;
-                word-break: break-word;
-                overflow-wrap: anywhere;
-            }
-            .cost-grid, .summary-grid, .advantages-grid {
-                grid-template-columns: 1fr !important;
-                gap: 1rem;
-            }
-            /* Override de grids/flex inline */
-            [style*="grid-template-columns"] {
-                grid-template-columns: 1fr !important;
-            }
-            [style*="display: flex"][style*="justify-content: space-between"] {
-                flex-direction: column !important;
-            }
-            .highlight-box { padding: 1.25rem; }
-            .highlight-box .big-number { font-size: 2rem; }
-            .print-btn { padding: 8px 14px; font-size: 0.8rem; top: 10px; right: 10px; }
-        }
-
-        @media (max-width: 480px) {
-            html { font-size: 13px; }
-            body { padding: 0.75rem; }
-            .section { padding: 1rem; }
-            table { font-size: 0.72rem; }
-            th, td { padding: 0.4rem; }
-        }
-
-        /* iPhone 2 / ≤360px */
-        @media (max-width: 360px) {
-            html { font-size: 12px; }
-            body { padding: 0.5rem; }
-        }
-
-        /* Desktops grandes / TVs */
-        @media (min-width: 1600px) {
-            body { max-width: 1500px; margin: 0 auto; }
-        }
-
-        /* 4K / cinema */
-        @media (min-width: 2560px) {
-            html { font-size: 22px; }
-            body { max-width: 2200px; }
-        }
-
-        @media (min-width: 3200px) {
-            html { font-size: 28px; }
-            body { max-width: 2800px; }
-        }
-    </style>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Comparativo de Mercado - Solução Própria vs SaaS</title>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+ <style>
+ :root {
+ --primary: #D4A849;
+ --primary-dark: #B8923D;
+ --secondary: #2C3E50;
+ --success: #27ae60;
+ --danger: #e74c3c;
+ --warning: #f39c12;
+ --dark: #1a1a2e;
+ --gray: #6c757d;
+ --light: #f8f9fa;
+ --white: #ffffff;
+ }
+
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+
+ body {
+ font-family: 'Inter', sans-serif;
+ background: var(--light);
+ color: #333;
+ line-height: 1.6;
+ }
+
+ .container {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 2rem;
+ }
+
+ .header {
+ background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+ color: var(--white);
+ padding: 3rem 2rem;
+ text-align: center;
+ margin-bottom: 2rem;
+ }
+
+ .header h1 {
+ font-size: 2.5rem;
+ margin-bottom: 0.5rem;
+ }
+
+ .header p {
+ font-size: 1.1rem;
+ color: var(--primary);
+ }
+
+ .section {
+ background: var(--white);
+ border-radius: 12px;
+ padding: 2rem;
+ margin-bottom: 2rem;
+ box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+ }
+
+ .section-title {
+ font-size: 1.5rem;
+ color: var(--secondary);
+ margin-bottom: 1.5rem;
+ padding-bottom: 0.75rem;
+ border-bottom: 3px solid var(--primary);
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+ }
+
+ .section-title .icon {
+ width: 40px;
+ height: 40px;
+ background: var(--primary);
+ color: var(--white);
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-weight: 700;
+ }
+
+ .comparison-table {
+ width: 100%;
+ border-collapse: collapse;
+ margin: 1.5rem 0;
+ }
+
+ .comparison-table th,
+ .comparison-table td {
+ padding: 1rem;
+ text-align: left;
+ border-bottom: 1px solid #eee;
+ }
+
+ .comparison-table th {
+ background: var(--secondary);
+ color: var(--white);
+ font-weight: 600;
+ }
+
+ .comparison-table th:first-child {
+ border-radius: 8px 0 0 0;
+ }
+
+ .comparison-table th:last-child {
+ border-radius: 0 8px 0 0;
+ }
+
+ .comparison-table .header-ours {
+ background: var(--primary);
+ color: var(--dark);
+ }
+
+ .comparison-table .header-competitor {
+ background: #10B981;
+ color: var(--white);
+ }
+
+ .comparison-table tr:hover {
+ background: var(--light);
+ }
+
+ .comparison-table .feature-name {
+ font-weight: 500;
+ color: var(--secondary);
+ }
+
+ .check {
+ color: var(--success);
+ font-weight: 700;
+ font-size: 1.2rem;
+ }
+
+ .cross {
+ color: var(--danger);
+ font-weight: 700;
+ font-size: 1.2rem;
+ }
+
+ .partial {
+ color: var(--warning);
+ font-weight: 700;
+ }
+
+ .cost-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+ gap: 2rem;
+ margin: 1.5rem 0;
+ }
+
+ .cost-card {
+ background: var(--light);
+ border-radius: 12px;
+ padding: 1.5rem;
+ border: 2px solid transparent;
+ }
+
+ .cost-card.ours {
+ border-color: var(--primary);
+ background: linear-gradient(180deg, rgba(212,168,73,0.1) 0%, var(--white) 100%);
+ }
+
+ .cost-card.competitor {
+ border-color: #10B981;
+ }
+
+ .cost-card h3 {
+ font-size: 1.25rem;
+ margin-bottom: 1rem;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ }
+
+ .cost-card.ours h3 {
+ color: var(--primary-dark);
+ }
+
+ .cost-card.competitor h3 {
+ color: #10B981;
+ }
+
+ .cost-item {
+ display: flex;
+ justify-content: space-between;
+ padding: 0.5rem 0;
+ border-bottom: 1px solid #eee;
+ }
+
+ .cost-item:last-child {
+ border-bottom: none;
+ }
+
+ .cost-item.total {
+ font-weight: 700;
+ font-size: 1.1rem;
+ background: var(--light);
+ margin: 0.5rem -1rem;
+ padding: 0.75rem 1rem;
+ border-radius: 6px;
+ }
+
+ .cost-card.ours .cost-item.total {
+ background: var(--primary);
+ color: var(--white);
+ }
+
+ .cost-card.competitor .cost-item.total {
+ background: #10B981;
+ color: var(--white);
+ }
+
+ .scenário-table {
+ width: 100%;
+ border-collapse: collapse;
+ margin: 1.5rem 0;
+ }
+
+ .scenário-table th,
+ .scenário-table td {
+ padding: 1rem;
+ text-align: center;
+ border: 1px solid #ddd;
+ }
+
+ .scenário-table th {
+ background: var(--secondary);
+ color: var(--white);
+ }
+
+ .scenário-table th:first-child {
+ text-align: left;
+ }
+
+ .scenário-table td:first-child {
+ text-align: left;
+ font-weight: 500;
+ }
+
+ .scenário-table .winner {
+ background: rgba(39, 174, 96, 0.15);
+ font-weight: 700;
+ color: var(--success);
+ }
+
+ .scenário-table .loser {
+ background: rgba(231, 76, 60, 0.1);
+ color: var(--danger);
+ }
+
+ .highlight-box {
+ background: linear-gradient(135deg, var(--success) 0%, #1e8449 100%);
+ color: var(--white);
+ border-radius: 12px;
+ padding: 2rem;
+ text-align: center;
+ margin: 2rem 0;
+ }
+
+ .highlight-box.warning {
+ background: linear-gradient(135deg, var(--danger) 0%, #c0392b 100%);
+ }
+
+ .highlight-box h3 {
+ font-size: 1.5rem;
+ margin-bottom: 1rem;
+ }
+
+ .highlight-box .big-number {
+ font-size: 3rem;
+ font-weight: 700;
+ }
+
+ .highlight-box p {
+ margin-top: 0.5rem;
+ opacity: 0.9;
+ }
+
+ .summary-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 1rem;
+ margin: 1.5rem 0;
+ }
+
+ .summary-item {
+ background: var(--light);
+ border-radius: 8px;
+ padding: 1.5rem;
+ text-align: center;
+ }
+
+ .summary-item .label {
+ font-size: 0.85rem;
+ color: var(--gray);
+ margin-bottom: 0.5rem;
+ }
+
+ .summary-item .value {
+ font-size: 1.5rem;
+ font-weight: 700;
+ color: var(--secondary);
+ }
+
+ .summary-item .value.success {
+ color: var(--success);
+ }
+
+ .summary-item .value.danger {
+ color: var(--danger);
+ }
+
+ .advantages-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+ gap: 1.5rem;
+ margin: 1.5rem 0;
+ }
+
+ .advantage-card {
+ background: var(--light);
+ border-radius: 12px;
+ padding: 1.5rem;
+ border-left: 4px solid var(--primary);
+ }
+
+ .advantage-card h4 {
+ color: var(--secondary);
+ margin-bottom: 0.5rem;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ }
+
+ .advantage-card p {
+ font-size: 0.9rem;
+ color: var(--gray);
+ }
+
+ .partner-table {
+ width: 100%;
+ border-collapse: collapse;
+ margin: 1rem 0;
+ }
+
+ .partner-table th,
+ .partner-table td {
+ padding: 0.75rem 1rem;
+ text-align: left;
+ border: 1px solid #ddd;
+ }
+
+ .partner-table th {
+ background: var(--secondary);
+ color: var(--white);
+ font-size: 0.85rem;
+ }
+
+ .partner-table td {
+ font-size: 0.9rem;
+ }
+
+ .partner-table .text-right {
+ text-align: right;
+ }
+
+ .partner-table .total-row {
+ background: var(--light);
+ font-weight: 700;
+ }
+
+ .footer {
+ text-align: center;
+ padding: 2rem;
+ color: var(--gray);
+ font-size: 0.9rem;
+ }
+
+ @media print {
+ body {
+ background: white;
+ }
+ .section {
+ break-inside: avoid;
+ }
+ .print-btn {
+ display: none;
+ }
+ }
+
+ .print-btn {
+ position: fixed;
+ top: 20px;
+ right: 20px;
+ background: var(--primary);
+ color: white;
+ border: none;
+ padding: 12px 24px;
+ border-radius: 8px;
+ cursor: pointer;
+ font-weight: 600;
+ box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+ z-index: 1000;
+ }
+
+ .alert-box {
+ background: rgba(231, 76, 60, 0.1);
+ border: 2px solid var(--danger);
+ border-radius: 12px;
+ padding: 1.5rem;
+ margin: 1.5rem 0;
+ }
+
+ .alert-box h4 {
+ color: var(--danger);
+ margin-bottom: 0.5rem;
+ }
+
+ .savings-box {
+ background: rgba(39, 174, 96, 0.1);
+ border: 2px solid var(--success);
+ border-radius: 12px;
+ padding: 1.5rem;
+ margin: 1.5rem 0;
+ }
+
+ .savings-box h4 {
+ color: var(--success);
+ margin-bottom: 0.5rem;
+ }
+
+ /* === Responsividade ampla (320px → 4K/cinema) === */
+ img, svg, video { max-width: 100%; height: auto; }
+ .container { max-width: 1200px; }
+
+ .comparison-table, .scenário-table, .partner-table {
+ width: 100%;
+ max-width: 100%;
+ }
+
+ @media (max-width: 1024px) {
+ html { font-size: 15px; }
+ .container { padding: 1.5rem; }
+ }
+
+ @media (max-width: 768px) {
+ html { font-size: 14px; }
+ .container { padding: 1rem; }
+ .header { padding: 2rem 1rem; }
+ .header h1 { font-size: 1.6rem; }
+ .section { padding: 1.25rem; }
+ .section-title { font-size: 1.15rem; }
+ .section { overflow-x: hidden; }
+ table {
+ width: 100% !important;
+ max-width: 100% !important;
+ table-layout: fixed;
+ word-break: break-word;
+ }
+ table th, table td {
+ padding: 0.4rem 0.3rem !important;
+ font-size: 0.7rem !important;
+ word-break: break-word;
+ overflow-wrap: anywhere;
+ }
+ .cost-grid, .summary-grid, .advantages-grid {
+ grid-template-columns: 1fr !important;
+ gap: 1rem;
+ }
+ /* Override de grids/flex inline */
+ [style*="grid-template-columns"] {
+ grid-template-columns: 1fr !important;
+ }
+ [style*="display: flex"][style*="justify-content: space-between"] {
+ flex-direction: column !important;
+ }
+ .highlight-box { padding: 1.25rem; }
+ .highlight-box .big-number { font-size: 2rem; }
+ .print-btn { padding: 8px 14px; font-size: 0.8rem; top: 10px; right: 10px; }
+ }
+
+ @media (max-width: 480px) {
+ html { font-size: 13px; }
+ body { padding: 0.75rem; }
+ .section { padding: 1rem; }
+ table { font-size: 0.72rem; }
+ th, td { padding: 0.4rem; }
+ }
+
+ /* iPhone 2 / ≤360px */
+ @media (max-width: 360px) {
+ html { font-size: 12px; }
+ body { padding: 0.5rem; }
+ }
+
+ /* Desktops grandes / TVs */
+ @media (min-width: 1600px) {
+ body { max-width: 1500px; margin: 0 auto; }
+ }
+
+ /* 4K / cinema */
+ @media (min-width: 2560px) {
+ html { font-size: 22px; }
+ body { max-width: 2200px; }
+ }
+
+ @media (min-width: 3200px) {
+ html { font-size: 28px; }
+ body { max-width: 2800px; }
+ }
+ </style>
 </head>
 <body>
-    <button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+ <button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
 
-    <div class="header">
-        <h1>Comparativo de Mercado</h1>
-        <p>Solução Própria vs Plataforma SaaS (Lumi) - Cenário 4 Sócios</p>
-    </div>
+ <div class="header">
+ <h1>Comparativo de Mercado</h1>
+ <p>Solução Própria vs Plataforma SaaS (Lumi) - Cenário 4 Sócios</p>
+ </div>
 
-    <div class="container">
-        <!-- Resumo Executivo -->
-        <div class="section">
-            <h2 class="section-title">
-                <span class="icon">1</span>
-                Resumo Executivo
-            </h2>
+ <div class="container">
+ <!-- Resumo Executivo -->
+ <div class="section">
+ <h2 class="section-title">
+ <span class="icon">1</span>
+ Resumo Executivo
+ </h2>
 
-            <p style="margin-bottom: 1rem;">
-                Este documento apresenta uma análise comparativa considerando o cenário real da plataforma:
-                <strong>4 sócios com operações de energia solar</strong>, onde cada um possui sua própria
-                base de clientes. No modelo SaaS (Lumi), cada sócio paga separadamente conforme sua quantidade de UCs.
-            </p>
+ <p style="margin-bottom: 1rem;">
+ Este documento apresenta uma análise comparativa considerando o cenário real da plataforma:
+ <strong>4 sócios com operações de energia solar</strong>, onde cada um possui sua própria
+ base de clientes. No modelo SaaS (Lumi), cada sócio paga separadamente conforme sua quantidade de UCs.
+ </p>
 
-            <div style="background: rgba(212,168,73,0.15); border: 2px solid #D4A849; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
-                <p style="font-size: 0.9rem; color: #333; margin: 0;">
-                    <strong style="color: #D4A849;">ESCOPO:</strong> A solução própria está sendo desenvolvida para atender
-                    operações de energia solar por assinatura. Funcionalidades adicionais que fujam do escopo documentado
-                    serao orçadas e desenvolvidas separadamente.
-                </p>
-            </div>
+ <div style="background: rgba(212,168,73,0.15); border: 2px solid #D4A849; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+ <p style="font-size: 0.9rem; color: #333; margin: 0;">
+ <strong style="color: #D4A849;">ESCOPO:</strong> A solução própria está sendo desenvolvida para atender
+ operações de energia solar por assinatura. Funcionalidades adicionais que fujam do escopo documentado
+ serao orçadas e desenvolvidas separadamente.
+ </p>
+ </div>
 
-            <div class="alert-box">
-                <h4>Ponto Crítico - Modelo Lumi</h4>
-                <p>A Lumi cobra <strong>por sócio</strong> e <strong>por quantidade de UCs</strong>. Com 4 sócios, os custos se multiplicam rapidamente, tornando o modelo SaaS significativamente mais caro.</p>
-            </div>
+ <div class="alert-box">
+ <h4>Ponto Crítico - Modelo Lumi</h4>
+ <p>A Lumi cobra <strong>por sócio</strong> e <strong>por quantidade de UCs</strong>. Com 4 sócios, os custos se multiplicam rapidamente, tornando o modelo SaaS significativamente mais caro.</p>
+ </div>
 
-            <!-- 4 CENÁRIOS DE COMPARAÇÃO -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
-                <!-- 1 SÓCIO -->
-                <div style="background: var(--light); border-radius: 12px; padding: 1.5rem; border: 2px solid var(--primary);">
-                    <h4 style="color: var(--secondary); margin-bottom: 1rem; text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem;">1 SOCIO (Plano Core)</h4>
-                    <div style="display: flex; justify-content: space-between; gap: 1rem;">
-                        <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(39,174,96,0.1); border-radius: 8px;">
-                            <div style="font-size: 0.8rem; color: var(--gray);">Nossa Solução (1º ano)</div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--success);">R$ 33.400</div>
-                            <div style="font-size: 0.75rem; color: var(--gray);">Desenvolv. + Assessment + Infra 12m</div>
-                        </div>
-                        <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(231,76,60,0.1); border-radius: 8px;">
-                            <div style="font-size: 0.8rem; color: var(--gray);">Lumi (1º ano)</div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--danger);">R$ 8.980</div>
-                            <div style="font-size: 0.75rem; color: var(--gray);">setup + 12 meses</div>
-                        </div>
-                    </div>
-                    <p style="font-size: 0.75rem; color: var(--gray); margin-top: 1rem; text-align: center;">
-                        Nossa: R$ 28.500 Desenvolvimento + R$ 2.500 Assessment + R$ 2.400 Infra+APIs (~R$ 200/mês). <strong>Anos 2-5: só Infra+APIs, sem mensalidade.</strong><br>
-                        Lumi: R$ 2.500 setup + R$ 540/mês (27 UCs, faixa 1-75 kW) — mensalidade para sempre.
-                    </p>
-                </div>
+ <!-- 4 CENÁRIOS DE COMPARAÇÃO -->
+ <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+ <!-- 1 SÓCIO -->
+ <div style="background: var(--light); border-radius: 12px; padding: 1.5rem; border: 2px solid var(--primary);">
+ <h4 style="color: var(--secondary); margin-bottom: 1rem; text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem;">1 SOCIO (Plano Core)</h4>
+ <div style="display: flex; justify-content: space-between; gap: 1rem;">
+ <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(39,174,96,0.1); border-radius: 8px;">
+ <div style="font-size: 0.8rem; color: var(--gray);">Nossa Solução (1º ano)</div>
+ <div style="font-size: 1.8rem; font-weight: 700; color: var(--success);">R$ 33.400</div>
+ <div style="font-size: 0.75rem; color: var(--gray);">Desenvolv. + Assessment + Infra 12m</div>
+ </div>
+ <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(231,76,60,0.1); border-radius: 8px;">
+ <div style="font-size: 0.8rem; color: var(--gray);">Lumi (1º ano)</div>
+ <div style="font-size: 1.8rem; font-weight: 700; color: var(--danger);">R$ 8.980</div>
+ <div style="font-size: 0.75rem; color: var(--gray);">setup + 12 meses</div>
+ </div>
+ </div>
+ <p style="font-size: 0.75rem; color: var(--gray); margin-top: 1rem; text-align: center;">
+ Nossa: R$ 28.500 Desenvolvimento + R$ 2.500 Assessment + R$ 2.400 Infra+APIs (~R$ 200/mês). <strong>Anos 2-5: só Infra+APIs, sem mensalidade.</strong><br>
+ Lumi: R$ 2.500 setup + R$ 540/mês (27 UCs, faixa 1-75 kW) — mensalidade para sempre.
+ </p>
+ </div>
 
-                <!-- 4 SÓCIOS -->
-                <div style="background: var(--light); border-radius: 12px; padding: 1.5rem; border: 2px solid #3498db;">
-                    <h4 style="color: var(--secondary); margin-bottom: 1rem; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 0.5rem;">4 SOCIOS (Plano Core)</h4>
-                    <div style="display: flex; justify-content: space-between; gap: 1rem;">
-                        <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(39,174,96,0.1); border-radius: 8px;">
-                            <div style="font-size: 0.8rem; color: var(--gray);">Nossa Solução (1º ano)</div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--success);">R$ 45.100</div>
-                            <div style="font-size: 0.75rem; color: #3498db; font-weight: 600;">R$ 11.275/sócio</div>
-                        </div>
-                        <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(231,76,60,0.1); border-radius: 8px;">
-                            <div style="font-size: 0.8rem; color: var(--gray);">Lumi (1º ano)</div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--danger);">R$ 73.624</div>
-                            <div style="font-size: 0.75rem; color: var(--danger); font-weight: 600;">R$ 18.406/sócio</div>
-                        </div>
-                    </div>
-                    <p style="font-size: 0.75rem; color: var(--success); margin-top: 1rem; text-align: center; font-weight: 600;">
-                        Economia de R$ 28.524 (39%) no 1º ano — e Anos 2-5 só pagam Infra+APIs
-                    </p>
-                </div>
-            </div>
-        </div>
+ <!-- 4 SÓCIOS -->
+ <div style="background: var(--light); border-radius: 12px; padding: 1.5rem; border: 2px solid #3498db;">
+ <h4 style="color: var(--secondary); margin-bottom: 1rem; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 0.5rem;">4 SOCIOS (Plano Core)</h4>
+ <div style="display: flex; justify-content: space-between; gap: 1rem;">
+ <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(39,174,96,0.1); border-radius: 8px;">
+ <div style="font-size: 0.8rem; color: var(--gray);">Nossa Solução (1º ano)</div>
+ <div style="font-size: 1.8rem; font-weight: 700; color: var(--success);">R$ 45.100</div>
+ <div style="font-size: 0.75rem; color: #3498db; font-weight: 600;">R$ 11.275/sócio</div>
+ </div>
+ <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(231,76,60,0.1); border-radius: 8px;">
+ <div style="font-size: 0.8rem; color: var(--gray);">Lumi (1º ano)</div>
+ <div style="font-size: 1.8rem; font-weight: 700; color: var(--danger);">R$ 73.624</div>
+ <div style="font-size: 0.75rem; color: var(--danger); font-weight: 600;">R$ 18.406/sócio</div>
+ </div>
+ </div>
+ <p style="font-size: 0.75rem; color: var(--success); margin-top: 1rem; text-align: center; font-weight: 600;">
+ Economia de R$ 28.524 (39%) no 1º ano — e Anos 2-5 só pagam Infra+APIs
+ </p>
+ </div>
+ </div>
+ </div>
 
-        <!-- Cenário dos 4 Sócios -->
-        <div class="section">
-            <h2 class="section-title">
-                <span class="icon">2</span>
-                Cenário Real: 4 Sócios
-            </h2>
+ <!-- Cenário dos 4 Sócios -->
+ <div class="section">
+ <h2 class="section-title">
+ <span class="icon">2</span>
+ Cenário Real: 4 Sócios
+ </h2>
 
-            <p style="margin-bottom: 1.5rem;">
-                Considerando que cada sócio tem uma operação independente com diferentes portes:
-            </p>
+ <p style="margin-bottom: 1.5rem;">
+ Considerando que cada sócio tem uma operação independente com diferentes portes:
+ </p>
 
-            <table class="partner-table">
-                <thead>
-                    <tr>
-                        <th>Sócio</th>
-                        <th>UCs</th>
-                        <th>Potência Est.</th>
-                        <th>Faixa Lumi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Sócio 1</td>
-                        <td>27</td>
-                        <td>~75 kW</td>
-                        <td>1-75 kW</td>
-                    </tr>
-                    <tr>
-                        <td>Sócio 2</td>
-                        <td>60</td>
-                        <td>~150 kW</td>
-                        <td>76-250 kW</td>
-                    </tr>
-                    <tr>
-                        <td>Sócio 3</td>
-                        <td>90</td>
-                        <td>~220 kW</td>
-                        <td>76-250 kW</td>
-                    </tr>
-                    <tr>
-                        <td>Sócio 4</td>
-                        <td>120</td>
-                        <td>~350 kW</td>
-                        <td>251-500 kW</td>
-                    </tr>
-                    <tr class="total-row">
-                        <td><strong>TOTAL</strong></td>
-                        <td><strong>297 UCs</strong></td>
-                        <td><strong>~795 kW</strong></td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="font-size: 0.8rem; color: #666; margin-top: 0.75rem; font-style: italic;">
-                * Apenas os dados do <strong>Sócio 1 (ESQ Energia — 27 UCs)</strong> são reais, levantados diretamente com o cliente. Os demais sócios são <strong>estimativas ilustrativas</strong> de portes plausíveis para fins de projeção comparativa.
-            </p>
-        </div>
+ <table class="partner-table">
+ <thead>
+ <tr>
+ <th>Sócio</th>
+ <th>UCs</th>
+ <th>Potência Est.</th>
+ <th>Faixa Lumi</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>Sócio 1</td>
+ <td>27</td>
+ <td>~75 kW</td>
+ <td>1-75 kW</td>
+ </tr>
+ <tr>
+ <td>Sócio 2</td>
+ <td>60</td>
+ <td>~150 kW</td>
+ <td>76-250 kW</td>
+ </tr>
+ <tr>
+ <td>Sócio 3</td>
+ <td>90</td>
+ <td>~220 kW</td>
+ <td>76-250 kW</td>
+ </tr>
+ <tr>
+ <td>Sócio 4</td>
+ <td>120</td>
+ <td>~350 kW</td>
+ <td>251-500 kW</td>
+ </tr>
+ <tr class="total-row">
+ <td><strong>TOTAL</strong></td>
+ <td><strong>297 UCs</strong></td>
+ <td><strong>~795 kW</strong></td>
+ <td>-</td>
+ </tr>
+ </tbody>
+ </table>
+ <p style="font-size: 0.8rem; color: #666; margin-top: 0.75rem; font-style: italic;">
+ * Apenas os dados do <strong>Sócio 1 (ESQ Energia — 27 UCs)</strong> são reais, levantados diretamente com o cliente. Os demais sócios são <strong>estimativas ilustrativas</strong> de portes plausíveis para fins de projeção comparativa.
+ </p>
+ </div>
 
-        <!-- Cálculo Detalhado Lumi -->
-        <div class="section">
-            <h2 class="section-title">
-                <span class="icon">3</span>
-                Cálculo Detalhado - Custo Lumi (Plano Flex)
-            </h2>
+ <!-- Cálculo Detalhado Lumi -->
+ <div class="section">
+ <h2 class="section-title">
+ <span class="icon">3</span>
+ Cálculo Detalhado - Custo Lumi (Plano Flex)
+ </h2>
 
-            <p style="margin-bottom: 0.5rem;">
-                <strong>Fórmula Lumi:</strong> Mensalidade = Preço por Faixa de Potência + (Preço Unitário UC × Quantidade UCs)
-            </p>
-            <p style="font-size: 0.78rem; color: #666; margin-bottom: 1rem;">
-                Valores extraídos da <strong>Proposta Comercial Lumi 1046/25</strong> (11/08/2025, Plano Flex).
-                Parametrização única: <strong>R$ 2.500</strong> por sócio. Preço Unitário UC (≤500 UCs): <strong>R$ 6,00/UC</strong>.
-                White Label: <strong>R$ 3.000</strong> uma vez por sócio.
-            </p>
+ <p style="margin-bottom: 0.5rem;">
+ <strong>Fórmula Lumi:</strong> Mensalidade = Preço por Faixa de Potência + (Preço Unitário UC × Quantidade UCs)
+ </p>
+ <p style="font-size: 0.78rem; color: #666; margin-bottom: 1rem;">
+ Valores extraídos da <strong>Proposta Comercial Lumi 1046/25</strong> (11/08/2025, Plano Flex).
+ Parametrização única: <strong>R$ 2.500</strong> por sócio. Preço Unitário UC (≤500 UCs): <strong>R$ 6,00/UC</strong>.
+ White Label: <strong>R$ 3.000</strong> uma vez por sócio.
+ </p>
 
-            <table class="partner-table">
-                <thead>
-                    <tr>
-                        <th>Sócio</th>
-                        <th>Parametrização</th>
-                        <th>Base Faixa Potência</th>
-                        <th>UCs × R$ 6,00</th>
-                        <th>Total/Mês</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Sócio 1 (27 UCs, 1-75 kW)</td>
-                        <td class="text-right">R$ 2.500</td>
-                        <td class="text-right">R$ 378</td>
-                        <td class="text-right">27 × R$ 6 = R$ 162</td>
-                        <td class="text-right"><strong>R$ 540</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Sócio 2 (60 UCs, 76-250 kW)</td>
-                        <td class="text-right">R$ 2.500</td>
-                        <td class="text-right">R$ 630</td>
-                        <td class="text-right">60 × R$ 6 = R$ 360</td>
-                        <td class="text-right"><strong>R$ 990</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Sócio 3 (90 UCs, 76-250 kW)</td>
-                        <td class="text-right">R$ 2.500</td>
-                        <td class="text-right">R$ 630</td>
-                        <td class="text-right">90 × R$ 6 = R$ 540</td>
-                        <td class="text-right"><strong>R$ 1.170</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Sócio 4 (120 UCs, 251-500 kW)</td>
-                        <td class="text-right">R$ 2.500</td>
-                        <td class="text-right">R$ 882</td>
-                        <td class="text-right">120 × R$ 6 = R$ 720</td>
-                        <td class="text-right"><strong>R$ 1.602</strong></td>
-                    </tr>
-                    <tr class="total-row">
-                        <td><strong>TOTAL</strong></td>
-                        <td class="text-right"><strong>R$ 10.000</strong></td>
-                        <td class="text-right"><strong>R$ 2.520</strong></td>
-                        <td class="text-right"><strong>R$ 1.782</strong></td>
-                        <td class="text-right"><strong>R$ 4.302/mês</strong></td>
-                    </tr>
-                </tbody>
-            </table>
+ <table class="partner-table">
+ <thead>
+ <tr>
+ <th>Sócio</th>
+ <th>Parametrização</th>
+ <th>Base Faixa Potência</th>
+ <th>UCs × R$ 6,00</th>
+ <th>Total/Mês</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>Sócio 1 (27 UCs, 1-75 kW)</td>
+ <td class="text-right">R$ 2.500</td>
+ <td class="text-right">R$ 378</td>
+ <td class="text-right">27 × R$ 6 = R$ 162</td>
+ <td class="text-right"><strong>R$ 540</strong></td>
+ </tr>
+ <tr>
+ <td>Sócio 2 (60 UCs, 76-250 kW)</td>
+ <td class="text-right">R$ 2.500</td>
+ <td class="text-right">R$ 630</td>
+ <td class="text-right">60 × R$ 6 = R$ 360</td>
+ <td class="text-right"><strong>R$ 990</strong></td>
+ </tr>
+ <tr>
+ <td>Sócio 3 (90 UCs, 76-250 kW)</td>
+ <td class="text-right">R$ 2.500</td>
+ <td class="text-right">R$ 630</td>
+ <td class="text-right">90 × R$ 6 = R$ 540</td>
+ <td class="text-right"><strong>R$ 1.170</strong></td>
+ </tr>
+ <tr>
+ <td>Sócio 4 (120 UCs, 251-500 kW)</td>
+ <td class="text-right">R$ 2.500</td>
+ <td class="text-right">R$ 882</td>
+ <td class="text-right">120 × R$ 6 = R$ 720</td>
+ <td class="text-right"><strong>R$ 1.602</strong></td>
+ </tr>
+ <tr class="total-row">
+ <td><strong>TOTAL</strong></td>
+ <td class="text-right"><strong>R$ 10.000</strong></td>
+ <td class="text-right"><strong>R$ 2.520</strong></td>
+ <td class="text-right"><strong>R$ 1.782</strong></td>
+ <td class="text-right"><strong>R$ 4.302/mês</strong></td>
+ </tr>
+ </tbody>
+ </table>
 
-            <div class="cost-grid" style="margin-top: 2rem;">
-                <div class="cost-card competitor">
-                    <h3>Lumi - Custo Anual (4 Sócios, Plano Flex)</h3>
-                    <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span><strong>Parametrização do Sistema</strong></span>
-                            <span>R$ 10.000</span>
-                        </div>
-                        <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">R$ 2.500 × 4 sócios · pagamento único após entrega</div>
-                    </div>
-                    <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span><strong>Mensalidade (4 sócios)</strong></span>
-                            <span>R$ 4.302/mês</span>
-                        </div>
-                        <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">
-                            Sócio 1: R$ 540 · Sócio 2: R$ 990 · Sócio 3: R$ 1.170 · Sócio 4: R$ 1.602
-                        </div>
-                    </div>
-                    <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span><strong>Mensalidades × 12 meses</strong></span>
-                            <span>R$ 51.624</span>
-                        </div>
-                        <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">R$ 4.302 × 12 meses de contrato (mínimo Lumi)</div>
-                    </div>
-                    <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span><strong>White Label (ID Visual)</strong></span>
-                            <span>R$ 12.000</span>
-                        </div>
-                        <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">R$ 3.000 × 4 sócios · customização única</div>
-                    </div>
-                    <div class="cost-item total">
-                        <span>Total 1º Ano</span>
-                        <span>R$ 73.624</span>
-                    </div>
-                    <p style="font-size: 0.72rem; color: #888; margin-top: 0.75rem; font-style: italic; line-height: 1.5;">
-                        <strong>Ano 2 em diante:</strong> permanece a mensalidade (R$ 51.624/ano) — sem fim do contrato. Se a potência ou nº de UCs crescer, o valor escala automaticamente conforme a tabela progressiva da Lumi.
-                    </p>
-                </div>
+ <div class="cost-grid" style="margin-top: 2rem;">
+ <div class="cost-card competitor">
+ <h3>Lumi - Custo Anual (4 Sócios, Plano Flex)</h3>
+ <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
+ <div style="display: flex; justify-content: space-between;">
+ <span><strong>Parametrização do Sistema</strong></span>
+ <span>R$ 10.000</span>
+ </div>
+ <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">R$ 2.500 × 4 sócios · pagamento único após entrega</div>
+ </div>
+ <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
+ <div style="display: flex; justify-content: space-between;">
+ <span><strong>Mensalidade (4 sócios)</strong></span>
+ <span>R$ 4.302/mês</span>
+ </div>
+ <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">
+ Sócio 1: R$ 540 · Sócio 2: R$ 990 · Sócio 3: R$ 1.170 · Sócio 4: R$ 1.602
+ </div>
+ </div>
+ <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
+ <div style="display: flex; justify-content: space-between;">
+ <span><strong>Mensalidades × 12 meses</strong></span>
+ <span>R$ 51.624</span>
+ </div>
+ <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">R$ 4.302 × 12 meses de contrato (mínimo Lumi)</div>
+ </div>
+ <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
+ <div style="display: flex; justify-content: space-between;">
+ <span><strong>White Label (ID Visual)</strong></span>
+ <span>R$ 12.000</span>
+ </div>
+ <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">R$ 3.000 × 4 sócios · customização única</div>
+ </div>
+ <div class="cost-item total">
+ <span>Total 1º Ano</span>
+ <span>R$ 73.624</span>
+ </div>
+ <p style="font-size: 0.72rem; color: #888; margin-top: 0.75rem; font-style: italic; line-height: 1.5;">
+ <strong>Ano 2 em diante:</strong> permanece a mensalidade (R$ 51.624/ano) — sem fim do contrato. Se a potência ou nº de UCs crescer, o valor escala automaticamente conforme a tabela progressiva da Lumi.
+ </p>
+ </div>
 
-                <div class="cost-card ours">
-                    <h3>Nossa Solução - Custo Anual (4 Sócios Core)</h3>
-                    <div class="cost-item">
-                        <span>Assessment 4 sócios (a partir de R$ 2.500 cada*)</span>
-                        <span>a partir de R$ 10.000</span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Core da Plataforma (único)</span>
-                        <span>R$ 28.500</span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Gateway Asaas (opcional)</span>
-                        <span>não incluso</span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Infra + APIs (12 meses, ~R$ 550/mês)</span>
-                        <span>R$ 6.600</span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Mensalidade da Plataforma</span>
-                        <span><strong>R$ 0,00</strong></span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Custo por UC/Sócio</span>
-                        <span><strong>R$ 0,00</strong></span>
-                    </div>
-                    <div class="cost-item total">
-                        <span>Total 1º Ano</span>
-                        <span>R$ 45.100</span>
-                    </div>
-                    <p style="font-size: 0.75rem; color: #666; margin-top: 0.75rem; font-style: italic;">
-                        *Assessment é pago <strong>por sócio</strong>, variando de R$ 2.500 a R$ 6.000 conforme a complexidade da operação (a tabela considera o piso de R$ 2.500). Operações de alta complexidade podem exigir orçamento de desenvolvimento adicional após o workshop. <strong>A partir do Ano 2, o custo trava em apenas Infra + APIs (~R$ 6.600/ano)</strong> — zero mensalidade de plataforma. Gateway Asaas disponível como add-on (+R$ 4.000).
-                    </p>
-                </div>
+ <div class="cost-card ours">
+ <h3>Nossa Solução - Custo Anual (4 Sócios Core)</h3>
+ <div class="cost-item">
+ <span>Assessment 4 sócios (a partir de R$ 2.500 cada*)</span>
+ <span>a partir de R$ 10.000</span>
+ </div>
+ <div class="cost-item">
+ <span>Core da Plataforma (único)</span>
+ <span>R$ 28.500</span>
+ </div>
+ <div class="cost-item">
+ <span>Gateway Asaas (opcional)</span>
+ <span>não incluso</span>
+ </div>
+ <div class="cost-item">
+ <span>Infra + APIs (12 meses, ~R$ 550/mês)</span>
+ <span>R$ 6.600</span>
+ </div>
+ <div class="cost-item">
+ <span>Mensalidade da Plataforma</span>
+ <span><strong>R$ 0,00</strong></span>
+ </div>
+ <div class="cost-item">
+ <span>Custo por UC/Sócio</span>
+ <span><strong>R$ 0,00</strong></span>
+ </div>
+ <div class="cost-item total">
+ <span>Total 1º Ano</span>
+ <span>R$ 45.100</span>
+ </div>
+ <p style="font-size: 0.75rem; color: #666; margin-top: 0.75rem; font-style: italic;">
+ *Assessment é pago <strong>por sócio</strong>, variando de R$ 2.500 a R$ 6.000 conforme a complexidade da operação (a tabela considera o piso de R$ 2.500). Operações de alta complexidade podem exigir orçamento de desenvolvimento adicional após o workshop. <strong>A partir do Ano 2, o custo trava em apenas Infra + APIs (~R$ 6.600/ano)</strong> — zero mensalidade de plataforma. Gateway Asaas disponível como add-on (+R$ 4.000).
+ </p>
+ </div>
 
-                <div class="cost-card ours" style="border: 2px dashed #3498db;">
-                    <h3>Nossa Solução - Custo Anual (4 Sócios Full)</h3>
-                    <div class="cost-item">
-                        <span>Assessment 4 sócios (a partir de R$ 2.500 cada*)</span>
-                        <span>a partir de R$ 10.000</span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Core da Plataforma (único)</span>
-                        <span>R$ 28.500</span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Gateway Asaas</span>
-                        <span>R$ 2.500</span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Expansões (WhatsApp+Parser+Rel)</span>
-                        <span>R$ 10.000</span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Infra + APIs elástica (12 meses, ~R$ 1.150/mês)</span>
-                        <span>R$ 13.800</span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Mensalidade da Plataforma</span>
-                        <span><strong>R$ 0,00</strong></span>
-                    </div>
-                    <div class="cost-item">
-                        <span>Custo por UC/Sócio</span>
-                        <span><strong>R$ 0,00</strong></span>
-                    </div>
-                    <div class="cost-item total">
-                        <span>Total 1º Ano</span>
-                        <span>R$ 64.800</span>
-                    </div>
-                    <p style="font-size: 0.75rem; color: #666; margin-top: 0.75rem; font-style: italic;">
-                        *Cenário com todas as expansões contratadas (Pagamento Asaas, WhatsApp, Parser COELBA, Relatórios Avançados). <strong>Ano 2 em diante: apenas Infra+APIs (~R$ 13.800/ano).</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
+ <div class="cost-card ours" style="border: 2px dashed #3498db;">
+ <h3>Nossa Solução - Custo Anual (4 Sócios Full)</h3>
+ <div class="cost-item">
+ <span>Assessment 4 sócios (a partir de R$ 2.500 cada*)</span>
+ <span>a partir de R$ 10.000</span>
+ </div>
+ <div class="cost-item">
+ <span>Core da Plataforma (único)</span>
+ <span>R$ 28.500</span>
+ </div>
+ <div class="cost-item">
+ <span>Gateway Asaas</span>
+ <span>R$ 2.500</span>
+ </div>
+ <div class="cost-item">
+ <span>Expansões (WhatsApp+Parser+Rel)</span>
+ <span>R$ 10.000</span>
+ </div>
+ <div class="cost-item">
+ <span>Infra + APIs elástica (12 meses, ~R$ 1.150/mês)</span>
+ <span>R$ 13.800</span>
+ </div>
+ <div class="cost-item">
+ <span>Mensalidade da Plataforma</span>
+ <span><strong>R$ 0,00</strong></span>
+ </div>
+ <div class="cost-item">
+ <span>Custo por UC/Sócio</span>
+ <span><strong>R$ 0,00</strong></span>
+ </div>
+ <div class="cost-item total">
+ <span>Total 1º Ano</span>
+ <span>R$ 64.800</span>
+ </div>
+ <p style="font-size: 0.75rem; color: #666; margin-top: 0.75rem; font-style: italic;">
+ *Cenário com todas as expansões contratadas (Pagamento Asaas, WhatsApp, Parser COELBA, Relatórios Avançados). <strong>Ano 2 em diante: apenas Infra+APIs (~R$ 13.800/ano).</strong>
+ </p>
+ </div>
+ </div>
+ </div>
 
-        <!-- Fundamento da economia -->
-        <div style="background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, #fff 100%); border: 1px solid rgba(39,174,96,0.3); border-left: 4px solid var(--success); border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 1.25rem;">
-            <h4 style="margin: 0 0 0.6rem 0; color: var(--success); font-size: 1rem;">💡 Por que a economia acontece?</h4>
-            <p style="font-size: 0.88rem; color: #444; line-height: 1.65; margin: 0 0 0.6rem;">
-                A Lumi cobra <strong>mensalidade recorrente para sempre</strong> — que escala por faixa de potência e por quantidade de UCs. Nossa proposta inverte o modelo: <strong>você paga uma vez pelo desenvolvimento do software</strong> (valor fixo, independente do porte) e a partir daí opera pagando apenas Infra + APIs conforme o uso real.
-            </p>
-            <p style="font-size: 0.85rem; color: #555; line-height: 1.65; margin: 0;">
-                <strong style="color: var(--success);">Por que os valores variam entre Core e Full:</strong> o investimento inicial (R$ 28.500 no Core vs R$ 41.000 no Full) reflete o escopo dos módulos contratados — Asaas, WhatsApp, SignalR, Parser COELBA, Relatórios Avançados. <strong style="color: var(--success);">Por que a economia cresce com o porte da operação:</strong> a base de custo Lumi sobe com cada sócio adicional, cada nova UC e cada upgrade de faixa de potência; o nosso custo de desenvolvimento permanece <strong>o mesmo</strong>. Quanto maior e mais complexa a operação, maior a economia absoluta e percentual.
-            </p>
-        </div>
+ <!-- Fundamento da economia -->
+ <div style="background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, #fff 100%); border: 1px solid rgba(39,174,96,0.3); border-left: 4px solid var(--success); border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 1.25rem;">
+ <h4 style="margin: 0 0 0.6rem 0; color: var(--success); font-size: 1rem;"> Por que a economia acontece?</h4>
+ <p style="font-size: 0.88rem; color: #444; line-height: 1.65; margin: 0 0 0.6rem;">
+ A Lumi cobra <strong>mensalidade recorrente para sempre</strong> — que escala por faixa de potência e por quantidade de UCs. Nossa proposta inverte o modelo: <strong>você paga uma vez pelo desenvolvimento do software</strong> (valor fixo, independente do porte) e a partir daí opera pagando apenas Infra + APIs conforme o uso real.
+ </p>
+ <p style="font-size: 0.85rem; color: #555; line-height: 1.65; margin: 0;">
+ <strong style="color: var(--success);">Por que os valores variam entre Core e Full:</strong> o investimento inicial (R$ 28.500 no Core vs R$ 41.000 no Full) reflete o escopo dos módulos contratados — Asaas, WhatsApp, SignalR, Parser COELBA, Relatórios Avançados. <strong style="color: var(--success);">Por que a economia cresce com o porte da operação:</strong> a base de custo Lumi sobe com cada sócio adicional, cada nova UC e cada upgrade de faixa de potência; o nosso custo de desenvolvimento permanece <strong>o mesmo</strong>. Quanto maior e mais complexa a operação, maior a economia absoluta e percentual.
+ </p>
+ </div>
 
-        <!-- Economia vs Lumi — versão verde (tema economia) -->
-        <div class="cost-grid" style="margin-top: 1.25rem;">
-            <div class="cost-card" style="border-color: var(--success); background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, var(--white) 100%);">
-                <h3 style="color: #1e8449;">Economia · Plano Core</h3>
-                <div class="cost-item">
-                    <span>1º Ano <span style="color: #888; font-size: 0.78rem;">(R$ 2.377/mês)</span></span>
-                    <span><strong>R$ 28.524</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−39%</span></span>
-                </div>
-                <div class="cost-item">
-                    <span>2º Ano em diante <span style="color: #888; font-size: 0.78rem;">(R$ 3.752/mês)</span></span>
-                    <span><strong>R$ 45.024</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−87%</span></span>
-                </div>
-                <div class="cost-item total" style="background: var(--success); color: var(--white);">
-                    <span>Média mensal economizada em 24 meses</span>
-                    <span>R$ 3.064 / mês</span>
-                </div>
-            </div>
+ <!-- Economia vs Lumi — versão verde (tema economia) -->
+ <div class="cost-grid" style="margin-top: 1.25rem;">
+ <div class="cost-card" style="border-color: var(--success); background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, var(--white) 100%);">
+ <h3 style="color: #1e8449;">Economia · Plano Core</h3>
+ <div class="cost-item">
+ <span>1º Ano <span style="color: #888; font-size: 0.78rem;">(R$ 2.377/mês)</span></span>
+ <span><strong>R$ 28.524</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−39%</span></span>
+ </div>
+ <div class="cost-item">
+ <span>2º Ano em diante <span style="color: #888; font-size: 0.78rem;">(R$ 3.752/mês)</span></span>
+ <span><strong>R$ 45.024</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−87%</span></span>
+ </div>
+ <div class="cost-item total" style="background: var(--success); color: var(--white);">
+ <span>Média mensal economizada em 24 meses</span>
+ <span>R$ 3.064 / mês</span>
+ </div>
+ </div>
 
-            <div class="cost-card" style="border-color: var(--success); background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, var(--white) 100%);">
-                <h3 style="color: #1e8449;">Economia · Plano Full</h3>
-                <div class="cost-item">
-                    <span>1º Ano <span style="color: #888; font-size: 0.78rem;">(R$ 735/mês)</span></span>
-                    <span><strong>R$ 8.824</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−12%</span></span>
-                </div>
-                <div class="cost-item">
-                    <span>2º Ano em diante <span style="color: #888; font-size: 0.78rem;">(R$ 3.152/mês)</span></span>
-                    <span><strong>R$ 37.824</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−73%</span></span>
-                </div>
-                <div class="cost-item total" style="background: var(--success); color: var(--white);">
-                    <span>Média mensal economizada em 24 meses</span>
-                    <span>R$ 1.944 / mês</span>
-                </div>
-            </div>
-        </div>
+ <div class="cost-card" style="border-color: var(--success); background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, var(--white) 100%);">
+ <h3 style="color: #1e8449;">Economia · Plano Full</h3>
+ <div class="cost-item">
+ <span>1º Ano <span style="color: #888; font-size: 0.78rem;">(R$ 735/mês)</span></span>
+ <span><strong>R$ 8.824</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−12%</span></span>
+ </div>
+ <div class="cost-item">
+ <span>2º Ano em diante <span style="color: #888; font-size: 0.78rem;">(R$ 3.152/mês)</span></span>
+ <span><strong>R$ 37.824</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−73%</span></span>
+ </div>
+ <div class="cost-item total" style="background: var(--success); color: var(--white);">
+ <span>Média mensal economizada em 24 meses</span>
+ <span>R$ 1.944 / mês</span>
+ </div>
+ </div>
+ </div>
 
-        <div class="cost-card" style="margin-top: 1.25rem; border-color: var(--success); background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, var(--white) 100%);">
-            <h3 style="color: #1e8449;">Economia Acumulada em 5 Anos</h3>
-            <p style="font-size: 0.82rem; color: #666; margin: -0.5rem 0 0.85rem; font-weight: 500;">
-                Base de comparação — Lumi em 5 anos: <strong style="color: var(--secondary);">R$ 280.120</strong> · cenário 4 sócios
-            </p>
-            <div class="cost-item">
-                <span>Plano Core <span style="color: #888; font-size: 0.82rem;">(investido R$ 71.500)</span></span>
-                <span><strong>R$ 208.620</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−74%</span></span>
-            </div>
-            <div class="cost-item">
-                <span>Plano Full <span style="color: #888; font-size: 0.82rem;">(investido R$ 120.000)</span></span>
-                <span><strong>R$ 160.120</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−57%</span></span>
-            </div>
-            <div class="cost-item total" style="background: var(--success); color: var(--white);">
-                <span>Média mensal economizada em 60 meses</span>
-                <span>Core R$ 3.477 · Full R$ 2.669</span>
-            </div>
-        </div>
+ <div class="cost-card" style="margin-top: 1.25rem; border-color: var(--success); background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, var(--white) 100%);">
+ <h3 style="color: #1e8449;">Economia Acumulada em 5 Anos</h3>
+ <p style="font-size: 0.82rem; color: #666; margin: -0.5rem 0 0.85rem; font-weight: 500;">
+ Base de comparação — Lumi em 5 anos: <strong style="color: var(--secondary);">R$ 280.120</strong> · cenário 4 sócios
+ </p>
+ <div class="cost-item">
+ <span>Plano Core <span style="color: #888; font-size: 0.82rem;">(investido R$ 71.500)</span></span>
+ <span><strong>R$ 208.620</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−74%</span></span>
+ </div>
+ <div class="cost-item">
+ <span>Plano Full <span style="color: #888; font-size: 0.82rem;">(investido R$ 120.000)</span></span>
+ <span><strong>R$ 160.120</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−57%</span></span>
+ </div>
+ <div class="cost-item total" style="background: var(--success); color: var(--white);">
+ <span>Média mensal economizada em 60 meses</span>
+ <span>Core R$ 3.477 · Full R$ 2.669</span>
+ </div>
+ </div>
 
-        <!-- Base de comparação — versão comercial -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem;">
-            <!-- LUMI -->
-            <div style="background: #fff; border: 1px solid #e8e8e8; border-top: 4px solid var(--danger); border-radius: 10px; padding: 1.1rem 1.25rem;">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
-                    <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(231,76,60,0.12); color: var(--danger); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">📕</div>
-                    <div>
-                        <div style="font-size: 0.66rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700;">Base Lumi · Plano Flex</div>
-                        <div style="font-size: 0.88rem; font-weight: 700; color: var(--secondary);">Mensalidade para sempre</div>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.78rem;">
-                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
-                        <span style="color: #666;">Parametrização <small style="color: #999;">(R$ 2.500 × 4 sócios)</small></span>
-                        <strong style="color: var(--secondary);">R$ 10.000</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
-                        <span style="color: #666;">12 mensalidades <small style="color: #999;">(R$ 4.302/mês)</small></span>
-                        <strong style="color: var(--secondary);">R$ 51.624</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
-                        <span style="color: #666;">White Label <small style="color: #999;">(R$ 3.000 × 4)</small></span>
-                        <strong style="color: var(--secondary);">R$ 12.000</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.45rem 0.6rem; background: rgba(231,76,60,0.08); border-radius: 6px; margin-top: 0.3rem;">
-                        <strong style="color: var(--danger);">Total 1º Ano (4 sócios)</strong>
-                        <strong style="color: var(--danger); font-size: 0.95rem;">R$ 73.624</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.55rem 0.7rem; background: var(--danger); color: #fff; border-radius: 6px; margin-top: 0.4rem;">
-                        <strong>Total 5 anos</strong>
-                        <strong style="font-size: 1rem;">R$ 280.120</strong>
-                    </div>
-                </div>
-            </div>
+ <!-- Base de comparação — versão comercial -->
+ <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem;">
+ <!-- LUMI -->
+ <div style="background: #fff; border: 1px solid #e8e8e8; border-top: 4px solid var(--danger); border-radius: 10px; padding: 1.1rem 1.25rem;">
+ <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+ <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(231,76,60,0.12); color: var(--danger); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;"></div>
+ <div>
+ <div style="font-size: 0.66rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700;">Base Lumi · Plano Flex</div>
+ <div style="font-size: 0.88rem; font-weight: 700; color: var(--secondary);">Mensalidade para sempre</div>
+ </div>
+ </div>
+ <div style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.78rem;">
+ <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+ <span style="color: #666;">Parametrização <small style="color: #999;">(R$ 2.500 × 4 sócios)</small></span>
+ <strong style="color: var(--secondary);">R$ 10.000</strong>
+ </div>
+ <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+ <span style="color: #666;">12 mensalidades <small style="color: #999;">(R$ 4.302/mês)</small></span>
+ <strong style="color: var(--secondary);">R$ 51.624</strong>
+ </div>
+ <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+ <span style="color: #666;">White Label <small style="color: #999;">(R$ 3.000 × 4)</small></span>
+ <strong style="color: var(--secondary);">R$ 12.000</strong>
+ </div>
+ <div style="display: flex; justify-content: space-between; padding: 0.45rem 0.6rem; background: rgba(231,76,60,0.08); border-radius: 6px; margin-top: 0.3rem;">
+ <strong style="color: var(--danger);">Total 1º Ano (4 sócios)</strong>
+ <strong style="color: var(--danger); font-size: 0.95rem;">R$ 73.624</strong>
+ </div>
+ <div style="display: flex; justify-content: space-between; padding: 0.55rem 0.7rem; background: var(--danger); color: #fff; border-radius: 6px; margin-top: 0.4rem;">
+ <strong>Total 5 anos</strong>
+ <strong style="font-size: 1rem;">R$ 280.120</strong>
+ </div>
+ </div>
+ </div>
 
-            <!-- NOSSA -->
-            <div style="background: #fff; border: 1px solid #e8e8e8; border-top: 4px solid var(--success); border-radius: 10px; padding: 1.1rem 1.25rem;">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
-                    <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(39,174,96,0.12); color: var(--success); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">💚</div>
-                    <div>
-                        <div style="font-size: 0.66rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700;">Nossa Solução</div>
-                        <div style="font-size: 0.88rem; font-weight: 700; color: var(--secondary);">Paga uma vez, opera sempre</div>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.78rem;">
-                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
-                        <span style="color: #666;">Assessment <small style="color: #999;">(R$ 2.500 × 4)</small></span>
-                        <strong style="color: var(--secondary);">R$ 10.000</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
-                        <span style="color: #666;">Desenvolvimento <small style="color: #999;">(Core → Full)</small></span>
-                        <strong style="color: var(--secondary);">R$ 28.500 – 41.000</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
-                        <span style="color: #666;">Infra + APIs 12m <small style="color: #999;">(Core → Full)</small></span>
-                        <strong style="color: var(--secondary);">R$ 6.600 – 13.800</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.45rem 0.6rem; background: rgba(39,174,96,0.08); border-radius: 6px; margin-top: 0.3rem;">
-                        <strong style="color: var(--success);">Total 1º Ano (4 sócios)</strong>
-                        <strong style="color: var(--success); font-size: 0.95rem;">R$ 45.100 – 64.800</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.55rem 0.7rem; background: var(--success); color: #fff; border-radius: 6px; margin-top: 0.4rem;">
-                        <strong>Total 5 anos</strong>
-                        <strong style="font-size: 1rem;">R$ 71.500 – 120.000</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
+ <!-- NOSSA -->
+ <div style="background: #fff; border: 1px solid #e8e8e8; border-top: 4px solid var(--success); border-radius: 10px; padding: 1.1rem 1.25rem;">
+ <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+ <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(39,174,96,0.12); color: var(--success); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;"></div>
+ <div>
+ <div style="font-size: 0.66rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700;">Nossa Solução</div>
+ <div style="font-size: 0.88rem; font-weight: 700; color: var(--secondary);">Paga uma vez, opera sempre</div>
+ </div>
+ </div>
+ <div style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.78rem;">
+ <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+ <span style="color: #666;">Assessment <small style="color: #999;">(R$ 2.500 × 4)</small></span>
+ <strong style="color: var(--secondary);">R$ 10.000</strong>
+ </div>
+ <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+ <span style="color: #666;">Desenvolvimento <small style="color: #999;">(Core → Full)</small></span>
+ <strong style="color: var(--secondary);">R$ 28.500 – 41.000</strong>
+ </div>
+ <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+ <span style="color: #666;">Infra + APIs 12m <small style="color: #999;">(Core → Full)</small></span>
+ <strong style="color: var(--secondary);">R$ 6.600 – 13.800</strong>
+ </div>
+ <div style="display: flex; justify-content: space-between; padding: 0.45rem 0.6rem; background: rgba(39,174,96,0.08); border-radius: 6px; margin-top: 0.3rem;">
+ <strong style="color: var(--success);">Total 1º Ano (4 sócios)</strong>
+ <strong style="color: var(--success); font-size: 0.95rem;">R$ 45.100 – 64.800</strong>
+ </div>
+ <div style="display: flex; justify-content: space-between; padding: 0.55rem 0.7rem; background: var(--success); color: #fff; border-radius: 6px; margin-top: 0.4rem;">
+ <strong>Total 5 anos</strong>
+ <strong style="font-size: 1rem;">R$ 71.500 – 120.000</strong>
+ </div>
+ </div>
+ </div>
+ </div>
 
-        <div style="margin-top: 0.85rem; padding: 0.75rem 1rem; background: linear-gradient(90deg, rgba(39,174,96,0.1), rgba(39,174,96,0.02)); border-left: 3px solid var(--success); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-            <div style="font-size: 0.82rem; color: #444;">
-                <strong style="color: var(--success);">✓ Fonte oficial:</strong> valores da Lumi extraídos da <strong>Proposta Comercial 1046/25</strong> (11/08/2025, Plano Flex).
-            </div>
-            <div style="font-size: 0.74rem; color: #666;">
-                Zero mensalidade de plataforma · Zero amarração · Propriedade do código
-            </div>
-        </div>
+ <div style="margin-top: 0.85rem; padding: 0.75rem 1rem; background: linear-gradient(90deg, rgba(39,174,96,0.1), rgba(39,174,96,0.02)); border-left: 3px solid var(--success); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+ <div style="font-size: 0.82rem; color: #444;">
+ <strong style="color: var(--success);">✓ Fonte oficial:</strong> valores da Lumi extraídos da <strong>Proposta Comercial 1046/25</strong> (11/08/2025, Plano Flex).
+ </div>
+ <div style="font-size: 0.74rem; color: #666;">
+ Zero mensalidade de plataforma · Zero amarração · Propriedade do código
+ </div>
+ </div>
 
-        <!-- Custo por UC -->
-        <div class="section">
-            <h2 class="section-title">
-                <span class="icon">4</span>
-                Impacto do Custo por UC
-            </h2>
+ <!-- Custo por UC -->
+ <div class="section">
+ <h2 class="section-title">
+ <span class="icon">4</span>
+ Impacto do Custo por UC
+ </h2>
 
-            <p style="margin-bottom: 1.5rem;">
-                O modelo Lumi cobra <strong>R$ 6,00 por UC por mês</strong>. Este custo escala linearmente:
-            </p>
+ <p style="margin-bottom: 1.5rem;">
+ O modelo Lumi cobra <strong>R$ 6,00 por UC por mês</strong>. Este custo escala linearmente:
+ </p>
 
-            <table class="partner-table">
-                <thead>
-                    <tr>
-                        <th>Quantidade UCs</th>
-                        <th>Custo UC/Mês (Lumi)</th>
-                        <th>Custo UC/Ano (Lumi)</th>
-                        <th>Nossa Solução</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>100 UCs</td>
-                        <td class="text-right">R$ 600</td>
-                        <td class="text-right">R$ 7.200</td>
-                        <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
-                    </tr>
-                    <tr>
-                        <td>300 UCs</td>
-                        <td class="text-right">R$ 1.800</td>
-                        <td class="text-right">R$ 21.600</td>
-                        <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
-                    </tr>
-                    <tr>
-                        <td>500 UCs</td>
-                        <td class="text-right">R$ 3.000</td>
-                        <td class="text-right">R$ 36.000</td>
-                        <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
-                    </tr>
-                    <tr>
-                        <td>1.000 UCs</td>
-                        <td class="text-right">R$ 5.750*</td>
-                        <td class="text-right">R$ 69.000</td>
-                        <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="font-size: 0.8rem; color: var(--gray); margin-top: 0.5rem;">
-                *Lumi oferece desconto por volume (R$ 5,75/UC acima de 500 UCs)
-            </p>
+ <table class="partner-table">
+ <thead>
+ <tr>
+ <th>Quantidade UCs</th>
+ <th>Custo UC/Mês (Lumi)</th>
+ <th>Custo UC/Ano (Lumi)</th>
+ <th>Nossa Solução</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>100 UCs</td>
+ <td class="text-right">R$ 600</td>
+ <td class="text-right">R$ 7.200</td>
+ <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
+ </tr>
+ <tr>
+ <td>300 UCs</td>
+ <td class="text-right">R$ 1.800</td>
+ <td class="text-right">R$ 21.600</td>
+ <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
+ </tr>
+ <tr>
+ <td>500 UCs</td>
+ <td class="text-right">R$ 3.000</td>
+ <td class="text-right">R$ 36.000</td>
+ <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
+ </tr>
+ <tr>
+ <td>1.000 UCs</td>
+ <td class="text-right">R$ 5.750*</td>
+ <td class="text-right">R$ 69.000</td>
+ <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
+ </tr>
+ </tbody>
+ </table>
+ <p style="font-size: 0.8rem; color: var(--gray); margin-top: 0.5rem;">
+ *Lumi oferece desconto por volume (R$ 5,75/UC acima de 500 UCs)
+ </p>
 
-            <div class="alert-box" style="margin-top: 1.5rem;">
-                <h4>Crescimento = Custo Crescente na Lumi</h4>
-                <p>Cada novo cliente que você conquista <strong>aumenta seu custo mensal</strong> no modelo SaaS. Na nossa solução, o crescimento não gera custo adicional de licença.</p>
-            </div>
-        </div>
+ <div class="alert-box" style="margin-top: 1.5rem;">
+ <h4>Crescimento = Custo Crescente na Lumi</h4>
+ <p>Cada novo cliente que você conquista <strong>aumenta seu custo mensal</strong> no modelo SaaS. Na nossa solução, o crescimento não gera custo adicional de licença.</p>
+ </div>
+ </div>
 
-        <!-- Comparativo de Funcionalidades -->
-        <div class="section">
-            <h2 class="section-title">
-                <span class="icon">5</span>
-                Comparativo de Funcionalidades
-            </h2>
+ <!-- Comparativo de Funcionalidades -->
+ <div class="section">
+ <h2 class="section-title">
+ <span class="icon">5</span>
+ Comparativo de Funcionalidades
+ </h2>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th style="width: 40%;">Funcionalidade</th>
-                        <th class="header-ours" style="width: 30%;">Nossa Solução</th>
-                        <th class="header-competitor" style="width: 30%;">Lumi Flex</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="feature-name">Gestão de Créditos (% e Prioridade)</td>
-                        <td><span class="check">Sim</span></td>
-                        <td><span class="check">Sim</span></td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Emissão de Boletos</td>
-                        <td><span class="check">Sim</span> - via Asaas</td>
-                        <td><span class="check">Sim</span></td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Pix Cobrança (QR Code)</td>
-                        <td><span class="check">Sim</span> - via Asaas</td>
-                        <td><span class="partial">Parcial</span></td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Baixa automática + conciliação</td>
-                        <td><span class="check">Sim</span> - Webhook Asaas</td>
-                        <td><span class="partial">Parcial</span></td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">WhatsApp como canal principal</td>
-                        <td><span class="check">Sim</span> - Nativo (envio unidirecional)</td>
-                        <td><span class="cross">Não</span> - Email</td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Notificações in-app em tempo real</td>
-                        <td><span class="check">Sim</span> - SignalR (sino + toast + painel)</td>
-                        <td><span class="cross">Não</span></td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Multitenancy (4 sócios)</td>
-                        <td><span class="check">Sim</span> - 1 banco de dados dedicado por sócio (multibanco), custo único</td>
-                        <td><span class="cross">4x o preço</span></td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Custo por UC adicional</td>
-                        <td><span class="check">R$ 0,00</span></td>
-                        <td><span class="cross">R$ 6,00/UC</span></td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Propriedade do Código</td>
-                        <td><span class="check">Sim</span> - 100%</td>
-                        <td><span class="cross">Não</span></td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Personalização Ilimitada</td>
-                        <td><span class="check">Sim</span></td>
-                        <td><span class="cross">Limitada</span></td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Sem Vendor Lock-in</td>
-                        <td><span class="check">Sim</span></td>
-                        <td><span class="cross">Não</span></td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Gateway brasileiro (Asaas)</td>
-                        <td><span class="check">Sim</span> - Nativo</td>
-                        <td><span class="partial">Limitado</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+ <table class="comparison-table">
+ <thead>
+ <tr>
+ <th style="width: 40%;">Funcionalidade</th>
+ <th class="header-ours" style="width: 30%;">Nossa Solução</th>
+ <th class="header-competitor" style="width: 30%;">Lumi Flex</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td class="feature-name">Gestão de Créditos (% e Prioridade)</td>
+ <td><span class="check">Sim</span></td>
+ <td><span class="check">Sim</span></td>
+ </tr>
+ <tr>
+ <td class="feature-name">Emissão de Boletos</td>
+ <td><span class="check">Sim</span> - via Asaas</td>
+ <td><span class="check">Sim</span></td>
+ </tr>
+ <tr>
+ <td class="feature-name">Pix Cobrança (QR Code)</td>
+ <td><span class="check">Sim</span> - via Asaas</td>
+ <td><span class="partial">Parcial</span></td>
+ </tr>
+ <tr>
+ <td class="feature-name">Baixa automática + conciliação</td>
+ <td><span class="check">Sim</span> - Webhook Asaas</td>
+ <td><span class="partial">Parcial</span></td>
+ </tr>
+ <tr>
+ <td class="feature-name">WhatsApp como canal principal</td>
+ <td><span class="check">Sim</span> - Nativo (envio unidirecional)</td>
+ <td><span class="cross">Não</span> - Email</td>
+ </tr>
+ <tr>
+ <td class="feature-name">Notificações in-app em tempo real</td>
+ <td><span class="check">Sim</span> - SignalR (sino + toast + painel)</td>
+ <td><span class="cross">Não</span></td>
+ </tr>
+ <tr>
+ <td class="feature-name">Multitenancy (4 sócios)</td>
+ <td><span class="check">Sim</span> - 1 banco de dados dedicado por sócio (multibanco), custo único</td>
+ <td><span class="cross">4x o preço</span></td>
+ </tr>
+ <tr>
+ <td class="feature-name">Custo por UC adicional</td>
+ <td><span class="check">R$ 0,00</span></td>
+ <td><span class="cross">R$ 6,00/UC</span></td>
+ </tr>
+ <tr>
+ <td class="feature-name">Propriedade do Código</td>
+ <td><span class="check">Sim</span> - 100%</td>
+ <td><span class="cross">Não</span></td>
+ </tr>
+ <tr>
+ <td class="feature-name">Personalização Ilimitada</td>
+ <td><span class="check">Sim</span></td>
+ <td><span class="cross">Limitada</span></td>
+ </tr>
+ <tr>
+ <td class="feature-name">Sem Vendor Lock-in</td>
+ <td><span class="check">Sim</span></td>
+ <td><span class="cross">Não</span></td>
+ </tr>
+ <tr>
+ <td class="feature-name">Gateway brasileiro (Asaas)</td>
+ <td><span class="check">Sim</span> - Nativo</td>
+ <td><span class="partial">Limitado</span></td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
 
-        <!-- Vantagens Estratégicas -->
-        <div class="section">
-            <h2 class="section-title">
-                <span class="icon">6</span>
-                Vantagens Estratégicas da Solução Própria
-            </h2>
+ <!-- Vantagens Estratégicas -->
+ <div class="section">
+ <h2 class="section-title">
+ <span class="icon">6</span>
+ Vantagens Estratégicas da Solução Própria
+ </h2>
 
-            <div class="advantages-grid">
-                <div class="advantage-card">
-                    <h4>Core Único para 4 Sócios</h4>
-                    <p>Core de R$ 28.500 (único) cobre todos os 4 sócios, cada um com seu próprio banco de dados dedicado (multibanco). Cada sócio paga seu próprio Assessment (R$ 2.500 a R$ 6.000). Na Lumi, cada sócio paga setup + mensalidade separadamente (4x, para sempre).</p>
-                </div>
-                <div class="advantage-card">
-                    <h4>Zero Custo por UC</h4>
-                    <p>Crescer de 297 para 1.000 UCs não adiciona custo. Na Lumi, seria +R$ 4.200/mês.</p>
-                </div>
-                <div class="advantage-card">
-                    <h4>WhatsApp Nativo</h4>
-                    <p>Envio de faturas, boletos e documentos via Cloud API oficial (Meta) + templates HSM. Canal unidirecional — bot conversacional via n8n é melhoria futura, escopo separado. Lumi usa email como padrão.</p>
-                </div>
-                <div class="advantage-card">
-                    <h4>Pagamento Automatizado (Asaas)</h4>
-                    <p>Boletos, Pix e baixa automática via webhook. Conciliação bancária automatizada — adeus à planilha de "quem pagou no mês".</p>
-                </div>
-                <div class="advantage-card">
-                    <h4>Notificações em Tempo Real (SignalR)</h4>
-                    <p>Push in-app via WebSocket: sino com badge, toast no canto e painel dropdown. Eventos de pagamento, faturamento, geração e alertas chegam instantaneamente, com isolamento por tenant. A Lumi não oferece notificações in-app.</p>
-                </div>
-                <div class="advantage-card">
-                    <h4>🤖 Roadmap: Bot WhatsApp via n8n</h4>
-                    <p>Evolução planejada do módulo WhatsApp com fluxos automatizados de atendimento (2ª via, status de pagamento, FAQs, roteamento) via n8n + Cloud API. Desenvolvimento independente, orçado separadamente após Go-Live.</p>
-                </div>
-                <div class="advantage-card" style="border-left-color: var(--success); background: rgba(39,174,96,0.08);">
-                    <h4 style="color: var(--success);">Fim da Mensalidade / Zero Amarração</h4>
-                    <p>Sem mensalidade de plataforma. A partir do Ano 2 você paga <strong>apenas Infra + APIs conforme uso</strong> (~R$ 200/mês Básico 1 sócio a ~R$ 1.150/mês Full 4 sócios). Suporte e evoluções são <strong>100% sob demanda</strong> — você contrata quando precisa, pelo que precisa. Zero vendor lock-in, zero contrato de recorrência.</p>
-                </div>
-                <div class="advantage-card">
-                    <h4>Independência Total</h4>
-                    <p>Sem risco de aumento de preços, mudanca de termos ou descontinuacao pelo fornecedor.</p>
-                </div>
-                <div class="advantage-card">
-                    <h4>Arquitetura Multibanco</h4>
-                    <p>Cada sócio tem <strong>seu próprio banco de dados dedicado</strong>. Isolamento físico total, backup e restore totalmente independentes.</p>
-                </div>
-            </div>
-        </div>
+ <div class="advantages-grid">
+ <div class="advantage-card">
+ <h4>Core Único para 4 Sócios</h4>
+ <p>Core de R$ 28.500 (único) cobre todos os 4 sócios, cada um com seu próprio banco de dados dedicado (multibanco). Cada sócio paga seu próprio Assessment (R$ 2.500 a R$ 6.000). Na Lumi, cada sócio paga setup + mensalidade separadamente (4x, para sempre).</p>
+ </div>
+ <div class="advantage-card">
+ <h4>Zero Custo por UC</h4>
+ <p>Crescer de 297 para 1.000 UCs não adiciona custo. Na Lumi, seria +R$ 4.200/mês.</p>
+ </div>
+ <div class="advantage-card">
+ <h4>WhatsApp Nativo</h4>
+ <p>Envio de faturas, boletos e documentos via Cloud API oficial (Meta) + templates HSM. Canal unidirecional — bot conversacional via n8n é melhoria futura, escopo separado. Lumi usa email como padrão.</p>
+ </div>
+ <div class="advantage-card">
+ <h4>Pagamento Automatizado (Asaas)</h4>
+ <p>Boletos, Pix e baixa automática via webhook. Conciliação bancária automatizada — adeus à planilha de "quem pagou no mês".</p>
+ </div>
+ <div class="advantage-card">
+ <h4>Notificações em Tempo Real (SignalR)</h4>
+ <p>Push in-app via WebSocket: sino com badge, toast no canto e painel dropdown. Eventos de pagamento, faturamento, geração e alertas chegam instantaneamente, com isolamento por tenant. A Lumi não oferece notificações in-app.</p>
+ </div>
+ <div class="advantage-card">
+ <h4> Roadmap: Bot WhatsApp via n8n</h4>
+ <p>Evolução planejada do módulo WhatsApp com fluxos automatizados de atendimento (2ª via, status de pagamento, FAQs, roteamento) via n8n + Cloud API. Desenvolvimento independente, orçado separadamente após Go-Live.</p>
+ </div>
+ <div class="advantage-card" style="border-left-color: var(--success); background: rgba(39,174,96,0.08);">
+ <h4 style="color: var(--success);">Fim da Mensalidade / Zero Amarração</h4>
+ <p>Sem mensalidade de plataforma. A partir do Ano 2 você paga <strong>apenas Infra + APIs conforme uso</strong> (~R$ 200/mês Básico 1 sócio a ~R$ 1.150/mês Full 4 sócios). Suporte e evoluções são <strong>100% sob demanda</strong> — você contrata quando precisa, pelo que precisa. Zero vendor lock-in, zero contrato de recorrência.</p>
+ </div>
+ <div class="advantage-card">
+ <h4>Independência Total</h4>
+ <p>Sem risco de aumento de preços, mudanca de termos ou descontinuacao pelo fornecedor.</p>
+ </div>
+ <div class="advantage-card">
+ <h4>Arquitetura Multibanco</h4>
+ <p>Cada sócio tem <strong>seu próprio banco de dados dedicado</strong>. Isolamento físico total, backup e restore totalmente independentes.</p>
+ </div>
+ </div>
+ </div>
 
-        <!-- Riscos SaaS -->
-        <div class="section">
-            <h2 class="section-title">
-                <span class="icon">7</span>
-                Riscos do Modelo SaaS para Múltiplos Sócios
-            </h2>
+ <!-- Riscos SaaS -->
+ <div class="section">
+ <h2 class="section-title">
+ <span class="icon">7</span>
+ Riscos do Modelo SaaS para Múltiplos Sócios
+ </h2>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Risco</th>
-                        <th>Impacto no Cenário 4 Sócios</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="feature-name">Reajuste anual de preços</td>
-                        <td>Aumento de 10% impacta R$ 5.160/ano (sobre R$ 51.600)</td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Novo sócio entra</td>
-                        <td>+R$ 2.500 setup + mensalidade proporcional</td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Crescimento de 50% nas UCs</td>
-                        <td>+R$ 1.070/mês = +R$ 12.840/ano</td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Migração para plano Business</td>
-                        <td>Custo salta de R$ 4.302 para ~R$ 7.100/mês</td>
-                    </tr>
-                    <tr>
-                        <td class="feature-name">Descontinuação do serviço</td>
-                        <td>Perda total dos dados e necessidade de nova solução</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+ <table class="comparison-table">
+ <thead>
+ <tr>
+ <th>Risco</th>
+ <th>Impacto no Cenário 4 Sócios</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td class="feature-name">Reajuste anual de preços</td>
+ <td>Aumento de 10% impacta R$ 5.160/ano (sobre R$ 51.600)</td>
+ </tr>
+ <tr>
+ <td class="feature-name">Novo sócio entra</td>
+ <td>+R$ 2.500 setup + mensalidade proporcional</td>
+ </tr>
+ <tr>
+ <td class="feature-name">Crescimento de 50% nas UCs</td>
+ <td>+R$ 1.070/mês = +R$ 12.840/ano</td>
+ </tr>
+ <tr>
+ <td class="feature-name">Migração para plano Business</td>
+ <td>Custo salta de R$ 4.302 para ~R$ 7.100/mês</td>
+ </tr>
+ <tr>
+ <td class="feature-name">Descontinuação do serviço</td>
+ <td>Perda total dos dados e necessidade de nova solução</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
 
-        <!-- Conclusão -->
-        <div class="section">
-            <h2 class="section-title">
-                <span class="icon">8</span>
-                Conclusão
-            </h2>
+ <!-- Conclusão -->
+ <div class="section">
+ <h2 class="section-title">
+ <span class="icon">8</span>
+ Conclusão
+ </h2>
 
-            <div style="background: var(--light); border-radius: 12px; padding: 2rem; border-left: 4px solid var(--success);">
-                <h3 style="color: var(--success); margin-bottom: 1rem;">Recomendação: Solução Própria com Modelo Modular</h3>
-                <p style="font-size: 1.1rem; line-height: 1.8;">
-                    O modelo de precificação oferece <strong>flexibilidade e economia</strong>:
-                </p>
-                <ul style="margin: 1rem 0 0 1.5rem; line-height: 2;">
-                    <li><strong>Entrada a partir de R$ 33.400</strong> no 1º ano (Plano Básico, 1 sócio, já com Desenvolvimento + Assessment + Infra+APIs 12m)</li>
-                    <li><strong>R$ 16.200 por sócio</strong> quando 4 sócios dividem (Plano Full, 1º ano completo)</li>
-                    <li><strong>R$ 160.120 de economia</strong> em 5 anos vs Lumi (4 sócios, Plano Full) · <strong>R$ 208.620</strong> no Plano Core</li>
-                    <li><strong>Fim da mensalidade</strong> — a partir do Ano 2 você paga apenas Infra+APIs (~R$ 200 a R$ 1.150/mês conforme plano e nº de sócios)</li>
-                    <li><strong>Custo fixo</strong> independente do número de UCs</li>
-                    <li><strong>Módulos opcionais</strong> - Asaas, WhatsApp, Parser e Relatórios podem ser adicionados depois</li>
-                    <li><strong>Propriedade total</strong> do código e dados</li>
-                </ul>
-            </div>
+ <div style="background: var(--light); border-radius: 12px; padding: 2rem; border-left: 4px solid var(--success);">
+ <h3 style="color: var(--success); margin-bottom: 1rem;">Recomendação: Solução Própria com Modelo Modular</h3>
+ <p style="font-size: 1.1rem; line-height: 1.8;">
+ O modelo de precificação oferece <strong>flexibilidade e economia</strong>:
+ </p>
+ <ul style="margin: 1rem 0 0 1.5rem; line-height: 2;">
+ <li><strong>Entrada a partir de R$ 33.400</strong> no 1º ano (Plano Básico, 1 sócio, já com Desenvolvimento + Assessment + Infra+APIs 12m)</li>
+ <li><strong>R$ 16.200 por sócio</strong> quando 4 sócios dividem (Plano Full, 1º ano completo)</li>
+ <li><strong>R$ 160.120 de economia</strong> em 5 anos vs Lumi (4 sócios, Plano Full) · <strong>R$ 208.620</strong> no Plano Core</li>
+ <li><strong>Fim da mensalidade</strong> — a partir do Ano 2 você paga apenas Infra+APIs (~R$ 200 a R$ 1.150/mês conforme plano e nº de sócios)</li>
+ <li><strong>Custo fixo</strong> independente do número de UCs</li>
+ <li><strong>Módulos opcionais</strong> - Asaas, WhatsApp, Parser e Relatórios podem ser adicionados depois</li>
+ <li><strong>Propriedade total</strong> do código e dados</li>
+ </ul>
+ </div>
 
-            <div style="background: rgba(52,152,219,0.05); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; border: 1px solid rgba(52,152,219,0.3);">
-                <h4 style="color: #3498db; margin-bottom: 1rem;">Planos e Preços</h4>
-                <table style="width: 100%; font-size: 0.82rem; border-collapse: collapse; table-layout: fixed;">
-                    <colgroup>
-                        <col style="width: 16%">
-                        <col style="width: 11%">
-                        <col style="width: 11%">
-                        <col style="width: 12%">
-                        <col style="width: 12%">
-                        <col style="width: 13%">
-                        <col style="width: 12%">
-                        <col style="width: 13%">
-                    </colgroup>
-                    <thead>
-                        <tr style="background: #3498db; color: white;">
-                            <th style="padding: 0.55rem 0.4rem; text-align: left;">Plano</th>
-                            <th style="padding: 0.55rem 0.4rem; text-align: center;">💻 Desenvolv.</th>
-                            <th style="padding: 0.55rem 0.4rem; text-align: center;">📋 Assessment<br><span style="font-size: 0.62rem; font-weight: 400;">(piso)</span></th>
-                            <th style="padding: 0.55rem 0.4rem; text-align: center;">☁️ Infra+APIs<br><span style="font-size: 0.62rem; font-weight: 400;">(12 meses)</span></th>
-                            <th style="padding: 0.55rem 0.4rem; text-align: center;">Total 1º ano<br><span style="font-size: 0.62rem; font-weight: 400;">1 sócio</span></th>
-                            <th style="padding: 0.55rem 0.4rem; text-align: center;">Total 1º ano<br><span style="font-size: 0.62rem; font-weight: 400;">4 sócios</span></th>
-                            <th style="padding: 0.55rem 0.4rem; text-align: center; background: #e74c3c;">Lumi<br><span style="font-size: 0.62rem; font-weight: 400;">(1º ano, 4 sócios)</span></th>
-                            <th style="padding: 0.55rem 0.4rem; text-align: center; background: var(--success);">💰 Economia<br><span style="font-size: 0.62rem; font-weight: 400;">vs Lumi</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 2px solid #ddd; background: rgba(39,174,96,0.1);">
-                            <td style="padding: 0.55rem 0.4rem;"><strong>Básico</strong><br><span style="font-size: 0.7rem; color: #666;">Core MVP</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 28.500</td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 2.500</td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 2.400<br><span style="font-size: 0.6rem; color: #888;">~R$200/mês</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: var(--success);">R$ 33.400</td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 45.100<br><span style="font-size: 0.64rem; color: #666; font-weight: 400;">R$ 11.275/sócio</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: var(--danger); background: rgba(231,76,60,0.08);">R$ 73.624<br><span style="font-size: 0.6rem; color: #888; font-weight: 400;">Plano Flex</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 800; color: var(--success); background: rgba(39,174,96,0.15);">R$ 28.524<br><span style="font-size: 0.64rem; font-weight: 700;">−39%</span></td>
-                        </tr>
-                        <tr style="border-bottom: 2px solid #ddd; background: rgba(52,152,219,0.1);">
-                            <td style="padding: 0.55rem 0.4rem;"><strong style="color: #3498db;">Médio</strong><br><span style="font-size: 0.7rem; color: #666;">+ Asaas + WhatsApp + SignalR</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 35.000</td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 2.500</td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 4.200<br><span style="font-size: 0.6rem; color: #888;">~R$350/mês</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: #3498db;">R$ 41.700</td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 55.800<br><span style="font-size: 0.64rem; color: #666; font-weight: 400;">R$ 13.950/sócio</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: var(--danger); background: rgba(231,76,60,0.08);">R$ 73.624<br><span style="font-size: 0.6rem; color: #888; font-weight: 400;">Plano Flex</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 800; color: var(--success); background: rgba(39,174,96,0.15);">R$ 17.824<br><span style="font-size: 0.64rem; font-weight: 700;">−24%</span></td>
-                        </tr>
-                        <tr style="background: rgba(212,168,73,0.18);">
-                            <td style="padding: 0.55rem 0.4rem;"><strong style="color: var(--primary);">Full ⭐</strong> <span style="background: var(--primary); color: #1a1a2e; font-size: 0.58rem; font-weight: 800; padding: 0.1rem 0.4rem; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Recomendado</span><br><span style="font-size: 0.7rem; color: #666;">+ Parser COELBA + Relatórios</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 41.000</td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 2.500</td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 5.400<br><span style="font-size: 0.6rem; color: #888;">~R$450/mês</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: var(--primary);">R$ 48.900</td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 64.800<br><span style="font-size: 0.64rem; color: #666; font-weight: 400;">R$ 16.200/sócio</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: var(--danger); background: rgba(231,76,60,0.08);">R$ 73.624<br><span style="font-size: 0.6rem; color: #888; font-weight: 400;">Plano Flex</span></td>
-                            <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 800; color: var(--success); background: rgba(39,174,96,0.15);">R$ 8.824<br><span style="font-size: 0.64rem; font-weight: 700;">−12%</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div style="margin-top: 1rem; padding: 1rem; background: #fafafa; border-left: 3px solid #3498db; border-radius: 6px; font-size: 0.82rem; color: #444; line-height: 1.7;">
-                    <p style="margin: 0 0 0.6rem 0;"><strong style="color: #3498db;">Como ler a tabela:</strong> cada plano = <strong>Desenvolvimento</strong> (custo único do código) + <strong>Assessment por sócio</strong> (R$ 2.500 a R$ 6.000 — a tabela considera o piso de R$ 2.500; valor final é definido após o workshop, conforme a complexidade da operação) + <strong>Infra + APIs (12 meses)</strong> — AWS, WhatsApp Cloud API e processamento.</p>
-                    <p style="margin: 0 0 0.6rem 0;"><strong style="color: #3498db;">Custo mensal de Infra + APIs:</strong><br>
-                        • <strong>1 sócio</strong> → Básico R$ 200 · Médio R$ 350 · Full R$ 450<br>
-                        • <strong>4 sócios</strong> → Básico R$ 550 · Médio R$ 900 · Full R$ 1.150
-                    </p>
-                    <p style="margin: 0 0 0.6rem 0;"><strong style="color: #3498db;">A partir do Ano 2:</strong> apenas Infra + APIs. <strong>Zero mensalidade de plataforma.</strong> Operações de alta complexidade podem exigir orçamento de desenvolvimento adicional após o Assessment.</p>
-                    <p style="margin: 0; padding-top: 0.6rem; border-top: 1px dashed #ddd;"><strong style="color: #3498db;">💾 Banco de dados:</strong> os valores acima consideram <strong>SQL Server Express</strong> (gratuito · limite de 10 GB por banco). Atende com folga o início da operação. <strong>Conforme o volume de dados crescer</strong> (próximo de 10 GB/sócio ou demanda por alta disponibilidade), pode ser necessário migrar para a edição paga (RDS SQL Server Standard, ~R$ 1.200–1.800/mês por sócio) — custo adicional, avaliado caso a caso.</p>
-                </div>
+ <div style="background: rgba(52,152,219,0.05); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; border: 1px solid rgba(52,152,219,0.3);">
+ <h4 style="color: #3498db; margin-bottom: 1rem;">Planos e Preços</h4>
+ <table style="width: 100%; font-size: 0.82rem; border-collapse: collapse; table-layout: fixed;">
+ <colgroup>
+ <col style="width: 16%">
+ <col style="width: 11%">
+ <col style="width: 11%">
+ <col style="width: 12%">
+ <col style="width: 12%">
+ <col style="width: 13%">
+ <col style="width: 12%">
+ <col style="width: 13%">
+ </colgroup>
+ <thead>
+ <tr style="background: #3498db; color: white;">
+ <th style="padding: 0.55rem 0.4rem; text-align: left;">Plano</th>
+ <th style="padding: 0.55rem 0.4rem; text-align: center;"> Desenvolv.</th>
+ <th style="padding: 0.55rem 0.4rem; text-align: center;"> Assessment<br><span style="font-size: 0.62rem; font-weight: 400;">(piso)</span></th>
+ <th style="padding: 0.55rem 0.4rem; text-align: center;"> Infra+APIs<br><span style="font-size: 0.62rem; font-weight: 400;">(12 meses)</span></th>
+ <th style="padding: 0.55rem 0.4rem; text-align: center;">Total 1º ano<br><span style="font-size: 0.62rem; font-weight: 400;">1 sócio</span></th>
+ <th style="padding: 0.55rem 0.4rem; text-align: center;">Total 1º ano<br><span style="font-size: 0.62rem; font-weight: 400;">4 sócios</span></th>
+ <th style="padding: 0.55rem 0.4rem; text-align: center; background: #e74c3c;">Lumi<br><span style="font-size: 0.62rem; font-weight: 400;">(1º ano, 4 sócios)</span></th>
+ <th style="padding: 0.55rem 0.4rem; text-align: center; background: var(--success);"> Economia<br><span style="font-size: 0.62rem; font-weight: 400;">vs Lumi</span></th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr style="border-bottom: 2px solid #ddd; background: rgba(39,174,96,0.1);">
+ <td style="padding: 0.55rem 0.4rem;"><strong>Básico</strong><br><span style="font-size: 0.7rem; color: #666;">Core MVP</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 28.500</td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 2.500</td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 2.400<br><span style="font-size: 0.6rem; color: #888;">~R$200/mês</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: var(--success);">R$ 33.400</td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 45.100<br><span style="font-size: 0.64rem; color: #666; font-weight: 400;">R$ 11.275/sócio</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: var(--danger); background: rgba(231,76,60,0.08);">R$ 73.624<br><span style="font-size: 0.6rem; color: #888; font-weight: 400;">Plano Flex</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 800; color: var(--success); background: rgba(39,174,96,0.15);">R$ 28.524<br><span style="font-size: 0.64rem; font-weight: 700;">−39%</span></td>
+ </tr>
+ <tr style="border-bottom: 2px solid #ddd; background: rgba(52,152,219,0.1);">
+ <td style="padding: 0.55rem 0.4rem;"><strong style="color: #3498db;">Médio</strong><br><span style="font-size: 0.7rem; color: #666;">+ Asaas + WhatsApp + SignalR</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 35.000</td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 2.500</td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 4.200<br><span style="font-size: 0.6rem; color: #888;">~R$350/mês</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: #3498db;">R$ 41.700</td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 55.800<br><span style="font-size: 0.64rem; color: #666; font-weight: 400;">R$ 13.950/sócio</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: var(--danger); background: rgba(231,76,60,0.08);">R$ 73.624<br><span style="font-size: 0.6rem; color: #888; font-weight: 400;">Plano Flex</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 800; color: var(--success); background: rgba(39,174,96,0.15);">R$ 17.824<br><span style="font-size: 0.64rem; font-weight: 700;">−24%</span></td>
+ </tr>
+ <tr style="background: rgba(212,168,73,0.18);">
+ <td style="padding: 0.55rem 0.4rem;"><strong style="color: var(--primary);">Full ⭐</strong> <span style="background: var(--primary); color: #1a1a2e; font-size: 0.58rem; font-weight: 800; padding: 0.1rem 0.4rem; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Recomendado</span><br><span style="font-size: 0.7rem; color: #666;">+ Parser COELBA + Relatórios</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 41.000</td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 2.500</td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; color: #555;">R$ 5.400<br><span style="font-size: 0.6rem; color: #888;">~R$450/mês</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: var(--primary);">R$ 48.900</td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700;">R$ 64.800<br><span style="font-size: 0.64rem; color: #666; font-weight: 400;">R$ 16.200/sócio</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 700; color: var(--danger); background: rgba(231,76,60,0.08);">R$ 73.624<br><span style="font-size: 0.6rem; color: #888; font-weight: 400;">Plano Flex</span></td>
+ <td style="padding: 0.55rem 0.4rem; text-align: center; font-weight: 800; color: var(--success); background: rgba(39,174,96,0.15);">R$ 8.824<br><span style="font-size: 0.64rem; font-weight: 700;">−12%</span></td>
+ </tr>
+ </tbody>
+ </table>
+ <div style="margin-top: 1rem; padding: 1rem; background: #fafafa; border-left: 3px solid #3498db; border-radius: 6px; font-size: 0.82rem; color: #444; line-height: 1.7;">
+ <p style="margin: 0 0 0.6rem 0;"><strong style="color: #3498db;">Como ler a tabela:</strong> cada plano = <strong>Desenvolvimento</strong> (custo único do código) + <strong>Assessment por sócio</strong> (R$ 2.500 a R$ 6.000 — a tabela considera o piso de R$ 2.500; valor final é definido após o workshop, conforme a complexidade da operação) + <strong>Infra + APIs (12 meses)</strong> — AWS, WhatsApp Cloud API e processamento.</p>
+ <p style="margin: 0 0 0.6rem 0;"><strong style="color: #3498db;">Custo mensal de Infra + APIs:</strong><br>
+ • <strong>1 sócio</strong> → Básico R$ 200 · Médio R$ 350 · Full R$ 450<br>
+ • <strong>4 sócios</strong> → Básico R$ 550 · Médio R$ 900 · Full R$ 1.150
+ </p>
+ <p style="margin: 0 0 0.6rem 0;"><strong style="color: #3498db;">A partir do Ano 2:</strong> apenas Infra + APIs. <strong>Zero mensalidade de plataforma.</strong> Operações de alta complexidade podem exigir orçamento de desenvolvimento adicional após o Assessment.</p>
+ <p style="margin: 0; padding-top: 0.6rem; border-top: 1px dashed #ddd;"><strong style="color: #3498db;"> Banco de dados:</strong> os valores acima consideram <strong>SQL Server Express</strong> (gratuito · limite de 10 GB por banco). Atende com folga o início da operação. <strong>Conforme o volume de dados crescer</strong> (próximo de 10 GB/sócio ou demanda por alta disponibilidade), pode ser necessário migrar para a edição paga (RDS SQL Server Standard, ~R$ 1.200–1.800/mês por sócio) — custo adicional, avaliado caso a caso.</p>
+ </div>
 
-                <div style="margin-top: 1rem; padding: 1rem; background: rgba(52,152,219,0.08); border: 1px dashed #3498db; border-radius: 8px;">
-                    <p style="font-size: 0.8rem; margin: 0; color: #555; line-height: 1.6;">
-                        <strong style="color: #3498db;">📌 Nota de Transparência:</strong> A precificação apresentada baseia-se em <strong>dados reais do primeiro sócio (ESQ Energia)</strong> e em <strong>estimativa técnica</strong> para o cenário provável dos demais 3 sócios, dada a ausência de dados específicos de suas operações neste momento. Os valores podem ser refinados após o Assessment individual de cada sócio adicional.
-                    </p>
-                </div>
-            </div>
+ <div style="margin-top: 1rem; padding: 1rem; background: rgba(52,152,219,0.08); border: 1px dashed #3498db; border-radius: 8px;">
+ <p style="font-size: 0.8rem; margin: 0; color: #555; line-height: 1.6;">
+ <strong style="color: #3498db;"> Nota de Transparência:</strong> A precificação apresentada baseia-se em <strong>dados reais do primeiro sócio (ESQ Energia)</strong> e em <strong>estimativa técnica</strong> para o cenário provável dos demais 3 sócios, dada a ausência de dados específicos de suas operações neste momento. Os valores podem ser refinados após o Assessment individual de cada sócio adicional.
+ </p>
+ </div>
+ </div>
 
-            <div class="summary-grid" style="margin-top: 2rem;">
-                <div class="summary-item">
-                    <div class="label">1 Sócio Básico (1º ano)</div>
-                    <div class="value success">R$ 33.400</div>
-                </div>
-                <div class="summary-item">
-                    <div class="label">Infra Ano 2+ (sem mensalidade)</div>
-                    <div class="value">~R$ 200/mês</div>
-                </div>
-                <div class="summary-item">
-                    <div class="label">Custo/UC</div>
-                    <div class="value success">R$ 0</div>
-                </div>
-                <div class="summary-item">
-                    <div class="label">Economia 5 Anos (4 sócios Full)</div>
-                    <div class="value success">R$ 160.120</div>
-                </div>
-            </div>
-        </div>
+ <div class="summary-grid" style="margin-top: 2rem;">
+ <div class="summary-item">
+ <div class="label">1 Sócio Básico (1º ano)</div>
+ <div class="value success">R$ 33.400</div>
+ </div>
+ <div class="summary-item">
+ <div class="label">Infra Ano 2+ (sem mensalidade)</div>
+ <div class="value">~R$ 200/mês</div>
+ </div>
+ <div class="summary-item">
+ <div class="label">Custo/UC</div>
+ <div class="value success">R$ 0</div>
+ </div>
+ <div class="summary-item">
+ <div class="label">Economia 5 Anos (4 sócios Full)</div>
+ <div class="value success">R$ 160.120</div>
+ </div>
+ </div>
+ </div>
 
-        <div class="footer">
-            <p>Documento Comparativo - Plataforma de Gestão de Energia Solar</p>
-            <p>Cenário Comparativo: 1 a 4 Sócios | Gerado em 10/04/2026</p>
-            <p style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.85;">Autoria: <strong>João Rocha</strong> &amp; <strong>José Ambrozi</strong></p>
-        </div>
-    </div>
+ <div class="footer">
+ <p>Documento Comparativo - Plataforma de Gestão de Energia Solar</p>
+ <p>Cenário Comparativo: 1 a 4 Sócios | Gerado em 10/04/2026</p>
+ <p style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.85;">Autoria: <strong>João Rocha</strong> &amp; <strong>José Ambrozi</strong></p>
+ </div>
+ </div>
 </body>
 </html>
