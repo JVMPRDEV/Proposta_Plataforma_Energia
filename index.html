@@ -90,27 +90,27 @@
 
  <div class="features-grid">
  <div class="feature-card">
- <div class="feature-icon">%</div>
+ <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div>
  <h4>Distribuição Percentual</h4>
  <p>X% da geração para cada unidade consumidora</p>
  </div>
  <div class="feature-card">
- <div class="feature-icon">#</div>
+ <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
  <h4>Distribuição por Prioridade</h4>
  <p>Ordem de abatimento (1, 2, 3...)</p>
  </div>
  <div class="feature-card">
- <div class="feature-icon">$</div>
+ <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.5-1.5-3-1.5-1.7 0-3 .9-3 2.2 0 1.2 1 1.8 2.6 2.2l.8.2c1.6.4 2.6 1 2.6 2.2 0 1.3-1.3 2.2-3 2.2-1.5 0-2.5-.5-3-1.5"/><line x1="12" y1="6.5" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="17.5"/></svg></div>
  <h4>Créditos Excedentes</h4>
  <p>Acumulação automática por unidade</p>
  </div>
  <div class="feature-card">
- <div class="feature-icon">W</div>
+ <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
  <h4>WhatsApp Nativo</h4>
  <p>Envio de faturas, boletos e documentos via Cloud API (sem bot)</p>
  </div>
  <div class="feature-card">
- <div class="feature-icon">N</div>
+ <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
  <h4>Notificações em Tempo Real</h4>
  <p>Push in-app via SignalR (sino, badge, toast e painel)</p>
  </div>
@@ -220,7 +220,7 @@
  </div>
 
  <!-- Módulo 5 -->
- <div class="module-card featured">
+ <div class="module-card">
  <div class="module-header">
  <span class="module-number">05</span>
  <h3>Distribuição de Créditos</h3>
@@ -250,7 +250,7 @@
  </div>
 
  <!-- Módulo 7 -->
- <div class="module-card featured">
+ <div class="module-card">
  <div class="module-header">
  <span class="module-number">07</span>
  <h3>Pagamento Automatizado (Asaas)</h3>
@@ -402,25 +402,33 @@
  </div>
 
  <!-- DECISÃO ARQUITETURAL: Segregação de Infraestrutura -->
- <div class="card" style="margin-top: 2rem; border: 2px dashed #3498db; background: linear-gradient(135deg, rgba(52,152,219,0.06) 0%, #fff 100%);">
- <div style="padding: 1.5rem;">
- <h3 style="color: #3498db; margin-bottom: 0.75rem;"> Decisão Arquitetural: Segregação Completa da Infraestrutura?</h3>
- <p style="color: #555; line-height: 1.7; margin-bottom: 1rem;">
+ <div class="decision-card">
+ <div class="decision-header">
+ <span class="decision-tag">Decisão Arquitetural</span>
+ <h3>Segregação Completa da Infraestrutura?</h3>
+ <p class="decision-question">
  Uma pergunta legítima a ser feita pelos sócios: <strong>cada operação deve ter sua própria infraestrutura (banco, app, ambiente) totalmente isolada</strong>, ou todos compartilham a mesma plataforma com isolamento físico via multitenancy multibanco (1 database dedicado por sócio)?
  </p>
- <div class="pricing-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
- <div style="background: rgba(39,174,96,0.08); border-left: 4px solid #27ae60; padding: 1rem; border-radius: 6px;">
- <h4 style="color: #27ae60; margin-bottom: 0.5rem;">✅ Pontos Positivos da Segregação Total</h4>
- <ul style="font-size: 0.88rem; color: #555; line-height: 1.6; padding-left: 1.25rem; margin-left: 0.25rem;">
+ </div>
+ <div class="decision-columns">
+ <div class="decision-col decision-pros">
+ <h4>
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+ Pontos Positivos
+ </h4>
+ <ul>
  <li><strong>Isolamento absoluto</strong> — falha, deploy ou bug em uma operação não afeta as demais</li>
  <li><strong>Soberania total</strong> — cada sócio decide janela de manutenção, versão, backup, retenção</li>
  <li><strong>Compliance simplificado</strong> — dados nunca compartilham hardware com terceiros</li>
  <li><strong>Portabilidade</strong> — saída de um sócio não impacta os outros (basta entregar a stack dele)</li>
  </ul>
  </div>
- <div style="background: rgba(231,76,60,0.06); border-left: 4px solid #e74c3c; padding: 1rem; border-radius: 6px;">
- <h4 style="color: #c0392b; margin-bottom: 0.5rem;"> Pontos Negativos da Segregação Total</h4>
- <ul style="font-size: 0.88rem; color: #555; line-height: 1.6; padding-left: 1.25rem; margin-left: 0.25rem;">
+ <div class="decision-col decision-cons">
+ <h4>
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+ Pontos Negativos
+ </h4>
+ <ul>
  <li><strong>Custo de infra multiplicado</strong> — N ambientes em vez de 1 (banco, app, observabilidade, backups)</li>
  <li><strong>Manutenção N vezes maior</strong> — cada deploy, patch e upgrade replicado por sócio</li>
  <li><strong>Sem economia de escala</strong> — cada sócio paga o "piso fixo" da infraestrutura</li>
@@ -429,9 +437,8 @@
  </ul>
  </div>
  </div>
- <p style="font-size: 0.9rem; color: #555; margin-top: 1rem; padding: 0.75rem; background: rgba(212,168,73,0.08); border-radius: 6px;">
- <strong style="color: var(--primary);">Recomendação técnica:</strong> a arquitetura proposta (Multitenancy Multibanco) já entrega <strong>isolamento físico total de dados</strong> — cada sócio tem seu <strong>próprio banco de dados dedicado</strong>, com backup e segurança totalmente independentes — preservando a economia de escala compartilhada da camada de aplicação. A segregação completa de infraestrutura permanece como opção, mediante orçamento adicional, caso algum sócio tenha exigência regulatória específica.
- </p>
+ <div class="decision-recommendation">
+ <strong>Recomendação técnica:</strong> a arquitetura proposta (Multitenancy Multibanco) já entrega <strong>isolamento físico total de dados</strong> — cada sócio tem seu <strong>próprio banco de dados dedicado</strong>, com backup e segurança totalmente independentes — preservando a economia de escala compartilhada da camada de aplicação. A segregação completa de infraestrutura permanece como opção, mediante orçamento adicional, caso algum sócio tenha exigência regulatória específica.
  </div>
  </div>
 
@@ -474,18 +481,7 @@
  Roadmap do Projeto
  </h2>
 
- <div class="card" style="background: linear-gradient(135deg, rgba(52,152,219,0.1) 0%, rgba(52,152,219,0.05) 100%); border: 2px solid #3498db; margin-bottom: 2rem;">
- <div style="padding: 1.5rem;">
- <h4 style="color: #3498db; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
- <span style="font-size: 1.3rem;">&#9881;</span> Roadmap com Trade-offs: Escolha seu Caminho
- </h4>
- <p style="font-size: 0.95rem; color: #555; line-height: 1.7;">
- O roadmap abaixo apresenta <strong>opções de escopo</strong> que permitem reduzir o investimento inicial
- no MVP e adicionar funcionalidades premium posteriormente. Cada escolha representa um trade-off entre
- <strong>custo imediato</strong> vs. <strong>automação/sofisticação</strong>.
- </p>
- </div>
- </div>
+ <p class="roadmap-lead">Plano de execução dividido em <strong>5 fases sequenciais</strong> ao longo de <strong>8 sprints (~4 meses)</strong>, baseado no escopo do Core e nos módulos opcionais discutidos no Assessment. Cada fase entrega um <strong>milestone funcional</strong> e apresenta, quando aplicável, <strong>trade-offs de escopo</strong> (MVP vs. Premium) para você dosar investimento e automação.</p>
 
  <!-- FASE 1 -->
  <div class="timeline">
@@ -522,27 +518,22 @@
  </ul>
 
  <!-- TRADE-OFF: FATURAS -->
- <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
- <h5 style="color: #856404; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
- <span>&#9888;</span> Trade-off: Entrada de Produção/Faturas
- </h5>
- <table style="width: 100%; font-size: 0.85rem; margin-top: 0.5rem;">
- <tr>
- <td style="padding: 0.5rem; background: #d4edda; border-radius: 4px;">
- <strong style="color: #155724;">Opção A (MVP):</strong> Input manual simplificado de kWh
- <span style="float: right; color: #155724;">Incluso no Core</span>
- </td>
- </tr>
- <tr>
- <td style="padding: 0.5rem; background: #f8d7da; border-radius: 4px; margin-top: 0.25rem;">
- <strong style="color: #721c24;">Opção B (Premium):</strong> Parser automático de PDF COELBA
- <span style="float: right; color: #721c24;">+ R$ 3.500</span>
- </td>
- </tr>
- </table>
- <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
- <em>Recomendação:</em> Comece com input manual. O parser pode ser adicionado quando o volume justificar.
- </p>
+ <div class="tradeoff">
+ <div class="tradeoff-header">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+ <span>Trade-off: Entrada de Produção/Faturas</span>
+ </div>
+ <div class="tradeoff-options">
+ <div class="option-row option-mvp">
+ <div class="option-label"><strong>Opção A (MVP):</strong> Input manual simplificado de kWh</div>
+ <span class="option-price">Incluso no Core</span>
+ </div>
+ <div class="option-row option-premium">
+ <div class="option-label"><strong>Opção B (Premium):</strong> Parser automático de PDF COELBA</div>
+ <span class="option-price">+ R$ 3.500</span>
+ </div>
+ </div>
+ <p class="tradeoff-rec"><em>Recomendação:</em> Comece com input manual. O parser pode ser adicionado quando o volume justificar.</p>
  </div>
 
  <div class="milestone">Milestone 2: Motor de créditos funcionando</div>
@@ -565,27 +556,22 @@
  </ul>
 
  <!-- TRADE-OFF: INTEGRAÇÃO BANCÁRIA -->
- <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
- <h5 style="color: #856404; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
- <span>&#9888;</span> Trade-off: Integração de Pagamentos
- </h5>
- <table style="width: 100%; font-size: 0.85rem; margin-top: 0.5rem;">
- <tr>
- <td style="padding: 0.5rem; background: #d4edda; border-radius: 4px;">
- <strong style="color: #155724;">Opção A (Core):</strong> Lançamento manual de recebíveis
- <span style="float: right; color: #155724;">Incluso no Core</span>
- </td>
- </tr>
- <tr>
- <td style="padding: 0.5rem; background: #f8d7da; border-radius: 4px; margin-top: 0.25rem;">
- <strong style="color: #721c24;">Opção B (Recomendado):</strong> Gateway Asaas (Boleto + Pix + Webhook de baixa + Conciliação automática)
- <span style="float: right; color: #721c24; font-weight: 700;">+ R$ 4.000</span>
- </td>
- </tr>
- </table>
- <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
- <em>Recomendação:</em> O Core já entrega faturamento e baixa manual sem custo adicional. Para automação completa de cobrança, o <strong>Asaas</strong> é o gateway padrão e único de integração nativa — é a melhor relação custo-benefício no Brasil (Pix R$ 1,99, Boleto ~R$ 2,49, API e suporte em PT-BR), com webhook de baixa automática e conciliação bancária automatizada.
- </p>
+ <div class="tradeoff">
+ <div class="tradeoff-header">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+ <span>Trade-off: Integração de Pagamentos</span>
+ </div>
+ <div class="tradeoff-options">
+ <div class="option-row option-mvp">
+ <div class="option-label"><strong>Opção A (Core):</strong> Lançamento manual de recebíveis</div>
+ <span class="option-price">Incluso no Core</span>
+ </div>
+ <div class="option-row option-premium">
+ <div class="option-label"><strong>Opção B (Recomendado):</strong> Gateway Asaas (Boleto + Pix + Webhook de baixa + Conciliação automática)</div>
+ <span class="option-price">+ R$ 4.000</span>
+ </div>
+ </div>
+ <p class="tradeoff-rec"><em>Recomendação:</em> O Core já entrega faturamento e baixa manual sem custo adicional. Para automação completa de cobrança, o <strong>Asaas</strong> é o gateway padrão e único de integração nativa — é a melhor relação custo-benefício no Brasil (Pix R$ 1,99, Boleto ~R$ 2,49, API e suporte em PT-BR), com webhook de baixa automática e conciliação bancária automatizada.</p>
  </div>
 
  <div class="milestone">Milestone 3: Faturamento e cobrança automatizados</div>
@@ -608,27 +594,22 @@
  </ul>
 
  <!-- TRADE-OFF: COMUNICAÇÃO -->
- <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
- <h5 style="color: #856404; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
- <span>&#9888;</span> Trade-off: Canal de Comunicação
- </h5>
- <table style="width: 100%; font-size: 0.85rem; margin-top: 0.5rem;">
- <tr>
- <td style="padding: 0.5rem; background: #d4edda; border-radius: 4px;">
- <strong style="color: #155724;">Opção A (MVP):</strong> Alertas por E-mail (templates profissionais)
- <span style="float: right; color: #155724;">Incluso no Core</span>
- </td>
- </tr>
- <tr>
- <td style="padding: 0.5rem; background: #f8d7da; border-radius: 4px; margin-top: 0.25rem;">
- <strong style="color: #721c24;">Opção B (Premium):</strong> WhatsApp Nativo (Cloud API oficial + templates HSM, envio unidirecional)
- <span style="float: right; color: #721c24; font-weight: 700;">+ R$ 2.500</span>
- </td>
- </tr>
- </table>
- <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
- <em>Recomendação:</em> E-mail funciona bem e tem custo zero de API. WhatsApp aumenta engajamento significativamente e pode ser adicionado depois. Escopo do módulo: <strong>envio de faturas, boletos, documentos e mensagens curtas</strong> via Cloud API + templates HSM. <strong>Bot conversacional (via n8n) é melhoria futura, fora do escopo deste módulo.</strong>
- </p>
+ <div class="tradeoff">
+ <div class="tradeoff-header">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+ <span>Trade-off: Canal de Comunicação</span>
+ </div>
+ <div class="tradeoff-options">
+ <div class="option-row option-mvp">
+ <div class="option-label"><strong>Opção A (MVP):</strong> Alertas por E-mail (templates profissionais)</div>
+ <span class="option-price">Incluso no Core</span>
+ </div>
+ <div class="option-row option-premium">
+ <div class="option-label"><strong>Opção B (Premium):</strong> WhatsApp Nativo (Cloud API oficial + templates HSM, envio unidirecional)</div>
+ <span class="option-price">+ R$ 2.500</span>
+ </div>
+ </div>
+ <p class="tradeoff-rec"><em>Recomendação:</em> E-mail funciona bem e tem custo zero de API. WhatsApp aumenta engajamento significativamente e pode ser adicionado depois. Escopo do módulo: <strong>envio de faturas, boletos, documentos e mensagens curtas</strong> via Cloud API + templates HSM. <strong>Bot conversacional (via n8n) é melhoria futura, fora do escopo deste módulo.</strong></p>
  </div>
  </div>
  </div>
@@ -648,69 +629,83 @@
  <li>Deploy em Produção</li>
  </ul>
 
- <div class="milestone success" style="display: inline-block; margin-top: 0.75rem;"> GO-LIVE MVP</div>
-
- <!-- TRADE-OFF: RELATÓRIOS (pós Go-Live) -->
- <div style="background: #e7f3ff; border: 1px solid #3498db; border-radius: 8px; padding: 1rem; margin-top: 1.25rem;">
- <h5 style="color: #2980b9; margin-bottom: 0.5rem;">Expansão Futura (pós Go-Live): Relatórios Avançados</h5>
- <p style="font-size: 0.85rem; color: #555;">
- Aging de recebíveis, projeções, exportação PDF/Excel, relatórios customizados.
- <span style="float: right; color: #2980b9; font-weight: 600;">+ R$ 2.500</span>
- </p>
+ <!-- EXPANSÕES FUTURAS -->
+ <div class="future-expansion">
+ <div class="future-header">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+ <span>Expansões Futuras (pós Go-Live)</span>
  </div>
+ <ul class="future-list">
+ <li>
+ <div class="future-item-head">
+ <strong>Relatórios Avançados</strong>
+ <span class="future-price">+ R$ 2.500</span>
+ </div>
+ <p>Aging de recebíveis, projeções, exportação PDF/Excel, relatórios customizados.</p>
+ </li>
+ <li>
+ <div class="future-item-head">
+ <strong>Automações com n8n</strong>
+ <span class="future-price future-price-tbd">A mensurar</span>
+ </div>
+ <p>Orquestração de fluxos, integrações com terceiros, bot conversacional WhatsApp e gatilhos automáticos. Escopo e valor a definir conforme demanda.</p>
+ </li>
+ </ul>
+ </div>
+
  </div>
  </div>
  </div>
 
  <!-- RESUMO DE TRADE-OFFS -->
- <div class="card" style="margin-top: 2rem; border: 2px solid var(--primary);">
- <div style="padding: 1.5rem;">
- <h4 style="color: var(--secondary); margin-bottom: 1rem;">Resumo: MVP vs. Full Platform</h4>
- <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+ <div class="roadmap-summary">
+ <h4 class="roadmap-summary-title">Resumo: MVP vs. Full Platform</h4>
+ <div class="roadmap-summary-table-wrap">
+ <table class="roadmap-summary-table">
  <thead>
- <tr style="background: var(--secondary); color: white;">
- <th style="padding: 0.75rem; text-align: left;">Funcionalidade</th>
- <th style="padding: 0.75rem; text-align: center;">MVP (Core)</th>
- <th style="padding: 0.75rem; text-align: center;">Full Platform</th>
+ <tr>
+ <th>Funcionalidade</th>
+ <th>MVP (Core)</th>
+ <th>Full Platform</th>
  </tr>
  </thead>
  <tbody>
- <tr style="border-bottom: 1px solid #eee;">
- <td style="padding: 0.75rem;">Entrada de Produção</td>
- <td style="padding: 0.75rem; text-align: center; color: #27ae60;">Input Manual</td>
- <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Parser COELBA (+R$ 3.500)</td>
- </tr>
- <tr style="border-bottom: 1px solid #eee;">
- <td style="padding: 0.75rem;">Pagamentos</td>
- <td style="padding: 0.75rem; text-align: center; color: #27ae60;">Baixa Manual</td>
- <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Asaas Automatizado (+R$ 4.000)</td>
- </tr>
- <tr style="border-bottom: 1px solid #eee;">
- <td style="padding: 0.75rem;">Comunicação</td>
- <td style="padding: 0.75rem; text-align: center; color: #27ae60;">E-mail</td>
- <td style="padding: 0.75rem; text-align: center; color: var(--primary);">WhatsApp (+R$ 2.500)</td>
- </tr>
- <tr style="border-bottom: 1px solid #eee;">
- <td style="padding: 0.75rem;">Notificações</td>
- <td style="padding: 0.75rem; text-align: center; color: #27ae60;">—</td>
- <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Tempo real / SignalR (incluso no Médio)</td>
+ <tr>
+ <td>Entrada de Produção</td>
+ <td class="cell-mvp">Input Manual</td>
+ <td class="cell-full">Parser COELBA <span class="delta">+R$ 3.500</span></td>
  </tr>
  <tr>
- <td style="padding: 0.75rem;">Relatórios</td>
- <td style="padding: 0.75rem; text-align: center; color: #27ae60;">Dashboard Básico</td>
- <td style="padding: 0.75rem; text-align: center; color: var(--primary);">Avançados (+R$ 2.500)</td>
+ <td>Pagamentos</td>
+ <td class="cell-mvp">Baixa Manual</td>
+ <td class="cell-full">Asaas Automatizado <span class="delta">+R$ 4.000</span></td>
  </tr>
- <tr style="background: var(--light); font-weight: 700;">
- <td style="padding: 0.75rem;">TOTAL Desenvolvimento (1 Sócio)</td>
- <td style="padding: 0.75rem; text-align: center; color: #27ae60;">R$ 28.500</td>
- <td style="padding: 0.75rem; text-align: center; color: var(--primary);">R$ 41.000</td>
+ <tr>
+ <td>Comunicação</td>
+ <td class="cell-mvp">E-mail</td>
+ <td class="cell-full">WhatsApp <span class="delta">+R$ 2.500</span></td>
+ </tr>
+ <tr>
+ <td>Notificações</td>
+ <td class="cell-mvp cell-empty">—</td>
+ <td class="cell-full">Tempo real / SignalR <span class="delta">+R$ 1.500</span></td>
+ </tr>
+ <tr>
+ <td>Relatórios</td>
+ <td class="cell-mvp">Dashboard Básico</td>
+ <td class="cell-full">Avançados <span class="delta">+R$ 2.500</span></td>
+ </tr>
+ <tr class="row-total">
+ <td>TOTAL Desenvolvimento (1 Sócio)</td>
+ <td class="cell-mvp">R$ 28.500</td>
+ <td class="cell-full">R$ 41.000</td>
  </tr>
  </tbody>
  </table>
  </div>
  </div>
 
- <div class="timeline-visual">
+ <div class="timeline-visual" style="margin-top: 3rem;">
  <h3>Cronograma Visual</h3>
  <div class="gantt-simple">
  <div class="gantt-row">
@@ -743,36 +738,26 @@
  Investimento
  </h2>
 
- <div class="card" style="background: linear-gradient(135deg, rgba(39,174,96,0.1) 0%, rgba(39,174,96,0.05) 100%); border: 2px solid #27ae60; margin-bottom: 2rem;">
- <div style="padding: 1.5rem;">
- <h4 style="color: #27ae60; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
- <span style="font-size: 1.3rem;">&#9432;</span> Modelo de Precificação Modular
- </h4>
- <p style="font-size: 0.95rem; color: #555; line-height: 1.7;">
- Para reduzir a barreira de entrada e permitir flexibilidade, o investimento foi estruturado em
- <strong>3 blocos independentes</strong>. Isso permite que um único sócio inicie o projeto com um MVP enxuto
- e adicione módulos conforme novos parceiros entrem ou a operação cresça.
- </p>
+ <div class="callout callout-success">
+ <div class="callout-icon">i</div>
+ <div class="callout-body">
+ <h4>Modelo de Precificação Modular</h4>
+ <p>Para reduzir a barreira de entrada e permitir flexibilidade, o investimento foi estruturado em <strong>3 blocos independentes</strong>. Isso permite que um único sócio inicie o projeto com um MVP enxuto e adicione módulos conforme novos parceiros entrem ou a operação cresça.</p>
  </div>
  </div>
 
  <!-- BLOCO 1: ASSESSMENT -->
  <div class="pricing-options">
- <h3 style="border-bottom: 3px solid var(--primary); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
- <span style="background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; margin-right: 0.75rem;">BLOCO 1</span>
+ <h3 class="bloco-title">
+ <span class="bloco-badge">Bloco 1</span>
  Assessment Individual
  </h3>
 
- <div class="card" style="background: linear-gradient(135deg, rgba(212,168,73,0.12) 0%, rgba(212,168,73,0.04) 100%); border: 2px solid var(--primary); margin-bottom: 1.5rem;">
- <div style="padding: 1rem;">
- <h4 style="color: var(--primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
- <span style="font-size: 1.2rem;">&#9888;</span> Assessment cobrado à parte para TODOS os sócios
- </h4>
- <p style="font-size: 0.95rem; color: #555; line-height: 1.6;">
- O Assessment é uma fase <strong>obrigatória e cobrada à parte para todos os sócios</strong> — inclusive a ESQ Energia (primeiro sócio).
- Não está incluso no valor do Core. O investimento varia entre <strong>R$ 2.500 e R$ 6.000 por sócio</strong>,
- conforme a complexidade da operação mapeada.
- </p>
+ <div class="callout callout-warning">
+ <div class="callout-icon">!</div>
+ <div class="callout-body">
+ <h4>Assessment cobrado à parte para TODOS os sócios</h4>
+ <p>O Assessment é uma fase <strong>obrigatória e cobrada à parte para todos os sócios</strong> — inclusive a ESQ Energia (primeiro sócio). Não está incluso no valor do Core. O investimento varia entre <strong>R$ 2.500 e R$ 6.000 por sócio</strong>, conforme a complexidade da operação mapeada.</p>
  </div>
  </div>
 
@@ -781,18 +766,24 @@
  da operação, migração de dados e adaptação às regras específicas de cada parceiro — do primeiro ao último.
  </p>
 
- <div class="pricing-grid" style="grid-template-columns: 1fr;">
- <div class="pricing-card recommended">
+ <div class="assessment-card">
+ <div class="assessment-card-header">
+ <div class="assessment-card-title">
  <h4>Assessment Individual</h4>
- <p class="pricing-subtitle">Mapeamento e migração por sócio</p>
- <div class="price">
+ <span class="assessment-card-subtitle">Mapeamento e migração por sócio</span>
+ </div>
+ <div class="assessment-card-price">
+ <span class="assessment-price-range">
  <span class="currency">R$</span>
  <span class="amount">2.500 — 6.000</span>
+ </span>
+ <span class="assessment-price-note">por sócio · variável conforme complexidade</span>
  </div>
- <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; text-align: center;">
- Valor variável conforme a <strong>complexidade da operação</strong>
- </p>
- <ul class="pricing-features" style="margin-top: 1rem;">
+ </div>
+
+ <div class="assessment-card-body">
+ <h5 class="assessment-section-title">O que está incluso</h5>
+ <ul class="assessment-features">
  <li>Mapeamento de processos e rotinas atuais</li>
  <li>Análise de planilhas e sistemas legados</li>
  <li>Migração de dados (clientes, UCs, contratos)</li>
@@ -800,10 +791,12 @@
  <li>Configuração de regras de rateio</li>
  <li>Adaptação às particularidades do sócio</li>
  </ul>
- <div style="margin-top: 1.25rem; padding: 1rem; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px;">
- <p style="font-size: 0.85rem; color: #856404; margin: 0; line-height: 1.6;">
- <strong> Importante:</strong> Operações de <strong>média/grande complexidade</strong> (múltiplas usinas, integrações com ERP, regras de negócio não-padrão, fluxos customizados) podem requerer <strong>orçamento de desenvolvimento individual</strong>, separado e adicional ao valor do Assessment, para implementar funcionalidades específicas que fogem do escopo do Core.
- </p>
+ </div>
+
+ <div class="assessment-warning">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+ <div>
+ <strong>Importante:</strong> Operações de <strong>média/grande complexidade</strong> (múltiplas usinas, integrações com ERP, regras de negócio não-padrão, fluxos customizados) podem requerer <strong>orçamento de desenvolvimento individual</strong>, separado e adicional ao valor do Assessment, para implementar funcionalidades específicas que fogem do escopo do Core.
  </div>
  </div>
  </div>
@@ -811,8 +804,8 @@
 
  <!-- BLOCO 2: CORE -->
  <div class="pricing-options" style="margin-top: 3rem;">
- <h3 style="border-bottom: 3px solid var(--primary); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
- <span style="background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; margin-right: 0.75rem;">BLOCO 2</span>
+ <h3 class="bloco-title">
+ <span class="bloco-badge">Bloco 2</span>
  Desenvolvimento do Core da Plataforma
  </h3>
  <p style="color: #555; margin-bottom: 1.5rem; line-height: 1.7;">
@@ -1171,9 +1164,9 @@
 
  <!-- BLOCO 3: EVOLUÇÃO E MANUTENÇÃO SOB DEMANDA -->
  <div class="pricing-options" style="margin-top: 3rem;">
- <h3 style="border-bottom: 3px solid var(--primary); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
- <span style="background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; margin-right: 0.75rem;">BLOCO 3</span>
- Evolução e Manutenção Sob Demanda <span style="font-size: 0.85rem; color: #666; font-weight: normal;">(Sem Recorrência)</span>
+ <h3 class="bloco-title">
+ <span class="bloco-badge">Bloco 3</span>
+ Evolução e Manutenção Sob Demanda <span class="bloco-title-suffix">(Sem Recorrência)</span>
  </h3>
  <p style="color: #555; margin-bottom: 1rem; line-height: 1.7;">
  <strong>Sem fee mensal. Sem contrato recorrente.</strong> Após o Go-Live a plataforma roda em infraestrutura AWS contratada e paga <strong>diretamente pelo cliente</strong>, sem intermediação. Intervenções técnicas — correções, manutenção evolutiva, novas integrações (Asaas, COELBA, WhatsApp) e novas features — são <strong>orçadas de forma avulsa e pontual</strong>, sob demanda, mediante escopo específico aprovado a cada chamado.
