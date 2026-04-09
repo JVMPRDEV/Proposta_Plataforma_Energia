@@ -840,47 +840,74 @@
             </div>
         </div>
 
-        <!-- Economia vs Lumi — Core e Full -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1rem;">
-            <div style="background: linear-gradient(135deg, #27ae60, #1e8449); color: #fff; border-radius: 14px; padding: 1.75rem 1.5rem; box-shadow: 0 10px 30px rgba(39,174,96,0.3);">
-                <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; font-weight: 700;">Economia vs Lumi · 4 sócios</div>
-                <h3 style="margin: 0.4rem 0 1.2rem 0; font-size: 1.35rem; color: #fff;">Plano Core</h3>
+        <!-- Fundamento da economia -->
+        <div style="background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, #fff 100%); border: 1px solid rgba(39,174,96,0.3); border-left: 4px solid var(--success); border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 1.25rem;">
+            <h4 style="margin: 0 0 0.6rem 0; color: var(--success); font-size: 1rem;">💡 Por que a economia acontece?</h4>
+            <p style="font-size: 0.88rem; color: #444; line-height: 1.65; margin: 0 0 0.6rem;">
+                A Lumi cobra <strong>mensalidade recorrente para sempre</strong> — que escala por faixa de potência e por quantidade de UCs. Nossa proposta inverte o modelo: <strong>você paga uma vez pelo desenvolvimento do software</strong> (valor fixo, independente do porte) e a partir daí opera pagando apenas Infra + APIs conforme o uso real.
+            </p>
+            <p style="font-size: 0.85rem; color: #555; line-height: 1.65; margin: 0;">
+                <strong style="color: var(--success);">Por que os valores variam entre Core e Full:</strong> o investimento inicial (R$ 28.500 no Core vs R$ 41.000 no Full) reflete o escopo dos módulos contratados — Asaas, WhatsApp, SignalR, Parser COELBA, Relatórios Avançados. <strong style="color: var(--success);">Por que a economia cresce com o porte da operação:</strong> a base de custo Lumi sobe com cada sócio adicional, cada nova UC e cada upgrade de faixa de potência; o nosso custo de desenvolvimento permanece <strong>o mesmo</strong>. Quanto maior e mais complexa a operação, maior a economia absoluta e percentual.
+            </p>
+        </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div style="background: rgba(255,255,255,0.12); border-radius: 10px; padding: 1rem; text-align: center; backdrop-filter: blur(4px);">
-                        <div style="font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; font-weight: 700;">1º Ano</div>
-                        <div style="font-size: 1.75rem; font-weight: 900; margin: 0.3rem 0 0.1rem;">R$ 28.524</div>
-                        <div style="font-size: 0.7rem; opacity: 0.9;">39% mais barato</div>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); border-radius: 10px; padding: 1rem; text-align: center;">
-                        <div style="font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; font-weight: 700;">2º Ano</div>
-                        <div style="font-size: 1.75rem; font-weight: 900; margin: 0.3rem 0 0.1rem;">R$ 45.024</div>
-                        <div style="font-size: 0.7rem; opacity: 0.95;">87% mais barato</div>
-                    </div>
+        <!-- Economia vs Lumi — versão verde (tema economia) -->
+        <div class="cost-grid" style="margin-top: 1.25rem;">
+            <div class="cost-card" style="border-color: var(--success); background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, var(--white) 100%);">
+                <h3 style="color: #1e8449;">Economia · Plano Core</h3>
+                <div class="cost-item">
+                    <span>1º Ano <span style="color: #888; font-size: 0.78rem;">(R$ 2.377/mês)</span></span>
+                    <span><strong>R$ 28.524</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−39%</span></span>
+                </div>
+                <div class="cost-item">
+                    <span>2º Ano em diante <span style="color: #888; font-size: 0.78rem;">(R$ 3.752/mês)</span></span>
+                    <span><strong>R$ 45.024</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−87%</span></span>
+                </div>
+                <div class="cost-item total" style="background: var(--success); color: var(--white);">
+                    <span>Média mensal economizada em 24 meses</span>
+                    <span>R$ 3.064 / mês</span>
                 </div>
             </div>
 
-            <div style="background: linear-gradient(135deg, #3498db, #21618c); color: #fff; border-radius: 14px; padding: 1.75rem 1.5rem; box-shadow: 0 10px 30px rgba(52,152,219,0.3);">
-                <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.85; font-weight: 700;">Economia vs Lumi · 4 sócios</div>
-                <h3 style="margin: 0.4rem 0 1.2rem 0; font-size: 1.35rem; color: #fff;">Plano Full</h3>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div style="background: rgba(255,255,255,0.12); border-radius: 10px; padding: 1rem; text-align: center; backdrop-filter: blur(4px);">
-                        <div style="font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; font-weight: 700;">1º Ano</div>
-                        <div style="font-size: 1.75rem; font-weight: 900; margin: 0.3rem 0 0.1rem;">R$ 8.824</div>
-                        <div style="font-size: 0.7rem; opacity: 0.9;">12% mais barato</div>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); border-radius: 10px; padding: 1rem; text-align: center;">
-                        <div style="font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; font-weight: 700;">2º Ano</div>
-                        <div style="font-size: 1.75rem; font-weight: 900; margin: 0.3rem 0 0.1rem;">R$ 37.824</div>
-                        <div style="font-size: 0.7rem; opacity: 0.95;">73% mais barato</div>
-                    </div>
+            <div class="cost-card" style="border-color: var(--success); background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, var(--white) 100%);">
+                <h3 style="color: #1e8449;">Economia · Plano Full</h3>
+                <div class="cost-item">
+                    <span>1º Ano <span style="color: #888; font-size: 0.78rem;">(R$ 735/mês)</span></span>
+                    <span><strong>R$ 8.824</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−12%</span></span>
+                </div>
+                <div class="cost-item">
+                    <span>2º Ano em diante <span style="color: #888; font-size: 0.78rem;">(R$ 3.152/mês)</span></span>
+                    <span><strong>R$ 37.824</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−73%</span></span>
+                </div>
+                <div class="cost-item total" style="background: var(--success); color: var(--white);">
+                    <span>Média mensal economizada em 24 meses</span>
+                    <span>R$ 1.944 / mês</span>
                 </div>
             </div>
         </div>
-        <p style="font-size: 0.75rem; color: #666; margin-top: 0.85rem; text-align: center; font-style: italic;">
-            Base de comparação: Lumi Plano Flex · 1º ano R$ 73.624 (parametrização + 12 mensalidades + white label) · 2º ano R$ 51.624 (apenas mensalidades, sem fim de contrato).
-            Nossa solução no 2º ano: apenas Infra + APIs — <strong>sem mensalidade de plataforma</strong>.
+
+        <div class="cost-card" style="margin-top: 1.25rem; border-color: var(--success); background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, var(--white) 100%);">
+            <h3 style="color: #1e8449;">Economia Acumulada em 5 Anos</h3>
+            <p style="font-size: 0.82rem; color: #666; margin: -0.5rem 0 0.85rem; font-weight: 500;">
+                Base de comparação — Lumi em 5 anos: <strong style="color: var(--secondary);">R$ 280.120</strong> · cenário 4 sócios
+            </p>
+            <div class="cost-item">
+                <span>Plano Core <span style="color: #888; font-size: 0.82rem;">(investido R$ 71.500)</span></span>
+                <span><strong>R$ 208.620</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−74%</span></span>
+            </div>
+            <div class="cost-item">
+                <span>Plano Full <span style="color: #888; font-size: 0.82rem;">(investido R$ 120.000)</span></span>
+                <span><strong>R$ 160.120</strong> <span style="color: var(--success); font-size: 0.82rem; font-weight: 700;">−57%</span></span>
+            </div>
+            <div class="cost-item total" style="background: var(--success); color: var(--white);">
+                <span>Média mensal economizada em 60 meses</span>
+                <span>Core R$ 3.477 · Full R$ 2.669</span>
+            </div>
+        </div>
+
+        <p style="font-size: 0.72rem; color: #666; margin-top: 0.85rem; text-align: center; font-style: italic;">
+            Base de comparação: Lumi Plano Flex · 1º ano R$ 73.624 (parametrização + 12 mensalidades + white label) · anos 2 a 5 R$ 51.624/ano (apenas mensalidades, sem fim de contrato) · <strong>total 5 anos R$ 280.120</strong>.
+            Nossa solução: desenvolvimento único no 1º ano + apenas Infra + APIs nos anos 2 a 5 — sem mensalidade de plataforma.
         </p>
 
         <!-- Projeção 5 Anos -->
