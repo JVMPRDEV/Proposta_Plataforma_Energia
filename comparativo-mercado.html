@@ -905,10 +905,91 @@
             </div>
         </div>
 
-        <p style="font-size: 0.72rem; color: #666; margin-top: 0.85rem; text-align: center; font-style: italic;">
-            Base de comparação: Lumi Plano Flex · 1º ano R$ 73.624 (parametrização + 12 mensalidades + white label) · anos 2 a 5 R$ 51.624/ano (apenas mensalidades, sem fim de contrato) · <strong>total 5 anos R$ 280.120</strong>.
-            Nossa solução: desenvolvimento único no 1º ano + apenas Infra + APIs nos anos 2 a 5 — sem mensalidade de plataforma.
-        </p>
+        <!-- Base de comparação — versão comercial -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem;">
+            <!-- LUMI -->
+            <div style="background: #fff; border: 1px solid #e8e8e8; border-top: 4px solid var(--danger); border-radius: 10px; padding: 1.1rem 1.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(231,76,60,0.12); color: var(--danger); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">📕</div>
+                    <div>
+                        <div style="font-size: 0.66rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700;">Base Lumi · Plano Flex</div>
+                        <div style="font-size: 0.88rem; font-weight: 700; color: var(--secondary);">Mensalidade para sempre</div>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.78rem;">
+                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+                        <span style="color: #666;">Parametrização <small style="color: #999;">(R$ 2.500 × 4 sócios)</small></span>
+                        <strong style="color: var(--secondary);">R$ 10.000</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+                        <span style="color: #666;">12 mensalidades <small style="color: #999;">(R$ 4.302/mês)</small></span>
+                        <strong style="color: var(--secondary);">R$ 51.624</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+                        <span style="color: #666;">White Label <small style="color: #999;">(R$ 3.000 × 4)</small></span>
+                        <strong style="color: var(--secondary);">R$ 12.000</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.45rem 0.6rem; background: rgba(231,76,60,0.08); border-radius: 6px; margin-top: 0.3rem;">
+                        <strong style="color: var(--danger);">1º Ano (4 sócios)</strong>
+                        <strong style="color: var(--danger); font-size: 0.95rem;">R$ 73.624</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0.6rem; font-size: 0.74rem;">
+                        <span style="color: #888;">Anos 2 a 5 <small>(R$ 51.624/ano)</small></span>
+                        <span style="color: #666; font-weight: 600;">+ R$ 206.496</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.55rem 0.7rem; background: var(--danger); color: #fff; border-radius: 6px; margin-top: 0.4rem;">
+                        <strong>Total 5 anos</strong>
+                        <strong style="font-size: 1rem;">R$ 280.120</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOSSA -->
+            <div style="background: #fff; border: 1px solid #e8e8e8; border-top: 4px solid var(--success); border-radius: 10px; padding: 1.1rem 1.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(39,174,96,0.12); color: var(--success); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">💚</div>
+                    <div>
+                        <div style="font-size: 0.66rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700;">Nossa Solução</div>
+                        <div style="font-size: 0.88rem; font-weight: 700; color: var(--secondary);">Paga uma vez, opera sempre</div>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.78rem;">
+                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+                        <span style="color: #666;">Assessment <small style="color: #999;">(R$ 2.500 × 4)</small></span>
+                        <strong style="color: var(--secondary);">R$ 10.000</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+                        <span style="color: #666;">Desenvolvimento <small style="color: #999;">(Core → Full)</small></span>
+                        <strong style="color: var(--secondary);">R$ 28.500 – 41.000</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed #eee;">
+                        <span style="color: #666;">Infra + APIs 12m <small style="color: #999;">(Core → Full)</small></span>
+                        <strong style="color: var(--secondary);">R$ 6.600 – 13.800</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.45rem 0.6rem; background: rgba(39,174,96,0.08); border-radius: 6px; margin-top: 0.3rem;">
+                        <strong style="color: var(--success);">1º Ano (4 sócios)</strong>
+                        <strong style="color: var(--success); font-size: 0.95rem;">R$ 45.100 – 64.800</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.35rem 0.6rem; font-size: 0.74rem;">
+                        <span style="color: #888;">Anos 2 a 5 <small>(só Infra + APIs)</small></span>
+                        <span style="color: #666; font-weight: 600;">+ R$ 26.400 – 55.200</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.55rem 0.7rem; background: var(--success); color: #fff; border-radius: 6px; margin-top: 0.4rem;">
+                        <strong>Total 5 anos</strong>
+                        <strong style="font-size: 1rem;">R$ 71.500 – 120.000</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 0.85rem; padding: 0.75rem 1rem; background: linear-gradient(90deg, rgba(39,174,96,0.1), rgba(39,174,96,0.02)); border-left: 3px solid var(--success); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="font-size: 0.82rem; color: #444;">
+                <strong style="color: var(--success);">✓ Fonte oficial:</strong> valores da Lumi extraídos da <strong>Proposta Comercial 1046/25</strong> (11/08/2025, Plano Flex).
+            </div>
+            <div style="font-size: 0.74rem; color: #666;">
+                Zero mensalidade de plataforma · Zero amarração · Propriedade do código
+            </div>
+        </div>
 
         <!-- Custo por UC -->
         <div class="section">
