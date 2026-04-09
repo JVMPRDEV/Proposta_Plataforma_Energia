@@ -218,6 +218,204 @@
 .modo-card h4 { font-size: var(--fs-md); color: var(--gray-900); margin-bottom: var(--sp-2); display: flex; align-items: center; gap: var(--sp-2); }
 .modo-card p { font-size: var(--fs-sm); color: var(--gray-600); }
 
+/* Cobrança Asaas — opções de sincronização e config de webhook */
+.sync-opt {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: 0.8rem;
+  color: var(--gray-700);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.12s;
+}
+.sync-opt:hover { background: var(--gray-50); }
+.sync-opt input { accent-color: var(--primary); }
+
+.wh-event {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.wh-event:hover { border-color: var(--primary); background: rgba(212,168,73,0.04); }
+.wh-event input { margin-top: 3px; accent-color: var(--primary); }
+.wh-event code {
+  display: block;
+  font-family: monospace;
+  background: var(--gray-50);
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-top: 2px;
+  width: max-content;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch-track {
+  position: absolute;
+  inset: 0;
+  background: var(--gray-300);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.switch-track::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 3px;
+  top: 3px;
+  background: var(--white);
+  border-radius: 50%;
+  transition: transform 0.18s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.switch input:checked + .switch-track { background: var(--success); }
+.switch input:checked + .switch-track::before { transform: translateX(18px); }
+
+/* Footer com voltar à esquerda + ações à direita (compartilhado) */
+.anexo-footer { display: flex !important; justify-content: space-between !important; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.anexo-footer-actions { display: flex; gap: var(--sp-2); align-items: center; }
+.btn-link-back { color: var(--gray-600) !important; font-weight: 600; padding-left: 0 !important; }
+.btn-link-back:hover { color: var(--primary-dark) !important; background: transparent !important; }
+
+/* Upload manual COELBA — stepper, dropzone, processing */
+.coelba-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-5);
+  padding: 0 var(--sp-3);
+  position: relative;
+}
+.coelba-steps::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background: var(--gray-200);
+  z-index: 0;
+}
+.coelba-step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--white);
+  padding: 0 var(--sp-3);
+}
+.coelba-step-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--gray-300);
+  color: var(--gray-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.92rem;
+  transition: all 0.2s ease;
+}
+.coelba-step.current .coelba-step-dot {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
+  transform: scale(1.1);
+  box-shadow: 0 0 0 4px rgba(212,168,73,0.18);
+}
+.coelba-step.done .coelba-step-dot {
+  background: var(--success);
+  border-color: var(--success);
+  color: var(--white);
+}
+.coelba-step-label {
+  font-size: 0.72rem;
+  color: var(--gray-600);
+  font-weight: 600;
+}
+.coelba-step.current .coelba-step-label { color: var(--primary-dark); }
+.coelba-step.done .coelba-step-label { color: var(--success); }
+
+.coelba-drop {
+  border: 2px dashed var(--gray-300);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background: var(--gray-50);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.coelba-drop:hover { border-color: var(--primary); background: rgba(212,168,73,0.04); }
+.coelba-drop.drag-over { border-color: var(--primary); background: rgba(212,168,73,0.1); transform: scale(1.01); }
+.coelba-drop.has-file { border-style: solid; border-color: var(--success); background: var(--success-bg); cursor: default; }
+.coelba-drop-icon { font-size: 3rem; margin-bottom: var(--sp-3); opacity: 0.7; }
+.coelba-drop-title { font-size: 1rem; font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
+.coelba-drop-sub { font-size: 0.85rem; color: var(--gray-600); margin-bottom: var(--sp-2); }
+.coelba-drop-browse {
+  background: none; border: none; padding: 0;
+  color: var(--primary-dark); font-weight: 700; text-decoration: underline;
+  cursor: pointer; font-size: inherit; font-family: inherit;
+}
+.coelba-drop-meta {
+  font-size: 0.7rem; color: var(--gray-500);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-top: var(--sp-2);
+}
+
+.coelba-processing { text-align: center; padding: 2rem 1rem; }
+.coelba-spinner {
+  width: 48px; height: 48px;
+  margin: 0 auto var(--sp-4);
+  border: 4px solid var(--gray-200);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: coelba-spin 0.9s linear infinite;
+}
+@keyframes coelba-spin { to { transform: rotate(360deg); } }
+.coelba-processing-title { font-size: 1rem; font-weight: 700; color: var(--gray-800); }
+.coelba-processing-sub { font-size: 0.78rem; color: var(--gray-600); margin-top: 4px; margin-bottom: var(--sp-4); }
+.coelba-progress {
+  height: 8px;
+  background: var(--gray-200);
+  border-radius: 999px;
+  overflow: hidden;
+  max-width: 360px;
+  margin: 0 auto;
+}
+.coelba-progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--primary), var(--success));
+  border-radius: inherit;
+  transition: width 0.18s linear;
+}
+.coelba-progress-meta {
+  font-size: 0.78rem;
+  color: var(--gray-700);
+  font-weight: 700;
+  margin-top: var(--sp-2);
+  font-variant-numeric: tabular-nums;
+}
+
 /* Avatar editável da tela Meu Perfil */
 .profile-avatar {
   position: relative;

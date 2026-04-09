@@ -14,7 +14,7 @@ window.view_geracao = function(root) {
 
   root.innerHTML = `
     ${viewHeader('Geração / Produção', ds.usinas.length + ' usinas · ' + ds.tenant.nome, `
-      ${ds.tenant.parserCoelba ? '<button class="btn btn-outline btn-sm">📥 Upload fatura COELBA</button>' : ''}
+      ${ds.tenant.parserCoelba ? '<button class="btn btn-outline btn-sm" id="btnUploadCoelba">📥 Upload fatura COELBA</button>' : ''}
       <button class="btn btn-primary btn-sm" id="btnNovaUsina">+ Nova Usina</button>
     `)}
 
@@ -162,6 +162,9 @@ window.view_geracao = function(root) {
   if (ds.usinas.length > 0) renderUsinas();
   root.querySelector('#btnNovaUsina').addEventListener('click', () => modalUsina());
 
+  const btnUp = root.querySelector('#btnUploadCoelba');
+  if (btnUp) btnUp.addEventListener('click', () => abrirUploadCoelba(ds));
+
   const btnRun = root.querySelector('#btnRunParser');
   if (btnRun) btnRun.addEventListener('click', () => {
     btnRun.disabled = true;
@@ -204,3 +207,195 @@ window.view_geracao = function(root) {
     `);
   });
 };
+
+// ============================================================
+// Upload manual de fatura COELBA — fluxo em 3 etapas
+// ============================================================
+function abrirUploadCoelba(ds) {
+  let etapa = 1;
+  let arquivo = null;
+  let resultado = null;
+
+  function render() {
+    openModal(`
+      <div class="modal" style="max-width: 720px;">
+        <div class="modal-header">
+          <h3>📥 Upload manual de fatura COELBA</h3>
+          <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="coelba-steps">
+            ${[
+              { n:1, l:'Selecionar arquivo' },
+              { n:2, l:'Processar' },
+              { n:3, l:'Confirmar' }
+            ].map(s => `
+              <div class="coelba-step ${etapa === s.n ? 'current' : (etapa > s.n ? 'done' : '')}">
+                <div class="coelba-step-dot">${etapa > s.n ? '✓' : s.n}</div>
+                <div class="coelba-step-label">${s.l}</div>
+              </div>
+            `).join('')}
+          </div>
+
+          ${etapa === 1 ? `
+            <div class="coelba-drop" id="coelbaDrop">
+              <input type="file" id="coelbaFile" accept=".pdf,.xml,.png,.jpg,.jpeg" hidden />
+              <div class="coelba-drop-icon">📄</div>
+              <div class="coelba-drop-title">Arraste a fatura COELBA aqui</div>
+              <div class="coelba-drop-sub">ou <button class="coelba-drop-browse" id="coelbaBrowse">selecione um arquivo do computador</button></div>
+              <div class="coelba-drop-meta">PDF · XML · PNG · JPG &nbsp;·&nbsp; máximo 10 MB</div>
+            </div>
+            <div style="margin-top:1rem; padding:.65rem .85rem; background:var(--info-bg); border-left:3px solid var(--info); border-radius:6px; font-size:.74rem; color:var(--gray-700);">
+              ℹ Use este upload manual quando o parser automático falhar ou a fatura COELBA chegar fora do ciclo. O arquivo será processado pelo mesmo parser.
+            </div>
+          ` : ''}
+
+          ${etapa === 2 ? `
+            <div class="coelba-processing">
+              <div class="coelba-spinner"></div>
+              <div class="coelba-processing-title">Processando ${esc(arquivo.name)}…</div>
+              <div class="coelba-processing-sub">Extraindo leituras de geração por UC. Não feche esta janela.</div>
+              <div class="coelba-progress">
+                <div class="coelba-progress-bar" id="coelbaBar"></div>
+              </div>
+              <div class="coelba-progress-meta" id="coelbaPct">0%</div>
+            </div>
+          ` : ''}
+
+          ${etapa === 3 ? `
+            <div style="display:flex; align-items:center; gap:.75rem; margin-bottom:1rem; padding:.7rem .9rem; background:var(--success-bg); border-radius:6px;">
+              <div style="font-size:1.4rem;">✓</div>
+              <div style="flex:1;">
+                <div style="font-weight:700; color:var(--success);">Parser concluído</div>
+                <div style="font-size:.74rem; color:var(--gray-700);">${resultado.length} leituras extraídas de <strong>${esc(arquivo.name)}</strong></div>
+              </div>
+            </div>
+            <div style="font-size:.78rem; color:var(--gray-700); margin-bottom:.5rem; font-weight:600;">📊 Leituras a aplicar</div>
+            <div style="max-height:280px; overflow:auto; border:1px solid var(--gray-200); border-radius:6px;">
+              <table class="data" style="font-size:.78rem; margin:0;">
+                <thead style="position:sticky; top:0; background:var(--white); z-index:1;">
+                  <tr>
+                    <th class="text-center" style="width:36px;"><input type="checkbox" id="coelbaChkAll" checked /></th>
+                    <th>Usina</th>
+                    <th class="text-right">Leitura anterior</th>
+                    <th class="text-right">Nova leitura</th>
+                    <th class="text-right">Δ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${resultado.map((r, i) => {
+                    const delta = r.kwh - r.anterior;
+                    const sinal = delta >= 0 ? '▲' : '▼';
+                    const cor = delta >= 0 ? 'var(--success)' : 'var(--danger)';
+                    return `
+                    <tr>
+                      <td class="text-center"><input type="checkbox" data-aplicar="${i}" checked /></td>
+                      <td>${esc(r.nome)}</td>
+                      <td class="text-right num">${fmt.num(r.anterior)} kWh</td>
+                      <td class="text-right num"><strong>${fmt.num(r.kwh)} kWh</strong></td>
+                      <td class="text-right" style="color:${cor}; font-weight:600; font-size:.74rem;">
+                        ${sinal} ${fmt.num(Math.abs(delta))}
+                      </td>
+                    </tr>`;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+            <div style="margin-top:.85rem; padding:.6rem .8rem; background:var(--gray-50); border-radius:6px; font-size:.72rem; color:var(--gray-600);">
+              ℹ Desmarque qualquer linha que pareça incorreta — apenas as marcadas serão aplicadas.
+            </div>
+          ` : ''}
+        </div>
+        <div class="modal-footer anexo-footer">
+          <button class="btn btn-ghost btn-link-back" onclick="closeModal()">${etapa === 3 ? '← Cancelar' : 'Cancelar'}</button>
+          <div class="anexo-footer-actions" id="coelbaFooterActions">
+            ${etapa === 1 && arquivo ? `<button class="btn btn-primary" id="coelbaProcessar">▶ Processar arquivo</button>` : ''}
+            ${etapa === 3 ? `<button class="btn btn-primary" id="coelbaAplicar">✓ Aplicar leituras</button>` : ''}
+          </div>
+        </div>
+      </div>
+    `);
+
+    if (etapa === 1) {
+      const drop = document.getElementById('coelbaDrop');
+      const inp = document.getElementById('coelbaFile');
+      const browse = document.getElementById('coelbaBrowse');
+      function setFile(file) {
+        if (!file) return;
+        if (file.size > 10 * 1024 * 1024) { alert('Arquivo muito grande (máx 10 MB).'); return; }
+        arquivo = { name: file.name, size: file.size };
+        drop.classList.add('has-file');
+        drop.innerHTML = `
+          <div class="coelba-drop-icon" style="color:var(--success);">✓</div>
+          <div class="coelba-drop-title" style="color:var(--success);">Arquivo selecionado</div>
+          <div class="coelba-drop-sub" style="font-family:monospace;">${esc(arquivo.name)}</div>
+          <div class="coelba-drop-meta">${(arquivo.size/1024).toFixed(0)} KB · clique em <strong>Processar</strong> abaixo</div>
+          <button class="btn btn-ghost btn-sm" id="coelbaClear" style="margin-top:.5rem;">↺ Trocar arquivo</button>
+        `;
+        document.getElementById('coelbaClear').addEventListener('click', () => { arquivo = null; render(); });
+        const footer = document.getElementById('coelbaFooterActions');
+        if (footer && !footer.querySelector('#coelbaProcessar')) {
+          footer.innerHTML = '<button class="btn btn-primary" id="coelbaProcessar">▶ Processar arquivo</button>';
+          document.getElementById('coelbaProcessar').addEventListener('click', startProcessing);
+        }
+      }
+      browse.addEventListener('click', (e) => { e.stopPropagation(); inp.click(); });
+      drop.addEventListener('click', (e) => { if (!e.target.closest('button')) inp.click(); });
+      inp.addEventListener('change', (e) => setFile(e.target.files && e.target.files[0]));
+      ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('drag-over'); }));
+      ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('drag-over'); }));
+      drop.addEventListener('drop', e => setFile(e.dataTransfer.files && e.dataTransfer.files[0]));
+      const btnProc = document.getElementById('coelbaProcessar');
+      if (btnProc) btnProc.addEventListener('click', startProcessing);
+    }
+
+    if (etapa === 2) {
+      const bar = document.getElementById('coelbaBar');
+      const pct = document.getElementById('coelbaPct');
+      let p = 0;
+      const tick = setInterval(() => {
+        p += 8 + Math.random() * 12;
+        if (p >= 100) {
+          p = 100;
+          bar.style.width = '100%';
+          pct.textContent = '100%';
+          clearInterval(tick);
+          resultado = ds.usinas.map(u => {
+            const fator = 0.85 + Math.random() * 0.3;
+            return {
+              id: u.id,
+              nome: u.nome,
+              anterior: u.producaoMes || 0,
+              kwh: Math.round((u.kwp * 4.5 * 30) * fator)
+            };
+          });
+          setTimeout(() => { etapa = 3; render(); }, 350);
+        } else {
+          bar.style.width = p + '%';
+          pct.textContent = Math.floor(p) + '%';
+        }
+      }, 180);
+    }
+
+    if (etapa === 3) {
+      const chkAll = document.getElementById('coelbaChkAll');
+      if (chkAll) chkAll.addEventListener('change', () => {
+        document.querySelectorAll('[data-aplicar]').forEach(c => c.checked = chkAll.checked);
+      });
+      document.getElementById('coelbaAplicar').addEventListener('click', () => {
+        const aplicar = [];
+        document.querySelectorAll('[data-aplicar]').forEach(c => {
+          if (c.checked) aplicar.push(resultado[+c.dataset.aplicar]);
+        });
+        if (aplicar.length === 0) { alert('Selecione ao menos uma leitura para aplicar.'); return; }
+        aplicar.forEach(r => window.dataStore.registrarLeitura(r.id, r.kwh));
+        closeModal();
+        setTimeout(() => alert('✓ ' + aplicar.length + ' leitura(s) aplicada(s) a partir da fatura COELBA.'), 100);
+      });
+    }
+  }
+
+  function startProcessing() { etapa = 2; render(); }
+
+  render();
+}
