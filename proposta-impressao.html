@@ -130,13 +130,18 @@
             width: 100%;
             border-collapse: collapse;
             margin: 15px 0;
-            font-size: 12px;
+            font-size: 11px;
+            table-layout: auto;
+            word-wrap: break-word;
         }
 
         th, td {
-            padding: 10px;
+            padding: 8px 10px;
             text-align: left;
             border: 1px solid #ddd;
+            vertical-align: middle;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         th {
@@ -144,10 +149,11 @@
             color: white;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 10px;
+            font-size: 9px;
+            letter-spacing: 0.3px;
         }
 
-        tr:nth-child(even) {
+        tbody tr:nth-child(even) {
             background: var(--light);
         }
 
@@ -311,7 +317,9 @@
 
         /* === Responsividade ampla (320px → 4K/cinema) === */
         img, svg, video { max-width: 100%; height: auto; }
-        table { max-width: 100%; display: block; overflow-x: auto; }
+        /* Wrapper para scroll horizontal em mobile sem quebrar o layout desktop */
+        .table-wrap { width: 100%; overflow-x: auto; margin: 15px 0; }
+        .table-wrap table { margin: 0; }
 
         @media (max-width: 1024px) {
             body { padding: 15mm; max-width: 100%; }
@@ -927,7 +935,7 @@
             </p>
         </div>
         <div style="background: rgba(52,152,219,0.08); border: 1px solid #3498db; border-radius: 4px; padding: 8px; margin-top: 8px;">
-            <p style="font-size: 9px; color: #2c3e50; margin: 0; line-height: 1.5;"><strong>Assessment cobrado à parte para todos os sócios</strong> — inclusive o primeiro (ESQ Energia). Valor individual entre R$ 2.500 e R$ 6.000, conforme a complexidade apurada na operação de cada sócio.</p>
+            <p style="font-size: 9px; color: #2c3e50; margin: 0; line-height: 1.5;"><strong>Assessment cobrado à parte para todos os sócios</strong>. Valor individual entre R$ 2.500 e R$ 6.000, conforme a complexidade apurada na operação de cada sócio.</p>
         </div>
 
         <!-- BLOCO 2 -->
@@ -979,7 +987,16 @@
 
         <!-- PLANOS E PREÇOS -->
         <h4 style="font-size: 11px; margin: 20px 0 8px 0; color: var(--secondary);">Planos e Preços</h4>
-        <table>
+        <table style="font-size: 9.5px; table-layout: fixed;">
+            <colgroup>
+                <col style="width: 16%">
+                <col style="width: 12%">
+                <col style="width: 12%">
+                <col style="width: 14%">
+                <col style="width: 14%">
+                <col style="width: 16%">
+                <col style="width: 16%">
+            </colgroup>
             <thead>
                 <tr>
                     <th>Plano</th>
@@ -1042,7 +1059,15 @@
 
         <!-- CONDIÇÕES -->
         <h4 style="font-size: 11px; margin: 20px 0 8px 0; color: var(--secondary);">Condições de Pagamento — Desenvolvimento (parcelado em 3)</h4>
-        <table>
+        <table style="font-size: 10px; table-layout: fixed;">
+            <colgroup>
+                <col style="width: 14%">
+                <col style="width: 16%">
+                <col style="width: 17%">
+                <col style="width: 15%">
+                <col style="width: 18%">
+                <col style="width: 20%">
+            </colgroup>
             <thead>
                 <tr style="background: var(--secondary); color: #fff;">
                     <th>Plano</th>
@@ -1053,6 +1078,7 @@
                     <th class="text-center" style="background: #3498db;">Custo / sócio<br><span style="font-size: 7px; font-weight: 400;">(4 sócios)</span></th>
                 </tr>
             </thead>
+            <tbody>
             <tr>
                 <td><strong>Básico</strong></td>
                 <td class="text-center">R$ 28.500</td>
@@ -1077,8 +1103,52 @@
                 <td class="text-center"><strong>R$ 16.400</strong></td>
                 <td class="text-center" style="background: rgba(52,152,219,0.15); color: #3498db;"><strong>R$ 10.250</strong></td>
             </tr>
+            </tbody>
         </table>
         <p style="font-size: 8px; color: #666; margin-top: 4px; font-style: italic;">Parcelamento incide apenas sobre o Desenvolvimento, dividido igualmente entre sócios (coluna considera 4 sócios). Assessment (R$ 2.500–6.000 por sócio) é cobrado 100% na contratação. Infra + APIs é paga diretamente pelo cliente conforme uso.</p>
+
+        <!-- ECONOMIA vs LUMI -->
+        <h4 style="background: #27ae60; color: white; padding: 6px 12px; border-radius: 4px; font-size: 11px; margin: 24px 0 10px 0;">
+            💰 Economia vs Lumi (cenário 4 sócios)
+        </h4>
+
+        <div style="background: rgba(39,174,96,0.08); border-left: 3px solid #27ae60; border-radius: 4px; padding: 10px 12px; margin-bottom: 10px;">
+            <p style="font-size: 10px; color: #2c3e50; margin: 0 0 5px 0; line-height: 1.6;">
+                <strong>Por que a economia acontece:</strong> a Lumi cobra mensalidade recorrente para sempre, que escala por faixa de potência e por quantidade de UCs. Nossa proposta inverte o modelo — <strong>pagamento único pelo desenvolvimento</strong> (valor fixo, independente do porte) e, a partir do Ano 2, apenas <strong>Infra + APIs</strong> conforme o uso real.
+            </p>
+            <p style="font-size: 9px; color: #555; margin: 0; line-height: 1.55;">
+                A diferença entre Core e Full reflete o escopo dos módulos (Asaas, WhatsApp, SignalR, Parser COELBA, Relatórios). A economia cresce com o porte da operação: o custo Lumi sobe a cada sócio, cada UC nova e cada upgrade de faixa; nosso desenvolvimento permanece o mesmo.
+            </p>
+        </div>
+
+        <table style="font-size: 10px; margin-top: 8px;">
+            <thead>
+                <tr style="background: #27ae60;">
+                    <th style="color: #fff;">Cenário</th>
+                    <th class="text-center" style="color: #fff;">1º Ano</th>
+                    <th class="text-center" style="color: #fff;">2º Ano em diante</th>
+                    <th class="text-center" style="color: #fff; background: #1e8449;">Economia 5 Anos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Plano Core</strong><br><span style="font-size: 8px; color: #666;">Core MVP · investido 5a: R$ 71.500</span></td>
+                    <td class="text-center"><strong>R$ 28.524</strong><br><span style="font-size: 8px; color: #27ae60;">−39%</span></td>
+                    <td class="text-center"><strong>R$ 45.024 / ano</strong><br><span style="font-size: 8px; color: #27ae60;">−87%</span></td>
+                    <td class="text-center" style="background: rgba(39,174,96,0.15);"><strong style="color: #1e8449; font-size: 12px;">R$ 208.620</strong><br><span style="font-size: 8px; color: #27ae60;">−74%</span></td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #3498db;">Plano Full</strong><br><span style="font-size: 8px; color: #666;">Todas as expansões · investido 5a: R$ 120.000</span></td>
+                    <td class="text-center"><strong>R$ 8.824</strong><br><span style="font-size: 8px; color: #27ae60;">−12%</span></td>
+                    <td class="text-center"><strong>R$ 37.824 / ano</strong><br><span style="font-size: 8px; color: #27ae60;">−73%</span></td>
+                    <td class="text-center" style="background: rgba(39,174,96,0.15);"><strong style="color: #1e8449; font-size: 12px;">R$ 160.120</strong><br><span style="font-size: 8px; color: #27ae60;">−57%</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="background: #fafafa; border: 1px solid #e0e0e0; border-radius: 4px; padding: 8px 10px; margin-top: 8px; font-size: 9px; color: #555; line-height: 1.6;">
+            <strong style="color: #1e8449;">Base de comparação:</strong> Lumi Plano Flex, 4 sócios, Proposta 1046/25 — Ano 1 <strong>R$ 73.624</strong> (parametrização R$ 10.000 + 12 mensalidades R$ 51.624 + white label R$ 12.000), Anos 2 a 5 <strong>R$ 51.624/ano</strong> apenas de mensalidades (contrato sem fim). Total 5 anos: <strong>R$ 280.120</strong>. Mensalidades Lumi escalam conforme crescimento de UCs e faixa de potência — aqui consideradas estáveis para projeção conservadora.
+        </div>
 
         <!-- BLOCO 3 -->
         <h4 style="background: var(--primary); color: white; padding: 6px 12px; border-radius: 4px; font-size: 11px; margin: 20px 0 10px 0;">
