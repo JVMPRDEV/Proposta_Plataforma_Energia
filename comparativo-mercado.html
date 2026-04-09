@@ -664,47 +664,52 @@
                 Cálculo Detalhado - Custo Lumi (Plano Flex)
             </h2>
 
-            <p style="margin-bottom: 1rem;">
-                <strong>Fórmula Lumi:</strong> Mensalidade = Preço por Faixa de Potência + (R$ 6,00 x Quantidade UCs)
+            <p style="margin-bottom: 0.5rem;">
+                <strong>Fórmula Lumi:</strong> Mensalidade = Preço por Faixa de Potência + (Preço Unitário UC × Quantidade UCs)
+            </p>
+            <p style="font-size: 0.78rem; color: #666; margin-bottom: 1rem;">
+                Valores extraídos da <strong>Proposta Comercial Lumi 1046/25</strong> (11/08/2025, Plano Flex).
+                Parametrização única: <strong>R$ 2.500</strong> por sócio. Preço Unitário UC (≤500 UCs): <strong>R$ 6,00/UC</strong>.
+                White Label: <strong>R$ 3.000</strong> uma vez por sócio.
             </p>
 
             <table class="partner-table">
                 <thead>
                     <tr>
                         <th>Sócio</th>
-                        <th>Setup (único)</th>
-                        <th>Base Mensal</th>
-                        <th>UCs x R$6</th>
+                        <th>Parametrização</th>
+                        <th>Base Faixa Potência</th>
+                        <th>UCs × R$ 6,00</th>
                         <th>Total/Mês</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Sócio 1 (27 UCs, 1-75kW)</td>
+                        <td>Sócio 1 (27 UCs, 1-75 kW)</td>
                         <td class="text-right">R$ 2.500</td>
                         <td class="text-right">R$ 378</td>
-                        <td class="text-right">R$ 162</td>
+                        <td class="text-right">27 × R$ 6 = R$ 162</td>
                         <td class="text-right"><strong>R$ 540</strong></td>
                     </tr>
                     <tr>
-                        <td>Sócio 2 (60 UCs, 76-250kW)</td>
+                        <td>Sócio 2 (60 UCs, 76-250 kW)</td>
                         <td class="text-right">R$ 2.500</td>
                         <td class="text-right">R$ 630</td>
-                        <td class="text-right">R$ 360</td>
+                        <td class="text-right">60 × R$ 6 = R$ 360</td>
                         <td class="text-right"><strong>R$ 990</strong></td>
                     </tr>
                     <tr>
-                        <td>Sócio 3 (90 UCs, 76-250kW)</td>
+                        <td>Sócio 3 (90 UCs, 76-250 kW)</td>
                         <td class="text-right">R$ 2.500</td>
                         <td class="text-right">R$ 630</td>
-                        <td class="text-right">R$ 540</td>
+                        <td class="text-right">90 × R$ 6 = R$ 540</td>
                         <td class="text-right"><strong>R$ 1.170</strong></td>
                     </tr>
                     <tr>
-                        <td>Sócio 4 (120 UCs, 251-500kW)</td>
+                        <td>Sócio 4 (120 UCs, 251-500 kW)</td>
                         <td class="text-right">R$ 2.500</td>
                         <td class="text-right">R$ 882</td>
-                        <td class="text-right">R$ 720</td>
+                        <td class="text-right">120 × R$ 6 = R$ 720</td>
                         <td class="text-right"><strong>R$ 1.602</strong></td>
                     </tr>
                     <tr class="total-row">
@@ -719,27 +724,44 @@
 
             <div class="cost-grid" style="margin-top: 2rem;">
                 <div class="cost-card competitor">
-                    <h3>Lumi - Custo Anual (4 Sócios)</h3>
-                    <div class="cost-item">
-                        <span>Setup (4 sócios)</span>
-                        <span>R$ 10.000</span>
+                    <h3>Lumi - Custo Anual (4 Sócios, Plano Flex)</h3>
+                    <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><strong>Parametrização do Sistema</strong></span>
+                            <span>R$ 10.000</span>
+                        </div>
+                        <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">R$ 2.500 × 4 sócios · pagamento único após entrega</div>
                     </div>
-                    <div class="cost-item">
-                        <span>Mensalidade total</span>
-                        <span>R$ 4.302/mês</span>
+                    <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><strong>Mensalidade (4 sócios)</strong></span>
+                            <span>R$ 4.302/mês</span>
+                        </div>
+                        <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">
+                            Sócio 1: R$ 540 · Sócio 2: R$ 990 · Sócio 3: R$ 1.170 · Sócio 4: R$ 1.602
+                        </div>
                     </div>
-                    <div class="cost-item">
-                        <span>12 meses</span>
-                        <span>R$ 51.624</span>
+                    <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><strong>Mensalidades × 12 meses</strong></span>
+                            <span>R$ 51.624</span>
+                        </div>
+                        <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">R$ 4.302 × 12 meses de contrato (mínimo Lumi)</div>
                     </div>
-                    <div class="cost-item">
-                        <span>White Label (4x)</span>
-                        <span>R$ 12.000</span>
+                    <div class="cost-item" style="flex-direction: column; align-items: stretch; gap: 4px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><strong>White Label (ID Visual)</strong></span>
+                            <span>R$ 12.000</span>
+                        </div>
+                        <div style="font-size: 0.72rem; color: #888; padding-left: 0.5rem;">R$ 3.000 × 4 sócios · customização única</div>
                     </div>
                     <div class="cost-item total">
                         <span>Total 1º Ano</span>
                         <span>R$ 73.624</span>
                     </div>
+                    <p style="font-size: 0.72rem; color: #888; margin-top: 0.75rem; font-style: italic; line-height: 1.5;">
+                        <strong>Ano 2 em diante:</strong> permanece a mensalidade (R$ 51.624/ano) — sem fim do contrato. Se a potência ou nº de UCs crescer, o valor escala automaticamente conforme a tabela progressiva da Lumi.
+                    </p>
                 </div>
 
                 <div class="cost-card ours">
