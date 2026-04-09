@@ -110,7 +110,7 @@
  <p>Envio de faturas, boletos e documentos via Cloud API (sem bot)</p>
  </div>
  <div class="feature-card">
- <div class="feature-icon"></div>
+ <div class="feature-icon">N</div>
  <h4>Notificações em Tempo Real</h4>
  <p>Push in-app via SignalR (sino, badge, toast e painel)</p>
  </div>
@@ -127,35 +127,37 @@
  <div class="context-map">
  <h3>Mapa de Contextos (DDD)</h3>
  <div class="map-container">
- <pre class="architecture-diagram">
-┌─────────────────────────────────────────────────────────────────────────────┐
-│ PLATAFORMA ENERGIA SOLAR │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ │
-│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ │
-│ │ IDENTITY & │ │ CADASTRO │ │ GERAÇÃO │ │
-│ │ MULTITENANCY │◄──►│ (Clientes) │◄──►│ (Produção) │ │
-│ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ │
-│ │ │ │ │
-│ ▼ ▼ ▼ │
-│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ │
-│ │ CONTRATOS & │◄──►│ DISTRIBUIÇÃO │◄──►│ FATURAMENTO │ │
-│ │ FIDELIDADE │ │ DE CRÉDITOS │ │ & COBRANÇA │ │
-│ └─────────────────┘ └────────┬────────┘ └────────┬────────┘ │
-│ │ │ │
-│ ▼ ▼ │
-│ ┌─────────────────┐ ┌─────────────────┐ │
-│ │ FINANCEIRO │◄──►│ COMUNICAÇÃO │ │
-│ │ (Asaas + Pix) │ │ (WhatsApp) │ │
-│ └────────┬────────┘ └─────────────────┘ │
-│ │ │
-│ ▼ │
-│ ┌─────────────────┐ │
-│ │ DASHBOARDS │ │
-│ │ & RELATÓRIOS │ │
-│ └─────────────────┘ │
-└─────────────────────────────────────────────────────────────────────────────┘
- </pre>
+ <div class="ddd-map">
+ <div class="ddd-title">PLATAFORMA ENERGIA SOLAR</div>
+ <div class="ddd-grid">
+ <div class="ddd-ctx" style="grid-column: 1;">Identity &amp;<br>Multitenancy</div>
+ <div class="ddd-arrow" style="grid-column: 2;">↔</div>
+ <div class="ddd-ctx" style="grid-column: 3;">Cadastro<br><small>(Clientes)</small></div>
+ <div class="ddd-arrow" style="grid-column: 4;">↔</div>
+ <div class="ddd-ctx" style="grid-column: 5;">Geração<br><small>(Produção)</small></div>
+
+ <div class="ddd-vert" style="grid-column: 1; grid-row: 2;">↓</div>
+ <div class="ddd-vert" style="grid-column: 3; grid-row: 2;">↓</div>
+ <div class="ddd-vert" style="grid-column: 5; grid-row: 2;">↓</div>
+
+ <div class="ddd-ctx" style="grid-column: 1; grid-row: 3;">Contratos &amp;<br>Fidelidade</div>
+ <div class="ddd-arrow" style="grid-column: 2; grid-row: 3;">↔</div>
+ <div class="ddd-ctx" style="grid-column: 3; grid-row: 3;">Distribuição<br>de Créditos</div>
+ <div class="ddd-arrow" style="grid-column: 4; grid-row: 3;">↔</div>
+ <div class="ddd-ctx" style="grid-column: 5; grid-row: 3;">Faturamento<br>&amp; Cobrança</div>
+
+ <div class="ddd-vert" style="grid-column: 3; grid-row: 4;">↓</div>
+ <div class="ddd-vert" style="grid-column: 5; grid-row: 4;">↓</div>
+
+ <div class="ddd-ctx" style="grid-column: 3; grid-row: 5;">Financeiro<br><small>(Asaas + Pix)</small></div>
+ <div class="ddd-arrow" style="grid-column: 4; grid-row: 5;">↔</div>
+ <div class="ddd-ctx" style="grid-column: 5; grid-row: 5;">Comunicação<br><small>(WhatsApp)</small></div>
+
+ <div class="ddd-vert" style="grid-column: 3; grid-row: 6;">↓</div>
+
+ <div class="ddd-ctx ddd-highlight" style="grid-column: 3; grid-row: 7;">Dashboards<br>&amp; Relatórios</div>
+ </div>
+ </div>
  </div>
  </div>
 
@@ -435,65 +437,34 @@
 
  <div class="cqrs-diagram">
  <h3>Arquitetura Monolito Modular + Multitenancy</h3>
- <pre class="architecture-diagram">
-┌─────────────────────────────────────────────────────────────────┐
-│ MONOLITO MODULAR + CQRS │
-├─────────────────────────────────────────────────────────────────┤
-│ │
-│ ┌─────────────┐ ┌─────────────┐ ┌─────────────────┐ │
-│ │ NGINX │ │ KEYCLOAK │ │ SQL SERVER │ │
-│ │ (Rev.Proxy) │ │ (SSO/OAuth) │ │ (Multibanco) │ │
-│ └──────┬──────┘ └──────┬──────┘ └────────┬────────┘ │
-│ │ │ │ │
-│ ▼ ▼ ▼ │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ .NET 8 API (Monolito Modular) │ │
-│ ├─────────────────────────────────────────────────────────┤ │
-│ │ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ │ │
-│ │ │Identity │ │Cadastro │ │Créditos │ │ Billing │ ... │ │
-│ │ └─────────┘ └─────────┘ └─────────┘ └─────────┘ │ │
-│ ├─────────────────────────────────────────────────────────┤ │
-│ │ NHibernate (Commands/Escrita) │ Dapper (Queries) │ │
-│ └─────────────────────────────────────────────────────────┘ │
-│ │ │ │
-│ ▼ ▼ │
-│ ┌─────────────┐ ┌─────────────────────┐ │
-│ │ Redis │ │ Swagger / OpenAPI │ │
-│ │ (Cache) │ │ (Documentação) │ │
-│ └─────────────┘ └─────────────────────┘ │
-│ │
-│ VANTAGENS: Deploy simples | Módulos isolados | CQRS nativo │
-└─────────────────────────────────────────────────────────────────┘
- </pre>
+ <div class="arch-diagram">
+ <div class="arch-title">MONOLITO MODULAR + CQRS</div>
+ <div class="arch-row">
+ <div class="arch-box"><strong>NGINX</strong><small>Rev. Proxy</small></div>
+ <div class="arch-box"><strong>Keycloak</strong><small>SSO / OAuth</small></div>
+ <div class="arch-box"><strong>SQL Server</strong><small>Multibanco</small></div>
+ </div>
+ <div class="arch-down">↓ &nbsp;&nbsp; ↓ &nbsp;&nbsp; ↓</div>
+ <div class="arch-api">
+ <div class="arch-api-title">.NET 8 API — Monolito Modular</div>
+ <div class="arch-modules">
+ <span>Identity</span>
+ <span>Cadastro</span>
+ <span>Créditos</span>
+ <span>Billing</span>
+ <span>…</span>
+ </div>
+ <div class="arch-stack"><span>NHibernate <small>(Commands / Escrita)</small></span><span>Dapper <small>(Queries)</small></span></div>
+ </div>
+ <div class="arch-down">↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓</div>
+ <div class="arch-row arch-row-2">
+ <div class="arch-box"><strong>Redis</strong><small>Cache</small></div>
+ <div class="arch-box"><strong>Swagger / OpenAPI</strong><small>Documentação</small></div>
+ </div>
+ <div class="arch-vantagens"><strong>Vantagens:</strong> Deploy simples · Módulos isolados · CQRS nativo</div>
+ </div>
  </div>
 
- <div class="solution-structure">
- <h3>Estrutura da Solução</h3>
- <pre class="code-block">
-src/
-├── Core/
-│ ├── SolarPlatform.Domain/ # Entidades, Value Objects, Domain Events
-│ └── SolarPlatform.Application/ # Use Cases, Commands, Queries (CQRS)
-│
-├── Infrastructure/
-│ ├── SolarPlatform.Persistence/ # NHibernate (Write) + Dapper (Read)
-│ ├── SolarPlatform.Integration.Asaas/ # Gateway de Pagamento (opcional)
-│ ├── SolarPlatform.Integration.WhatsApp/ # API WhatsApp (opcional)
-│ └── SolarPlatform.Integration.COELBA/ # Parser de Faturas (opcional)
-│
-├── Presentation/
-│ ├── SolarPlatform.API/ # Web API (Controllers + Swagger)
-│ └── SolarPlatform.WebApp/ # Vue 3 SPA (projeto separado)
-│
-├── CrossCutting/
-│ ├── SolarPlatform.Common/ # Shared Kernel
-│ └── SolarPlatform.IoC/ # Dependency Injection
-│
-└── docker/
- ├── nginx/ # Configuração Nginx (reverse proxy)
- └── docker-compose.yml # Orquestração dos containers
- </pre>
- </div>
  </section>
 
  <!-- Roadmap -->
