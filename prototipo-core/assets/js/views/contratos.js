@@ -39,14 +39,6 @@ window.view_contratos = function(root) {
       </div>
     </div>
 
-    <div class="card" style="margin-bottom: 1.5rem;">
-      <div class="card-header">
-        <h3>Ciclo de vida do contrato</h3>
-        <span class="subtitle">Máquina de estado</span>
-      </div>
-      ${steps(['Rascunho','Em análise','Ativo','Renovação','Encerrado'], 2)}
-    </div>
-
     <div class="table-wrap">
       <div class="table-toolbar">
         <input type="search" id="busca" value="${esc(busca)}" placeholder="🔍 Buscar contrato por cliente..." />
@@ -101,6 +93,7 @@ window.view_contratos = function(root) {
     });
     tbody.innerHTML = p.items.map(c => {
       const items = [
+        { icon: '👁', label: 'Ver detalhes', onClick: () => modalDetalhesContrato(c) },
         { icon: '✎', label: 'Editar contrato', onClick: () => modalContrato(c) }
       ];
       if (c.status === 'ativo') {
@@ -141,4 +134,45 @@ window.view_contratos = function(root) {
     renderTable();
   }));
 };
+
+function modalDetalhesContrato(c) {
+  const stepIdx = c.status === 'pendente' ? 1
+                : c.status === 'ativo'    ? 2
+                : c.status === 'encerrado' ? 4
+                : 0;
+  openModal(`
+    <div class="modal" style="max-width: 640px;">
+      <div class="modal-header">
+        <h3>Detalhes do Contrato · ${esc(c.id)}</h3>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
+          <div>
+            <div style="font-size:1.05rem; font-weight:700; color:var(--gray-900);">${esc(c.cliente)}</div>
+            <div style="font-size:.78rem; color:var(--gray-600); margin-top:2px;">Contrato ${esc(c.id)}</div>
+          </div>
+          ${statusBadge(c.status)}
+        </div>
+
+        <div class="card" style="margin-bottom:1rem;">
+          <div class="card-header">
+            <h3 style="font-size:.9rem;">Ciclo de vida deste contrato</h3>
+          </div>
+          ${steps(['Rascunho','Em análise','Ativo','Renovação','Encerrado'], stepIdx)}
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:.75rem; font-size:.85rem;">
+          <div><strong>Fidelidade:</strong> ${esc(c.fidelidade)}</div>
+          <div><strong>Desconto:</strong> ${c.desconto}%</div>
+          <div><strong>Vigência:</strong> ${esc(c.vigenciaInicio)} → ${esc(c.vigenciaFim)}</div>
+          <div><strong>Valor mensal:</strong> ${fmt.moeda(c.valorMensal)}</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeModal()">Fechar</button>
+      </div>
+    </div>
+  `);
+}
 })();

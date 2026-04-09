@@ -54,17 +54,6 @@ window.view_faturamento = function(root) {
       </div>
     </div>
 
-    <div class="card" style="margin-bottom: 1.5rem;">
-      <div class="card-header">
-        <h3>Ciclo de vida da fatura</h3>
-        <span class="subtitle">Máquina de estado</span>
-      </div>
-      ${steps(['Gerada', 'Enviada', 'Aberta', 'Paga'], 2)}
-      <p style="font-size: 0.8rem; color: var(--gray-600); margin-top: 0.75rem;">
-        Cada transição é registrada com timestamp e usuário. Faturas vencidas geram juros automaticamente (2% + 0,033%/dia).
-      </p>
-    </div>
-
     <div class="table-wrap">
       <div class="table-toolbar">
         <input type="search" id="busca" value="${esc(busca)}" placeholder="🔍 Buscar por nº ou cliente..." />
@@ -156,42 +145,197 @@ window.view_faturamento = function(root) {
 
   // Botão gerar lote
   root.querySelector('#btnGerarLote').addEventListener('click', () => {
+    const MESES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    const ativos = ds.contratos.filter(c => c.status === 'ativo');
+    const selecionados = new Set(ativos.map(c => c.id));
+    const hoje = new Date();
+    const vencDef = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 15).toISOString().slice(0, 10);
+    const compDef = MESES[hoje.getMonth()] + '/' + String(hoje.getFullYear()).slice(-2);
+
+    function compOptions(selecionada) {
+      const opts = [];
+      for (let i = -2; i <= 2; i++) {
+        const dt = new Date(hoje.getFullYear(), hoje.getMonth() + i, 1);
+        const v = MESES[dt.getMonth()] + '/' + String(dt.getFullYear()).slice(-2);
+        opts.push(`<option value="${v}" ${v === selecionada ? 'selected' : ''}>${v}</option>`);
+      }
+      return opts.join('');
+    }
+
     openModal(`
-      <div class="modal" style="max-width: 480px;">
+      <div class="modal" style="max-width: 640px;">
         <div class="modal-header">
-          <h3>Geração de Faturas em Lote</h3>
+          <h3>⚡ Geração de Faturas em Lote</h3>
           <button class="modal-close" onclick="closeModal()">×</button>
         </div>
-        <div class="modal-body" style="text-align: center;">
-          <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
-          <p style="font-size: 0.9rem; color: var(--gray-700); margin-bottom: 1.25rem;">
-            Será gerada uma fatura para cada contrato ativo deste tenant referente à competência <strong>Abr/2026</strong>.
+        <div class="modal-body">
+          ${ativos.length === 0 ? `
+            <div style="text-align:center; padding:1.5rem; color:var(--gray-600);">
+              <div style="font-size:2.4rem;">📭</div>
+              <div style="font-weight:600; margin-top:.4rem;">Nenhum contrato ativo</div>
+              <div style="font-size:.78rem; margin-top:.3rem;">Cadastre contratos ativos antes de gerar faturas em lote.</div>
+            </div>
+          ` : `
+          <p style="font-size:.85rem; color:var(--gray-700); margin-bottom:1rem;">
+            Será gerada <strong>uma fatura por contrato ativo</strong> usando o valor mensal acordado em cada contrato.
+            Faturas duplicadas (mesma competência + cliente) são automaticamente ignoradas.
           </p>
-          <div style="background: var(--gray-50); padding: 1rem; border-radius: 6px; text-align: left;">
-            <div style="display: flex; justify-content: space-between; padding: 4px 0;">
-              <span>Contratos ativos:</span>
-              <strong>${ds.contratos.filter(c => c.status === 'ativo').length}</strong>
+
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Competência <span style="color:var(--danger);">*</span></label>
+              <select id="lt_comp">${compOptions(compDef)}</select>
             </div>
-            <div style="display: flex; justify-content: space-between; padding: 4px 0;">
-              <span>Valor total estimado:</span>
-              <strong>${fmt.moeda(ds.contratos.filter(c => c.status === 'ativo').reduce((a,c) => a + c.valorMensal, 0))}</strong>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: 4px 0;">
-              <span>Vencimento:</span>
-              <strong>15/04/2026</strong>
+            <div class="form-row">
+              <label>Vencimento <span style="color:var(--danger);">*</span></label>
+              <input type="date" id="lt_venc" value="${vencDef}" />
             </div>
           </div>
+
+          <div id="lt_resumo" style="margin-top:1rem;"></div>
+
+          <div style="margin-top:1rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem;">
+              <div style="font-size:.78rem; color:var(--gray-700); font-weight:600;">
+                📋 Selecione os contratos a incluir <span id="lt_selCount" style="color:var(--gray-500); font-weight:400;"></span>
+              </div>
+              <div style="display:flex; gap:.4rem;">
+                <button class="btn btn-ghost btn-sm" id="lt_selAll" type="button">✓ Todos</button>
+                <button class="btn btn-ghost btn-sm" id="lt_selNone" type="button">✕ Nenhum</button>
+                <button class="btn btn-ghost btn-sm" id="lt_selNew" type="button">↻ Só novos</button>
+              </div>
+            </div>
+            <div style="max-height:260px; overflow:auto; border:1px solid var(--gray-200); border-radius:6px;">
+              <table class="data" style="font-size:.76rem; margin:0;">
+                <thead style="position:sticky; top:0; background:var(--white); z-index:1;">
+                  <tr>
+                    <th class="text-center" style="width:36px;"><input type="checkbox" id="lt_chkAll" /></th>
+                    <th>Cliente</th>
+                    <th>Contrato</th>
+                    <th class="text-right">Valor</th>
+                    <th class="text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="lt_preview"></tbody>
+              </table>
+            </div>
+          </div>
+          `}
         </div>
         <div class="modal-footer">
           <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
-          <button class="btn btn-primary" id="btnConfirmaLote">⚡ Gerar agora</button>
+          ${ativos.length > 0 ? '<button class="btn btn-primary" id="btnConfirmaLote">⚡ Gerar agora</button>' : ''}
         </div>
       </div>
     `);
+
+    if (ativos.length === 0) return;
+
+    const selComp = document.getElementById('lt_comp');
+    const inpVenc = document.getElementById('lt_venc');
+    const resumoEl = document.getElementById('lt_resumo');
+    const previewEl = document.getElementById('lt_preview');
+
+    function refresh() {
+      const comp = selComp.value;
+      const linhas = ativos.map(c => {
+        const jaExiste = (ds.faturas || []).some(f => f.clienteId === c.clienteId && f.competencia === comp);
+        return { c, jaExiste, marcado: selecionados.has(c.id) };
+      });
+      const aGerar = linhas.filter(l => l.marcado && !l.jaExiste);
+      const dup = linhas.filter(l => l.marcado && l.jaExiste).length;
+      const ignorados = linhas.filter(l => !l.marcado).length;
+      const total = aGerar.reduce((a, l) => a + (l.c.valorMensal || 0), 0);
+
+      resumoEl.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem;">
+          <div style="padding:.65rem; background:var(--success-bg); border-radius:6px; text-align:center;">
+            <div style="font-size:.62rem; color:var(--gray-600); text-transform:uppercase; letter-spacing:.5px; font-weight:700;">A gerar</div>
+            <div style="font-size:1.35rem; font-weight:800; color:var(--success);">${aGerar.length}</div>
+          </div>
+          <div style="padding:.65rem; background:${dup > 0 ? 'var(--warning-bg)' : 'var(--gray-50)'}; border-radius:6px; text-align:center;">
+            <div style="font-size:.62rem; color:var(--gray-600); text-transform:uppercase; letter-spacing:.5px; font-weight:700;">Duplicadas</div>
+            <div style="font-size:1.35rem; font-weight:800; color:${dup > 0 ? '#b8740a' : 'var(--gray-500)'};">${dup}</div>
+          </div>
+          <div style="padding:.65rem; background:var(--gray-50); border-radius:6px; text-align:center;">
+            <div style="font-size:.62rem; color:var(--gray-600); text-transform:uppercase; letter-spacing:.5px; font-weight:700;">Excluídas</div>
+            <div style="font-size:1.35rem; font-weight:800; color:var(--gray-500);">${ignorados}</div>
+          </div>
+          <div style="padding:.65rem; background:var(--info-bg); border-radius:6px; text-align:center;">
+            <div style="font-size:.62rem; color:var(--gray-600); text-transform:uppercase; letter-spacing:.5px; font-weight:700;">Total</div>
+            <div style="font-size:1.05rem; font-weight:800; color:var(--info);">${fmt.moedaCompact(total)}</div>
+          </div>
+        </div>
+      `;
+
+      previewEl.innerHTML = linhas.map(l => `
+        <tr style="${!l.marcado ? 'opacity:.45;' : ''}">
+          <td class="text-center"><input type="checkbox" data-sel="${esc(l.c.id)}" ${l.marcado ? 'checked' : ''} /></td>
+          <td>${esc(l.c.cliente)}</td>
+          <td><span style="font-family:monospace; font-size:.7rem;">${esc(l.c.id)}</span></td>
+          <td class="text-right num">${fmt.moeda(l.c.valorMensal || 0)}</td>
+          <td class="text-center">${l.jaExiste ? '<span class="badge warning">duplicada</span>' : '<span class="badge success">nova</span>'}</td>
+        </tr>
+      `).join('');
+
+      const chkAll = document.getElementById('lt_chkAll');
+      if (chkAll) {
+        chkAll.checked = selecionados.size === linhas.length;
+        chkAll.indeterminate = selecionados.size > 0 && selecionados.size < linhas.length;
+      }
+      const cnt = document.getElementById('lt_selCount');
+      if (cnt) cnt.textContent = `(${selecionados.size}/${linhas.length} marcados)`;
+
+      previewEl.querySelectorAll('[data-sel]').forEach(chk => {
+        chk.addEventListener('change', () => {
+          if (chk.checked) selecionados.add(chk.dataset.sel);
+          else selecionados.delete(chk.dataset.sel);
+          refresh();
+        });
+      });
+
+      const btnGo = document.getElementById('btnConfirmaLote');
+      if (btnGo) {
+        btnGo.disabled = aGerar.length === 0;
+        btnGo.textContent = aGerar.length === 0 ? '⚡ Nenhuma fatura a gerar' : `⚡ Gerar ${aGerar.length} fatura(s)`;
+      }
+    }
+    selComp.addEventListener('change', refresh);
+
+    document.getElementById('lt_chkAll').addEventListener('change', (e) => {
+      if (e.target.checked) ativos.forEach(c => selecionados.add(c.id));
+      else selecionados.clear();
+      refresh();
+    });
+    document.getElementById('lt_selAll').addEventListener('click', () => {
+      ativos.forEach(c => selecionados.add(c.id));
+      refresh();
+    });
+    document.getElementById('lt_selNone').addEventListener('click', () => {
+      selecionados.clear();
+      refresh();
+    });
+    document.getElementById('lt_selNew').addEventListener('click', () => {
+      const comp = selComp.value;
+      selecionados.clear();
+      ativos.forEach(c => {
+        const jaExiste = (ds.faturas || []).some(f => f.clienteId === c.clienteId && f.competencia === comp);
+        if (!jaExiste) selecionados.add(c.id);
+      });
+      refresh();
+    });
+
+    refresh();
+
     document.getElementById('btnConfirmaLote').addEventListener('click', () => {
-      const qtd = window.dataStore.gerarLote('Abr/26', '15/04/2026');
+      const comp = selComp.value;
+      const vencISO = inpVenc.value;
+      if (!vencISO) { alert('Informe a data de vencimento.'); return; }
+      if (selecionados.size === 0) { alert('Selecione ao menos um contrato.'); return; }
+      const vencBR = vencISO.split('-').reverse().join('/');
+      const qtd = window.dataStore.gerarLote(comp, vencBR, Array.from(selecionados));
       closeModal();
-      setTimeout(() => alert(qtd + ' fatura(s) gerada(s) em lote.'), 100);
+      setTimeout(() => alert('✓ ' + qtd + ' fatura(s) gerada(s) em lote para ' + comp + '.\nVencimento: ' + vencBR), 100);
     });
   });
 };
@@ -225,6 +369,14 @@ function abrirPreviewFatura(f, t) {
               <div class="label">Fatura</div>
               <div class="num">${esc(f.id)}</div>
             </div>
+          </div>
+
+          <div class="section">
+            <h4>Ciclo de vida desta fatura</h4>
+            ${steps(['Gerada','Enviada','Aberta','Paga'],
+              f.status === 'paga' ? 3 :
+              (f.status === 'aberta' || f.status === 'vencida') ? 2 :
+              f.status === 'enviada' ? 1 : 0)}
           </div>
 
           <div class="section">

@@ -286,30 +286,102 @@
 
   // ===== LEITURA MANUAL DA USINA =====
   window.modalLeitura = function(u) {
+    const estimado = Math.round(u.kwp * 4.5 * 30);
+    const anterior = u.producaoMes || 0;
+    const hojeISO = new Date().toISOString().slice(0, 10);
+
     openModal(`
-      <div class="modal" style="max-width: 460px;">
+      <div class="modal" style="max-width: 560px;">
         <div class="modal-header">
-          <h3>Registrar Leitura Manual</h3>
+          <h3>📊 Registrar Leitura — ${esc(u.nome)}</h3>
           <button class="modal-close" onclick="closeModal()">×</button>
         </div>
         <div class="modal-body">
-          <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 1rem;">
-            Usina: <strong>${esc(u.nome)}</strong> · ${u.kwp} kWp
-          </p>
-          <div class="form-row">
-            <label>Produção do mês (kWh)</label>
-            <input type="number" id="m_kwh" value="${u.producaoMes}" />
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:.6rem; margin-bottom:1rem;">
+            <div style="background:var(--gray-50); padding:.65rem; border-radius:6px; text-align:center;">
+              <div style="font-size:.68rem; color:var(--gray-500); text-transform:uppercase; letter-spacing:.5px;">Capacidade</div>
+              <div style="font-size:1.05rem; font-weight:700; color:var(--gray-900); margin-top:2px;">${u.kwp} kWp</div>
+            </div>
+            <div style="background:var(--gray-50); padding:.65rem; border-radius:6px; text-align:center;">
+              <div style="font-size:.68rem; color:var(--gray-500); text-transform:uppercase; letter-spacing:.5px;">Leitura anterior</div>
+              <div style="font-size:1.05rem; font-weight:700; color:var(--gray-900); margin-top:2px;">${fmt.num(anterior)} kWh</div>
+              <div style="font-size:.66rem; color:var(--gray-500);">${esc(u.ultimaLeitura || '—')}</div>
+            </div>
+            <div style="background:var(--info-bg); padding:.65rem; border-radius:6px; text-align:center;">
+              <div style="font-size:.68rem; color:var(--info); text-transform:uppercase; letter-spacing:.5px;">Estimado / mês</div>
+              <div style="font-size:1.05rem; font-weight:700; color:var(--info); margin-top:2px;">${fmt.num(estimado)} kWh</div>
+              <div style="font-size:.66rem; color:var(--gray-500);">~4,5 kWh/kWp/dia</div>
+            </div>
           </div>
-          <p style="font-size: 0.75rem; color: var(--gray-500);">Conforme questionário B1 (digitação manual).</p>
+
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Data da leitura</label>
+              <input type="date" id="m_data" value="${hojeISO}" max="${hojeISO}" />
+            </div>
+            <div class="form-row">
+              <label>Competência</label>
+              <input type="text" id="m_comp" value="${new Date().toLocaleDateString('pt-BR',{month:'short',year:'2-digit'}).replace('.','').replace(' de ','/')}" placeholder="Ex.: Abr/26" />
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top:.5rem;">
+            <label>Produção do mês (kWh) <span style="color:var(--danger);">*</span></label>
+            <input type="number" id="m_kwh" value="${anterior}" min="0" step="1" placeholder="Ex.: ${estimado}" autofocus />
+          </div>
+
+          <div id="m_indic" style="margin-top:.6rem; padding:.7rem .85rem; border-radius:6px; font-size:.78rem; display:none;"></div>
+
+          <div class="form-row" style="margin-top:.75rem;">
+            <label>Observação <span style="color:var(--gray-400); font-weight:400;">(opcional)</span></label>
+            <textarea id="m_obs" rows="2" placeholder="Ex.: limpeza dos painéis em 05/04, dia nublado afetou geração..."></textarea>
+          </div>
+
+          <div style="margin-top:.85rem; padding:.55rem .75rem; background:var(--gray-50); border-radius:6px; font-size:.7rem; color:var(--gray-600);">
+            ℹ A leitura será registrada com o usuário atual e o timestamp da operação.
+          </div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
-          <button class="btn btn-primary" id="m_save">Registrar</button>
+          <button class="btn btn-primary" id="m_save">✓ Registrar leitura</button>
         </div>
       </div>
     `);
+
+    const inp = document.getElementById('m_kwh');
+    const indic = document.getElementById('m_indic');
+    function recalc() {
+      const v = +inp.value;
+      if (!v || v <= 0) { indic.style.display = 'none'; return; }
+      const efic = (v / u.kwp / 30);
+      const variacao = anterior > 0 ? ((v - anterior) / anterior * 100) : 0;
+      const desvioEstim = ((v - estimado) / estimado * 100);
+      let cor = 'var(--success)', bg = 'var(--success-bg)', alerta = '';
+      if (Math.abs(desvioEstim) > 30) { cor = 'var(--danger)'; bg = 'var(--warning-bg)'; alerta = '⚠ Valor muito distante do estimado — verifique antes de salvar.'; }
+      else if (Math.abs(desvioEstim) > 15) { cor = '#b8740a'; bg = 'var(--warning-bg)'; }
+      indic.style.display = 'block';
+      indic.style.background = bg;
+      indic.style.color = cor;
+      indic.innerHTML = `
+        <div style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+          <span><strong>${efic.toFixed(2).replace('.',',')}</strong> kWh/kWp/dia</span>
+          <span>vs anterior: <strong>${variacao >= 0 ? '▲' : '▼'} ${Math.abs(variacao).toFixed(1).replace('.',',')}%</strong></span>
+          <span>vs estimado: <strong>${desvioEstim >= 0 ? '+' : ''}${desvioEstim.toFixed(1).replace('.',',')}%</strong></span>
+        </div>
+        ${alerta ? `<div style="margin-top:4px; font-weight:600;">${alerta}</div>` : ''}
+      `;
+    }
+    inp.addEventListener('input', recalc);
+    recalc();
+
     document.getElementById('m_save').addEventListener('click', () => {
-      window.dataStore.registrarLeitura(u.id, +document.getElementById('m_kwh').value);
+      const v = +inp.value;
+      if (!v || v <= 0) { alert('Informe a produção em kWh (deve ser maior que zero).'); inp.focus(); return; }
+      const dataISO = document.getElementById('m_data').value;
+      const dataBR = dataISO ? dataISO.split('-').reverse().join('/') : null;
+      const desvio = Math.abs((v - estimado) / estimado * 100);
+      if (desvio > 50 && !confirm('A leitura informada (' + fmt.num(v) + ' kWh) está ' + desvio.toFixed(0) + '% fora da estimativa (' + fmt.num(estimado) + ' kWh).\n\nConfirmar mesmo assim?')) return;
+      window.dataStore.registrarLeitura(u.id, v, dataBR);
       closeModal();
     });
   };
@@ -318,54 +390,185 @@
   window.modalFatura = function(f) {
     const ed = !!f;
     const ds = window.dataStore.get();
+    const TARIFA = 0.78;
+    const MESES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+    function compAtual() {
+      const d = new Date();
+      return MESES[d.getMonth()] + '/' + String(d.getFullYear()).slice(-2);
+    }
+    function vencDefault() {
+      const d = new Date();
+      d.setMonth(d.getMonth() + 1);
+      d.setDate(15);
+      return d.toISOString().slice(0, 10);
+    }
+    function brToISO(br) {
+      if (!br) return '';
+      const m = br.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+      return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
+    }
+    function isoToBR(iso) {
+      if (!iso) return '';
+      const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      return m ? `${m[3]}/${m[2]}/${m[1]}` : iso;
+    }
+
     openModal(`
-      <div class="modal" style="max-width: 600px;">
+      <div class="modal" style="max-width: 640px;">
         <div class="modal-header">
-          <h3>${ed ? 'Editar' : 'Nova'} Fatura</h3>
+          <h3>${ed ? '✎ Editar Fatura ' + esc(f.id) : '+ Nova Fatura Individual'}</h3>
           <button class="modal-close" onclick="closeModal()">×</button>
         </div>
         <div class="modal-body">
           <div class="form-row">
-            <label>Cliente</label>
+            <label>Cliente <span style="color:var(--danger);">*</span></label>
             <select id="m_cli">
-              ${ds.clientes.map(c => `<option value="${c.id}" ${f && f.clienteId === c.id ? 'selected' : ''}>${esc(c.nome)}</option>`).join('')}
+              <option value="">— Selecione um cliente —</option>
+              ${ds.clientes.map(c => `<option value="${c.id}" ${f && f.clienteId === c.id ? 'selected' : ''}>${esc(c.nome)}${c.status !== 'ativo' ? ' (inativo)' : ''}</option>`).join('')}
             </select>
           </div>
+
+          <div id="m_cliInfo" style="display:none; margin:.4rem 0 .85rem; padding:.65rem .8rem; background:var(--gray-50); border-radius:6px; font-size:.78rem;"></div>
+
           <div class="form-grid">
             <div class="form-row">
               <label>Competência</label>
-              <input type="text" id="m_comp" value="${esc(f ? f.competencia : 'Abr/26')}" />
+              <select id="m_comp">
+                ${(function(){
+                  const opts = [];
+                  const d = new Date();
+                  for (let i = -2; i <= 2; i++) {
+                    const dt = new Date(d.getFullYear(), d.getMonth() + i, 1);
+                    const v = MESES[dt.getMonth()] + '/' + String(dt.getFullYear()).slice(-2);
+                    opts.push(`<option value="${v}" ${(f ? f.competencia : compAtual()) === v ? 'selected' : ''}>${v}</option>`);
+                  }
+                  return opts.join('');
+                })()}
+              </select>
             </div>
             <div class="form-row">
               <label>Vencimento</label>
-              <input type="text" id="m_venc" value="${esc(f ? f.vencimento : '15/05/2026')}" />
+              <input type="date" id="m_venc" value="${f ? brToISO(f.vencimento) : vencDefault()}" />
             </div>
             <div class="form-row">
-              <label>Consumo (kWh)</label>
-              <input type="number" id="m_cons" value="${f ? f.consumo : 300}" />
+              <label>Consumo (kWh) <span style="color:var(--danger);">*</span></label>
+              <input type="number" id="m_cons" value="${f ? f.consumo : ''}" min="0" step="1" placeholder="Ex.: 350" />
             </div>
             <div class="form-row">
-              <label>Valor (R$)</label>
-              <input type="number" id="m_val" value="${f ? f.valor : 250}" step="0.01" />
+              <label>Valor (R$) <span style="color:var(--danger);">*</span></label>
+              <input type="number" id="m_val" value="${f ? f.valor : ''}" min="0" step="0.01" placeholder="Calculado automaticamente" />
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:.5rem; margin-top:.4rem;">
+            <input type="checkbox" id="m_autoCalc" ${ed ? '' : 'checked'} />
+            <label for="m_autoCalc" style="font-size:.78rem; color:var(--gray-700); cursor:pointer;">
+              Calcular valor automaticamente (consumo × R$ ${TARIFA.toFixed(2).replace('.',',')}/kWh × desconto do contrato)
+            </label>
+          </div>
+
+          <div id="m_preview" style="margin-top:1rem; padding:.85rem 1rem; background:var(--success-bg); border-left:3px solid var(--success); border-radius:6px; display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;">
+              <div>
+                <div style="font-size:.66rem; color:var(--gray-600); text-transform:uppercase; letter-spacing:.5px; font-weight:700;">Total a faturar</div>
+                <div id="m_total" style="font-size:1.5rem; font-weight:800; color:var(--success);">R$ 0,00</div>
+              </div>
+              <div id="m_breakdown" style="font-size:.72rem; color:var(--gray-700); text-align:right;"></div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
-          <button class="btn btn-primary" id="m_save">${ed ? 'Salvar' : 'Gerar fatura'}</button>
+          <button class="btn btn-primary" id="m_save">${ed ? '💾 Salvar alterações' : '⚡ Gerar fatura'}</button>
         </div>
       </div>
     `);
+
+    const selCli = document.getElementById('m_cli');
+    const inpCons = document.getElementById('m_cons');
+    const inpVal = document.getElementById('m_val');
+    const inpComp = document.getElementById('m_comp');
+    const cliInfo = document.getElementById('m_cliInfo');
+    const preview = document.getElementById('m_preview');
+    const totalEl = document.getElementById('m_total');
+    const breakEl = document.getElementById('m_breakdown');
+    const chkAuto = document.getElementById('m_autoCalc');
+
+    function getCli() { return ds.clientes.find(c => c.id === selCli.value); }
+    function getContrato(cliId) { return (ds.contratos || []).find(c => c.clienteId === cliId && c.status === 'ativo'); }
+
+    function refreshCliInfo() {
+      const cli = getCli();
+      if (!cli) { cliInfo.style.display = 'none'; return; }
+      const ct = getContrato(cli.id);
+      cliInfo.style.display = 'block';
+      cliInfo.innerHTML = `
+        <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:space-between;">
+          <span>📊 Consumo médio: <strong>${fmt.kwh(cli.consumoMedio || 0)}</strong></span>
+          ${ct ? `<span>📄 Contrato: <strong>${esc(ct.id)}</strong> · Desconto <strong>${ct.desconto}%</strong></span>` : '<span style="color:var(--warning);">⚠ Sem contrato ativo</span>'}
+          ${cli.titularidade ? `<span>🏷 Titularidade: <strong>${esc(cli.titularidade)}</strong></span>` : ''}
+        </div>
+      `;
+    }
+
+    function autoFillFromCli() {
+      const cli = getCli();
+      if (!cli || ed) return;
+      if (!inpCons.value) inpCons.value = cli.consumoMedio || '';
+      recalc();
+    }
+
+    function recalc() {
+      const cli = getCli();
+      const cons = +inpCons.value || 0;
+      if (chkAuto.checked && cli && cons > 0) {
+        const ct = getContrato(cli.id);
+        const desc = ct ? ct.desconto : 0;
+        const valor = cons * TARIFA * (1 - desc / 100);
+        inpVal.value = valor.toFixed(2);
+        inpVal.disabled = true;
+      } else {
+        inpVal.disabled = false;
+      }
+      const v = +inpVal.value || 0;
+      if (cli && cons > 0 && v > 0) {
+        preview.style.display = 'block';
+        totalEl.textContent = fmt.moeda(v);
+        const ct = getContrato(cli.id);
+        breakEl.innerHTML = `
+          ${cons} kWh × R$ ${TARIFA.toFixed(2).replace('.',',')}/kWh
+          ${ct && ct.desconto ? `<br>Desconto contrato: <strong>−${ct.desconto}%</strong>` : ''}
+          <br>Competência: <strong>${esc(inpComp.value)}</strong>
+        `;
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+
+    selCli.addEventListener('change', () => { refreshCliInfo(); autoFillFromCli(); });
+    inpCons.addEventListener('input', recalc);
+    inpVal.addEventListener('input', recalc);
+    inpComp.addEventListener('change', recalc);
+    chkAuto.addEventListener('change', recalc);
+    refreshCliInfo();
+    recalc();
+
     document.getElementById('m_save').addEventListener('click', () => {
-      const cliId = document.getElementById('m_cli').value;
+      const cliId = selCli.value;
+      if (!cliId) { alert('Selecione um cliente.'); return; }
+      const cons = +inpCons.value;
+      if (!cons || cons <= 0) { alert('Informe o consumo em kWh.'); inpCons.focus(); return; }
+      const valor = +inpVal.value;
+      if (!valor || valor <= 0) { alert('Informe o valor da fatura.'); inpVal.focus(); return; }
       const cli = ds.clientes.find(c => c.id === cliId);
       const data = {
         clienteId:   cliId,
         cliente:     cli ? cli.nome : '—',
-        competencia: document.getElementById('m_comp').value,
-        vencimento:  document.getElementById('m_venc').value,
-        consumo:     +document.getElementById('m_cons').value,
-        valor:       +document.getElementById('m_val').value
+        competencia: inpComp.value,
+        vencimento:  isoToBR(document.getElementById('m_venc').value),
+        consumo:     cons,
+        valor:       valor
       };
       if (ed) window.dataStore.updateFatura(f.id, data);
       else    window.dataStore.addFatura(data);

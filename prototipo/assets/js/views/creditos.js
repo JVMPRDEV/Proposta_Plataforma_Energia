@@ -3,6 +3,14 @@
 // ============================================================
 
 (function() {
+  const HIST_KEY = 'proto_creditos_hist';
+  const SAVED_KEY = 'proto_creditos_saved';
+
+  function loadHist() { try { return JSON.parse(localStorage.getItem(HIST_KEY) || '{}'); } catch(e) { return {}; } }
+  function saveHist(d) { localStorage.setItem(HIST_KEY, JSON.stringify(d)); }
+  function loadSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '{}'); } catch(e) { return {}; } }
+  function saveSaved(d) { localStorage.setItem(SAVED_KEY, JSON.stringify(d)); }
+
   let modo = 'percentual';
   let kwhDisponivel = 12000;
   let rateios = [];      // {clienteId, nome, pct, consumo}
@@ -13,22 +21,37 @@
     if (rateios.length === 0 || rateios[0].tenantId !== ds.tenant.id) {
       const top = ds.clientes.filter(c => c.status === 'ativo').slice(0, 5);
       const valores = [30, 25, 20, 15, 10];
+      const saved = loadSaved()[ds.tenant.id];
       rateios = top.map((c, i) => ({
         tenantId: ds.tenant.id,
         clienteId: c.id,
         nome: c.nome,
         consumo: c.consumoMedio,
-        pct: valores[i] || 5
+        pct: (saved && saved.rateios && saved.rateios[c.id] != null) ? saved.rateios[c.id] : (valores[i] || 5)
       }));
       prioridade = top.map((c, i) => ({
         tenantId: ds.tenant.id,
         clienteId: c.id,
         nome: c.nome,
         consumo: c.consumoMedio,
-        ordem: i + 1
+        ordem: (saved && saved.prioridade && saved.prioridade[c.id] != null) ? saved.prioridade[c.id] : (i + 1)
       }));
-      receptorExcedente = top[0] ? top[0].id : null;
+      receptorExcedente = (saved && saved.receptorExcedente) || (top[0] ? top[0].id : null);
+      if (saved && saved.kwhDisponivel) kwhDisponivel = saved.kwhDisponivel;
+      if (saved && saved.modo) modo = saved.modo;
     }
+  }
+
+  function snapshotConfig(tenantId) {
+    return {
+      tenantId,
+      modo,
+      kwhDisponivel,
+      rateios: rateios.reduce((a, r) => (a[r.clienteId] = r.pct, a), {}),
+      prioridade: prioridade.reduce((a, p) => (a[p.clienteId] = p.ordem, a), {}),
+      receptorExcedente,
+      ts: Date.now()
+    };
   }
 
   function calcularPrioridade() {
@@ -447,9 +470,44 @@
 
     root.innerHTML = `
       ${viewHeader('Distribuição de Créditos', 'Engine de rateio · ' + ds.tenant.nome, `
-        <button class="btn btn-outline btn-sm">📜 Histórico</button>
-        <button class="btn btn-primary btn-sm">💾 Salvar configuração</button>
+        <button class="btn btn-outline btn-sm" id="btnHistCred">📜 Histórico</button>
+        <button class="btn btn-primary btn-sm" id="btnSalvarCred">💾 Salvar configuração</button>
       `)}
+
+      ${(function(){
+        const hist = (loadHist()[ds.tenant.id] || []);
+        const ultima = hist[0];
+        let savedLine;
+        if (ultima) {
+          const d = new Date(ultima.ts);
+          const diff = Math.floor((Date.now() - ultima.ts) / 1000);
+          const rel = diff < 60 ? 'agora há pouco'
+                    : diff < 3600 ? 'há ' + Math.floor(diff/60) + ' min'
+                    : diff < 86400 ? 'há ' + Math.floor(diff/3600) + ' h'
+                    : 'há ' + Math.floor(diff/86400) + ' d';
+          savedLine = `Última configuração salva <strong>${rel}</strong> · ${d.toLocaleDateString('pt-BR')} ${d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})} · por <strong>${esc(ultima.usuario || '—')}</strong>`;
+        } else {
+          savedLine = 'Nenhuma configuração salva ainda neste tenant.';
+        }
+        return `
+        <div class="sim-banner">
+          <div class="sim-banner-icon">🧪</div>
+          <div class="sim-banner-body">
+            <div class="sim-banner-title">
+              <span class="sim-pill">Modo simulação</span>
+              <span class="sim-banner-headline">Ajustes recalculam o rateio em tempo real e só são aplicados ao salvar.</span>
+            </div>
+            <div class="sim-banner-meta">
+              <span class="sim-meta-item">📌 ${savedLine}</span>
+            </div>
+          </div>
+          <div class="sim-banner-hints">
+            <span class="sim-hint"><kbd>💾 Salvar</kbd> aplica ao tenant</span>
+            <span class="sim-hint"><kbd>📜 Histórico</kbd> restaura versões anteriores</span>
+          </div>
+        </div>
+        `;
+      })()}
 
       <div class="modo-cards">
         <div class="modo-card ${modo === 'percentual' ? 'active' : ''}" data-modo="percentual">
@@ -563,6 +621,97 @@
       c.addEventListener('click', () => {
         modo = c.dataset.modo;
         view_creditos(root);
+      });
+    });
+
+    root.querySelector('#btnSalvarCred').addEventListener('click', () => {
+      if (modo === 'percentual') {
+        const total = rateios.reduce((a, r) => a + r.pct, 0);
+        if (total !== 100) {
+          alert('A soma das porcentagens deve ser exatamente 100% para salvar.\nAtual: ' + total + '%');
+          return;
+        }
+      }
+      const snap = snapshotConfig(ds.tenant.id);
+      const all = loadSaved();
+      all[ds.tenant.id] = snap;
+      saveSaved(all);
+      const hist = loadHist();
+      hist[ds.tenant.id] = hist[ds.tenant.id] || [];
+      hist[ds.tenant.id].unshift({
+        ...snap,
+        usuario: (window.store.user && window.store.user.nome) || 'Demo Admin'
+      });
+      hist[ds.tenant.id] = hist[ds.tenant.id].slice(0, 20);
+      saveHist(hist);
+      alert('✓ Configuração salva com sucesso.\n\nModo: ' + (snap.modo === 'percentual' ? 'Percentual' : 'Prioridade') +
+            '\nkWh disponível: ' + fmt.num(snap.kwhDisponivel) +
+            '\nUCs: ' + Object.keys(snap.rateios).length);
+    });
+
+    root.querySelector('#btnHistCred').addEventListener('click', () => {
+      const hist = (loadHist()[ds.tenant.id] || []);
+      openModal(`
+        <div class="modal" style="max-width: 720px;">
+          <div class="modal-header">
+            <h3>📜 Histórico de Distribuições</h3>
+            <button class="modal-close" onclick="closeModal()">×</button>
+          </div>
+          <div class="modal-body">
+            ${hist.length === 0
+              ? `<div style="text-align:center; padding:2rem 1rem; color:var(--gray-500);">
+                   <div style="font-size:2.4rem; margin-bottom:.5rem;">📭</div>
+                   <div>Nenhuma configuração salva ainda neste tenant.</div>
+                   <div style="font-size:.78rem; margin-top:.4rem;">Ajuste o rateio e clique em <strong>"💾 Salvar configuração"</strong> para criar a primeira entrada.</div>
+                 </div>`
+              : `<table class="data" style="font-size:.82rem;">
+                   <thead>
+                     <tr>
+                       <th>Quando</th>
+                       <th>Modo</th>
+                       <th class="text-right">kWh</th>
+                       <th class="text-center">UCs</th>
+                       <th>Usuário</th>
+                       <th class="text-center">Ações</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     ${hist.map((h, idx) => {
+                       const d = new Date(h.ts);
+                       const data = d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+                       const nUcs = Object.keys(h.rateios || {}).length;
+                       return `<tr>
+                         <td>${data}</td>
+                         <td>${h.modo === 'percentual' ? '🎯 Percentual' : '📊 Prioridade'}</td>
+                         <td class="text-right num">${fmt.num(h.kwhDisponivel)}</td>
+                         <td class="text-center">${nUcs}</td>
+                         <td>${esc(h.usuario || '—')}</td>
+                         <td class="text-center"><button class="btn btn-ghost btn-sm" data-restaurar="${idx}">↺ Restaurar</button></td>
+                       </tr>`;
+                     }).join('')}
+                   </tbody>
+                 </table>
+                 <div style="margin-top:.85rem; padding:.55rem .75rem; background:var(--gray-50); border-radius:6px; font-size:.72rem; color:var(--gray-600);">
+                   ℹ Cada salvar gera uma entrada no histórico (mantém as últimas 20). Restaurar carrega a configuração no simulador — você ainda precisa salvar para aplicar.
+                 </div>`}
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" onclick="closeModal()">Fechar</button>
+          </div>
+        </div>
+      `);
+      document.querySelectorAll('[data-restaurar]').forEach(b => {
+        b.addEventListener('click', () => {
+          const h = hist[+b.dataset.restaurar];
+          if (!h) return;
+          modo = h.modo;
+          kwhDisponivel = h.kwhDisponivel;
+          rateios.forEach(r => { if (h.rateios[r.clienteId] != null) r.pct = h.rateios[r.clienteId]; });
+          prioridade.forEach(p => { if (h.prioridade[p.clienteId] != null) p.ordem = h.prioridade[p.clienteId]; });
+          receptorExcedente = h.receptorExcedente;
+          closeModal();
+          view_creditos(root);
+        });
       });
     });
   };

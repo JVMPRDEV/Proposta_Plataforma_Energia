@@ -160,8 +160,11 @@
     if (c > 0) {
       badge.textContent = c > 99 ? '99+' : c;
       badge.hidden = false;
+      badge.style.display = '';
     } else {
+      badge.textContent = '';
       badge.hidden = true;
+      badge.style.display = 'none';
     }
     // Re-render painel se aberto
     const open = document.getElementById('notifPanel');

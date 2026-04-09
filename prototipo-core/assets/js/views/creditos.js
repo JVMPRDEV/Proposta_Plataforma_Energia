@@ -3,32 +3,58 @@
 // ============================================================
 
 (function() {
+  const HIST_KEY = 'proto_creditos_hist';
+  const SAVED_KEY = 'proto_creditos_saved';
+
+  function loadHist() { try { return JSON.parse(localStorage.getItem(HIST_KEY) || '{}'); } catch(e) { return {}; } }
+  function saveHist(d) { localStorage.setItem(HIST_KEY, JSON.stringify(d)); }
+  function loadSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '{}'); } catch(e) { return {}; } }
+  function saveSaved(d) { localStorage.setItem(SAVED_KEY, JSON.stringify(d)); }
+
   let modo = 'percentual';
   let kwhDisponivel = 12000;
   let rateios = [];      // {clienteId, nome, pct, consumo}
   let prioridade = [];   // [{clienteId, nome, ordem, consumo}]
   let receptorExcedente = null;
+  let dirty = false;
 
   function inicializar(ds) {
     if (rateios.length === 0 || rateios[0].tenantId !== ds.tenant.id) {
       const top = ds.clientes.filter(c => c.status === 'ativo').slice(0, 5);
       const valores = [30, 25, 20, 15, 10];
+      const saved = loadSaved()[ds.tenant.id];
+
       rateios = top.map((c, i) => ({
         tenantId: ds.tenant.id,
         clienteId: c.id,
         nome: c.nome,
         consumo: c.consumoMedio,
-        pct: valores[i] || 5
+        pct: (saved && saved.rateios && saved.rateios[c.id] != null) ? saved.rateios[c.id] : (valores[i] || 5)
       }));
       prioridade = top.map((c, i) => ({
         tenantId: ds.tenant.id,
         clienteId: c.id,
         nome: c.nome,
         consumo: c.consumoMedio,
-        ordem: i + 1
+        ordem: (saved && saved.prioridade && saved.prioridade[c.id] != null) ? saved.prioridade[c.id] : (i + 1)
       }));
-      receptorExcedente = top[0] ? top[0].id : null;
+      receptorExcedente = (saved && saved.receptorExcedente) || (top[0] ? top[0].id : null);
+      if (saved && saved.kwhDisponivel) kwhDisponivel = saved.kwhDisponivel;
+      if (saved && saved.modo) modo = saved.modo;
+      dirty = false;
     }
+  }
+
+  function snapshotConfig(tenantId) {
+    return {
+      tenantId,
+      modo,
+      kwhDisponivel,
+      rateios: rateios.reduce((a, r) => (a[r.clienteId] = r.pct, a), {}),
+      prioridade: prioridade.reduce((a, p) => (a[p.clienteId] = p.ordem, a), {}),
+      receptorExcedente,
+      ts: Date.now()
+    };
   }
 
   function calcularPrioridade() {
@@ -373,19 +399,37 @@
       const excedente = lista.find(p => p.excedente);
       const receptor = prioridade.find(p => p.clienteId === receptorExcedente) || prioridade[0];
 
+      // Info do receptor pós-distribuição
+      const receptorRow = ucsAlocadas.find(p => p.clienteId === receptorExcedente);
+      const receptorAlocOriginal = receptorRow ? receptorRow.alocado : 0;
+      const receptorTotalFinal = receptorAlocOriginal + (excedente.sobra || 0);
+
       wrap.innerHTML = `
         <div style="font-size: 0.78rem; color: var(--gray-600); margin-bottom: 0.75rem; padding: 0.5rem 0.75rem; background: var(--gray-50); border-radius: 4px;">
-          ↕ Use as setas para reordenar a prioridade. Os créditos vão sendo alocados <strong>em ordem</strong> até o consumo de cada UC ser atendido.
+          ↕ Use as setas para reordenar a prioridade. Edite o consumo de cada UC para simular cenários. Créditos são alocados <strong>em ordem</strong> até o consumo ser atendido.
         </div>
-        ${ucsAlocadas.map((p, idx) => `
-          <div style="display: grid; grid-template-columns: 40px 1.4fr 1.6fr 110px 80px; align-items: center; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid var(--gray-100);">
+        ${ucsAlocadas.map((p, idx) => {
+          const isReceptor = p.clienteId === receptorExcedente && excedente.sobra > 0;
+          return `
+          <div class="prio-row ${isReceptor ? 'is-receptor' : ''}" style="display: grid; grid-template-columns: 40px 1.5fr 130px 1.4fr 110px 80px; align-items: center; gap: 0.75rem; padding: 0.7rem 0.5rem; border-bottom: 1px solid var(--gray-100); ${isReceptor ? 'background: rgba(212,168,73,0.06); border-radius: 6px;' : ''}">
             <div style="display: flex; flex-direction: column; gap: 2px;">
               <button class="btn-ghost" data-up="${idx}" style="padding: 0; width: 24px; height: 18px; font-size: 0.7rem; ${idx === 0 ? 'opacity: 0.3; cursor: not-allowed;' : ''}">▲</button>
               <button class="btn-ghost" data-down="${idx}" style="padding: 0; width: 24px; height: 18px; font-size: 0.7rem; ${idx === ucsAlocadas.length - 1 ? 'opacity: 0.3; cursor: not-allowed;' : ''}">▼</button>
             </div>
             <div>
-              <div style="font-weight: 600; color: var(--gray-800); font-size: 0.88rem;">#${idx + 1} · ${esc(p.nome)}</div>
-              <div style="font-size: 0.72rem; color: var(--gray-500);">Consumo: ${fmt.kwh(p.consumo)}</div>
+              <div style="font-weight: 600; color: var(--gray-800); font-size: 0.88rem;">
+                #${idx + 1} · ${esc(p.nome)}
+                ${isReceptor ? '<span class="badge warning" style="margin-left:.4rem; font-size:.62rem;">⭐ Receptor</span>' : ''}
+              </div>
+              <div style="font-size: 0.7rem; color: var(--gray-500); margin-top: 2px;">UC ID: ${esc(p.clienteId)}</div>
+            </div>
+            <div>
+              <label style="display:block; font-size:.62rem; color:var(--gray-500); text-transform:uppercase; letter-spacing:.4px; margin-bottom:2px;">Consumo (kWh)</label>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <input type="number" min="0" step="50" value="${p.consumo}" data-cons="${p.clienteId}"
+                  style="width:90px; padding:4px 6px; border:1px solid var(--gray-300); border-radius:4px; font-size:.78rem; text-align:right; font-variant-numeric:tabular-nums;" />
+                <span style="font-size:.66rem; color:var(--gray-500);">kWh</span>
+              </div>
             </div>
             <div>
               <div style="height: 8px; background: var(--gray-100); border-radius: 4px; overflow: hidden;">
@@ -395,22 +439,49 @@
             </div>
             <div style="text-align: right; font-weight: 700; color: var(--primary-dark); font-variant-numeric: tabular-nums;">
               ${fmt.num(p.alocado)} kWh
+              ${isReceptor && excedente.sobra > 0 ? `<div style="font-size:.66rem; font-weight:600; color:var(--success); margin-top:2px;">+ ${fmt.num(excedente.sobra)} excedente</div>` : ''}
             </div>
             <div style="text-align: right; font-size: 0.75rem; color: ${p.restante > 0 ? 'var(--danger)' : 'var(--success)'};">
               ${p.restante > 0 ? '−' + fmt.num(p.restante) : '✓ ok'}
             </div>
           </div>
-        `).join('')}
+        `;}).join('')}
 
-        <div style="margin-top: 1rem; padding: 0.85rem; background: ${excedente.sobra > 0 ? 'var(--success-bg)' : 'var(--gray-100)'}; border-radius: 6px; border-left: 4px solid ${excedente.sobra > 0 ? 'var(--success)' : 'var(--gray-300)'};">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <div style="margin-top: 1rem; padding: 0.85rem 1rem; background: ${excedente.sobra > 0 ? 'var(--success-bg)' : 'var(--gray-100)'}; border-radius: 6px; border-left: 4px solid ${excedente.sobra > 0 ? 'var(--success)' : 'var(--gray-300)'};">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
             <div>
-              <div style="font-size: 0.72rem; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Saldo excedente</div>
-              <div style="font-size: 1.2rem; font-weight: 700; color: ${excedente.sobra > 0 ? 'var(--success)' : 'var(--gray-600)'};">${fmt.num(excedente.sobra)} kWh</div>
+              <div style="font-size:.66rem; color:var(--gray-600); text-transform:uppercase; letter-spacing:.5px; font-weight:700;">Saldo excedente</div>
+              <div style="font-size:1.4rem; font-weight:800; color:${excedente.sobra > 0 ? 'var(--success)' : 'var(--gray-600)'};">${fmt.num(excedente.sobra)} kWh</div>
+              ${excedente.sobra === 0 ? '<div style="font-size:.72rem; color:var(--gray-600); margin-top:2px;">Energia totalmente consumida neste ciclo.</div>' : ''}
             </div>
-            <div style="font-size: 0.8rem; color: var(--gray-700);">
-              ${excedente.sobra > 0 ? `Receptor: <strong>${esc(receptor ? receptor.nome : '—')}</strong> <select id="receptorSelect" style="margin-left: 0.5rem; padding: 4px 8px; border: 1px solid var(--gray-300); border-radius: 4px; font-size: 0.8rem;">${prioridade.map(p => `<option value="${p.clienteId}" ${p.clienteId === receptorExcedente ? 'selected' : ''}>${esc(p.nome)}</option>`).join('')}</select>` : 'Energia totalmente consumida — sem excedente neste ciclo.'}
-            </div>
+            ${excedente.sobra > 0 ? `
+              <div style="flex:1; min-width:240px;">
+                <label style="display:block; font-size:.66rem; color:var(--gray-600); text-transform:uppercase; letter-spacing:.5px; font-weight:700; margin-bottom:4px;">UC receptora do excedente</label>
+                <select id="receptorSelect" style="width:100%; padding:6px 10px; border:1px solid var(--gray-300); border-radius:6px; font-size:.85rem; font-weight:600; background:var(--white);">
+                  ${prioridade.slice().sort((a,b) => a.ordem - b.ordem).map(p => `<option value="${p.clienteId}" ${p.clienteId === receptorExcedente ? 'selected' : ''}>#${p.ordem} · ${esc(p.nome)}</option>`).join('')}
+                </select>
+                ${receptorRow ? `
+                  <div style="margin-top:.5rem; padding:.55rem .7rem; background:var(--white); border:1px dashed var(--gray-300); border-radius:6px; font-size:.72rem; color:var(--gray-700);">
+                    <div style="display:flex; justify-content:space-between; padding:2px 0;">
+                      <span>Consumo da UC:</span>
+                      <strong style="font-variant-numeric:tabular-nums;">${fmt.num(receptorRow.consumo)} kWh</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:2px 0;">
+                      <span>Alocado nesta rodada:</span>
+                      <strong style="font-variant-numeric:tabular-nums;">${fmt.num(receptorAlocOriginal)} kWh</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:2px 0; color:var(--success);">
+                      <span>+ Excedente recebido:</span>
+                      <strong style="font-variant-numeric:tabular-nums;">+ ${fmt.num(excedente.sobra)} kWh</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:4px 0 2px; border-top:1px solid var(--gray-200); margin-top:2px;">
+                      <span><strong>Total final na UC:</strong></span>
+                      <strong style="color:var(--primary-dark); font-size:.85rem; font-variant-numeric:tabular-nums;">${fmt.num(receptorTotalFinal)} kWh</strong>
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
@@ -441,15 +512,66 @@
         receptorExcedente = e.target.value;
         renderPrioridade();
       });
+
+      // Edição inline do consumo de cada UC
+      wrap.querySelectorAll('[data-cons]').forEach(inp => {
+        inp.addEventListener('change', () => {
+          const id = inp.dataset.cons;
+          const v = Math.max(0, +inp.value || 0);
+          const p = prioridade.find(x => x.clienteId === id);
+          if (p) p.consumo = v;
+          // Atualiza também rateios (modo percentual usa consumoMedio do mesmo registro)
+          const r = rateios.find(x => x.clienteId === id);
+          if (r) r.consumo = v;
+          renderPrioridade();
+        });
+        inp.addEventListener('focus', e => e.target.select());
+      });
     }
 
     function renderRateio() { return modo === 'percentual' ? renderPercentual() : renderPrioridade(); }
 
     root.innerHTML = `
       ${viewHeader('Distribuição de Créditos', 'Engine de rateio · ' + ds.tenant.nome, `
-        <button class="btn btn-outline btn-sm">📜 Histórico</button>
-        <button class="btn btn-primary btn-sm">💾 Salvar configuração</button>
+        <button class="btn btn-outline btn-sm" id="btnHistCred">📜 Histórico</button>
+        <button class="btn btn-primary btn-sm" id="btnSalvarCred">💾 Salvar configuração</button>
       `)}
+
+      ${(function(){
+        const hist = (loadHist()[ds.tenant.id] || []);
+        const saved = loadSaved()[ds.tenant.id];
+        const ultima = hist[0];
+        let savedLine;
+        if (ultima) {
+          const d = new Date(ultima.ts);
+          const diff = Math.floor((Date.now() - ultima.ts) / 1000);
+          const rel = diff < 60 ? 'agora há pouco'
+                    : diff < 3600 ? 'há ' + Math.floor(diff/60) + ' min'
+                    : diff < 86400 ? 'há ' + Math.floor(diff/3600) + ' h'
+                    : 'há ' + Math.floor(diff/86400) + ' d';
+          savedLine = `Última configuração salva <strong>${rel}</strong> · ${d.toLocaleDateString('pt-BR')} ${d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})} · por <strong>${esc(ultima.usuario || '—')}</strong>`;
+        } else {
+          savedLine = 'Nenhuma configuração salva ainda neste tenant.';
+        }
+        return `
+        <div class="sim-banner">
+          <div class="sim-banner-icon">🧪</div>
+          <div class="sim-banner-body">
+            <div class="sim-banner-title">
+              <span class="sim-pill">Modo simulação</span>
+              <span class="sim-banner-headline">Ajustes recalculam o rateio em tempo real e só são aplicados ao salvar.</span>
+            </div>
+            <div class="sim-banner-meta">
+              <span class="sim-meta-item">📌 ${savedLine}</span>
+            </div>
+          </div>
+          <div class="sim-banner-hints">
+            <span class="sim-hint"><kbd>💾 Salvar</kbd> aplica ao tenant</span>
+            <span class="sim-hint"><kbd>📜 Histórico</kbd> restaura versões anteriores</span>
+          </div>
+        </div>
+        `;
+      })()}
 
       <div class="modo-cards">
         <div class="modo-card ${modo === 'percentual' ? 'active' : ''}" data-modo="percentual">
@@ -563,6 +685,102 @@
       c.addEventListener('click', () => {
         modo = c.dataset.modo;
         view_creditos(root);
+      });
+    });
+
+    // ===== Botão Salvar configuração =====
+    root.querySelector('#btnSalvarCred').addEventListener('click', () => {
+      if (modo === 'percentual') {
+        const total = rateios.reduce((a, r) => a + r.pct, 0);
+        if (total !== 100) {
+          alert('A soma das porcentagens deve ser exatamente 100% para salvar.\nAtual: ' + total + '%');
+          return;
+        }
+      }
+      const snap = snapshotConfig(ds.tenant.id);
+      // Persiste como configuração corrente
+      const all = loadSaved();
+      all[ds.tenant.id] = snap;
+      saveSaved(all);
+      // Adiciona ao histórico
+      const hist = loadHist();
+      hist[ds.tenant.id] = hist[ds.tenant.id] || [];
+      hist[ds.tenant.id].unshift({
+        ...snap,
+        usuario: (window.store.user && window.store.user.nome) || 'Demo Admin'
+      });
+      hist[ds.tenant.id] = hist[ds.tenant.id].slice(0, 20);
+      saveHist(hist);
+      dirty = false;
+      alert('✓ Configuração salva com sucesso.\n\nModo: ' + (snap.modo === 'percentual' ? 'Percentual' : 'Prioridade') +
+            '\nkWh disponível: ' + fmt.num(snap.kwhDisponivel) +
+            '\nUCs: ' + Object.keys(snap.rateios).length);
+    });
+
+    // ===== Botão Histórico =====
+    root.querySelector('#btnHistCred').addEventListener('click', () => {
+      const hist = (loadHist()[ds.tenant.id] || []);
+      openModal(`
+        <div class="modal" style="max-width: 720px;">
+          <div class="modal-header">
+            <h3>📜 Histórico de Distribuições</h3>
+            <button class="modal-close" onclick="closeModal()">×</button>
+          </div>
+          <div class="modal-body">
+            ${hist.length === 0
+              ? `<div style="text-align:center; padding:2rem 1rem; color:var(--gray-500);">
+                   <div style="font-size:2.4rem; margin-bottom:.5rem;">📭</div>
+                   <div>Nenhuma configuração salva ainda neste tenant.</div>
+                   <div style="font-size:.78rem; margin-top:.4rem;">Ajuste o rateio e clique em <strong>"💾 Salvar configuração"</strong> para criar a primeira entrada.</div>
+                 </div>`
+              : `<table class="data" style="font-size:.82rem;">
+                   <thead>
+                     <tr>
+                       <th>Quando</th>
+                       <th>Modo</th>
+                       <th class="text-right">kWh</th>
+                       <th class="text-center">UCs</th>
+                       <th>Usuário</th>
+                       <th class="text-center">Ações</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     ${hist.map((h, idx) => {
+                       const d = new Date(h.ts);
+                       const data = d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+                       const nUcs = Object.keys(h.rateios || {}).length;
+                       return `<tr>
+                         <td>${data}</td>
+                         <td>${h.modo === 'percentual' ? '🎯 Percentual' : '📊 Prioridade'}</td>
+                         <td class="text-right num">${fmt.num(h.kwhDisponivel)}</td>
+                         <td class="text-center">${nUcs}</td>
+                         <td>${esc(h.usuario || '—')}</td>
+                         <td class="text-center"><button class="btn btn-ghost btn-sm" data-restaurar="${idx}">↺ Restaurar</button></td>
+                       </tr>`;
+                     }).join('')}
+                   </tbody>
+                 </table>
+                 <div style="margin-top:.85rem; padding:.55rem .75rem; background:var(--gray-50); border-radius:6px; font-size:.72rem; color:var(--gray-600);">
+                   ℹ Cada salvar gera uma entrada no histórico (mantém as últimas 20). Restaurar carrega a configuração no simulador — você ainda precisa salvar para aplicar.
+                 </div>`}
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" onclick="closeModal()">Fechar</button>
+          </div>
+        </div>
+      `);
+      document.querySelectorAll('[data-restaurar]').forEach(b => {
+        b.addEventListener('click', () => {
+          const h = hist[+b.dataset.restaurar];
+          if (!h) return;
+          modo = h.modo;
+          kwhDisponivel = h.kwhDisponivel;
+          rateios.forEach(r => { if (h.rateios[r.clienteId] != null) r.pct = h.rateios[r.clienteId]; });
+          prioridade.forEach(p => { if (h.prioridade[p.clienteId] != null) p.ordem = h.prioridade[p.clienteId]; });
+          receptorExcedente = h.receptorExcedente;
+          closeModal();
+          view_creditos(root);
+        });
       });
     });
   };

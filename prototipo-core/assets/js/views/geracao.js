@@ -14,7 +14,6 @@ window.view_geracao = function(root) {
 
   root.innerHTML = `
     ${viewHeader('Geração / Produção', ds.usinas.length + ' usinas · ' + ds.tenant.nome, `
-      ${ds.tenant.parserCoelba ? '<button class="btn btn-outline btn-sm">📥 Upload fatura COELBA</button>' : ''}
       <button class="btn btn-primary btn-sm" id="btnNovaUsina">+ Nova Usina</button>
     `)}
 
@@ -50,27 +49,16 @@ window.view_geracao = function(root) {
         <div class="card-header">
           <h3>Coleta de produção</h3>
         </div>
-        ${ds.tenant.parserCoelba ? `
-        <div style="text-align: center; padding: 1rem 0;">
-          <div style="font-size: 0.7rem; color: var(--gray-500); text-transform: uppercase; letter-spacing: 1px;">Parser COELBA · Automático</div>
-          <div style="font-size: 1.8rem; font-weight: 700; color: var(--success); margin: 0.5rem 0;">✓ Sucesso</div>
-          <div style="font-size: 0.85rem; color: var(--gray-600);">10/04/2026 às 14:32</div>
-          <div style="margin-top: 1rem; padding: 0.75rem; background: var(--success-bg); border-radius: 6px; font-size: 0.8rem; color: var(--success);">
-            ${ds.usinas.length} usinas atualizadas automaticamente
-          </div>
-        </div>
-        ` : `
         <div style="text-align: center; padding: 1rem 0;">
           <div style="font-size: 0.7rem; color: var(--gray-500); text-transform: uppercase; letter-spacing: 1px;">Modo de coleta atual</div>
           <div style="font-size: 1.4rem; font-weight: 700; color: var(--gray-700); margin: 0.5rem 0;">📝 Digitação Manual</div>
           <div style="font-size: 0.8rem; color: var(--gray-600); margin-top: 0.5rem;">
-            Conforme questionário B1: digitação manual.
+            Versão Core: digitação manual.
           </div>
           <div style="margin-top: 1rem; padding: 0.75rem; background: var(--info-bg); border-radius: 6px; font-size: 0.78rem; color: var(--info);">
             💡 Use o botão <strong>"Registrar leitura"</strong> em cada usina para informar a produção do mês.
           </div>
         </div>
-        `}
       </div>
     </div>
 
@@ -86,8 +74,8 @@ window.view_geracao = function(root) {
           <h4>☀ ${esc(u.nome)}</h4>
           <div style="display: flex; gap: 0.5rem; align-items: center;">
             ${statusBadge(u.status)}
+            <button class="btn btn-secondary btn-sm" data-leitura="${u.id}" title="Registrar leitura manual">📊 Registrar leitura</button>
             ${kebab([
-              { icon: '📊', label: 'Registrar leitura manual', onClick: () => modalLeitura(u) },
               { icon: '✎', label: 'Editar usina', onClick: () => modalUsina(u) },
               { divider: true },
               { icon: '🗑', label: 'Excluir', danger: true, onClick: () => {
@@ -117,6 +105,12 @@ window.view_geracao = function(root) {
       </div>
     `).join('');
 
+    wrap.querySelectorAll('[data-leitura]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const u = ds.usinas.find(x => x.id === btn.dataset.leitura);
+        if (u) modalLeitura(u);
+      });
+    });
   }
 
   if (ds.usinas.length > 0) renderUsinas();

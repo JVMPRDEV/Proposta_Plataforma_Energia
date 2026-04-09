@@ -5,6 +5,17 @@
 (function() {
   let aba = 'dados';
 
+  window.userPhotoStore = window.userPhotoStore || (function() {
+    const KEY = 'proto_user_photos';
+    let state;
+    try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { state = {}; }
+    return {
+      get: (id) => state[id] || null,
+      set: (id, dataUrl) => { state[id] = dataUrl; localStorage.setItem(KEY, JSON.stringify(state)); window.dispatchEvent(new CustomEvent('user-photo-changed')); },
+      clear: (id) => { delete state[id]; localStorage.setItem(KEY, JSON.stringify(state)); window.dispatchEvent(new CustomEvent('user-photo-changed')); }
+    };
+  })();
+
   window.view_perfil = function(root) {
     const t = window.store.tenant;
     const cfg = window.configStore.get(t.id);
@@ -30,7 +41,19 @@
 
       <div class="card" style="margin-bottom: 1.5rem;">
         <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
-          <div style="width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(135deg, var(--secondary), var(--dark)); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; flex-shrink: 0;">${iniciais}</div>
+          <div class="profile-avatar" id="profileAvatar" title="Clique para alterar a foto">
+            ${(function(){
+              const photo = window.userPhotoStore.get(usr.id);
+              return photo
+                ? `<img src="${photo}" alt="${esc(usr.nome)}" />`
+                : `<span class="profile-avatar-initials">${iniciais}</span>`;
+            })()}
+            <div class="profile-avatar-overlay">
+              <span class="profile-avatar-icon">📷</span>
+              <span class="profile-avatar-label">Alterar</span>
+            </div>
+            <input type="file" id="profilePhotoInput" accept="image/*" hidden />
+          </div>
           <div style="flex: 1; min-width: 240px;">
             <h2 style="font-size: 1.4rem; color: var(--gray-900); margin-bottom: 4px;">${esc(usr.nome)}</h2>
             <div style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 8px;">${esc(usr.email)} · ${esc(usr.cargo || '—')}</div>
@@ -244,5 +267,23 @@
       aba = b.dataset.aba;
       view_perfil(root);
     }));
+
+    const avatar = root.querySelector('#profileAvatar');
+    const fileInp = root.querySelector('#profilePhotoInput');
+    if (avatar && fileInp) {
+      avatar.addEventListener('click', () => fileInp.click());
+      fileInp.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        if (!file.type.startsWith('image/')) { alert('Selecione um arquivo de imagem.'); return; }
+        if (file.size > 2 * 1024 * 1024) { alert('Imagem muito grande (máx 2 MB).'); return; }
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          window.userPhotoStore.set(usr.id, ev.target.result);
+          view_perfil(root);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
   };
 })();

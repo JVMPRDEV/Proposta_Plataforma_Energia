@@ -2,8 +2,25 @@
 // View: Relatórios & Aging
 // ============================================================
 
+window._relPeriodo = window._relPeriodo || (function(){
+  const d = new Date();
+  const m = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return m[d.getMonth()] + '/' + String(d.getFullYear()).slice(-2);
+})();
+
 window.view_relatorios = function(root) {
   const ds = window.store.dataset;
+  const MESES_LBL = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const periodo = window._relPeriodo;
+  const periodoOpcoes = (function(){
+    const out = [];
+    const d = new Date();
+    for (let i = -11; i <= 0; i++) {
+      const dt = new Date(d.getFullYear(), d.getMonth() + i, 1);
+      out.push(MESES_LBL[dt.getMonth()] + '/' + String(dt.getFullYear()).slice(-2));
+    }
+    return out.reverse();
+  })();
 
   // Aging dos recebíveis (mockado a partir das faturas em aberto/vencidas)
   const emAberto = ds.faturas.filter(f => ['aberta','enviada','vencida'].includes(f.status));
@@ -19,7 +36,9 @@ window.view_relatorios = function(root) {
     ${viewHeader('Relatórios & Aging', 'Análise financeira · ' + ds.tenant.nome, `
       <button class="btn btn-outline btn-sm">📥 Exportar CSV</button>
       <button class="btn btn-outline btn-sm">📄 Exportar PDF</button>
-      <button class="btn btn-primary btn-sm">📅 Período: Mar/26</button>
+      <div class="periodo-picker">
+        <button class="btn btn-primary btn-sm" id="btnPeriodo">📅 Período: <strong>${esc(periodo)}</strong> ▾</button>
+      </div>
     `)}
 
     <h3 style="margin-bottom: 1rem; color: var(--gray-800); font-size: 1rem;">Aging de Recebíveis</h3>
@@ -112,4 +131,48 @@ window.view_relatorios = function(root) {
       </div>
     </div>
   `;
+
+  const btnPer = root.querySelector('#btnPeriodo');
+  if (btnPer) {
+    btnPer.addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.querySelectorAll('.periodo-menu').forEach(m => m.remove());
+      const menu = document.createElement('div');
+      menu.className = 'kebab-menu periodo-menu';
+      menu.style.minWidth = '180px';
+      menu.style.maxHeight = '320px';
+      menu.style.overflowY = 'auto';
+      menu.innerHTML = periodoOpcoes.map(p => `
+        <button class="item ${p === periodo ? 'success' : ''}" data-per="${esc(p)}">
+          <span class="icon">${p === periodo ? '✓' : '📅'}</span>
+          <span>${esc(p)}</span>
+        </button>
+      `).join('');
+      document.body.appendChild(menu);
+      const r = btnPer.getBoundingClientRect();
+      const mr = menu.getBoundingClientRect();
+      let top = r.bottom + 4;
+      let left = r.right - mr.width;
+      if (top + mr.height > window.innerHeight - 8) top = r.top - mr.height - 4;
+      if (left < 8) left = 8;
+      menu.style.top = top + 'px';
+      menu.style.left = left + 'px';
+
+      menu.querySelectorAll('[data-per]').forEach(b => {
+        b.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          window._relPeriodo = b.dataset.per;
+          menu.remove();
+          view_relatorios(root);
+        });
+      });
+      const closeOut = (ev) => {
+        if (!menu.contains(ev.target) && ev.target !== btnPer) {
+          menu.remove();
+          document.removeEventListener('click', closeOut);
+        }
+      };
+      setTimeout(() => document.addEventListener('click', closeOut), 0);
+    });
+  }
 };

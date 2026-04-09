@@ -225,10 +225,10 @@
       ds.usinas = ds.usinas.filter(u => u.id !== id);
       commit(null, ds, { entity: 'usina' });
     },
-    registrarLeitura(usinaId, kwh) {
+    registrarLeitura(usinaId, kwh, dataLeitura) {
       this.updateUsina(usinaId, {
         producaoMes: kwh,
-        ultimaLeitura: new Date().toLocaleDateString('pt-BR')
+        ultimaLeitura: dataLeitura || new Date().toLocaleDateString('pt-BR')
       });
     },
 
@@ -262,12 +262,17 @@
       ds.faturas = ds.faturas.filter(f => f.id !== id);
       commit(null, ds, { entity: 'fatura' });
     },
-    gerarLote(competencia, vencimento) {
+    gerarLote(competencia, vencimento, contratoIds) {
       const ds = get();
       let novas = 0;
-      ds.contratos.filter(c => c.status === 'ativo').forEach(c => {
+      const filtro = contratoIds && contratoIds.length
+        ? ds.contratos.filter(c => c.status === 'ativo' && contratoIds.indexOf(c.id) >= 0)
+        : ds.contratos.filter(c => c.status === 'ativo');
+      filtro.forEach(c => {
         const cli = ds.clientes.find(x => x.id === c.clienteId);
         if (!cli) return;
+        // Pula duplicadas (mesma competência + cliente)
+        if (ds.faturas.some(f => f.clienteId === cli.id && f.competencia === competencia)) return;
         ds.faturas.unshift({
           id: 'FAT-2026-' + String(ds.faturas.length + novas + 1).padStart(5, '0'),
           cliente: cli.nome,

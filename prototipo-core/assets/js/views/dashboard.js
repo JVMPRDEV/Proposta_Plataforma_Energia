@@ -14,7 +14,6 @@ window.view_dashboard = function(root) {
   root.innerHTML = `
     ${viewHeader('Dashboard Operacional', 'Visão consolidada de ' + t.nome, `
       <button class="btn btn-outline btn-sm">📊 Exportar</button>
-      <button class="btn btn-primary btn-sm">+ Novo Cliente</button>
     `)}
 
     <div class="kpi-grid">
