@@ -643,46 +643,84 @@
  <p>A Lumi cobra <strong>por sócio</strong> e <strong>por quantidade de UCs</strong>. Com 4 sócios, os custos se multiplicam rapidamente, tornando o modelo SaaS significativamente mais caro.</p>
  </div>
 
- <!-- 4 CENÁRIOS DE COMPARAÇÃO -->
+ <!-- COMPARAÇÃO POR PLANO (3 planos × 2 cenários) -->
  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
- <!-- 1 SÓCIO -->
+
+ <!-- 1 SÓCIO — TODOS OS PLANOS -->
  <div style="background: var(--light); border-radius: 12px; padding: 1.5rem; border: 2px solid var(--primary);">
- <h4 style="color: var(--secondary); margin-bottom: 1rem; text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem;">1 SOCIO (Plano Core)</h4>
- <div style="display: flex; justify-content: space-between; gap: 1rem;">
- <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(39,174,96,0.1); border-radius: 8px;">
- <div style="font-size: 0.8rem; color: var(--gray);">Nossa Solução (1º ano)</div>
- <div style="font-size: 1.8rem; font-weight: 700; color: var(--success);">R$ 33.400</div>
- <div style="font-size: 0.75rem; color: var(--gray);">Desenvolv. + Assessment + Infra 12m</div>
- </div>
- <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(231,76,60,0.1); border-radius: 8px;">
- <div style="font-size: 0.8rem; color: var(--gray);">Lumi (1º ano)</div>
- <div style="font-size: 1.8rem; font-weight: 700; color: var(--danger);">R$ 8.980</div>
- <div style="font-size: 0.75rem; color: var(--gray);">setup + 12 meses</div>
- </div>
- </div>
- <p style="font-size: 0.75rem; color: var(--gray); margin-top: 1rem; text-align: center;">
- Nossa: R$ 28.500 Desenvolvimento + R$ 2.500 Assessment + R$ 2.400 Infra+APIs (~R$ 200/mês). <strong>Anos 2-5: só Infra+APIs, sem mensalidade.</strong><br>
- Lumi: R$ 2.500 setup + R$ 540/mês (27 UCs, faixa 1-75 kW) — mensalidade para sempre.
+ <h4 style="color: var(--secondary); margin-bottom: 1rem; text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem;">1 SÓCIO — Comparação por plano</h4>
+ <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+ <thead>
+ <tr style="background: var(--secondary); color: #fff;">
+ <th style="padding: 0.55rem; text-align: left;">Plano</th>
+ <th style="padding: 0.55rem; text-align: center;">Nossa<br><span style="font-size: 0.65rem; font-weight: 400;">(1º ano)</span></th>
+ <th style="padding: 0.55rem; text-align: center;">Lumi<br><span style="font-size: 0.65rem; font-weight: 400;">(1º ano)</span></th>
+ <th style="padding: 0.55rem; text-align: center;">Δ Ano 1</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr style="background: rgba(39,174,96,0.08); border-bottom: 1px solid #e0e0e0;">
+ <td style="padding: 0.55rem;"><strong>Básico</strong></td>
+ <td style="padding: 0.55rem; text-align: center; font-weight: 700; color: var(--success);">R$ 33.400</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--danger);">R$ 8.980</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--danger); font-weight: 600;">−R$ 24.420</td>
+ </tr>
+ <tr style="background: rgba(212,168,73,0.08); border-bottom: 1px solid #e0e0e0;">
+ <td style="padding: 0.55rem;"><strong style="color: var(--primary);">Médio</strong></td>
+ <td style="padding: 0.55rem; text-align: center; font-weight: 700; color: var(--primary);">R$ 41.700</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--danger);">R$ 8.980</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--danger); font-weight: 600;">−R$ 32.720</td>
+ </tr>
+ <tr style="background: rgba(52,152,219,0.08);">
+ <td style="padding: 0.55rem;"><strong style="color: #3498db;">Full</strong></td>
+ <td style="padding: 0.55rem; text-align: center; font-weight: 700; color: #3498db;">R$ 48.900</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--danger);">R$ 8.980</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--danger); font-weight: 600;">−R$ 39.920</td>
+ </tr>
+ </tbody>
+ </table>
+ <p style="font-size: 0.72rem; color: var(--gray); margin-top: 0.85rem; line-height: 1.55;">
+ <strong>Lumi:</strong> R$ 2.500 setup + R$ 540/mês (27 UCs, faixa 1-75 kW) — mensalidade para sempre, escalando com UCs/potência.<br>
+ <strong>Nossa Solução:</strong> investimento maior no Ano 1, mas <strong style="color: var(--success);">payback no Ano 5</strong> (Básico) — Anos 2+ só Infra+APIs (~R$ 200/mês), sem mensalidade.
  </p>
  </div>
 
- <!-- 4 SÓCIOS -->
+ <!-- 4 SÓCIOS — TODOS OS PLANOS -->
  <div style="background: var(--light); border-radius: 12px; padding: 1.5rem; border: 2px solid #3498db;">
- <h4 style="color: var(--secondary); margin-bottom: 1rem; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 0.5rem;">4 SOCIOS (Plano Core)</h4>
- <div style="display: flex; justify-content: space-between; gap: 1rem;">
- <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(39,174,96,0.1); border-radius: 8px;">
- <div style="font-size: 0.8rem; color: var(--gray);">Nossa Solução (1º ano)</div>
- <div style="font-size: 1.8rem; font-weight: 700; color: var(--success);">R$ 45.100</div>
- <div style="font-size: 0.75rem; color: #3498db; font-weight: 600;">R$ 11.275/sócio</div>
- </div>
- <div style="flex: 1; text-align: center; padding: 1rem; background: rgba(231,76,60,0.1); border-radius: 8px;">
- <div style="font-size: 0.8rem; color: var(--gray);">Lumi (1º ano)</div>
- <div style="font-size: 1.8rem; font-weight: 700; color: var(--danger);">R$ 73.624</div>
- <div style="font-size: 0.75rem; color: var(--danger); font-weight: 600;">R$ 18.406/sócio</div>
- </div>
- </div>
- <p style="font-size: 0.75rem; color: var(--success); margin-top: 1rem; text-align: center; font-weight: 600;">
- Economia de R$ 28.524 (39%) no 1º ano — e Anos 2-5 só pagam Infra+APIs
+ <h4 style="color: var(--secondary); margin-bottom: 1rem; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 0.5rem;">4 SÓCIOS — Comparação por plano</h4>
+ <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+ <thead>
+ <tr style="background: var(--secondary); color: #fff;">
+ <th style="padding: 0.55rem; text-align: left;">Plano</th>
+ <th style="padding: 0.55rem; text-align: center;">Nossa<br><span style="font-size: 0.65rem; font-weight: 400;">(1º ano)</span></th>
+ <th style="padding: 0.55rem; text-align: center;">Lumi<br><span style="font-size: 0.65rem; font-weight: 400;">(1º ano)</span></th>
+ <th style="padding: 0.55rem; text-align: center;">Economia</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr style="background: rgba(39,174,96,0.08); border-bottom: 1px solid #e0e0e0;">
+ <td style="padding: 0.55rem;"><strong>Básico</strong><br><span style="font-size: 0.68rem; color: #888;">R$ 11.275/sócio</span></td>
+ <td style="padding: 0.55rem; text-align: center; font-weight: 700; color: var(--success);">R$ 45.100</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--danger);">R$ 73.624</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--success); font-weight: 700;">+R$ 28.524<br><span style="font-size: 0.68rem; font-weight: 400;">(39%)</span></td>
+ </tr>
+ <tr style="background: rgba(212,168,73,0.08); border-bottom: 1px solid #e0e0e0;">
+ <td style="padding: 0.55rem;"><strong style="color: var(--primary);">Médio</strong><br><span style="font-size: 0.68rem; color: #888;">R$ 13.950/sócio</span></td>
+ <td style="padding: 0.55rem; text-align: center; font-weight: 700; color: var(--primary);">R$ 55.800</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--danger);">R$ 73.624</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--success); font-weight: 700;">+R$ 17.824<br><span style="font-size: 0.68rem; font-weight: 400;">(24%)</span></td>
+ </tr>
+ <tr style="background: rgba(52,152,219,0.08);">
+ <td style="padding: 0.55rem;"><strong style="color: #3498db;">Full</strong><br><span style="font-size: 0.68rem; color: #888;">R$ 16.200/sócio</span></td>
+ <td style="padding: 0.55rem; text-align: center; font-weight: 700; color: #3498db;">R$ 64.800</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--danger);">R$ 73.624</td>
+ <td style="padding: 0.55rem; text-align: center; color: var(--success); font-weight: 700;">+R$ 8.824<br><span style="font-size: 0.68rem; font-weight: 400;">(12%)</span></td>
+ </tr>
+ </tbody>
+ </table>
+ <p style="font-size: 0.72rem; color: var(--success); margin-top: 0.85rem; text-align: center; font-weight: 600; line-height: 1.55;">
+ ✓ Economia em <strong>todos os planos</strong> já no 1º ano — e Anos 2+ só pagam Infra+APIs<br>
+ <span style="color: var(--gray); font-weight: 400;">A vantagem aumenta a cada ano: a Lumi continua mensalizando enquanto a nossa solução congela após o Go-Live.</span>
  </p>
  </div>
  </div>
