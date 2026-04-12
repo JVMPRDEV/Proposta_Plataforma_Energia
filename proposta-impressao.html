@@ -955,7 +955,7 @@
  </h2>
 
  <div class="module-list">
- <div class="module-item">
+ <div class="module-item" style="border-left: 4px solid #27ae60;">
  <h4>01. Identity & Multitenancy</h4>
  <ul>
  <li>Autenticação via Keycloak (OpenSource)</li>
@@ -964,7 +964,7 @@
  <li>Controle de Acesso (RBAC)</li>
  </ul>
  </div>
- <div class="module-item">
+ <div class="module-item" style="border-left: 4px solid #27ae60;">
  <h4>02. Cadastro de Clientes</h4>
  <ul>
  <li>CRUD completo</li>
@@ -972,7 +972,7 @@
  <li>Migração de dados</li>
  </ul>
  </div>
- <div class="module-item">
+ <div class="module-item" style="border-left: 4px solid #27ae60;">
  <h4>03. Gestão de Contratos</h4>
  <ul>
  <li>Fidelidade (sem/1ano/2anos)</li>
@@ -980,14 +980,14 @@
  <li>Vigência e renovação</li>
  </ul>
  </div>
- <div class="module-item">
+ <div class="module-item" style="border-left: 4px solid #27ae60;">
  <h4>04. Gestão de Geração</h4>
  <ul>
  <li>Cadastro de usinas</li>
  <li>Registro de produção (kWh)</li>
  </ul>
  </div>
- <div class="module-item">
+ <div class="module-item" style="border-left: 4px solid #27ae60;">
  <h4>05. Distribuição de Créditos</h4>
  <ul>
  <li>Modo Percentual</li>
@@ -995,7 +995,7 @@
  <li>Créditos excedentes</li>
  </ul>
  </div>
- <div class="module-item">
+ <div class="module-item" style="border-left: 4px solid #27ae60;">
  <h4>06. Faturamento & Cobrança</h4>
  <ul>
  <li>Geração de faturas (sem gateway no Core)</li>
@@ -1005,7 +1005,7 @@
  <li>Juros: 2% + 0,033%/dia</li>
  </ul>
  </div>
- <div class="module-item">
+ <div class="module-item" style="border-left: 4px solid #3498db;">
  <h4>07. Pagamento Automatizado (Asaas)</h4>
  <ul>
  <li>Emissão de boletos e Pix via API</li>
@@ -1013,7 +1013,7 @@
  <li>Conciliação bancária automatizada</li>
  </ul>
  </div>
- <div class="module-item">
+ <div class="module-item" style="border-left: 4px solid #3498db;">
  <h4>08. Comunicação WhatsApp</h4>
  <ul>
  <li>Envio de faturas e boletos (PDF anexo)</li>
@@ -1024,7 +1024,7 @@
  <li><strong>Roadmap futuro:</strong> bot via n8n (escopo separado)</li>
  </ul>
  </div>
- <div class="module-item">
+ <div class="module-item" style="border-left: 4px solid #3498db;">
  <h4>8b. Notificações em Tempo Real (SignalR)</h4>
  <ul>
  <li>Push in-app via WebSocket (SignalR)</li>
@@ -1033,13 +1033,23 @@
  <li>Isolamento por tenant</li>
  </ul>
  </div>
- <div class="module-item">
+ <div class="module-item" style="border-left: 4px solid #27ae60;">
  <h4>09. Dashboards & Relatórios</h4>
  <ul>
  <li>Dashboard financeiro</li>
  <li>Relatório de produção</li>
  <li>Aging de recebíveis</li>
  </ul>
+ </div>
+ </div>
+ <div style="display: flex; gap: 1.5rem; margin-top: 10px; font-size: 9px; color: #555;">
+ <div style="display: flex; align-items: center; gap: 5px;">
+ <span style="width: 12px; height: 12px; background: #27ae60; border-radius: 2px; display: inline-block;"></span>
+ <span>Incluso no Plano Básico (Core)</span>
+ </div>
+ <div style="display: flex; align-items: center; gap: 5px;">
+ <span style="width: 12px; height: 12px; background: #3498db; border-radius: 2px; display: inline-block;"></span>
+ <span>Módulo de expansão (Plano Médio / Full)</span>
  </div>
  </div>
  </div>
@@ -1337,15 +1347,21 @@
 
  <h4 style="font-size: 11px; margin: 14px 0 6px 0; color: var(--secondary);">Previsibilidade de Prazo por Versão</h4>
  <p style="font-size: 10px; color: #555; margin-bottom: 6px; line-height: 1.5;">
- Estimativa baseada em dedicação de <strong>4 horas/dia</strong> em <strong>dias úteis</strong> (22 dias úteis por mês), execução sequencial e escopo fechado.
+ Estimativa baseada em <strong>dias úteis</strong> (22 dias úteis por mês), execução sequencial e escopo fechado. Dois cenários de dedicação: <strong>4 h/dia</strong> (base) e <strong>6 h/dia</strong> (acelerado).
  </p>
  <table>
  <thead>
  <tr>
- <th>Versão</th>
- <th class="text-center">Horas</th>
+ <th rowspan="2">Versão</th>
+ <th class="text-center" rowspan="2">Horas</th>
+ <th class="text-center" colspan="2">4 h/dia</th>
+ <th class="text-center" colspan="2" style="background: rgba(52,152,219,0.15);">6 h/dia</th>
+ </tr>
+ <tr>
  <th class="text-center">Dias úteis</th>
- <th class="text-center">Equivalente</th>
+ <th class="text-center">Prazo</th>
+ <th class="text-center" style="background: rgba(52,152,219,0.15);">Dias úteis</th>
+ <th class="text-center" style="background: rgba(52,152,219,0.15);">Prazo</th>
  </tr>
  </thead>
  <tbody>
@@ -1353,24 +1369,30 @@
  <td><strong>Básico</strong> <span style="font-size: 8px; color: #666;">(Core puro)</span></td>
  <td class="text-center">382 h</td>
  <td class="text-center">~96 dias</td>
- <td class="text-center">~4 meses e 8 dias úteis (≈ 4,4 meses)</td>
+ <td class="text-center">≈ 4,4 meses</td>
+ <td class="text-center" style="background: rgba(52,152,219,0.08);">~64 dias</td>
+ <td class="text-center" style="background: rgba(52,152,219,0.08);">≈ 2,9 meses</td>
  </tr>
  <tr style="background: rgba(52,152,219,0.10);">
  <td><strong style="color: #3498db;">Médio</strong> <span style="font-size: 8px; color: #666;">(Core + Asaas + WhatsApp + Notif. SignalR)</span></td>
  <td class="text-center">488 h</td>
  <td class="text-center">122 dias</td>
- <td class="text-center">~5 meses e 12 dias úteis (≈ 5,5 meses)</td>
+ <td class="text-center">≈ 5,5 meses</td>
+ <td class="text-center" style="background: rgba(52,152,219,0.08);">~81 dias</td>
+ <td class="text-center" style="background: rgba(52,152,219,0.08);">≈ 3,7 meses</td>
  </tr>
  <tr style="background: rgba(212,168,73,0.18);">
  <td><strong style="color: var(--primary);">Full ⭐</strong> <span style="background: var(--primary); color: #1a1a2e; font-size: 7px; font-weight: 800; padding: 1px 4px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.4px;">Recomendado</span> <span style="font-size: 8px; color: #666;">(todas as expansões)</span></td>
  <td class="text-center">521 h</td>
  <td class="text-center">130 dias</td>
- <td class="text-center">~5 meses e 20 dias úteis (≈ 5,9 meses)</td>
+ <td class="text-center">≈ 5,9 meses</td>
+ <td class="text-center" style="background: rgba(52,152,219,0.08);">~87 dias</td>
+ <td class="text-center" style="background: rgba(52,152,219,0.08);">≈ 4 meses</td>
  </tr>
  </tbody>
  </table>
  <p style="font-size: 9px; color: #666; margin-top: 5px; line-height: 1.5;">
- <strong>Premissas:</strong> 4 h/dia em dias úteis, sem feriados, execução sequencial sem paralelismo. Reuniões de alinhamento, retrabalho de feedback e refinamento de requisitos consomem horas dentro do próprio orçamento. Aumento de dedicação diária (ex.: 6 h ou 8 h/dia) reduz o prazo proporcionalmente.
+ <strong>Premissas:</strong> 22 dias úteis/mês, sem feriados, execução sequencial sem paralelismo. Reuniões de alinhamento, retrabalho de feedback e refinamento de requisitos consomem horas dentro do próprio orçamento. <strong>Cenário base: 4 h/dia. Cenário acelerado: 6 h/dia — reduz prazo em ~33%.</strong>
  </p>
  </div>
 
