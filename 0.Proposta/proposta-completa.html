@@ -386,6 +386,14 @@
 
  /* ===== RESPONSIVE ===== */
 
+ /* Wrap every table in a scrollable container */
+ .table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 15px 0;
+ }
+
  /* Tablet landscape / small desktop */
  @media (max-width: 1024px) {
   .sidebar { display: none; }
@@ -415,10 +423,9 @@
   [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr !important; }
   [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
 
-  /* Tables: horizontal scroll */
-  table { font-size: 10px; display: block; overflow-x: auto; white-space: nowrap; }
-  thead, tbody, tr { display: table; width: 100%; table-layout: auto; }
-  th, td { padding: 6px 8px; }
+  /* Tables: prevent squeezing, allow horizontal scroll */
+  table { min-width: 600px; font-size: 10px; }
+  th, td { padding: 6px 8px; white-space: nowrap; }
   .total-row td { white-space: nowrap; }
 
   .print-btn { top: 10px; right: 10px; padding: 8px 14px; font-size: 12px; }
@@ -434,7 +441,7 @@
   .section-title { font-size: 14px; flex-wrap: wrap; }
   .section { margin-bottom: 24px; }
 
-  table { font-size: 9px; }
+  table { min-width: 500px; font-size: 9px; }
   th, td { padding: 4px 6px; }
 
   .print-btn { position: static; display: block; width: 100%; margin: 0.5rem 0 1rem; border-radius: 6px; }
@@ -738,6 +745,7 @@
   </h2>
 
   <!-- STACK TABLE -->
+  <div class="table-responsive">
   <table>
    <thead>
     <tr>
@@ -759,6 +767,7 @@
     <tr><td>Mensageria / Eventos</td><td>AWS SNS + SQS FIFO + Lambda</td><td>Eventos de domínio com ordem garantida, deduplicação e DLQ</td></tr>
    </tbody>
   </table>
+  </div>
 
   <!-- ARCHITECTURAL PATTERNS -->
   <h4 style="font-size: 13px; margin: 18px 0 8px; color: var(--secondary);">Padroes Arquiteturais</h4>
@@ -961,6 +970,7 @@
   <h4 style="font-size: 13px; margin: 0 0 10px; color: var(--secondary);">Roadmap por Sprints (cenário 6h/dia)</h4>
   <p style="font-size: 10px; color: #666; margin-bottom: 10px;">Cada sprint = <strong>2 semanas (10 dias úteis)</strong>. Básico: 7 sprints · Médio: 8 sprints · Full: 9 sprints.</p>
 
+  <div class="table-responsive">
   <table style="font-size: 10px;">
    <thead>
     <tr>
@@ -1037,6 +1047,7 @@
     </tr>
    </tbody>
   </table>
+  </div>
   <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px;">
    <div style="padding: 6px 10px; background: rgba(39,174,96,0.08); border-left: 3px solid var(--success); border-radius: 4px; font-size: 9px; color: #555;">
     <strong style="color: var(--success);">Básico:</strong> Sprints 1–6 (382h) · Go-Live na Sprint 6
@@ -1051,6 +1062,7 @@
 
   <!-- TRADE-OFFS -->
   <h4 style="font-size: 13px; margin: 20px 0 10px; color: var(--secondary);">Trade-offs: MVP vs. Premium</h4>
+  <div class="table-responsive">
   <table>
    <thead>
     <tr>
@@ -1087,6 +1099,7 @@
     </tr>
    </tbody>
   </table>
+  </div>
 
   <!-- PREVISIBILIDADE DE PRAZO -->
   <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Previsibilidade de Prazo por Versão</h4>
@@ -1095,6 +1108,7 @@
    Estimativa baseada em <strong>dias úteis</strong> (22 dias úteis por mês), execução sequencial e escopo fechado. Dois cenários de dedicação: <strong>4 h/dia</strong> (base) e <strong>6 h/dia</strong> (acelerado).
   </p>
 
+  <div class="table-responsive">
   <table style="font-size: 11px;">
    <thead>
     <tr>
@@ -1137,6 +1151,7 @@
     </tr>
    </tbody>
   </table>
+  </div>
 
   <p style="font-size: 10px; color: #666; margin-top: 8px; line-height: 1.6;">
    <strong>Premissas:</strong> 22 dias úteis/mês, sem feriados, execução sequencial sem paralelismo. Reuniões de alinhamento, retrabalho de feedback e refinamento de requisitos consomem horas dentro do próprio orçamento. <strong>Cenário base: 4 h/dia. Cenário acelerado: 6 h/dia -- reduz prazo em ~33%.</strong>
@@ -1144,6 +1159,7 @@
 
   <!-- ESTIMATIVA DE HORAS -->
   <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Estimativa de Horas -- Core (382 h)</h4>
+  <div class="table-responsive">
   <table style="font-size: 10px;">
    <thead>
     <tr>
@@ -1167,8 +1183,10 @@
     <tr class="total-row"><td><strong>SUBTOTAL CORE</strong></td><td class="text-center"><strong>200</strong></td><td class="text-center"><strong>126</strong></td><td class="text-center"><strong>56</strong></td><td class="text-center"><strong>382 h</strong></td></tr>
    </tbody>
   </table>
+  </div>
 
   <h4 style="font-size: 13px; margin: 18px 0 10px; color: var(--secondary);">Módulos de Expansão (139 h -- opcionais)</h4>
+  <div class="table-responsive">
   <table style="font-size: 10px;">
    <thead>
     <tr>
@@ -1188,6 +1206,7 @@
     <tr class="total-row" style="background: rgba(212,168,73,0.22) !important;"><td style="color: var(--dark);"><strong>TOTAL GERAL (Core + Expansões)</strong></td><td class="text-center" style="color: var(--dark);"><strong>280</strong></td><td class="text-center" style="color: var(--dark);"><strong>168</strong></td><td class="text-center" style="color: var(--dark);"><strong>73</strong></td><td class="text-center" style="color: var(--dark);"><strong>521 h</strong></td></tr>
    </tbody>
   </table>
+  </div>
  </div>
 
  <div class="page-break"></div>
@@ -1220,6 +1239,7 @@
    </div>
   </div>
 
+  <div class="table-responsive">
   <table>
    <thead>
     <tr>
@@ -1236,6 +1256,7 @@
     </tr>
    </tbody>
   </table>
+  </div>
 
   <p style="font-size: 10px; color: #666; margin-top: 6px; line-height: 1.6;">
    <strong>Inclui:</strong> mapeamento de processos e rotinas atuais, análise de planilhas e sistemas legados, migração de dados (clientes, UCs, contratos), workshop de requisitos com stakeholders, configuração de regras de rateio, adaptação as particularidades do sócio.
@@ -1438,6 +1459,7 @@
   <!-- 5.3 INFRA + APIs -->
   <h3 class="bloco-header" style="margin-top: 28px;">5.3 Infra + APIs (custo recorrente mensal)</h3>
 
+  <div class="table-responsive">
   <table>
    <thead>
     <tr>
@@ -1462,6 +1484,7 @@
     </tr>
    </tbody>
   </table>
+  </div>
 
   <div style="background: rgba(52,152,219,0.08); border: 1px dashed #3498db; border-radius: 6px; padding: 10px 12px; margin-top: 8px;">
    <p style="font-size: 10px; color: #555; margin: 0; line-height: 1.6;">
@@ -1472,6 +1495,7 @@
   <!-- 5.4 TABELA CONSOLIDADA -->
   <h3 class="bloco-header" style="margin-top: 28px;">5.4 Tabela Consolidada -- Total 1º Ano</h3>
 
+  <div class="table-responsive">
   <table style="font-size: 11px;">
    <thead>
     <tr>
@@ -1514,6 +1538,7 @@
     </tr>
    </tbody>
   </table>
+  </div>
 
   <div class="legend-block">
    <p><strong style="color: #3498db;">Como ler a tabela:</strong> cada plano = <strong>Desenvolvimento</strong> (custo único do código) + <strong>Assessment por sócio</strong> (R$ 2.500 a R$ 6.000 -- a tabela considera o piso de R$ 2.500; valor final definido após o workshop) + <strong>Infra + APIs 12 meses</strong> (AWS, WhatsApp Cloud API e processamento).</p>
@@ -1528,6 +1553,7 @@
    <strong>Parcelamento 30/30/40</strong> incide apenas sobre o <strong>Desenvolvimento</strong>. Assessment é 100% na contratação. Infra+APIs é paga diretamente pelo cliente.
   </p>
 
+  <div class="table-responsive">
   <table style="font-size: 11px;">
    <thead>
     <tr>
@@ -1562,6 +1588,7 @@
     </tr>
    </tbody>
   </table>
+  </div>
 
   <p style="font-size: 10px; color: #666; margin-top: 6px; font-style: italic; line-height: 1.6;">
    Parcelamento incide apenas sobre o Desenvolvimento, que é dividido igualmente entre os sócios. Assessment (R$ 2.500-6.000 por sócio) é cobrado 100% na contratação. Infra + APIs é paga diretamente pelo cliente conforme uso.
@@ -1586,6 +1613,7 @@
   <!-- LUMI COST SUMMARY -->
   <h4 style="font-size: 13px; margin: 0 0 10px; color: var(--secondary);">Custo Lumi -- Resumo (Plano Flex, 4 sócios)</h4>
 
+  <div class="table-responsive">
   <table style="font-size: 11px; margin-bottom: 18px;">
    <thead>
     <tr>
@@ -1622,10 +1650,12 @@
     </tr>
    </tbody>
   </table>
+  </div>
 
   <!-- COMPARISON TABLE -->
   <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Lumi vs Nossa Solução -- 1º Ano (4 sócios)</h4>
 
+  <div class="table-responsive">
   <table style="font-size: 11px; margin-bottom: 18px;">
    <thead>
     <tr>
@@ -1667,10 +1697,12 @@
     </tr>
    </tbody>
   </table>
+  </div>
 
   <!-- FEATURE COMPARISON -->
   <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Comparativo de Funcionalidades</h4>
 
+  <div class="table-responsive">
   <table>
    <thead>
     <tr>
@@ -1694,10 +1726,12 @@
     <tr><td>Gateway brasileiro (Asaas)</td><td class="text-center"><span class="check">Sim</span> - Nativo</td><td class="text-center"><span class="partial">Limitado</span></td></tr>
    </tbody>
   </table>
+  </div>
 
   <!-- RISKS -->
   <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Riscos do Modelo SaaS de Aluguel</h4>
 
+  <div class="table-responsive">
   <table>
    <thead>
     <tr>
@@ -1713,6 +1747,7 @@
     <tr><td>Descontinuação do serviço</td><td>Perda total dos dados e necessidade de nova solução</td></tr>
    </tbody>
   </table>
+  </div>
 
   <!-- ECONOMY 5 YEARS BANNER -->
   <div style="background: linear-gradient(135deg, var(--success) 0%, #1e8449 100%); color: #fff; border-radius: 12px; padding: 20px; text-align: center; margin-top: 20px;">
@@ -1750,6 +1785,7 @@
 
   <!-- INFRA TABLE -->
   <h4 style="font-size: 13px; margin: 20px 0 10px; color: var(--secondary);">Infraestrutura (Após Go-Live)</h4>
+  <div class="table-responsive">
   <table>
    <thead>
     <tr>
@@ -1780,6 +1816,7 @@
     </tr>
    </tbody>
   </table>
+  </div>
 
   <p style="font-size: 10px; color: #666; margin-top: 6px; font-style: italic; line-height: 1.6;">
    *SQL Server Express tem limite de 10 GB por banco -- atende o início da operação com folga. Ao escalar, pode ser necessário migrar para edição paga (RDS SQL Server Standard, ~R$ 1.200-1.800/mês por sócio) -- custo adicional avaliado caso a caso.
@@ -1788,6 +1825,7 @@
   <!-- ROADMAP FUTURO -->
   <h3 class="bloco-header bloco-dark" style="margin-top: 28px;">Roadmap -- Melhorias Futuras (fora do escopo atual)</h3>
 
+  <div class="table-responsive">
   <table>
    <thead>
     <tr>
@@ -1806,6 +1844,7 @@
     </tr>
    </tbody>
   </table>
+  </div>
  </div>
 
  <div class="page-break"></div>

@@ -520,10 +520,12 @@ img, svg, video { max-width: 100%; height: auto; }
  .slide { padding: 6vh 5vw; justify-content: flex-start; }
  .slide-num { font-size: 0.7rem; top: 1vh; right: 2vw; }
  .slide-tag { font-size: 0.65rem; margin-bottom: 1rem; padding: 0.3rem 0.75rem; }
- .deck-table { font-size: 0.75rem; display: block; overflow-x: auto; white-space: nowrap; }
+ .deck-table { font-size: 0.75rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; min-width: 500px; }
  .takeaway { font-size: 0.85rem; padding: 0.75rem 1rem; }
  .partnership-banner .text { font-size: 1rem; }
  .hint { font-size: 0.7rem; padding: 0.4rem 0.75rem; }
+ [style*="grid-template-columns: repeat("] { grid-template-columns: 1fr !important; }
+ [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
 }
 
 /* Telas muito pequenas — iPhone SE / iPhone 5 (≤480px) */
