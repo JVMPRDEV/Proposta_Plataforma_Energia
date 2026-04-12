@@ -214,7 +214,7 @@
  <ul class="module-features">
  <li>Cadastro de usinas solares</li>
  <li>Registro manual de produção (kWh)</li>
- <li>Parser de faturas COELBA (PDF)</li>
+ <li>Registro de geração via planilha ou digitação</li>
  <li>Histórico de geração</li>
  </ul>
  </div>
@@ -528,12 +528,7 @@
  <div class="option-label"><strong>Opção A (MVP):</strong> Input manual simplificado de kWh</div>
  <span class="option-price">Incluso no Core</span>
  </div>
- <div class="option-row option-premium">
- <div class="option-label"><strong>Opção B (Premium):</strong> Parser automático de PDF COELBA</div>
- <span class="option-price">+ R$ 3.500</span>
  </div>
- </div>
- <p class="tradeoff-rec"><em>Recomendação:</em> Comece com input manual. O parser pode ser adicionado quando o volume justificar.</p>
  </div>
 
  <div class="milestone">Milestone 2: Motor de créditos funcionando</div>
@@ -673,7 +668,7 @@
  <tr>
  <td>Entrada de Produção</td>
  <td class="cell-mvp">Input Manual</td>
- <td class="cell-full">Parser COELBA <span class="delta">+R$ 3.500</span></td>
+ <td class="cell-full">Input Manual (mesmo do Core)</td>
  </tr>
  <tr>
  <td>Pagamentos</td>
@@ -698,7 +693,7 @@
  <tr class="row-total">
  <td>TOTAL Desenvolvimento (1 Sócio)</td>
  <td class="cell-mvp">R$ 28.500</td>
- <td class="cell-full">R$ 41.000</td>
+ <td class="cell-full">R$ 37.500</td>
  </tr>
  </tbody>
  </table>
@@ -726,7 +721,7 @@
  </div>
  </div>
  <p style="font-size: 0.85rem; color: #666; margin-top: 1rem; text-align: center;">
- * Módulos de expansão (Asaas, WhatsApp, Parser, Relatórios) podem ser desenvolvidos em paralelo ou após o Go-Live
+ * Módulos de expansão (Asaas, WhatsApp, Relatórios) podem ser desenvolvidos em paralelo ou após o Go-Live
  </p>
  </div>
  </section>
@@ -858,10 +853,6 @@
  <td style="padding: 0.5rem 0;"><strong>Notificações em Tempo Real (SignalR)</strong> — push in-app, sino + toast + painel</td>
  <td style="text-align: right; color: var(--primary); font-weight: 600;">+ R$ 1.500</td>
  </tr>
- <tr style="border-bottom: 1px solid #eee;">
- <td style="padding: 0.5rem 0;"><strong>Parser Faturas COELBA</strong></td>
- <td style="text-align: right; color: var(--primary); font-weight: 600;">+ R$ 3.500</td>
- </tr>
  <tr>
  <td style="padding: 0.5rem 0;"><strong>Relatórios Avançados</strong></td>
  <td style="text-align: right; color: var(--primary); font-weight: 600;">+ R$ 2.500</td>
@@ -982,15 +973,15 @@
  <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #1a1a2e; padding: 0.2rem 0.85rem; border-radius: 12px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">⭐ Recomendado</div>
  <div style="text-align: center; padding-bottom: 0.85rem; border-bottom: 2px dashed #e8e8e8;">
  <div style="background: var(--primary); color: #1a1a2e; display: inline-block; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.78rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">Full</div>
- <div style="font-size: 0.78rem; color: #666; margin-top: 0.45rem;">Todas as expansões</div>
+ <div style="font-size: 0.78rem; color: #666; margin-top: 0.45rem;">Tudo do Médio + Relatórios</div>
  </div>
  <div style="padding: 0.85rem 0; font-size: 0.82rem; color: #555; line-height: 1.55; min-height: 64px;">
- Tudo do Médio + <strong>Parser COELBA</strong> + <strong>Relatórios Avançados</strong>
+ Tudo do Médio + <strong>Relatórios Avançados</strong>
  </div>
  <div style="background: rgba(212,168,73,0.08); border-radius: 8px; padding: 0.9rem;">
  <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0;">
  <span style="font-size: 0.82rem; color: #444;"> Desenvolvimento</span>
- <strong style="font-size: 1.1rem; color: var(--primary);">R$ 41.000</strong>
+ <strong style="font-size: 1.1rem; color: var(--primary);">R$ 37.500</strong>
  </div>
  <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.4rem 0; border-top: 1px solid rgba(0,0,0,0.06);">
  <span style="font-size: 0.8rem; color: #555;"> Assessment <span style="font-size: 0.7rem; color: #888;">(piso)</span></span>
@@ -1002,12 +993,12 @@
  </div>
  <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0.65rem 0 0.2rem; border-top: 2px solid var(--primary); margin-top: 0.4rem;">
  <span style="font-size: 0.82rem; color: #1a1a2e; font-weight: 700;">Total 1º ano</span>
- <strong style="font-size: 1.4rem; color: var(--primary);">R$ 48.900</strong>
+ <strong style="font-size: 1.4rem; color: var(--primary);">R$ 45.400</strong>
  </div>
  </div>
  <div style="margin-top: 0.9rem; padding: 0.65rem; background: #f8f9fa; border-radius: 6px; text-align: center;">
  <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Cenário 4 sócios</div>
- <div style="font-size: 1rem; font-weight: 700; color: #1a1a2e; margin-top: 0.2rem;">R$ 64.800 <span style="font-size: 0.72rem; color: #666; font-weight: 400;">(R$ 16.200/sócio)</span></div>
+ <div style="font-size: 1rem; font-weight: 700; color: #1a1a2e; margin-top: 0.2rem;">R$ 61.300 <span style="font-size: 0.72rem; color: #666; font-weight: 400;">(R$ 15.325/sócio)</span></div>
  </div>
  <div style="margin-top: 0.75rem; padding: 0.75rem 0.85rem; background: linear-gradient(135deg, rgba(212,168,73,0.22), rgba(212,168,73,0.06)); border: 1.5px solid rgba(212,168,73,0.55); border-radius: 8px; position: relative;">
  <div style="position: absolute; top: -9px; left: 10px; background: var(--primary); color: #1a1a2e; padding: 2px 8px; border-radius: 10px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase;"> A partir do Ano 2</div>
@@ -1064,10 +1055,10 @@
  <td style="padding: 0.6rem; text-align: center;">~5 meses e 12 dias úteis<br><span style="font-size: 0.75rem; color: #666;">(≈ 5,5 meses)</span></td>
  </tr>
  <tr style="background: rgba(212,168,73,0.18);">
- <td style="padding: 0.6rem;"><strong style="color: var(--primary);">Full ⭐</strong> <span style="background: var(--primary); color: #1a1a2e; font-size: 0.62rem; font-weight: 800; padding: 0.1rem 0.4rem; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Recomendado</span><br><span style="font-size: 0.75rem; color: #666;">Todas as expansões</span></td>
- <td style="padding: 0.6rem; text-align: center;">568 h</td>
- <td style="padding: 0.6rem; text-align: center;"><strong>142 dias</strong></td>
- <td style="padding: 0.6rem; text-align: center;">~6 meses e 10 dias úteis<br><span style="font-size: 0.75rem; color: #666;">(≈ 6,5 meses)</span></td>
+ <td style="padding: 0.6rem;"><strong style="color: var(--primary);">Full ⭐</strong> <span style="background: var(--primary); color: #1a1a2e; font-size: 0.62rem; font-weight: 800; padding: 0.1rem 0.4rem; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Recomendado</span><br><span style="font-size: 0.75rem; color: #666;">Médio + Relatórios Avançados</span></td>
+ <td style="padding: 0.6rem; text-align: center;">521 h</td>
+ <td style="padding: 0.6rem; text-align: center;"><strong>131 dias</strong></td>
+ <td style="padding: 0.6rem; text-align: center;">~5 meses e 21 dias úteis<br><span style="font-size: 0.75rem; color: #666;">(≈ 6 meses)</span></td>
  </tr>
  </tbody>
  </table>
@@ -1147,11 +1138,11 @@
  </tr>
  <tr style="background: rgba(212,168,73,0.18);">
  <td style="padding: 0.6rem;"><strong style="color: var(--primary);">Full ⭐</strong> <span style="background: var(--primary); color: #1a1a2e; font-size: 0.62rem; font-weight: 800; padding: 0.1rem 0.4rem; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Recomendado</span></td>
- <td style="padding: 0.6rem; text-align: center;">R$ 41.000</td>
- <td style="padding: 0.6rem; text-align: center;">R$ 12.300</td>
- <td style="padding: 0.6rem; text-align: center;">R$ 12.300</td>
- <td style="padding: 0.6rem; text-align: center; color: var(--success); font-weight: 700;">R$ 16.400</td>
- <td style="padding: 0.6rem; text-align: center; background: rgba(52,152,219,0.1); color: #3498db; font-weight: 800;">R$ 10.250</td>
+ <td style="padding: 0.6rem; text-align: center;">R$ 37.500</td>
+ <td style="padding: 0.6rem; text-align: center;">R$ 11.250</td>
+ <td style="padding: 0.6rem; text-align: center;">R$ 11.250</td>
+ <td style="padding: 0.6rem; text-align: center; color: var(--success); font-weight: 700;">R$ 15.000</td>
+ <td style="padding: 0.6rem; text-align: center; background: rgba(52,152,219,0.1); color: #3498db; font-weight: 800;">R$ 9.375</td>
  </tr>
  </tbody>
  </table>
