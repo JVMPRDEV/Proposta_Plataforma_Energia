@@ -1,0 +1,2291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Proposta Completa - Plataforma de Gestão de Energia Solar</title>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+ <style>
+ :root {
+  --primary: #D4A849;
+  --primary-dark: #B8923D;
+  --secondary: #2C3E50;
+  --success: #27ae60;
+  --danger: #e74c3c;
+  --warning: #f39c12;
+  --dark: #1a1a2e;
+  --gray: #6c757d;
+  --light: #f8f9fa;
+  --white: #ffffff;
+  --sidebar-width: 260px;
+ }
+
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+
+ body {
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background: #eef0f3;
+ }
+
+ /* ===== SIDEBAR NAV ===== */
+ .sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: linear-gradient(180deg, var(--secondary) 0%, var(--dark) 100%);
+  color: #fff;
+  padding: 1.5rem 0;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+ }
+
+ .sidebar-logo {
+  text-align: center;
+  padding: 0 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 1rem;
+ }
+ .sidebar-logo h2 { font-size: 1.1rem; color: var(--primary); letter-spacing: 0.5px; }
+ .sidebar-logo span { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+
+ .sidebar-nav { list-style: none; padding: 0; }
+ .sidebar-nav li a {
+  display: block;
+  padding: 0.65rem 1.5rem;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all .2s;
+  border-left: 3px solid transparent;
+ }
+ .sidebar-nav li a:hover,
+ .sidebar-nav li a.active {
+  color: #fff;
+  background: rgba(212,168,73,0.15);
+  border-left-color: var(--primary);
+ }
+
+ .sidebar-footer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
+ }
+
+ /* ===== MAIN CONTENT ===== */
+ .main-content {
+  margin-left: var(--sidebar-width);
+  padding: 2rem 3rem;
+  background: var(--white);
+  min-height: 100vh;
+ }
+
+ /* ===== PRINT BUTTON ===== */
+ .print-btn {
+  position: fixed;
+  top: 20px; right: 20px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 200;
+  transition: background .2s;
+ }
+ .print-btn:hover { background: var(--primary-dark); }
+
+ /* ===== HEADER ===== */
+ .doc-header {
+  text-align: center;
+  padding: 32px 20px 28px;
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, var(--secondary) 0%, #34495e 100%);
+  color: #fff;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+ }
+ .doc-header::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, #f0c674 50%, var(--primary) 100%);
+ }
+ .doc-header h1 { font-size: 26px; color: #fff; margin-bottom: 6px; letter-spacing: 0.5px; }
+ .doc-header .subtitle {
+  font-size: 13px; color: var(--primary); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1.2px;
+ }
+ .doc-header .meta { margin-top: 18px; font-size: 11px; color: rgba(255,255,255,0.78); }
+ .doc-header .meta strong { color: #fff; }
+ .doc-header .badge {
+  display: inline-block; background: rgba(212,168,73,0.2); color: var(--primary);
+  padding: 3px 12px; border-radius: 20px; font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; margin-top: 10px;
+ }
+
+ /* ===== SECTIONS ===== */
+ .section { margin-bottom: 36px; }
+ .section-title {
+  font-size: 18px; color: var(--secondary);
+  padding-bottom: 12px; margin-bottom: 18px;
+  display: flex; align-items: center; gap: 12px;
+  position: relative; border-bottom: 1px solid #e5e7eb;
+ }
+ .section-title::after {
+  content: ''; position: absolute; left: 0; bottom: -1px;
+  width: 70px; height: 3px; background: var(--primary); border-radius: 2px;
+ }
+ .section-num {
+  background: linear-gradient(135deg, var(--primary), #b8902f);
+  color: white; width: 30px; height: 30px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800;
+  box-shadow: 0 2px 6px rgba(212,168,73,0.4); flex-shrink: 0;
+ }
+
+ /* ===== INFO BOX ===== */
+ .info-box {
+  background: linear-gradient(135deg, #f8f9fb 0%, #f1f3f5 100%);
+  border: 1px solid #e5e7eb; border-left: 4px solid var(--primary);
+  border-radius: 8px; padding: 20px; margin-bottom: 20px;
+ }
+ .info-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
+ }
+ .info-item label {
+  display: block; font-size: 10px; color: var(--gray);
+  text-transform: uppercase; margin-bottom: 3px;
+ }
+ .info-item span { font-size: 14px; font-weight: 600; color: var(--secondary); }
+
+ /* ===== TABLES ===== */
+ table {
+  width: 100%; border-collapse: collapse;
+  margin: 15px 0; font-size: 12px;
+ }
+ th, td {
+  padding: 10px 12px; text-align: left;
+  border: 1px solid #ddd; vertical-align: middle;
+ }
+ th {
+  background: linear-gradient(180deg, #34495e 0%, var(--secondary) 100%);
+  color: white; font-weight: 700; text-transform: uppercase;
+  font-size: 10px; letter-spacing: 0.4px;
+ }
+ tbody tr:nth-child(even) { background: #fafbfc; }
+ tbody tr:hover { background: rgba(212,168,73,0.06); }
+ .text-center { text-align: center; }
+ .text-right { text-align: right; }
+ .total-row {
+  background: linear-gradient(135deg, var(--primary), #b8902f) !important;
+  color: white; font-weight: 700;
+ }
+ .total-row td { border-color: var(--primary); color: #fff; }
+
+ /* ===== CALLOUTS ===== */
+ .callout {
+  border-radius: 8px; padding: 16px 20px; margin-bottom: 18px;
+  display: flex; gap: 14px; align-items: flex-start;
+ }
+ .callout-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 14px; flex-shrink: 0;
+ }
+ .callout-warning {
+  background: #fff3cd; border: 1px solid #ffc107; border-left: 4px solid var(--warning);
+ }
+ .callout-warning .callout-icon { background: var(--warning); color: #fff; }
+ .callout-success {
+  background: rgba(39,174,96,0.08); border: 1px solid rgba(39,174,96,0.3); border-left: 4px solid var(--success);
+ }
+ .callout-success .callout-icon { background: var(--success); color: #fff; }
+ .callout-info {
+  background: rgba(52,152,219,0.08); border: 1px solid rgba(52,152,219,0.3); border-left: 4px solid #3498db;
+ }
+ .callout-info .callout-icon { background: #3498db; color: #fff; }
+ .callout h4 { font-size: 13px; color: var(--secondary); margin-bottom: 4px; }
+ .callout p { font-size: 12px; color: #555; line-height: 1.6; margin: 0; }
+
+ /* ===== BLOCO HEADERS ===== */
+ .bloco-header {
+  background: linear-gradient(135deg, var(--primary), #b8902f);
+  color: #fff; padding: 9px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+  text-transform: uppercase; display: flex; align-items: center; gap: 8px;
+  margin: 24px 0 12px 0;
+  box-shadow: 0 2px 8px rgba(212,168,73,0.32);
+ }
+ .bloco-header::before {
+  content: ''; width: 6px; height: 6px; background: #fff;
+  border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,0.4); flex-shrink: 0;
+ }
+ .bloco-header.bloco-success {
+  background: linear-gradient(135deg, #27ae60, #1e8449);
+  box-shadow: 0 2px 8px rgba(39,174,96,0.32);
+ }
+ .bloco-header.bloco-dark {
+  background: linear-gradient(135deg, var(--secondary), #34495e);
+  box-shadow: 0 2px 8px rgba(44,62,80,0.32);
+ }
+
+ /* ===== PRICING CARDS ===== */
+ .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin: 1.25rem 0; }
+ .pricing-card {
+  background: #fff; border: 2px solid #e5e7eb; border-radius: 12px;
+  padding: 1.25rem; position: relative;
+  display: flex; flex-direction: column;
+ }
+ .pricing-card.plan-basico { border-color: var(--success); }
+ .pricing-card.plan-medio { border-color: #3498db; }
+ .pricing-card.plan-full { border-color: var(--primary); box-shadow: 0 4px 14px rgba(212,168,73,0.28); }
+ .pricing-card .plan-badge {
+  display: inline-block; color: #fff; padding: 0.3rem 1rem;
+  border-radius: 20px; font-size: 0.78rem; font-weight: 800;
+  letter-spacing: 1px; text-transform: uppercase;
+ }
+ .plan-basico .plan-badge { background: var(--success); }
+ .plan-medio .plan-badge { background: #3498db; }
+ .plan-full .plan-badge { background: var(--primary); color: var(--dark); }
+
+ .recommended-tag {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  background: var(--primary); color: var(--dark); padding: 0.2rem 0.85rem;
+  border-radius: 12px; font-size: 0.65rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;
+ }
+
+ .price-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 0.4rem 0;
+ }
+ .price-row + .price-row { border-top: 1px solid rgba(0,0,0,0.06); }
+ .price-row .label { font-size: 0.82rem; color: #555; }
+ .price-row .value { font-weight: 700; }
+
+ .card-content-area {
+  flex: 1;
+ }
+ .card-footer-area {
+  margin-top: auto;
+ }
+ .year2-box {
+  margin-top: 0.75rem; padding: 0.75rem 0.85rem;
+  border: 1.5px solid; border-radius: 8px; position: relative;
+  padding-top: 1rem;
+ }
+ .year2-box .year2-tag {
+  position: absolute; top: -9px; left: 10px;
+  color: #fff; padding: 2px 8px; border-radius: 10px;
+  font-size: 0.6rem; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase;
+ }
+
+ /* ===== MODULE CARDS ===== */
+ .module-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+ .module-card {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+  padding: 14px; box-shadow: 0 1px 4px rgba(44,62,80,0.04);
+  transition: transform .15s ease;
+ }
+ .module-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(44,62,80,0.08); }
+ .module-card.core { border-left: 4px solid var(--success); }
+ .module-card.expansion { border-left: 4px solid #3498db; }
+ .module-card h4 {
+  font-size: 12px; color: var(--secondary); margin-bottom: 6px;
+  padding-bottom: 5px; border-bottom: 1px dashed #e5e7eb;
+ }
+ .module-card ul { font-size: 10px; color: var(--gray); margin-left: 15px; }
+ .module-card li { margin-bottom: 2px; }
+
+ /* ===== TIMELINE ===== */
+ .timeline-simple { margin: 15px 0; }
+ .timeline-row { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+ .timeline-phase { width: 80px; font-size: 11px; font-weight: 600; color: var(--secondary); }
+ .timeline-bar {
+  flex: 1; height: 28px; border-radius: 999px;
+  display: flex; align-items: center; padding: 0 14px;
+  color: white; font-size: 10px; font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+ }
+
+ /* ===== ARCH DECISION ===== */
+ .arch-decision {
+  background: #fff; border: 1px solid #e5e7eb; border-left: 4px solid var(--secondary);
+  border-radius: 8px; padding: 16px; margin-top: 16px;
+ }
+ .arch-pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+ .arch-col { padding: 10px 12px; border-radius: 6px; border: 1px solid; }
+ .arch-col h5 {
+  font-size: 10px; font-weight: 800; margin: 0 0 6px; text-transform: uppercase;
+  letter-spacing: 0.3px; padding-bottom: 5px; border-bottom: 1px dashed currentColor;
+ }
+ .arch-col ul { list-style: none; margin: 0; padding: 0; font-size: 10px; line-height: 1.6; }
+ .arch-col li { padding: 3px 0 3px 14px; position: relative; color: #444; }
+ .arch-col li::before { position: absolute; left: 0; top: 3px; font-weight: 800; font-size: 10px; }
+ .arch-pros { background: rgba(39,174,96,0.06); border-color: rgba(39,174,96,0.35); color: #1e8449; }
+ .arch-pros li::before { content: '\2713'; color: var(--success); }
+ .arch-cons { background: rgba(231,76,60,0.05); border-color: rgba(231,76,60,0.3); color: #c0392b; }
+ .arch-cons li::before { content: '\00D7'; color: #c0392b; font-size: 12px; top: 1px; }
+ .arch-recommendation {
+  margin-top: 10px; padding: 10px 12px;
+  background: linear-gradient(135deg, rgba(212,168,73,0.14), rgba(212,168,73,0.04));
+  border-left: 3px solid var(--primary); border-radius: 4px;
+  font-size: 10px; color: #555; line-height: 1.6;
+ }
+
+ /* ===== PATTERNS ===== */
+ .patterns-grid { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 16px; }
+ .pattern-tag {
+  display: inline-flex; align-items: center; background: #f1f3f5; border: 1px solid #dde2e6;
+  color: var(--secondary); font-size: 10px; font-weight: 600;
+  padding: 5px 10px; border-radius: 999px;
+ }
+ .pattern-tag em { font-style: normal; color: #888; font-weight: 400; margin-left: 4px; font-size: 9px; }
+ .pattern-tag.highlight {
+  background: linear-gradient(135deg, rgba(212,168,73,0.18), rgba(212,168,73,0.06));
+  border-color: var(--primary); color: #8a6a1e;
+ }
+
+ /* ===== SIGNATURES ===== */
+ .signature-area { margin-top: 50px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; }
+ .signature-box { text-align: center; padding-top: 50px; border-top: 1px solid #333; }
+ .signature-box p { font-size: 12px; color: var(--gray); }
+
+ /* ===== FOOTER ===== */
+ .doc-footer {
+  margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd;
+  text-align: center; font-size: 10px; color: var(--gray);
+ }
+
+ /* ===== LEGEND ===== */
+ .legend-block {
+  font-size: 11px; color: #444; margin-top: 10px; padding: 12px 14px;
+  background: #fafafa; border-left: 3px solid #3498db; line-height: 1.7; border-radius: 4px;
+ }
+ .legend-block p { margin: 0 0 6px; }
+ .legend-block p:last-child { margin-bottom: 0; }
+
+ /* ===== CHECK / CROSS ===== */
+ .check { color: var(--success); font-weight: 700; }
+ .cross { color: var(--danger); font-weight: 700; }
+ .partial { color: var(--warning); font-weight: 700; }
+
+ /* ===== RESPONSIVE ===== */
+
+ /* Tablet landscape / small desktop */
+ @media (max-width: 1024px) {
+  .sidebar { display: none; }
+  .main-content { margin-left: 0; max-width: 100%; padding: 1.5rem 2rem; }
+  .mobile-menu-btn { display: flex !important; }
+ }
+
+ /* Tablet portrait */
+ @media (max-width: 768px) {
+  .main-content { padding: 1rem 1.25rem; }
+  .doc-header { padding: 20px 16px 18px; }
+  .doc-header h1 { font-size: 20px; }
+  .doc-header .subtitle { font-size: 11px; }
+  .doc-header .meta { font-size: 10px; }
+  .section-title { font-size: 15px; gap: 8px; }
+  .section-num { width: 26px; height: 26px; font-size: 11px; }
+
+  .pricing-grid { grid-template-columns: 1fr !important; }
+  .module-grid { grid-template-columns: 1fr !important; }
+  .info-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .arch-pros-cons { grid-template-columns: 1fr !important; }
+  .signature-area { grid-template-columns: 1fr !important; gap: 24px !important; }
+
+  /* Inline grids override */
+  [style*="grid-template-columns: repeat(2"] { grid-template-columns: 1fr !important; }
+  [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
+  [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr !important; }
+  [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+  /* Tables: horizontal scroll */
+  table { font-size: 10px; display: block; overflow-x: auto; white-space: nowrap; }
+  thead, tbody, tr { display: table; width: 100%; table-layout: auto; }
+  th, td { padding: 6px 8px; }
+  .total-row td { white-space: nowrap; }
+
+  .print-btn { top: 10px; right: 10px; padding: 8px 14px; font-size: 12px; }
+ }
+
+ /* Mobile */
+ @media (max-width: 480px) {
+  .main-content { padding: 0.75rem 1rem; }
+  .doc-header { padding: 16px 12px 14px; border-radius: 6px; }
+  .doc-header h1 { font-size: 17px; }
+  .info-grid { grid-template-columns: 1fr !important; }
+  .info-item span { font-size: 12px; }
+  .section-title { font-size: 14px; flex-wrap: wrap; }
+  .section { margin-bottom: 24px; }
+
+  table { font-size: 9px; }
+  th, td { padding: 4px 6px; }
+
+  .print-btn { position: static; display: block; width: 100%; margin: 0.5rem 0 1rem; border-radius: 6px; }
+
+  /* Cost cards: full width stacked */
+  .cost-card { margin-bottom: 12px; }
+  .cost-item { flex-wrap: wrap; }
+
+  /* Comparison tables: allow scroll */
+  [style*="table-layout: fixed"] { table-layout: auto !important; }
+ }
+
+ /* Mobile menu button (hidden by default, shown on tablet/mobile) */
+ .mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 12px; left: 12px;
+  width: 40px; height: 40px;
+  background: var(--secondary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 300;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+ }
+
+ /* Sidebar overlay on mobile */
+ .sidebar.open {
+  display: block !important;
+  position: fixed;
+  z-index: 250;
+ }
+ .sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+ }
+ .sidebar-overlay.open { display: block; }
+
+ /* ===== PRINT ===== */
+ @media print {
+  .sidebar, .print-btn { display: none !important; }
+  .main-content { margin-left: 0; max-width: 210mm; padding: 15mm 20mm; box-shadow: none; }
+  body { background: white; }
+  .section { page-break-inside: avoid; }
+  .page-break { page-break-before: always; }
+  .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+ }
+ </style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+ <div class="sidebar-logo">
+  <h2>Energia Solar</h2>
+  <span>Proposta Comercial Completa</span>
+ </div>
+ <ul class="sidebar-nav">
+	 <li><a href="#resumo" class="active">1. Resumo Executivo</a></li>
+	 <li><a href="#modulos">2. Módulos do Sistema</a></li>
+	 <li><a href="#arquitetura">3. Arquitetura Técnica</a></li>
+	 <li><a href="#roadmap">4. Roadmap e Prazos</a></li>
+	 <li><a href="#comparativo">5. Comparativo vs Mercado</a></li>
+	 <li><a href="#investimento">6. Planos e Investimento</a></li>
+	 <li><a href="#pos-golive">7. Pós Go-Live</a></li>
+	 <li><a href="#proximos-passos">8. Próximos Passos</a></li>
+	</ul>
+ <div class="sidebar-footer">
+  <p>Data: 11/04/2026</p>
+  <p>Validade: 30 dias</p>
+  <p style="margin-top: 4px;">Confidencial</p>
+ </div>
+</nav>
+
+<!-- PRINT BUTTON -->
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+ <!-- HEADER -->
+ <div class="doc-header">
+  <h1>PROPOSTA TÉCNICA E COMERCIAL</h1>
+  <p class="subtitle">Plataforma de Gestão de Energia Solar por Assinatura</p>
+  <div class="meta">
+   <p><strong>Cliente:</strong> ESQ Energia (1o sócio) | <strong>Modelo:</strong> Ambientes Isolados Multibanco</p>
+   <p><strong>Data:</strong> 11/04/2026 | <strong>Validade:</strong> 30 dias</p>
+  </div>
+  <span class="badge">Confidencial</span>
+ </div>
+
+ <!-- ================================================================ -->
+ <!-- 1. RESUMO EXECUTIVO -->
+ <!-- ================================================================ -->
+ <div id="resumo" class="section">
+  <h2 class="section-title">
+   <span class="section-num">1</span>
+   Resumo Executivo
+  </h2>
+
+  <div style="background: rgba(212,168,73,0.15); border: 2px solid var(--primary); border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+   <p style="font-size: 12px; color: #333; margin: 0;">
+    <strong style="color: var(--primary);">ESCOPO DO PROJETO:</strong> Esta plataforma foi desenvolvida para atender
+    <strong>operações de energia solar por assinatura</strong>, com gestão de créditos, faturamento e comunicação automatizada.
+    Funcionalidades adicionais que fujam do escopo apresentado nesta documentação serão orçadas e desenvolvidas separadamente.
+   </p>
+  </div>
+
+  <div class="info-box">
+   <div class="info-grid">
+    <div class="info-item">
+     <label>Modelo de Negócio</label>
+     <span>Energia por Assinatura</span>
+    </div>
+    <div class="info-item">
+     <label>Concessionária</label>
+     <span>COELBA</span>
+    </div>
+    <div class="info-item">
+     <label>Clientes Ativos</label>
+     <span>27 UCs</span>
+    </div>
+    <div class="info-item">
+     <label>Gateway Pagamento</label>
+     <span>Asaas</span>
+    </div>
+    <div class="info-item">
+     <label>Canal Comunicação</label>
+     <span>WhatsApp (Cloud API)</span>
+    </div>
+    <div class="info-item">
+     <label>Subdomínio</label>
+     <span>esqenergia.plataforma.com.br</span>
+    </div>
+   </div>
+  </div>
+ </div>
+
+ <div class="page-break"></div>
+
+ <!-- ================================================================ -->
+ <!-- 3. MODULOS DO SISTEMA -->
+ <!-- ================================================================ -->
+ <div id="modulos" class="section">
+  <h2 class="section-title">
+   <span class="section-num">2</span>
+   Módulos do Sistema
+  </h2>
+
+  <div class="module-grid">
+   <!-- 01 Core -->
+   <div class="module-card core">
+    <h4>01. Identity & Ambientes Isolados</h4>
+    <ul>
+     <li>Autenticação via Keycloak (OpenSource)</li>
+     <li>SSO, OAuth 2.0 e OpenID Connect</li>
+     <li>Ambientes Isolados Multibanco (1 database dedicado por sócio -- isolamento físico total)</li>
+     <li>Controle de Acesso (RBAC)</li>
+     <li>Subdomínio dinâmico por sócio</li>
+    </ul>
+   </div>
+
+   <!-- 02 Core -->
+   <div class="module-card core">
+    <h4>02. Cadastro de Clientes</h4>
+    <ul>
+     <li>CRUD completo (CPF/CNPJ)</li>
+     <li>Unidades Consumidoras (UC COELBA)</li>
+     <li>Importação de base existente</li>
+     <li>Histórico de alterações</li>
+    </ul>
+   </div>
+
+   <!-- 03 Core -->
+   <div class="module-card core">
+    <h4>03. Gestão de Contratos</h4>
+    <ul>
+     <li>Sem fidelidade / 1 ano / 2 anos</li>
+     <li>Regras de cancelamento</li>
+     <li>Vigência e renovação</li>
+     <li>Multa por quebra contratual</li>
+    </ul>
+   </div>
+
+   <!-- 04 Core -->
+   <div class="module-card core">
+    <h4>04. Gestão de Geração (entrada manual)</h4>
+    <ul>
+     <li>Cadastro de usinas solares</li>
+     <li>Registro manual de produção (kWh)</li>
+     <li>Registro de geração via planilha ou digitação</li>
+     <li>Histórico de geração</li>
+    </ul>
+   </div>
+
+   <!-- 05 Core -->
+   <div class="module-card core">
+    <h4>05. Distribuição de Créditos</h4>
+    <ul>
+     <li>Modo Percentual (X% por unidade)</li>
+     <li>Modo Prioridade (ordem de abatimento)</li>
+     <li>Créditos excedentes acumulados</li>
+     <li>Engine de rateio automático</li>
+    </ul>
+   </div>
+
+   <!-- 06 Core -->
+   <div class="module-card core">
+    <h4>06. Faturamento & Cobrança</h4>
+    <ul>
+     <li>Geração de faturas (sem gateway no Core)</li>
+     <li>Template do cliente preenchido com dados do BD</li>
+     <li>Importação de QR Code, código de barras e print da conta de luz (S3)</li>
+     <li>Envio e baixa manuais</li>
+     <li>Juros: 2% + 0,033%/dia</li>
+     <li>Máquina de estado: Gerada - Enviada - Paga</li>
+    </ul>
+   </div>
+
+   <!-- 07 Expansion -->
+   <div class="module-card expansion">
+    <h4>07. Pagamento Automatizado (Asaas)</h4>
+    <ul>
+     <li>Emissão de boletos e Pix via API</li>
+     <li>Webhook de baixa automática</li>
+     <li>Conciliação bancária automatizada</li>
+     <li>Padrão do mercado brasileiro</li>
+    </ul>
+   </div>
+
+   <!-- 08 Expansion -->
+   <div class="module-card expansion">
+    <h4>08. Comunicação WhatsApp</h4>
+    <ul>
+     <li>Envio de faturas e boletos (PDF anexo)</li>
+     <li>Envio de documentos (relatórios, recibos)</li>
+     <li>Mensagens curtas (lembretes, avisos)</li>
+     <li>WhatsApp Cloud API + templates HSM</li>
+     <li><em>Canal unidirecional -- sem bot conversacional</em></li>
+     <li><strong>Roadmap futuro:</strong> bot via n8n (escopo separado)</li>
+    </ul>
+   </div>
+
+   <!-- 8b Expansion -->
+   <div class="module-card expansion">
+    <h4>8b. Notificações em Tempo Real (SignalR)</h4>
+    <ul>
+     <li>Push in-app via <strong>SignalR</strong> (WebSocket)</li>
+     <li>Sino no topbar com badge de não lidas</li>
+     <li>Toast no canto + painel dropdown</li>
+     <li>Eventos: pagamento, faturamento, geração, cobrança, alertas</li>
+     <li>Ambientes Isolados -- cada sócio só recebe os próprios eventos</li>
+    </ul>
+   </div>
+
+   <!-- 09 Core -->
+   <div class="module-card core">
+    <h4>09. Dashboards & Relatórios</h4>
+    <ul>
+     <li>Dashboard financeiro</li>
+     <li>Relatório de produção</li>
+     <li>Aging de recebíveis</li>
+     <li>Exportação PDF/Excel</li>
+    </ul>
+   </div>
+  </div>
+
+  <!-- Legend -->
+  <div style="display: flex; gap: 2rem; align-items: center; margin-top: 14px; padding: 0.85rem 1.25rem; background: #f8f9fa; border-radius: 8px; font-size: 12px;">
+   <div style="display: flex; align-items: center; gap: 0.5rem;">
+    <span style="display: inline-block; width: 16px; height: 16px; background: var(--success); border-radius: 3px;"></span>
+    <span style="color: #444;"><strong>Core</strong> -- incluso no plano Básico</span>
+   </div>
+   <div style="display: flex; align-items: center; gap: 0.5rem;">
+    <span style="display: inline-block; width: 16px; height: 16px; background: #3498db; border-radius: 3px;"></span>
+    <span style="color: #444;"><strong>Expansão</strong> -- módulos opcionais (Médio / Full)</span>
+   </div>
+  </div>
+ </div>
+
+ <div class="page-break"></div>
+
+ <!-- ================================================================ -->
+ <!-- 6. ARQUITETURA TECNICA -->
+ <!-- ================================================================ -->
+ <div id="arquitetura" class="section">
+  <h2 class="section-title">
+   <span class="section-num">3</span>
+   Arquitetura Técnica
+  </h2>
+
+  <!-- STACK TABLE -->
+  <table>
+   <thead>
+    <tr>
+     <th>Camada</th>
+     <th>Tecnologia</th>
+     <th>Descrição</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr><td>Backend</td><td>.NET 8 (C#) + Swagger</td><td>API RESTful documentada (OpenAPI)</td></tr>
+    <tr><td>Frontend</td><td>Vue 3</td><td>SPA responsiva separada do backend</td></tr>
+    <tr><td>ORM / Data Access</td><td>NHibernate + Dapper</td><td>CQRS: NHibernate (escrita) + Dapper (leitura)</td></tr>
+    <tr><td>Banco de Dados</td><td>SQL Server (multibanco) + Redis</td><td>1 database dedicado por sócio (isolamento físico total)</td></tr>
+    <tr><td>Autenticação</td><td>Keycloak</td><td>SSO, OAuth 2.0, OpenID Connect (OpenSource)</td></tr>
+    <tr><td>Reverse Proxy</td><td>Nginx</td><td>Roteamento SPA + API, SSL termination</td></tr>
+    <tr><td>Real-time</td><td>SignalR</td><td>Notificações e atualizações em tempo real</td></tr>
+    <tr><td>Infraestrutura</td><td>Docker + AWS (EC2/ECS + RDS)</td><td>Escalabilidade e alta disponibilidade</td></tr>
+    <tr><td>Armazenamento</td><td>AWS S3</td><td>Templates, logos, QR Code, prints da conta de luz -- versionados por ambiente</td></tr>
+    <tr><td>Mensageria / Eventos</td><td>AWS SNS + SQS FIFO + Lambda</td><td>Eventos de domínio com ordem garantida, deduplicação e DLQ</td></tr>
+   </tbody>
+  </table>
+
+  <!-- ARCHITECTURAL PATTERNS -->
+  <h4 style="font-size: 13px; margin: 18px 0 8px; color: var(--secondary);">Padroes Arquiteturais</h4>
+  <div class="patterns-grid">
+   <span class="pattern-tag">Monolito Modular</span>
+   <span class="pattern-tag">DDD</span>
+   <span class="pattern-tag">CQRS</span>
+   <span class="pattern-tag">Clean Architecture</span>
+   <span class="pattern-tag">API REST + Swagger</span>
+   <span class="pattern-tag">Ambientes Isolados Multibanco <em>(1 DB por sócio)</em></span>
+   <span class="pattern-tag highlight">Event-Driven Architecture</span>
+   <span class="pattern-tag highlight">Máquinas de Estado <em>(Contrato / Fatura / Crédito / Cobrança)</em></span>
+  </div>
+
+  <!-- 3 ARCHITECTURE CARDS -->
+  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px;">
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-left: 4px solid var(--secondary); border-radius: 8px; padding: 14px;">
+    <h4 style="font-size: 12px; color: var(--secondary); margin-bottom: 4px;">Infra simples, custo baixo</h4>
+    <div style="font-size: 9px; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 6px;">Monolito Modular</div>
+    <p style="font-size: 10px; color: #555; line-height: 1.5;">Aplicação única organizada em módulos independentes. Deploy simples, infra barata, evolução rápida. Sem complexidade de microserviços — mas pronto pra separar quando justificar.</p>
+   </div>
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-left: 4px solid var(--primary); border-radius: 8px; padding: 14px;">
+    <h4 style="font-size: 12px; color: var(--secondary); margin-bottom: 4px;">Manutenção sem surpresas</h4>
+    <div style="font-size: 9px; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 6px;">DDD — Domain-Driven Design</div>
+    <p style="font-size: 10px; color: #555; line-height: 1.5;">Código organizado por domínio de negócio: "Crédito de Energia", "Rateio", "Beneficiário". Qualquer dev entende o sistema rápido — onboarding barato, manutenção previsível.</p>
+   </div>
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-left: 4px solid #3498db; border-radius: 8px; padding: 14px;">
+    <h4 style="font-size: 12px; color: var(--secondary); margin-bottom: 4px;">Performance que escala</h4>
+    <div style="font-size: 9px; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 6px;">CQRS — Command/Query Separation</div>
+    <p style="font-size: 10px; color: #555; line-height: 1.5;">NHibernate para escrita (commands) e Dapper para leitura (queries). Dashboards rápidos mesmo com milhares de UCs. Escala sem refatoração.</p>
+   </div>
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-left: 4px solid #e67e22; border-radius: 8px; padding: 14px;">
+    <h4 style="font-size: 12px; color: var(--secondary); margin-bottom: 4px;">Orientada a Eventos</h4>
+    <div style="font-size: 9px; color: #e67e22; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 6px;">AWS SNS + SQS FIFO + Lambda</div>
+    <p style="font-size: 10px; color: #555; line-height: 1.5;">Cada ação (pagamento confirmado, fatura gerada, crédito distribuído) dispara eventos de domínio com ordem garantida, deduplicação por ambiente+fatura e DLQ. Módulos desacoplados — WhatsApp, Asaas e SignalR reagem automáticamente aos eventos sem dependência direta.</p>
+   </div>
+  </div>
+
+  <!-- DDD CONTEXT MAP -->
+  <h4 style="font-size: 13px; margin: 20px 0 10px; color: var(--secondary);">Mapa de Contextos (DDD)</h4>
+  <div style="background: linear-gradient(135deg, #f8f9fb, #f1f3f5); border: 2px solid #e5e7eb; border-radius: 10px; padding: 20px; margin-bottom: 18px;">
+   <div style="text-align: center; font-size: 11px; font-weight: 800; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--primary);">Plataforma Energia Solar</div>
+   <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+    <!-- Row 1 -->
+    <div style="background: #fff; border: 2px solid var(--secondary); border-radius: 8px; padding: 12px; text-align: center;">
+     <div style="font-size: 11px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">Identity & Ambientes Isolados</div>
+     <div style="font-size: 9px; color: #888;">Keycloak, RBAC, Subdomínio</div>
+    </div>
+    <div style="background: #fff; border: 2px solid var(--secondary); border-radius: 8px; padding: 12px; text-align: center;">
+     <div style="font-size: 11px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">Cadastro de Clientes</div>
+     <div style="font-size: 9px; color: #888;">CPF/CNPJ, UCs, Histórico</div>
+    </div>
+    <div style="background: #fff; border: 2px solid var(--secondary); border-radius: 8px; padding: 12px; text-align: center;">
+     <div style="font-size: 11px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">Gestão de Geração</div>
+     <div style="font-size: 9px; color: #888;">Usinas, Produção (kWh)</div>
+    </div>
+    <!-- Row 2 -->
+    <div style="background: #fff; border: 2px solid var(--secondary); border-radius: 8px; padding: 12px; text-align: center;">
+     <div style="font-size: 11px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">Gestão de Contratos</div>
+     <div style="font-size: 9px; color: #888;">Fidelidade, Vigência, Multa</div>
+    </div>
+    <div style="background: #fff; border: 2px solid var(--primary); border-radius: 8px; padding: 12px; text-align: center; box-shadow: 0 2px 8px rgba(212,168,73,0.2);">
+     <div style="font-size: 11px; font-weight: 700; color: var(--primary-dark); margin-bottom: 4px;">Distribuição de Créditos</div>
+     <div style="font-size: 9px; color: #888;">Engine de Rateio, % e Prioridade</div>
+    </div>
+    <div style="background: #fff; border: 2px solid var(--secondary); border-radius: 8px; padding: 12px; text-align: center;">
+     <div style="font-size: 11px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">Faturamento & Cobrança</div>
+     <div style="font-size: 9px; color: #888;">Faturas, Juros, Maq. Estado</div>
+    </div>
+    <!-- Row 3 -->
+    <div style="background: #fff; border: 2px solid #3498db; border-radius: 8px; padding: 12px; text-align: center; border-style: dashed;">
+     <div style="font-size: 11px; font-weight: 700; color: #3498db; margin-bottom: 4px;">Financeiro (Asaas)</div>
+     <div style="font-size: 9px; color: #888;">Boleto, Pix, Conciliação</div>
+    </div>
+    <div style="background: #fff; border: 2px solid #3498db; border-radius: 8px; padding: 12px; text-align: center; border-style: dashed;">
+     <div style="font-size: 11px; font-weight: 700; color: #3498db; margin-bottom: 4px;">Comunicação (WhatsApp)</div>
+     <div style="font-size: 9px; color: #888;">Cloud API, HSM, Envio</div>
+    </div>
+    <div style="background: linear-gradient(135deg, rgba(212,168,73,0.12), rgba(212,168,73,0.04)); border: 2px solid var(--primary); border-radius: 8px; padding: 12px; text-align: center;">
+     <div style="font-size: 11px; font-weight: 700; color: var(--primary-dark); margin-bottom: 4px;">Dashboards & Relatórios</div>
+     <div style="font-size: 9px; color: #888;">Financeiro, Produção, Aging</div>
+    </div>
+   </div>
+   <div style="display: flex; gap: 16px; margin-top: 12px; justify-content: center; font-size: 10px; color: #666;">
+    <span><span style="display: inline-block; width: 12px; height: 12px; border: 2px solid var(--secondary); border-radius: 3px; vertical-align: middle; margin-right: 3px;"></span> Core</span>
+    <span><span style="display: inline-block; width: 12px; height: 12px; border: 2px dashed #3498db; border-radius: 3px; vertical-align: middle; margin-right: 3px;"></span> Expansão</span>
+    <span><span style="display: inline-block; width: 12px; height: 12px; border: 2px solid var(--primary); background: rgba(212,168,73,0.12); border-radius: 3px; vertical-align: middle; margin-right: 3px;"></span> Destaque</span>
+   </div>
+  </div>
+
+  <!-- MULTITENANCY NOTE -->
+  <div class="callout callout-info" style="margin-top: 18px;">
+   <div class="callout-icon">i</div>
+   <div>
+    <h4>Ambientes Isolados: 1 database dedicado por sócio</h4>
+    <p>Cada sócio possui <strong>seu próprio banco de dados físico</strong> (não schema isolado). Backup, restore e segurança são totalmente independentes entre sócios. A aplicação compartilha a camada de serviço, preservando economia de escala.</p>
+   </div>
+  </div>
+
+  <!-- ARCH DECISION -->
+  <div class="arch-decision">
+   <div style="font-size: 11px; font-weight: 800; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 8px;">
+    Decisão Arquitetural -- Segregação Completa da Infraestrutura?
+   </div>
+   <p style="font-size: 11px; color: #555; line-height: 1.6; margin-bottom: 10px;">
+    Cada operação pode rodar em infraestrutura totalmente isolada (banco, app e ambiente próprios) ou compartilhar a mesma plataforma com isolamento físico via ambientes isolados multibanco.
+   </p>
+   <div class="arch-pros-cons">
+    <div class="arch-col arch-pros">
+     <h5>Pontos Positivos da Segregação Total</h5>
+     <ul>
+      <li>Isolamento absoluto (falha/deploy não propaga)</li>
+      <li>Soberania total: janela de manutenção, versão, backup próprios</li>
+      <li>Compliance simplificado</li>
+      <li>Portabilidade: saída de um sócio não afeta os demais</li>
+     </ul>
+    </div>
+    <div class="arch-col arch-cons">
+     <h5>Pontos Negativos da Segregação Total</h5>
+     <ul>
+      <li>Custo de infra multiplicado (N ambientes)</li>
+      <li>Manutenção N vezes maior</li>
+      <li>Sem economia de escala</li>
+      <li>Consolidação de indicadores vira projeto a parte</li>
+      <li>Suporte mais caro</li>
+     </ul>
+    </div>
+   </div>
+   <div class="arch-recommendation">
+    <strong>Recomendação técnica:</strong> Ambientes Isolados Multibanco já entrega <strong>isolamento físico total de dados</strong> (banco próprio por sócio, backup e segurança independentes), preservando a economia de escala da camada de aplicação. Segregação completa permanece disponível mediante orçamento adicional.
+   </div>
+  </div>
+ </div>
+
+ <div class="page-break"></div>
+
+ <!-- ================================================================ -->
+ <!-- 4. ROADMAP E PRAZOS -->
+ <!-- ================================================================ -->
+ <div id="roadmap" class="section">
+  <h2 class="section-title">
+   <span class="section-num">4</span>
+   Roadmap e Prazos
+  </h2>
+
+  <p style="font-size: 12px; color: #555; margin-bottom: 16px; line-height: 1.6;">
+   Execução organizada em <strong>sprints de 2 semanas</strong> (10 dias úteis cada). Cada sprint entrega funcionalidades validáveis — sem "big bang" no final.
+  </p>
+
+  <!-- PRAZO POR PLANO (4h e 6h) -->
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
+   <div style="background: rgba(39,174,96,0.06); border: 1.5px solid rgba(39,174,96,0.3); border-radius: 10px; padding: 12px;">
+    <div style="text-align: center; font-size: 9px; color: var(--success); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(39,174,96,0.2);">Básico · 382h</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+     <div style="text-align: center;">
+      <div style="font-size: 8px; color: #888;">4h/dia</div>
+      <div style="font-size: 18px; font-weight: 700; color: #666;">~4,4 meses</div>
+      <div style="font-size: 8px; color: #888;">96 dias úteis</div>
+     </div>
+     <div style="text-align: center; background: rgba(39,174,96,0.1); border-radius: 6px; padding: 4px;">
+      <div style="font-size: 8px; color: var(--success);">6h/dia</div>
+      <div style="font-size: 22px; font-weight: 900; color: var(--success);">~2,9 meses</div>
+      <div style="font-size: 8px; color: var(--success);">64 dias úteis</div>
+     </div>
+    </div>
+   </div>
+   <div style="background: rgba(52,152,219,0.06); border: 1.5px solid rgba(52,152,219,0.3); border-radius: 10px; padding: 12px;">
+    <div style="text-align: center; font-size: 9px; color: #3498db; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(52,152,219,0.2);">Médio · 488h</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+     <div style="text-align: center;">
+      <div style="font-size: 8px; color: #888;">4h/dia</div>
+      <div style="font-size: 18px; font-weight: 700; color: #666;">~5,5 meses</div>
+      <div style="font-size: 8px; color: #888;">122 dias úteis</div>
+     </div>
+     <div style="text-align: center; background: rgba(52,152,219,0.1); border-radius: 6px; padding: 4px;">
+      <div style="font-size: 8px; color: #3498db;">6h/dia</div>
+      <div style="font-size: 22px; font-weight: 900; color: #3498db;">~3,7 meses</div>
+      <div style="font-size: 8px; color: #3498db;">81 dias úteis</div>
+     </div>
+    </div>
+   </div>
+   <div style="background: rgba(212,168,73,0.08); border: 1.5px solid rgba(212,168,73,0.4); border-radius: 10px; padding: 12px;">
+    <div style="text-align: center; font-size: 9px; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(212,168,73,0.25);">Full ⭐ · 521h</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+     <div style="text-align: center;">
+      <div style="font-size: 8px; color: #888;">4h/dia</div>
+      <div style="font-size: 18px; font-weight: 700; color: #666;">~6 meses</div>
+      <div style="font-size: 8px; color: #888;">131 dias úteis</div>
+     </div>
+     <div style="text-align: center; background: rgba(212,168,73,0.12); border-radius: 6px; padding: 4px;">
+      <div style="font-size: 8px; color: var(--primary);">6h/dia</div>
+      <div style="font-size: 22px; font-weight: 900; color: var(--primary);">~4 meses</div>
+      <div style="font-size: 8px; color: var(--primary);">87 dias úteis</div>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <!-- ROADMAP POR SPRINTS -->
+  <h4 style="font-size: 13px; margin: 0 0 10px; color: var(--secondary);">Roadmap por Sprints (cenário 6h/dia)</h4>
+  <p style="font-size: 10px; color: #666; margin-bottom: 10px;">Cada sprint = <strong>2 semanas (10 dias úteis)</strong>. Básico: 7 sprints · Médio: 8 sprints · Full: 9 sprints.</p>
+
+  <table style="font-size: 10px;">
+   <thead>
+    <tr>
+     <th style="width: 10%;">Sprint</th>
+     <th style="width: 15%;">Fase</th>
+     <th style="width: 50%;">Entregas</th>
+     <th style="width: 12%;">Horas</th>
+     <th style="width: 13%;">Plano</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr style="background: rgba(52,152,219,0.06);">
+     <td style="border-left: 3px solid #3498db; font-weight: 700;">Sprint 1</td>
+     <td><strong>Foundation</strong></td>
+     <td>Setup AWS + CI/CD + Docker · Keycloak (autenticação + SSO + RBAC) · Estrutura multibanco (1 DB por sócio) · Subdomínio dinâmico · Event Bus (SNS+SQS)</td>
+     <td class="text-center">~60h</td>
+     <td style="text-align: center;"><span style="background: var(--success); color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8px; font-weight: 700;">Todos</span></td>
+    </tr>
+    <tr style="background: rgba(52,152,219,0.03);">
+     <td style="border-left: 3px solid #3498db; font-weight: 700;">Sprint 2</td>
+     <td><strong>Cadastros</strong></td>
+     <td>CRUD Clientes (CPF/CNPJ + UCs) · Importação de base existente · Gestão de Contratos (fidelidade, cancelamento, vigência) · Máquina de estado de contrato</td>
+     <td class="text-center">~60h</td>
+     <td style="text-align: center;"><span style="background: var(--success); color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8px; font-weight: 700;">Todos</span></td>
+    </tr>
+    <tr style="background: rgba(52,152,219,0.06);">
+     <td style="border-left: 3px solid #3498db; font-weight: 700;">Sprint 3</td>
+     <td><strong>Engine de Créditos</strong></td>
+     <td>Cadastro de usinas · Registro manual de produção (kWh) · Engine de distribuição de créditos (modo % e prioridade) · Créditos excedentes · State machine de crédito</td>
+     <td class="text-center">~60h</td>
+     <td style="text-align: center;"><span style="background: var(--success); color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8px; font-weight: 700;">Todos</span></td>
+    </tr>
+    <tr style="background: rgba(52,152,219,0.03);">
+     <td style="border-left: 3px solid #3498db; font-weight: 700;">Sprint 4</td>
+     <td><strong>Faturamento</strong></td>
+     <td>Geração de faturas com template personalizado · QR Code + código de barras + print da conta de luz (S3) · Envio e baixa manuais · Juros e multas · State machine de fatura</td>
+     <td class="text-center">~60h</td>
+     <td style="text-align: center;"><span style="background: var(--success); color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8px; font-weight: 700;">Todos</span></td>
+    </tr>
+    <tr style="background: rgba(52,152,219,0.06);">
+     <td style="border-left: 3px solid #3498db; font-weight: 700;">Sprint 5</td>
+     <td><strong>Dashboard + E-mail</strong></td>
+     <td>Dashboard operacional · Relatórios básicos · Comunicação por e-mail · Configurações do sistema</td>
+     <td class="text-center">~50h</td>
+     <td style="text-align: center;"><span style="background: var(--success); color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8px; font-weight: 700;">Todos</span></td>
+    </tr>
+    <tr style="background: rgba(39,174,96,0.1);">
+     <td style="border-left: 3px solid var(--success); font-weight: 700;">Sprint 6</td>
+     <td><strong>QA + Deploy</strong></td>
+     <td>Testes integrados (backend + frontend) · QA completo · Treinamento da equipe · Deploy em produção</td>
+     <td class="text-center">~52h</td>
+     <td style="text-align: center;"><span style="background: var(--success); color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8px; font-weight: 700;">🚀 Go-Live Básico</span></td>
+    </tr>
+    <tr style="background: rgba(52,152,219,0.08); border-top: 2px solid #3498db;">
+     <td style="border-left: 3px solid #3498db; font-weight: 700;">Sprint 7</td>
+     <td><strong>Asaas + WhatsApp</strong></td>
+     <td>Gateway Asaas (boleto + Pix + webhook de baixa + conciliação bancária) · WhatsApp Cloud API (envio de faturas, boletos, avisos via templates HSM)</td>
+     <td class="text-center">~86h</td>
+     <td style="text-align: center;"><span style="background: #3498db; color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8px; font-weight: 700;">Médio</span></td>
+    </tr>
+    <tr style="background: rgba(52,152,219,0.05);">
+     <td style="border-left: 3px solid #3498db; font-weight: 700;">Sprint 8</td>
+     <td><strong>SignalR + QA Médio</strong></td>
+     <td>Notificações em tempo real (SignalR: sino + toast + painel) · Eventos por sócio · Testes integrados expansões · Deploy expansões</td>
+     <td class="text-center">~20h</td>
+     <td style="text-align: center;"><span style="background: #3498db; color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8px; font-weight: 700;">🚀 Go-Live Médio</span></td>
+    </tr>
+    <tr style="background: rgba(212,168,73,0.1); border-top: 2px solid var(--primary);">
+     <td style="border-left: 3px solid var(--primary); font-weight: 700;">Sprint 9</td>
+     <td><strong>Relatórios + Go-Live Full</strong></td>
+     <td>Relatórios avançados (aging de recebíveis, exportação PDF/Excel) · QA final · Ajustes finais · Deploy completo</td>
+     <td class="text-center">~33h</td>
+     <td style="text-align: center;"><span style="background: var(--primary); color: #1a1a2e; padding: 1px 6px; border-radius: 8px; font-size: 8px; font-weight: 700;">🚀 Go-Live Full</span></td>
+    </tr>
+   </tbody>
+  </table>
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px;">
+   <div style="padding: 6px 10px; background: rgba(39,174,96,0.08); border-left: 3px solid var(--success); border-radius: 4px; font-size: 9px; color: #555;">
+    <strong style="color: var(--success);">Básico:</strong> Sprints 1–6 (382h) · Go-Live na Sprint 6
+   </div>
+   <div style="padding: 6px 10px; background: rgba(52,152,219,0.08); border-left: 3px solid #3498db; border-radius: 4px; font-size: 9px; color: #555;">
+    <strong style="color: #3498db;">Médio:</strong> Sprints 1–8 (488h) · Go-Live na Sprint 8
+   </div>
+   <div style="padding: 6px 10px; background: rgba(212,168,73,0.08); border-left: 3px solid var(--primary); border-radius: 4px; font-size: 9px; color: #555;">
+    <strong style="color: var(--primary);">Full:</strong> Sprints 1–9 (521h) · Go-Live na Sprint 9
+   </div>
+  </div>
+
+  <!-- TRADE-OFFS -->
+  <h4 style="font-size: 13px; margin: 20px 0 10px; color: var(--secondary);">Trade-offs: MVP vs. Premium</h4>
+  <table>
+   <thead>
+    <tr>
+     <th>Funcionalidade</th>
+     <th>MVP (incluso no Core)</th>
+     <th>Premium (expansão)</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>Entrada de Produção</td>
+     <td style="color: var(--success);">Input Manual</td>
+     <td>Input Manual (mesmo do Core)</td>
+    </tr>
+    <tr>
+     <td>Pagamentos</td>
+     <td style="color: var(--success);">Baixa Manual</td>
+     <td>Pagamento Automatizado Asaas (+R$ 4.000)</td>
+    </tr>
+    <tr>
+     <td>Comunicação</td>
+     <td style="color: var(--success);">E-mail</td>
+     <td>WhatsApp Cloud API (+R$ 2.500)</td>
+    </tr>
+    <tr>
+     <td>Notificações</td>
+     <td style="color: var(--success);">--</td>
+     <td>Tempo real via SignalR (+R$ 1.500)</td>
+    </tr>
+    <tr>
+     <td>Relatórios</td>
+     <td style="color: var(--success);">Dashboard Básico</td>
+     <td>Avancados (+R$ 2.500)</td>
+    </tr>
+   </tbody>
+  </table>
+
+  <!-- PREVISIBILIDADE DE PRAZO -->
+  <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Previsibilidade de Prazo por Versão</h4>
+
+  <p style="font-size: 11px; color: #555; margin-bottom: 8px; line-height: 1.6;">
+   Estimativa baseada em <strong>dias úteis</strong> (22 dias úteis por mês), execução sequencial e escopo fechado. Dois cenários de dedicação: <strong>4 h/dia</strong> (base) e <strong>6 h/dia</strong> (acelerado).
+  </p>
+
+  <table style="font-size: 11px;">
+   <thead>
+    <tr>
+     <th rowspan="2">Versão</th>
+     <th class="text-center" rowspan="2">Horas</th>
+     <th class="text-center" colspan="2" style="border-bottom: 2px solid rgba(255,255,255,0.2);">4 h/dia</th>
+     <th class="text-center" colspan="2" style="background: #3498db; border-bottom: 2px solid rgba(255,255,255,0.3);">6 h/dia</th>
+    </tr>
+    <tr>
+     <th class="text-center" style="font-size: 10px;">Dias uteis</th>
+     <th class="text-center" style="font-size: 10px;">Prazo</th>
+     <th class="text-center" style="background: #3498db; font-size: 10px;">Dias uteis</th>
+     <th class="text-center" style="background: #3498db; font-size: 10px;">Prazo</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr style="background: rgba(39,174,96,0.06);">
+     <td style="border-left: 3px solid var(--success);"><strong style="color: var(--success);">Básico</strong> <span style="font-size: 9px; color: #888;">(Core puro)</span></td>
+     <td class="text-center" style="font-weight: 600;">382 h</td>
+     <td class="text-center">~96 dias</td>
+     <td class="text-center">~4,4 meses</td>
+     <td class="text-center" style="background: rgba(39,174,96,0.12); font-weight: 700; color: var(--success);"><strong>~64 dias</strong></td>
+     <td class="text-center" style="background: rgba(39,174,96,0.12); font-weight: 700; color: var(--success);"><strong>~2,9 meses</strong></td>
+    </tr>
+    <tr style="background: rgba(52,152,219,0.06);">
+     <td style="border-left: 3px solid #3498db;"><strong style="color: #3498db;">Médio</strong> <span style="font-size: 9px; color: #888;">(+ Asaas + WhatsApp + SignalR)</span></td>
+     <td class="text-center" style="font-weight: 600;">488 h</td>
+     <td class="text-center">~122 dias</td>
+     <td class="text-center">~5,5 meses</td>
+     <td class="text-center" style="background: rgba(52,152,219,0.12); font-weight: 700; color: #3498db;"><strong>~81 dias</strong></td>
+     <td class="text-center" style="background: rgba(52,152,219,0.12); font-weight: 700; color: #3498db;"><strong>~3,7 meses</strong></td>
+    </tr>
+    <tr style="background: rgba(212,168,73,0.08);">
+     <td style="border-left: 3px solid var(--primary);"><strong style="color: var(--primary);">Full ⭐</strong> <span style="background: var(--primary); color: var(--dark); font-size: 8px; font-weight: 800; padding: 1px 5px; border-radius: 6px; text-transform: uppercase;">Recomendado</span></td>
+     <td class="text-center" style="font-weight: 600;">521 h</td>
+     <td class="text-center">~131 dias</td>
+     <td class="text-center">~6 meses</td>
+     <td class="text-center" style="background: rgba(212,168,73,0.15); font-weight: 700; color: var(--primary);"><strong>~87 dias</strong></td>
+     <td class="text-center" style="background: rgba(212,168,73,0.15); font-weight: 700; color: var(--primary);"><strong>~4 meses</strong></td>
+    </tr>
+   </tbody>
+  </table>
+
+  <p style="font-size: 10px; color: #666; margin-top: 8px; line-height: 1.6;">
+   <strong>Premissas:</strong> 22 dias úteis/mês, sem feriados, execução sequencial sem paralelismo. Reuniões de alinhamento, retrabalho de feedback e refinamento de requisitos consomem horas dentro do próprio orçamento. <strong>Cenário base: 4 h/dia. Cenário acelerado: 6 h/dia -- reduz prazo em ~33%.</strong>
+  </p>
+
+  <!-- ESTIMATIVA DE HORAS -->
+  <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Estimativa de Horas -- Core (382 h)</h4>
+  <table style="font-size: 10px;">
+   <thead>
+    <tr>
+     <th>Módulo</th>
+     <th class="text-center">Backend (h)</th>
+     <th class="text-center">Frontend (h)</th>
+     <th class="text-center">Dados (h)</th>
+     <th class="text-center">Total</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr><td>Identity & Ambientes Isolados</td><td class="text-center">20</td><td class="text-center">12</td><td class="text-center">-</td><td class="text-center"><strong>32</strong></td></tr>
+    <tr><td>Cadastro de Clientes</td><td class="text-center">18</td><td class="text-center">20</td><td class="text-center">6</td><td class="text-center"><strong>44</strong></td></tr>
+    <tr><td>Gestão de Contratos</td><td class="text-center">22</td><td class="text-center">16</td><td class="text-center">-</td><td class="text-center"><strong>38</strong></td></tr>
+    <tr><td>Geração / Produção</td><td class="text-center">22</td><td class="text-center">16</td><td class="text-center">12</td><td class="text-center"><strong>50</strong></td></tr>
+    <tr><td>Engine de Distribuição de Créditos</td><td class="text-center">32</td><td class="text-center">14</td><td class="text-center">10</td><td class="text-center"><strong>56</strong></td></tr>
+    <tr><td>Faturamento & Cobrança (baixa manual)</td><td class="text-center">20</td><td class="text-center">16</td><td class="text-center">4</td><td class="text-center"><strong>40</strong></td></tr>
+    <tr><td>Dashboards & Relatórios</td><td class="text-center">10</td><td class="text-center">22</td><td class="text-center">18</td><td class="text-center"><strong>50</strong></td></tr>
+    <tr><td>Infraestrutura, DevOps & Event Bus</td><td class="text-center">32</td><td class="text-center">-</td><td class="text-center">-</td><td class="text-center"><strong>32</strong></td></tr>
+    <tr><td>Testes & QA</td><td class="text-center">24</td><td class="text-center">10</td><td class="text-center">6</td><td class="text-center"><strong>40</strong></td></tr>
+    <tr class="total-row"><td><strong>SUBTOTAL CORE</strong></td><td class="text-center"><strong>200</strong></td><td class="text-center"><strong>126</strong></td><td class="text-center"><strong>56</strong></td><td class="text-center"><strong>382 h</strong></td></tr>
+   </tbody>
+  </table>
+
+  <h4 style="font-size: 13px; margin: 18px 0 10px; color: var(--secondary);">Módulos de Expansão (139 h -- opcionais)</h4>
+  <table style="font-size: 10px;">
+   <thead>
+    <tr>
+     <th>Módulo</th>
+     <th class="text-center">Backend (h)</th>
+     <th class="text-center">Frontend (h)</th>
+     <th class="text-center">Dados (h)</th>
+     <th class="text-center">Total</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr><td>Gateway Asaas (Boleto + Pix + Webhook + Conciliação)</td><td class="text-center">36</td><td class="text-center">12</td><td class="text-center">5</td><td class="text-center"><strong>53</strong></td></tr>
+    <tr><td>Comunicação WhatsApp Nativo (Cloud API + HSM)</td><td class="text-center">22</td><td class="text-center">8</td><td class="text-center">3</td><td class="text-center"><strong>33</strong></td></tr>
+    <tr><td>Notificações em Tempo Real (SignalR)</td><td class="text-center">12</td><td class="text-center">8</td><td class="text-center">-</td><td class="text-center"><strong>20</strong></td></tr>
+    <tr><td>Relatórios Avançados (Aging, Exportação)</td><td class="text-center">10</td><td class="text-center">14</td><td class="text-center">9</td><td class="text-center"><strong>33</strong></td></tr>
+    <tr class="total-row"><td><strong>SUBTOTAL EXPANSÕES</strong></td><td class="text-center"><strong>80</strong></td><td class="text-center"><strong>42</strong></td><td class="text-center"><strong>17</strong></td><td class="text-center"><strong>139 h</strong></td></tr>
+    <tr class="total-row" style="background: rgba(212,168,73,0.22) !important;"><td style="color: var(--dark);"><strong>TOTAL GERAL (Core + Expansões)</strong></td><td class="text-center" style="color: var(--dark);"><strong>280</strong></td><td class="text-center" style="color: var(--dark);"><strong>168</strong></td><td class="text-center" style="color: var(--dark);"><strong>73</strong></td><td class="text-center" style="color: var(--dark);"><strong>521 h</strong></td></tr>
+   </tbody>
+  </table>
+ </div>
+
+ <div class="page-break"></div>
+
+ <!-- ================================================================ -->
+ <!-- 7. COMPARATIVO VS MERCADO (LUMI) -->
+ <!-- ================================================================ -->
+ <div id="comparativo" class="section">
+  <h2 class="section-title">
+   <span class="section-num">5</span>
+   Comparativo vs Mercado (Lumi)
+  </h2>
+
+  <p style="font-size: 12px; color: #555; margin-bottom: 16px; line-height: 1.6;">
+   Análise comparativa considerando o cenário real: <strong>4 sócios com operações de energia solar</strong>. Para valores detalhados de investimento da nossa solução, consulte a <strong>Seção 6 — Planos e Investimento</strong>.
+  </p>
+
+  <!-- LUMI COST DECOMPOSITION -->
+  <h4 style="font-size: 13px; margin: 0 0 10px; color: var(--secondary);">Decomposição do Custo Lumi (Plano Flex, 4 sócios)</h4>
+
+  <!-- CUSTOS UNICOS -->
+  <div style="background: #fff8e1; border: 1px solid #f0c419; border-left: 4px solid var(--primary); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px;">
+   <h4 style="margin: 0 0 8px; color: #8a6d00; font-size: 13px;">Custos únicos</h4>
+   <table style="margin: 0;">
+    <thead>
+     <tr>
+      <th>Item</th>
+      <th class="text-right">Valor por sócio</th>
+      <th class="text-right">x 4 sócios</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>Parametrização do sistema</td>
+      <td class="text-right">R$ 2.500 (por sócio)</td>
+      <td class="text-right"><strong>R$ 10.000</strong></td>
+     </tr>
+     <tr>
+      <td>White Label (identidade visual, opcional)</td>
+      <td class="text-right">R$ 3.000 (por sócio)</td>
+      <td class="text-right"><strong>R$ 12.000</strong></td>
+     </tr>
+     <tr style="background: rgba(212,168,73,0.15);">
+      <td><strong>Subtotal -- Custos únicos</strong></td>
+      <td class="text-right">R$ 5.500</td>
+      <td class="text-right"><strong>R$ 22.000</strong></td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+
+  <!-- MENSALIDADE RECORRENTE -->
+  <div style="background: rgba(231,76,60,0.06); border: 1px solid rgba(231,76,60,0.35); border-left: 4px solid var(--danger); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px;">
+   <h4 style="margin: 0 0 8px; color: var(--danger); font-size: 13px;">Mensalidade recorrente (mensal, para sempre)</h4>
+   <p style="font-size: 11px; color: #555; margin-bottom: 10px;">
+    <strong>Fórmula Lumi:</strong> Base da Faixa de Potência + (No de UCs x R$ 6,00). Cada sócio paga sua própria mensalidade.
+   </p>
+   <table style="margin: 0; font-size: 11px;">
+    <thead>
+     <tr>
+      <th>Sócio</th>
+      <th class="text-right">Base Faixa</th>
+      <th class="text-right">Custo por UCs</th>
+      <th class="text-right">Mensalidade (mensal)</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr><td>Sócio 1 <span style="color:#888; font-size: 10px;">(27 UCs, 1-75 kW)</span></td><td class="text-right">R$ 378</td><td class="text-right">27 x R$ 6 = R$ 162</td><td class="text-right"><strong>R$ 540/mês (mensal)</strong></td></tr>
+     <tr><td>Sócio 2 <span style="color:#888; font-size: 10px;">(60 UCs, 76-250 kW)</span></td><td class="text-right">R$ 630</td><td class="text-right">60 x R$ 6 = R$ 360</td><td class="text-right"><strong>R$ 990/mês (mensal)</strong></td></tr>
+     <tr><td>Sócio 3 <span style="color:#888; font-size: 10px;">(90 UCs, 76-250 kW)</span></td><td class="text-right">R$ 630</td><td class="text-right">90 x R$ 6 = R$ 540</td><td class="text-right"><strong>R$ 1.170/mês (mensal)</strong></td></tr>
+     <tr><td>Sócio 4 <span style="color:#888; font-size: 10px;">(120 UCs, 251-500 kW)</span></td><td class="text-right">R$ 882</td><td class="text-right">120 x R$ 6 = R$ 720</td><td class="text-right"><strong>R$ 1.602/mês (mensal)</strong></td></tr>
+     <tr style="background: rgba(231,76,60,0.10); font-weight: 700;">
+      <td colspan="3"><strong>Mensalidade somada dos 4 sócios</strong></td>
+      <td class="text-right"><strong>R$ 4.302/mês (mensal)</strong></td>
+     </tr>
+     <tr style="background: rgba(231,76,60,0.15); font-weight: 700;">
+      <td colspan="3"><strong>x 12 meses</strong></td>
+      <td class="text-right"><strong style="color: var(--danger);">R$ 51.624 (12 meses)</strong></td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+
+  <!-- TOTAL LUMI -->
+  <div style="background: linear-gradient(180deg, rgba(231,76,60,0.08) 0%, #fff 100%); border: 2px solid var(--danger); border-radius: 10px; padding: 14px 16px; margin-bottom: 18px;">
+   <h4 style="margin: 0 0 8px; color: var(--danger); font-size: 13px;">Total Lumi -- 1o ano (4 sócios)</h4>
+   <table style="margin: 0; font-size: 12px; border: none;">
+    <tr style="border: none;"><td style="border: none; padding: 4px 0;">Custos únicos</td><td style="border: none; text-align: right; padding: 4px 0;">R$ 22.000</td></tr>
+    <tr style="border: none;"><td style="border: none; padding: 4px 0;">Mensalidade recorrente (12 meses)</td><td style="border: none; text-align: right; padding: 4px 0;">R$ 51.624</td></tr>
+    <tr style="border-top: 2px solid var(--danger);"><td style="border: none; padding: 8px 0; font-weight: 700;">TOTAL 1o ANO</td><td style="border: none; text-align: right; padding: 8px 0; font-size: 1.3rem; font-weight: 800; color: var(--danger);">R$ 73.624</td></tr>
+   </table>
+  </div>
+
+  <!-- SIDE-BY-SIDE SUMMARY -->
+  <h4 style="font-size: 13px; margin: 20px 0 10px; color: var(--secondary);">Lumi vs Nossa Solução -- Resumo (4 sócios)</h4>
+
+  <table style="font-size: 11px;">
+   <thead>
+    <tr>
+     <th>Componente</th>
+     <th class="text-center" style="background: var(--danger); color: #fff;">Lumi Flex<br><span style="font-size: 9px; font-weight: 400;">Mensalidade para sempre</span></th>
+     <th class="text-center" style="background: var(--success); color: #fff;">Nossa Solução<br><span style="font-size: 9px; font-weight: 400;">Paga uma vez, opera sempre</span></th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td><strong>Setup inicial</strong></td>
+     <td class="text-center">R$ 10.000<br><span style="font-size: 9px; color: #888;">(R$ 2.500 x 4 sócios)</span></td>
+     <td class="text-center">R$ 10.000<br><span style="font-size: 9px; color: #888;">(R$ 2.500 x 4 sócios)</span></td>
+    </tr>
+    <tr>
+     <td><strong>Plataforma</strong></td>
+     <td class="text-center">R$ 51.624 (12 meses)<br><span style="font-size: 9px; color: #888;">(R$ 4.302/mês x 12)</span></td>
+     <td class="text-center">R$ 28.500 - 37.500<br><span style="font-size: 9px; color: #888;">(Core - Full)</span></td>
+    </tr>
+    <tr>
+     <td><strong>Extras / Infra</strong></td>
+     <td class="text-center">R$ 12.000<br><span style="font-size: 9px; color: #888;">(White Label, R$ 3.000 x 4)</span></td>
+     <td class="text-center">R$ 6.600 - 13.800 (12 meses)<br><span style="font-size: 9px; color: #888;">(Infra, ~R$ 550-1.150/mês)</span></td>
+    </tr>
+    <tr style="background: rgba(0,0,0,0.03);">
+     <td><strong>Total 1o Ano</strong></td>
+     <td class="text-center" style="background: rgba(231,76,60,0.12); color: var(--danger);"><strong style="font-size: 14px;">R$ 73.624</strong></td>
+     <td class="text-center" style="background: rgba(39,174,96,0.12); color: var(--success);"><strong style="font-size: 14px;">R$ 45.100 - 61.300</strong></td>
+    </tr>
+    <tr class="total-row" style="background: var(--secondary) !important;">
+     <td style="color: #fff;"><strong>Total 5 anos (5 anos, acumulado)</strong></td>
+     <td class="text-center" style="background: #c0392b !important; border-color: #c0392b;"><strong style="font-size: 14px;">R$ 280.120 (5 anos, acumulado)</strong></td>
+     <td class="text-center" style="background: #1e7e3a !important; border-color: #1e7e3a;"><strong style="font-size: 14px;">R$ 71.500 - 116.500 (5 anos, acumulado)</strong></td>
+    </tr>
+   </tbody>
+  </table>
+
+  <!-- FEATURE COMPARISON -->
+  <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Comparativo de Funcionalidades</h4>
+
+  <table>
+   <thead>
+    <tr>
+     <th style="width: 40%;">Funcionalidade</th>
+     <th class="text-center" style="width: 30%; background: var(--primary); color: var(--dark);">Nossa Solução</th>
+     <th class="text-center" style="width: 30%; background: #10B981; color: #fff;">Lumi Flex</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr><td>Gestão de Créditos (% e Prioridade)</td><td class="text-center"><span class="check">Sim</span></td><td class="text-center"><span class="check">Sim</span></td></tr>
+    <tr><td>Emissão de Boletos</td><td class="text-center"><span class="check">Sim</span> - via Asaas</td><td class="text-center"><span class="check">Sim</span></td></tr>
+    <tr><td>Pix Cobrança (QR Code)</td><td class="text-center"><span class="check">Sim</span> - via Asaas</td><td class="text-center"><span class="partial">Parcial</span></td></tr>
+    <tr><td>Baixa automática + conciliação</td><td class="text-center"><span class="check">Sim</span> - Webhook Asaas</td><td class="text-center"><span class="partial">Parcial</span></td></tr>
+    <tr><td>WhatsApp como canal principal</td><td class="text-center"><span class="check">Sim</span> - Nativo (envio unidirecional)</td><td class="text-center"><span class="cross">Não</span> - Email</td></tr>
+    <tr><td>Notificações in-app em tempo real</td><td class="text-center"><span class="check">Sim</span> - SignalR</td><td class="text-center"><span class="cross">Não</span></td></tr>
+    <tr><td>Ambientes Isolados (4 sócios)</td><td class="text-center"><span class="check">Sim</span> - 1 DB por sócio, custo único</td><td class="text-center"><span class="cross">4x o preço</span></td></tr>
+    <tr><td>Custo por UC adicional</td><td class="text-center"><span class="check">R$ 0,00</span></td><td class="text-center"><span class="cross">R$ 6,00/UC (mensal)</span></td></tr>
+    <tr><td>Propriedade do Código</td><td class="text-center"><span class="check">Sim</span> - 100%</td><td class="text-center"><span class="cross">Não</span></td></tr>
+    <tr><td>Personalização Ilimitada</td><td class="text-center"><span class="check">Sim</span></td><td class="text-center"><span class="cross">Limitada</span></td></tr>
+    <tr><td>Sem Vendor Lock-in</td><td class="text-center"><span class="check">Sim</span></td><td class="text-center"><span class="cross">Não</span></td></tr>
+    <tr><td>Gateway brasileiro (Asaas)</td><td class="text-center"><span class="check">Sim</span> - Nativo</td><td class="text-center"><span class="partial">Limitado</span></td></tr>
+   </tbody>
+  </table>
+
+  <!-- 5 RISKS -->
+  <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Riscos do Modelo SaaS de Aluguel</h4>
+
+  <table>
+   <thead>
+    <tr>
+     <th>Risco</th>
+     <th>Impacto no Cenário 4 Sócios</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr><td>Reajuste anual de preços</td><td>Aumento de 10% impacta R$ 5.160/ano (mensal) sobre R$ 51.600</td></tr>
+    <tr><td>Novo sócio entra</td><td>+R$ 2.500 setup + mensalidade proporcional (mensal)</td></tr>
+    <tr><td>Crescimento de 50% nas UCs</td><td>+R$ 1.070/mês (mensal) = +R$ 12.840/ano (12 meses)</td></tr>
+    <tr><td>Migração para plano Business</td><td>Custo salta de R$ 4.302 para ~R$ 7.100/mês (mensal)</td></tr>
+    <tr><td>Descontinuação do serviço</td><td>Perda total dos dados e necessidade de nova solução</td></tr>
+   </tbody>
+  </table>
+
+  <!-- ECONOMY -->
+  <div style="background: linear-gradient(135deg, var(--success) 0%, #1e8449 100%); color: #fff; border-radius: 12px; padding: 20px; text-align: center; margin-top: 20px;">
+   <h4 style="font-size: 14px; margin-bottom: 8px;">Economia acumulada em 5 anos (5 anos, acumulado)</h4>
+   <p style="font-size: 2rem; font-weight: 800; margin-bottom: 4px;">R$ 163.620 - R$ 208.620</p>
+   <p style="font-size: 12px; opacity: 0.9;">Plano Full (5 anos, acumulado): R$ 163.620 de economia | Plano Básico (5 anos, acumulado): R$ 208.620 de economia</p>
+  </div>
+
+  <p style="font-size: 10px; color: #666; margin-top: 10px; font-style: italic; line-height: 1.6;">
+   <strong>Fonte oficial:</strong> valores Lumi extraídos da <strong>Proposta Comercial 1046/25</strong> (11/08/2025, Plano Flex). Mensalidades Lumi consideradas estáveis na projeção -- na pratica escalam conforme crescimento de UCs e upgrade de faixa de potência, aumentando ainda mais a economia.
+  </p>
+
+  <!-- COMPARACAO POR PLANO (1 SOCIO vs 4 SOCIOS) -->
+  <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Comparação por Plano -- 1 Sócio vs 4 Sócios</h4>
+
+  <table style="font-size: 11px; table-layout: fixed; margin-bottom: 20px;">
+   <colgroup>
+    <col style="width: 18%">
+    <col style="width: 15%">
+    <col style="width: 15%">
+    <col style="width: 15%">
+    <col style="width: 15%">
+    <col style="width: 22%">
+   </colgroup>
+   <thead>
+    <tr>
+     <th rowspan="2">Plano</th>
+     <th class="text-center" colspan="3" style="border-bottom: 2px solid rgba(255,255,255,0.2);">1 Sócio</th>
+     <th class="text-center" colspan="2" style="background: #3498db; border-bottom: 2px solid rgba(255,255,255,0.2);">4 Sócios</th>
+    </tr>
+    <tr>
+     <th class="text-center" style="font-size: 9px;">Nossa (1o ano)</th>
+     <th class="text-center" style="font-size: 9px;">Lumi (1o ano)</th>
+     <th class="text-center" style="font-size: 9px;">Diferenca</th>
+     <th class="text-center" style="font-size: 9px; background: #3498db;">Nossa (1o ano)</th>
+     <th class="text-center" style="font-size: 9px; background: #3498db;">Economia vs Lumi</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr style="background: rgba(39,174,96,0.06);">
+     <td style="border-left: 3px solid var(--success);"><strong style="color: var(--success);">Básico</strong></td>
+     <td class="text-center" style="font-weight: 700;">R$ 33.400</td>
+     <td class="text-center" style="color: var(--danger);">R$ 8.980</td>
+     <td class="text-center" style="color: var(--danger); font-size: 10px;">-R$ 24.420</td>
+     <td class="text-center" style="font-weight: 700; background: rgba(52,152,219,0.06);">R$ 45.100<br><span style="font-size: 9px; color: #888; font-weight: 400;">R$ 11.275/sócio</span></td>
+     <td class="text-center" style="color: var(--success); font-weight: 800; background: rgba(39,174,96,0.1); font-size: 12px;">+R$ 28.524 (39%)</td>
+    </tr>
+    <tr style="background: rgba(52,152,219,0.06);">
+     <td style="border-left: 3px solid #3498db;"><strong style="color: #3498db;">Médio</strong></td>
+     <td class="text-center" style="font-weight: 700;">R$ 41.700</td>
+     <td class="text-center" style="color: var(--danger);">R$ 8.980</td>
+     <td class="text-center" style="color: var(--danger); font-size: 10px;">-R$ 32.720</td>
+     <td class="text-center" style="font-weight: 700; background: rgba(52,152,219,0.06);">R$ 55.800<br><span style="font-size: 9px; color: #888; font-weight: 400;">R$ 13.950/sócio</span></td>
+     <td class="text-center" style="color: var(--success); font-weight: 800; background: rgba(39,174,96,0.1); font-size: 12px;">+R$ 17.824 (24%)</td>
+    </tr>
+    <tr style="background: rgba(212,168,73,0.06);">
+     <td style="border-left: 3px solid var(--primary);"><strong style="color: var(--primary);">Full ⭐</strong></td>
+     <td class="text-center" style="font-weight: 700;">R$ 45.400</td>
+     <td class="text-center" style="color: var(--danger);">R$ 8.980</td>
+     <td class="text-center" style="color: var(--danger); font-size: 10px;">-R$ 36.420</td>
+     <td class="text-center" style="font-weight: 700; background: rgba(52,152,219,0.06);">R$ 61.300<br><span style="font-size: 9px; color: #888; font-weight: 400;">R$ 15.325/sócio</span></td>
+     <td class="text-center" style="color: var(--success); font-weight: 800; background: rgba(39,174,96,0.1); font-size: 12px;">+R$ 12.324 (17%)</td>
+    </tr>
+   </tbody>
+  </table>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+   <div style="padding: 10px 14px; background: rgba(231,76,60,0.06); border-left: 3px solid var(--danger); border-radius: 6px; font-size: 10px; color: #555; line-height: 1.55;">
+    <strong style="color: var(--danger);">Lumi (1 sócio):</strong> R$ 2.500 setup + R$ 540/mês (27 UCs, 1-75 kW) — mensalidade para sempre. Investimento maior no nosso Ano 1, mas <strong style="color: var(--success);">payback no Ano 5</strong> (Básico).
+   </div>
+   <div style="padding: 10px 14px; background: rgba(39,174,96,0.06); border-left: 3px solid var(--success); border-radius: 6px; font-size: 10px; color: #555; line-height: 1.55;">
+    <strong style="color: var(--success);">4 sócios:</strong> economia em todos os planos já no 1o ano. <strong>Lumi R$ 73.624</strong> vs <strong>Nossa R$ 45.100–61.300</strong>. A vantagem cresce a cada ano — a Lumi continua cobrando, a nossa para. <strong style="color: var(--success);">Bônus:</strong> propriedade do SaaS = novo modelo de negócio.
+   </div>
+  </div>
+
+  <!-- COST-GRID CARDS: LUMI vs NOSSA CORE vs NOSSA FULL -->
+  <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Lumi vs Nossa Solução -- Decomposição de Custos (4 Sócios)</h4>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px;">
+   <!-- LUMI CARD -->
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-top: 4px solid var(--danger); border-radius: 10px; padding: 14px; font-size: 11px; display: flex; flex-direction: column;">
+    <h4 style="color: var(--danger); font-size: 13px; margin-bottom: 10px;">Lumi · 4 Sócios (Plano Flex)</h4>
+
+    <div style="flex: 1;">
+     <div style="font-size: 9px; font-weight: 700; color: #8a6d00; background: #fff8e1; padding: 4px 8px; border-radius: 4px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Custo único</div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Parametrização do sistema</span>
+      <strong>R$ 10.000</strong>
+     </div>
+     <div style="font-size: 9px; color: #888; padding: 0 0 4px;">R$ 2.500 x 4 sócios</div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>White Label · ID Visual <span style="font-size: 9px; color: #888;">(opcional)</span></span>
+      <strong>R$ 12.000</strong>
+     </div>
+     <div style="font-size: 9px; color: #888; padding: 0 0 4px;">R$ 3.000 x 4 sócios</div>
+
+     <div style="font-size: 9px; font-weight: 700; color: var(--danger); background: rgba(231,76,60,0.08); padding: 4px 8px; border-radius: 4px; margin: 8px 0 6px; text-transform: uppercase; letter-spacing: 0.5px;">Custo recorrente (12 meses)</div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Mensalidade somada 4 sócios</span>
+      <strong>R$ 4.302/mês</strong>
+     </div>
+     <div style="font-size: 9px; color: #888; padding: 0 0 4px;">S1 R$540 · S2 R$990 · S3 R$1.170 · S4 R$1.602</div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>x 12 meses (contrato minimo)</span>
+      <strong>R$ 51.624</strong>
+     </div>
+    </div>
+
+    <div style="background: var(--danger); color: #fff; padding: 10px 12px; border-radius: 6px; margin-top: 10px; display: flex; justify-content: space-between; font-weight: 700; font-size: 13px;">
+     <span>Total 1o ano</span>
+     <span>R$ 73.624</span>
+    </div>
+    <div style="text-align: center; font-size: 9px; color: var(--danger); margin-top: 6px; font-weight: 600;">Mensalidade continua todos os anos</div>
+   </div>
+
+   <!-- NOSSA CORE CARD -->
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-top: 4px solid var(--success); border-radius: 10px; padding: 14px; font-size: 11px; display: flex; flex-direction: column;">
+    <h4 style="color: var(--success); font-size: 13px; margin-bottom: 10px;">Nossa · 4 Sócios (Básico)</h4>
+
+    <div style="flex: 1;">
+     <div style="font-size: 9px; font-weight: 700; color: #8a6d00; background: #fff8e1; padding: 4px 8px; border-radius: 4px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Custo único</div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Assessment (4 sócios)</span>
+      <strong>R$ 10.000</strong>
+     </div>
+     <div style="font-size: 9px; color: #888; padding: 0 0 4px;">R$ 2.500 a R$ 6.000 por sócio</div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Desenvolvimento (382h)</span>
+      <strong>R$ 28.500</strong>
+     </div>
+     <div style="font-size: 9px; color: #888; padding: 0 0 4px;">Core único · mesma plataforma para os 4 sócios</div>
+
+     <div style="font-size: 9px; font-weight: 700; color: var(--success); background: rgba(39,174,96,0.08); padding: 4px 8px; border-radius: 4px; margin: 8px 0 6px; text-transform: uppercase; letter-spacing: 0.5px;">Custo recorrente (12 meses)</div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Infra + APIs (~R$ 550/mês)</span>
+      <strong>R$ 6.600</strong>
+     </div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Mensalidade de plataforma</span>
+      <strong style="color: var(--success);">R$ 0</strong>
+     </div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Custo por UC</span>
+      <strong style="color: var(--success);">R$ 0</strong>
+     </div>
+    </div>
+
+    <div style="background: var(--success); color: #fff; padding: 10px 12px; border-radius: 6px; margin-top: 10px; display: flex; justify-content: space-between; font-weight: 700; font-size: 13px;">
+     <span>Total 1o ano</span>
+     <span>R$ 45.100</span>
+    </div>
+    <div style="text-align: center; font-size: 9px; color: var(--success); margin-top: 6px; font-weight: 600;">Ano 2+: apenas ~R$ 550/mês</div>
+   </div>
+
+   <!-- NOSSA FULL CARD -->
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-top: 4px solid var(--primary); border-radius: 10px; padding: 14px; font-size: 11px; display: flex; flex-direction: column;">
+    <h4 style="color: var(--primary-dark); font-size: 13px; margin-bottom: 10px;">Nossa · 4 Sócios (Full ⭐)</h4>
+
+    <div style="flex: 1;">
+     <div style="font-size: 9px; font-weight: 700; color: #8a6d00; background: #fff8e1; padding: 4px 8px; border-radius: 4px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Custo único</div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Assessment (4 sócios)</span>
+      <strong>R$ 10.000</strong>
+     </div>
+     <div style="font-size: 9px; color: #888; padding: 0 0 4px;">R$ 2.500 a R$ 6.000 por sócio</div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Desenvolvimento (521h)</span>
+      <strong>R$ 37.500</strong>
+     </div>
+     <div style="font-size: 9px; color: #888; padding: 0 0 4px;">Core + Asaas + WhatsApp + SignalR + Relatórios</div>
+
+     <div style="font-size: 9px; font-weight: 700; color: var(--success); background: rgba(39,174,96,0.08); padding: 4px 8px; border-radius: 4px; margin: 8px 0 6px; text-transform: uppercase; letter-spacing: 0.5px;">Custo recorrente (12 meses)</div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Infra + APIs (~R$ 1.150/mês)</span>
+      <strong>R$ 13.800</strong>
+     </div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Mensalidade de plataforma</span>
+      <strong style="color: var(--success);">R$ 0</strong>
+     </div>
+     <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee;">
+      <span>Custo por UC</span>
+      <strong style="color: var(--success);">R$ 0</strong>
+     </div>
+    </div>
+
+    <div style="background: var(--primary); color: var(--dark); padding: 10px 12px; border-radius: 6px; margin-top: 10px; display: flex; justify-content: space-between; font-weight: 700; font-size: 13px;">
+     <span>Total 1o ano</span>
+     <span>R$ 61.300</span>
+    </div>
+    <div style="text-align: center; font-size: 9px; color: var(--primary-dark); margin-top: 6px; font-weight: 600;">Ano 2+: apenas ~R$ 1.150/mês</div>
+   </div>
+  </div>
+
+  <!-- POR QUE A ECONOMIA ACONTECE -->
+  <div style="background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, #fff 100%); border: 1px solid rgba(39,174,96,0.3); border-left: 4px solid var(--success); border-radius: 8px; padding: 14px 16px; margin-bottom: 18px;">
+   <h4 style="margin: 0 0 8px; color: var(--success); font-size: 12px;">Por que a economia acontece?</h4>
+   <p style="font-size: 11px; color: #444; line-height: 1.65; margin: 0 0 8px;">
+    A Lumi cobra <strong>mensalidade recorrente para sempre</strong> -- que escala por faixa de potência e por quantidade de UCs. Nossa proposta inverte o modelo: <strong>você paga uma vez pelo desenvolvimento do software</strong> (valor fixo, independente do porte) e a partir daí opera pagando apenas Infra + APIs conforme o uso real.
+   </p>
+   <p style="font-size: 10px; color: #555; line-height: 1.65; margin: 0;">
+    <strong style="color: var(--success);">Por que os valores variam entre Core e Full:</strong> o investimento inicial (R$ 28.500 no Core vs R$ 37.500 no Full) reflete o escopo dos módulos contratados -- Asaas, WhatsApp, SignalR, Relatórios Avançados. <strong style="color: var(--success);">Por que a economia cresce com o porte da operação:</strong> a base de custo Lumi sobe com cada sócio adicional, cada nova UC e cada upgrade de faixa de potência; o nosso custo de desenvolvimento permanece <strong>o mesmo</strong>. Quanto maior e mais complexa a operação, maior a economia absoluta e percentual.
+   </p>
+  </div>
+
+  <!-- ECONOMY CARDS: CORE vs FULL -->
+  <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Economia vs Lumi -- Detalhamento por Plano (4 Sócios)</h4>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+   <!-- ECONOMIA CORE -->
+   <div style="background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, #fff 100%); border: 1px solid rgba(39,174,96,0.3); border-radius: 10px; padding: 14px; font-size: 11px;">
+    <h4 style="color: #1e8449; font-size: 12px; margin-bottom: 8px;">Economia - Plano Básico</h4>
+    <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee;">
+     <span>1o Ano <span style="color: #888; font-size: 10px;">(R$ 2.377/mês)</span></span>
+     <span><strong>R$ 28.524</strong> <span style="color: var(--success); font-weight: 700;">-39%</span></span>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee;">
+     <span>2o Ano em diante <span style="color: #888; font-size: 10px;">(R$ 3.752/mês)</span></span>
+     <span><strong>R$ 45.024</strong> <span style="color: var(--success); font-weight: 700;">-87%</span></span>
+    </div>
+    <div style="background: var(--success); color: #fff; padding: 8px 10px; border-radius: 6px; margin-top: 8px; display: flex; justify-content: space-between; font-weight: 700; font-size: 10px;">
+     <span>Media mensal economizada em 24 meses</span>
+     <span>R$ 3.064/mês</span>
+    </div>
+   </div>
+
+   <!-- ECONOMIA FULL -->
+   <div style="background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, #fff 100%); border: 1px solid rgba(39,174,96,0.3); border-radius: 10px; padding: 14px; font-size: 11px;">
+    <h4 style="color: #1e8449; font-size: 12px; margin-bottom: 8px;">Economia - Plano Full</h4>
+    <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee;">
+     <span>1o Ano <span style="color: #888; font-size: 10px;">(R$ 1.027/mês)</span></span>
+     <span><strong>R$ 12.324</strong> <span style="color: var(--success); font-weight: 700;">-17%</span></span>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee;">
+     <span>2o Ano em diante <span style="color: #888; font-size: 10px;">(R$ 3.152/mês)</span></span>
+     <span><strong>R$ 37.824</strong> <span style="color: var(--success); font-weight: 700;">-73%</span></span>
+    </div>
+    <div style="background: var(--success); color: #fff; padding: 8px 10px; border-radius: 6px; margin-top: 8px; display: flex; justify-content: space-between; font-weight: 700; font-size: 10px;">
+     <span>Media mensal economizada em 24 meses</span>
+     <span>R$ 2.089/mês</span>
+    </div>
+   </div>
+  </div>
+
+  <!-- ECONOMIA ACUMULADA 5 ANOS -->
+  <div style="background: linear-gradient(180deg, rgba(39,174,96,0.08) 0%, #fff 100%); border: 1px solid rgba(39,174,96,0.3); border-radius: 10px; padding: 14px; font-size: 11px; margin-bottom: 18px;">
+   <h4 style="color: #1e8449; font-size: 12px; margin-bottom: 4px;">Economia Acumulada em 5 Anos (5 anos, acumulado)</h4>
+   <p style="font-size: 10px; color: #666; margin: 0 0 8px;">Base de comparação -- Lumi em 5 anos: <strong style="color: var(--secondary);">R$ 280.120 (5 anos, acumulado)</strong> - cenário 4 sócios</p>
+   <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee;">
+    <span>Plano Básico <span style="color: #888; font-size: 10px;">(investido R$ 71.500, 5 anos)</span></span>
+    <span><strong>R$ 208.620</strong> <span style="color: var(--success); font-weight: 700;">-74%</span></span>
+   </div>
+   <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee;">
+    <span>Plano Full <span style="color: #888; font-size: 10px;">(investido R$ 116.500, 5 anos)</span></span>
+    <span><strong>R$ 163.620</strong> <span style="color: var(--success); font-weight: 700;">-58%</span></span>
+   </div>
+   <div style="background: var(--success); color: #fff; padding: 8px 10px; border-radius: 6px; margin-top: 8px; display: flex; justify-content: space-between; font-weight: 700; font-size: 10px;">
+    <span>Media mensal economizada em 60 meses</span>
+    <span>Core R$ 3.477/mês - Full R$ 2.727/mês</span>
+   </div>
+  </div>
+
+  <!-- RESUMO LADO A LADO -->
+  <h4 style="font-size: 13px; margin: 24px 0 4px; color: var(--secondary); text-align: center;">Resumo comparativo - 4 sócios</h4>
+  <p style="text-align: center; font-size: 10px; color: #666; margin-bottom: 12px;">Os dois modelos lado a lado: alugar (Lumi, mensalidade para sempre) vs comprar uma vez (nossa solução).</p>
+
+  <table style="font-size: 11px;">
+   <thead>
+    <tr>
+     <th style="width: 35%;">&nbsp;</th>
+     <th class="text-center" style="background: var(--danger); color: #fff;">Lumi (Plano Flex)<br><span style="font-size: 9px; font-weight: 400;">Aluguel - mensalidade para sempre</span></th>
+     <th class="text-center" style="background: var(--success); color: #fff;">Nossa Solução<br><span style="font-size: 9px; font-weight: 400;">Propriedade - paga uma vez</span></th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>Investimento inicial (1x)</td>
+     <td class="text-center"><strong>R$ 22.000</strong><br><span style="font-size: 9px; color: #888;">Parametrização + White Label</span></td>
+     <td class="text-center"><strong>R$ 38.500 - 47.500</strong><br><span style="font-size: 9px; color: #888;">Assessment + Desenvolvimento (Básico - Full)</span></td>
+    </tr>
+    <tr>
+     <td>Custo recorrente anual (12 meses)</td>
+     <td class="text-center" style="color: var(--danger);"><strong>R$ 51.624/ano (12 meses)</strong><br><span style="font-size: 9px; color: #888;">Mensalidade (R$ 4.302 x 12) - para sempre</span></td>
+     <td class="text-center" style="color: var(--success);"><strong>R$ 6.600 - 13.800/ano (12 meses)</strong><br><span style="font-size: 9px; color: #888;">So Infra + APIs - zero mensalidade</span></td>
+    </tr>
+    <tr style="background: rgba(0,0,0,0.03);">
+     <td><strong>Total 1o Ano</strong></td>
+     <td class="text-center" style="background: rgba(231,76,60,0.10);"><strong style="font-size: 14px; color: var(--danger);">R$ 73.624</strong></td>
+     <td class="text-center" style="background: rgba(39,174,96,0.10);"><strong style="font-size: 14px; color: var(--success);">R$ 45.100 - 61.300</strong></td>
+    </tr>
+    <tr class="total-row" style="background: var(--secondary) !important;">
+     <td style="color: #fff;"><strong>Total acumulado em 5 anos (5 anos)</strong></td>
+     <td class="text-center" style="background: #c0392b !important; border-color: #c0392b;"><strong style="font-size: 14px;">R$ 280.120</strong><br><span style="font-size: 9px; opacity: 0.85;">e continua crescendo no Ano 6+</span></td>
+     <td class="text-center" style="background: #1e7e3a !important; border-color: #1e7e3a;"><strong style="font-size: 14px;">R$ 71.500 - 116.500</strong><br><span style="font-size: 9px; opacity: 0.85;">trava aqui -- só Infra + APIs</span></td>
+    </tr>
+   </tbody>
+  </table>
+
+  <!-- SAVINGS BOX -->
+  <div style="margin-top: 12px; padding: 12px 14px; background: linear-gradient(90deg, rgba(39,174,96,0.12), rgba(39,174,96,0.04)); border: 1px solid rgba(39,174,96,0.3); border-left: 5px solid var(--success); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+   <div>
+    <div style="font-size: 9px; color: #666; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Economia em 5 anos (5 anos, acumulado)</div>
+    <div style="font-size: 1.3rem; font-weight: 800; color: var(--success); margin-top: 2px;">R$ 163.620 a R$ 208.620</div>
+    <div style="font-size: 10px; color: #666;">Full: -58% - Básico: -74%</div>
+   </div>
+   <div style="text-align: right; font-size: 10px; color: #555; max-width: 240px; line-height: 1.5;">
+    Na Lumi, a mensalidade segue crescendo indefinidamente (mensal).<br>
+    Na nossa solução, <strong>o custo trava depois do Ano 1</strong> -- só resta Infra + APIs (mensal).
+   </div>
+  </div>
+
+  <!-- IMPACTO DO CUSTO POR UC -->
+  <h4 style="font-size: 13px; margin: 24px 0 10px; color: var(--secondary);">Impacto do Custo por UC</h4>
+  <p style="font-size: 11px; color: #555; margin-bottom: 10px; line-height: 1.6;">
+   O modelo Lumi cobra <strong>R$ 6,00 por UC por mês (mensal)</strong>. Este custo escala linearmente:
+  </p>
+
+  <table style="font-size: 11px;">
+   <thead>
+    <tr>
+     <th>Quantidade UCs</th>
+     <th class="text-right">Custo UC/Mes (Lumi, mensal)</th>
+     <th class="text-right">Custo UC/Ano (Lumi, 12 meses)</th>
+     <th class="text-right">Nossa Solução</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>100 UCs</td>
+     <td class="text-right">R$ 600/mês (mensal)</td>
+     <td class="text-right">R$ 7.200 (12 meses)</td>
+     <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
+    </tr>
+    <tr>
+     <td>300 UCs</td>
+     <td class="text-right">R$ 1.800/mês (mensal)</td>
+     <td class="text-right">R$ 21.600 (12 meses)</td>
+     <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
+    </tr>
+    <tr>
+     <td>500 UCs</td>
+     <td class="text-right">R$ 3.000/mês (mensal)</td>
+     <td class="text-right">R$ 36.000 (12 meses)</td>
+     <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
+    </tr>
+    <tr>
+     <td>1.000 UCs</td>
+     <td class="text-right">R$ 5.750/mês* (mensal)</td>
+     <td class="text-right">R$ 69.000 (12 meses)</td>
+     <td class="text-right" style="color: var(--success);"><strong>R$ 0</strong></td>
+    </tr>
+   </tbody>
+  </table>
+  <p style="font-size: 9px; color: var(--gray); margin-top: 4px;">*Lumi oferece desconto por volume (R$ 5,75/UC acima de 500 UCs, mensal)</p>
+
+  <div style="background: rgba(231,76,60,0.06); border: 1px solid rgba(231,76,60,0.3); border-left: 4px solid var(--danger); border-radius: 8px; padding: 12px 14px; margin-top: 10px;">
+   <h4 style="color: var(--danger); font-size: 11px; margin-bottom: 4px;">Crescimento = Custo Crescente na Lumi</h4>
+   <p style="font-size: 10px; color: #555; margin: 0; line-height: 1.6;">Cada novo cliente que você conquista <strong>aumenta seu custo mensal (mensal)</strong> no modelo SaaS. Na nossa solução, o crescimento não gera custo adicional de licença.</p>
+  </div>
+ </div>
+
+ <div class="page-break"></div>
+
+ <!-- ================================================================ -->
+ <!-- 2. PLANOS E INVESTIMENTO -->
+ <!-- ================================================================ -->
+ <div id="investimento" class="section">
+  <h2 class="section-title">
+   <span class="section-num">6</span>
+   Planos e Investimento
+  </h2>
+
+  <div class="callout callout-success">
+   <div class="callout-icon">i</div>
+   <div>
+    <h4>Modelo de Precificação Modular</h4>
+    <p>O investimento foi estruturado em <strong>3 blocos independentes</strong> para reduzir a barreira de entrada. Um único sócio pode iniciar com um MVP enxuto e adicionar módulos conforme novos parceiros entrem ou a operação cresca.</p>
+   </div>
+  </div>
+
+  <!-- 2.1 ASSESSMENT -->
+  <h3 class="bloco-header">2.1 Assessment Individual (por sócio)</h3>
+
+  <div class="callout callout-warning">
+   <div class="callout-icon">!</div>
+   <div>
+    <h4>Assessment cobrado a parte para TODOS os sócios</h4>
+    <p>O Assessment é uma fase <strong>obrigatória e cobrada a parte para todos os sócios</strong>. Não está incluso no valor do Core.</p>
+   </div>
+  </div>
+
+  <table>
+   <thead>
+    <tr>
+     <th>Servico</th>
+     <th class="text-right">Valor</th>
+     <th>Pagamento</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td><strong>Assessment Individual</strong><br><span style="font-size: 10px; color: #666;">Mapeamento + migração + workshop + configuração de regras</span></td>
+     <td class="text-right"><strong>R$ 2.500 a R$ 6.000 (por sócio)</strong></td>
+     <td>100% na contratação</td>
+    </tr>
+   </tbody>
+  </table>
+
+  <p style="font-size: 10px; color: #666; margin-top: 6px; line-height: 1.6;">
+   <strong>Inclui:</strong> mapeamento de processos e rotinas atuais, análise de planilhas e sistemas legados, migração de dados (clientes, UCs, contratos), workshop de requisitos com stakeholders, configuração de regras de rateio, adaptação as particularidades do sócio.
+  </p>
+
+  <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 10px 12px; margin-top: 10px;">
+   <p style="font-size: 10px; color: #856404; margin: 0; line-height: 1.6;">
+    <strong>Importante:</strong> Operações de média/grande complexidade (múltiplas usinas, integrações com ERP, regras de negócio não-padrão) podem requerer <strong>orçamento de desenvolvimento individual</strong>, separado e adicional ao Assessment.
+   </p>
+  </div>
+
+  <!-- 2.2 DESENVOLVIMENTO -->
+  <h3 class="bloco-header" style="margin-top: 28px;">2.2 Desenvolvimento da Plataforma</h3>
+
+  <div class="pricing-grid">
+   <!-- BASICO -->
+   <div class="pricing-card plan-basico">
+    <div style="text-align: center; padding-bottom: 0.85rem; border-bottom: 2px dashed #e8e8e8;">
+     <span class="plan-badge">Básico</span>
+     <div style="font-size: 0.78rem; color: #666; margin-top: 0.45rem;">Core MVP</div>
+    </div>
+    <div class="card-content-area" style="padding: 0.7rem 0; font-size: 0.78rem; color: #555; line-height: 1.5;">
+     <div style="margin-bottom: 0.5rem;">
+      <div style="font-size: 0.65rem; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Módulos (310h)</div>
+      <span>Identity & Ambientes Isolados · Cadastro de Clientes · Gestão de Contratos · Gestão de Geração · Engine de Créditos · Faturamento & Cobrança (baixa manual) · E-mail · Dashboards & Relatórios</span>
+     </div>
+     <div style="padding-top: 0.4rem; border-top: 1px dashed #e0e0e0;">
+      <div style="font-size: 0.65rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Infra & Processos (72h)</div>
+      <span>Setup AWS + CI/CD · Docker · Event Bus (SNS+SQS) · Keycloak · Testes & QA</span>
+     </div>
+    </div>
+    <div style="background: rgba(39,174,96,0.05); border-radius: 8px; padding: 0.9rem;">
+     <div class="price-row">
+      <span class="label">Desenvolvimento (382h)</span>
+      <strong style="font-size: 1.15rem; color: var(--success);">R$ 28.500</strong>
+     </div>
+     <div class="price-row">
+      <span class="label">Assessment (por sócio)</span>
+      <strong style="color: #555;">R$ 2.500 a R$ 6.000</strong>
+     </div>
+     <div class="price-row">
+      <span class="label">Infra + APIs (12m, ~R$ 200/mês)</span>
+      <strong style="color: #555;">R$ 2.400 (12 meses)</strong>
+     </div>
+    </div>
+    <div class="card-footer-area">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0.75rem;">
+     <div style="padding: 0.6rem; background: rgba(39,174,96,0.08); border: 1.5px solid rgba(39,174,96,0.3); border-radius: 6px; text-align: center;">
+      <div style="font-size: 0.62rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px;">Total 1o ano · 1 sócio</div>
+      <div style="font-size: 1.25rem; font-weight: 800; color: var(--success); margin-top: 0.15rem;">R$ 33.400</div>
+     </div>
+     <div style="padding: 0.6rem; background: #f8f9fa; border: 1.5px solid #e0e0e0; border-radius: 6px; text-align: center;">
+      <div style="font-size: 0.62rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px;">Total 1o ano · 4 sócios</div>
+      <div style="font-size: 1.25rem; font-weight: 800; color: var(--dark); margin-top: 0.15rem;">R$ 45.100</div>
+      <div style="font-size: 0.65rem; color: #666;">R$ 11.275/sócio</div>
+     </div>
+    </div>
+    <div class="year2-box" style="background: linear-gradient(135deg, rgba(39,174,96,0.12), rgba(39,174,96,0.04)); border-color: rgba(39,174,96,0.35);">
+     <span class="year2-tag" style="background: var(--success);">A partir do Ano 2</span>
+     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px;">
+      <div>
+       <div style="font-size: 0.68rem; color: #555;">Apenas Infra + APIs (mensal)</div>
+       <div style="font-size: 0.62rem; color: #666;">Zero mensalidade de plataforma</div>
+      </div>
+      <div style="text-align: right;">
+       <div style="font-size: 1.25rem; font-weight: 900; color: var(--success);">~R$ 200</div>
+       <div style="font-size: 0.62rem; color: #666; font-weight: 600;">/ mês (mensal)</div>
+      </div>
+     </div>
+    </div>
+    </div><!-- /card-footer-area -->
+   </div>
+
+   <!-- MEDIO -->
+   <div class="pricing-card plan-medio">
+    <div style="text-align: center; padding-bottom: 0.85rem; border-bottom: 2px dashed #e8e8e8;">
+     <span class="plan-badge">Médio</span>
+     <div style="font-size: 0.78rem; color: #666; margin-top: 0.45rem;">Core + Asaas + WhatsApp + SignalR</div>
+    </div>
+    <div class="card-content-area" style="padding: 0.7rem 0; font-size: 0.78rem; color: #555; line-height: 1.5;">
+     <div style="margin-bottom: 0.5rem;">
+      <div style="font-size: 0.65rem; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Módulos Core (310h)</div>
+      <span>Identity & Ambientes Isolados · Cadastro de Clientes · Gestão de Contratos · Gestão de Geração · Engine de Créditos · Faturamento & Cobrança (baixa manual) · E-mail · Dashboards & Relatórios</span>
+     </div>
+     <div style="margin-bottom: 0.5rem; padding-top: 0.4rem; border-top: 1px dashed #e0e0e0;">
+      <div style="font-size: 0.65rem; font-weight: 700; color: #3498db; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">+ Expansões (106h)</div>
+      <span><strong>Pagamento Automatizado (Asaas)</strong> 53h · <strong>WhatsApp Nativo</strong> 33h · <strong>Notificações SignalR</strong> 20h</span>
+     </div>
+     <div style="padding-top: 0.4rem; border-top: 1px dashed #e0e0e0;">
+      <div style="font-size: 0.65rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Infra & Processos (72h)</div>
+      <span>Setup AWS + CI/CD · Docker · Event Bus (SNS+SQS) · Keycloak · Testes & QA</span>
+     </div>
+    </div>
+    <div style="background: rgba(52,152,219,0.05); border-radius: 8px; padding: 0.9rem;">
+     <div class="price-row">
+      <span class="label">Desenvolvimento (488h)</span>
+      <strong style="font-size: 1.15rem; color: #3498db;">R$ 35.000</strong>
+     </div>
+     <div class="price-row">
+      <span class="label">Assessment (por sócio)</span>
+      <strong style="color: #555;">R$ 2.500 a R$ 6.000</strong>
+     </div>
+     <div class="price-row">
+      <span class="label">Infra + APIs (12m, ~R$ 350/mês)</span>
+      <strong style="color: #555;">R$ 4.200 (12 meses)</strong>
+     </div>
+    </div>
+    <div class="card-footer-area">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0.75rem;">
+     <div style="padding: 0.6rem; background: rgba(52,152,219,0.08); border: 1.5px solid rgba(52,152,219,0.3); border-radius: 6px; text-align: center;">
+      <div style="font-size: 0.62rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px;">Total 1o ano · 1 sócio</div>
+      <div style="font-size: 1.25rem; font-weight: 800; color: #3498db; margin-top: 0.15rem;">R$ 41.700</div>
+     </div>
+     <div style="padding: 0.6rem; background: #f8f9fa; border: 1.5px solid #e0e0e0; border-radius: 6px; text-align: center;">
+      <div style="font-size: 0.62rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px;">Total 1o ano · 4 sócios</div>
+      <div style="font-size: 1.25rem; font-weight: 800; color: var(--dark); margin-top: 0.15rem;">R$ 55.800</div>
+      <div style="font-size: 0.65rem; color: #666;">R$ 13.950/sócio</div>
+     </div>
+    </div>
+    <div class="year2-box" style="background: linear-gradient(135deg, rgba(52,152,219,0.15), rgba(52,152,219,0.04)); border-color: rgba(52,152,219,0.45);">
+     <span class="year2-tag" style="background: #3498db;">A partir do Ano 2</span>
+     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px;">
+      <div>
+       <div style="font-size: 0.68rem; color: #555;">Apenas Infra + APIs (mensal)</div>
+       <div style="font-size: 0.62rem; color: #666;">Zero mensalidade de plataforma</div>
+      </div>
+      <div style="text-align: right;">
+       <div style="font-size: 1.25rem; font-weight: 900; color: #3498db;">~R$ 350</div>
+       <div style="font-size: 0.62rem; color: #666; font-weight: 600;">/ mês (mensal)</div>
+      </div>
+     </div>
+    </div>
+    </div><!-- /card-footer-area -->
+   </div>
+
+   <!-- FULL -->
+   <div class="pricing-card plan-full">
+    <span class="recommended-tag">Recomendado</span>
+    <div style="text-align: center; padding-bottom: 0.85rem; border-bottom: 2px dashed #e8e8e8;">
+     <span class="plan-badge">Full</span>
+     <div style="font-size: 0.78rem; color: #666; margin-top: 0.45rem;">Tudo do Médio + Relatórios</div>
+    </div>
+    <div class="card-content-area" style="padding: 0.7rem 0; font-size: 0.78rem; color: #555; line-height: 1.5;">
+     <div style="margin-bottom: 0.5rem;">
+      <div style="font-size: 0.65rem; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Módulos Core (310h)</div>
+      <span>Identity & Ambientes Isolados · Cadastro de Clientes · Gestão de Contratos · Gestão de Geração · Engine de Créditos · Faturamento & Cobrança (baixa manual) · E-mail · Dashboards & Relatórios</span>
+     </div>
+     <div style="margin-bottom: 0.5rem; padding-top: 0.4rem; border-top: 1px dashed #e0e0e0;">
+      <div style="font-size: 0.65rem; font-weight: 700; color: #3498db; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">+ Expansões (139h)</div>
+      <span><strong>Asaas</strong> 53h · <strong>WhatsApp</strong> 33h · <strong>SignalR</strong> 20h · <strong>Relatórios Avançados</strong> 33h</span>
+     </div>
+     <div style="padding-top: 0.4rem; border-top: 1px dashed #e0e0e0;">
+      <div style="font-size: 0.65rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Infra & Processos (72h)</div>
+      <span>Setup AWS + CI/CD · Docker · Event Bus (SNS+SQS) · Keycloak · Testes & QA</span>
+     </div>
+    </div>
+    <div style="background: rgba(212,168,73,0.08); border-radius: 8px; padding: 0.9rem;">
+     <div class="price-row">
+      <span class="label">Desenvolvimento (521h)</span>
+      <strong style="font-size: 1.15rem; color: var(--primary);">R$ 37.500</strong>
+     </div>
+     <div class="price-row">
+      <span class="label">Assessment (por sócio)</span>
+      <strong style="color: #555;">R$ 2.500 a R$ 6.000</strong>
+     </div>
+     <div class="price-row">
+      <span class="label">Infra + APIs (12m, ~R$ 450/mês)</span>
+      <strong style="color: #555;">R$ 5.400 (12 meses)</strong>
+     </div>
+    </div>
+    <div class="card-footer-area">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0.75rem;">
+     <div style="padding: 0.6rem; background: rgba(212,168,73,0.1); border: 1.5px solid rgba(212,168,73,0.4); border-radius: 6px; text-align: center;">
+      <div style="font-size: 0.62rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px;">Total 1o ano · 1 sócio</div>
+      <div style="font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-top: 0.15rem;">R$ 45.400</div>
+     </div>
+     <div style="padding: 0.6rem; background: #f8f9fa; border: 1.5px solid #e0e0e0; border-radius: 6px; text-align: center;">
+      <div style="font-size: 0.62rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px;">Total 1o ano · 4 sócios</div>
+      <div style="font-size: 1.25rem; font-weight: 800; color: var(--dark); margin-top: 0.15rem;">R$ 61.300</div>
+      <div style="font-size: 0.65rem; color: #666;">R$ 15.325/sócio</div>
+     </div>
+    </div>
+    <div class="year2-box" style="background: linear-gradient(135deg, rgba(212,168,73,0.22), rgba(212,168,73,0.06)); border-color: rgba(212,168,73,0.55);">
+     <span class="year2-tag" style="background: var(--primary); color: var(--dark);">A partir do Ano 2</span>
+     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px;">
+      <div>
+       <div style="font-size: 0.68rem; color: #555;">Apenas Infra + APIs (mensal)</div>
+       <div style="font-size: 0.62rem; color: #666;">Zero mensalidade de plataforma</div>
+      </div>
+      <div style="text-align: right;">
+       <div style="font-size: 1.25rem; font-weight: 900; color: var(--primary);">~R$ 450</div>
+       <div style="font-size: 0.62rem; color: #666; font-weight: 600;">/ mês (mensal)</div>
+      </div>
+     </div>
+    </div>
+    </div><!-- /card-footer-area -->
+   </div>
+  </div>
+
+  <!-- 2.3 INFRA + APIs -->
+  <h3 class="bloco-header" style="margin-top: 28px;">2.3 Infra + APIs (custo recorrente mensal)</h3>
+
+  <table>
+   <thead>
+    <tr>
+     <th>Cenário</th>
+     <th class="text-center">Básico (mensal)</th>
+     <th class="text-center">Médio (mensal)</th>
+     <th class="text-center">Full (mensal)</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td><strong>1 sócio</strong></td>
+     <td class="text-center">R$ 200/mês (mensal)</td>
+     <td class="text-center">R$ 350/mês (mensal)</td>
+     <td class="text-center">R$ 450/mês (mensal)</td>
+    </tr>
+    <tr>
+     <td><strong>4 sócios</strong></td>
+     <td class="text-center">R$ 550/mês (mensal)</td>
+     <td class="text-center">R$ 900/mês (mensal)</td>
+     <td class="text-center">R$ 1.150/mês (mensal)</td>
+    </tr>
+   </tbody>
+  </table>
+
+  <div style="background: rgba(52,152,219,0.08); border: 1px dashed #3498db; border-radius: 6px; padding: 10px 12px; margin-top: 8px;">
+   <p style="font-size: 10px; color: #555; margin: 0; line-height: 1.6;">
+    <strong style="color: #3498db;">Banco de dados:</strong> valores consideram <strong>SQL Server Express</strong> (gratuito, limite 10 GB por banco), suficiente para o início da operação. Conforme o volume crescer (próximo de 10 GB/sócio ou demanda por alta disponibilidade), pode ser necessário migrar para a edição paga (RDS SQL Server Standard, ~R$ 1.200-1.800/mês por sócio) -- custo adicional avaliado caso a caso.
+   </p>
+  </div>
+
+  <!-- 2.4 TABELA CONSOLIDADA -->
+  <h3 class="bloco-header" style="margin-top: 28px;">2.4 Tabela Consolidada -- Total 1o Ano</h3>
+
+  <table style="font-size: 11px;">
+   <thead>
+    <tr>
+     <th>Plano</th>
+     <th class="text-center">Desenvolv.</th>
+     <th class="text-center">Assessment (, piso)</th>
+     <th class="text-center">Infra+APIs (12 meses)</th>
+     <th class="text-center">Total 1o ano (1 sócio)</th>
+     <th class="text-center">Total 1o ano (4 sócios)</th>
+     <th class="text-center">Ano 2+ (mensal)</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr style="background: rgba(39,174,96,0.10);">
+     <td><strong>Básico</strong><br><span style="font-size: 9px; color: #666;">Core MVP</span></td>
+     <td class="text-center"><strong>R$ 28.500</strong></td>
+     <td class="text-center">R$ 2.500</td>
+     <td class="text-center">R$ 2.400<br><span style="font-size: 9px; color: #888;">(~R$ 200/mês)</span></td>
+     <td class="text-center" style="color: var(--success);"><strong>R$ 33.400</strong></td>
+     <td class="text-center"><strong>R$ 45.100</strong></td>
+     <td class="text-center" style="color: var(--success);"><strong>~R$ 200/mês (mensal)</strong></td>
+    </tr>
+    <tr style="background: rgba(52,152,219,0.10);">
+     <td><strong style="color: #3498db;">Médio</strong><br><span style="font-size: 9px; color: #666;">+ Asaas + WhatsApp + SignalR</span></td>
+     <td class="text-center"><strong>R$ 35.000</strong></td>
+     <td class="text-center">R$ 2.500</td>
+     <td class="text-center">R$ 4.200<br><span style="font-size: 9px; color: #888;">(~R$ 350/mês)</span></td>
+     <td class="text-center" style="color: #3498db;"><strong>R$ 41.700</strong></td>
+     <td class="text-center"><strong>R$ 55.800</strong></td>
+     <td class="text-center" style="color: #3498db;"><strong>~R$ 350/mês (mensal)</strong></td>
+    </tr>
+    <tr style="background: rgba(212,168,73,0.18);">
+     <td><strong style="color: var(--primary);">Full</strong> <span style="background: var(--primary); color: var(--dark); font-size: 8px; font-weight: 800; padding: 1px 5px; border-radius: 6px; text-transform: uppercase;">Recomendado</span><br><span style="font-size: 9px; color: #666;">+ Relatórios</span></td>
+     <td class="text-center"><strong>R$ 37.500</strong></td>
+     <td class="text-center">R$ 2.500</td>
+     <td class="text-center">R$ 5.400<br><span style="font-size: 9px; color: #888;">(~R$ 450/mês)</span></td>
+     <td class="text-center" style="color: var(--primary);"><strong>R$ 45.400</strong></td>
+     <td class="text-center"><strong>R$ 61.300</strong></td>
+     <td class="text-center" style="color: var(--primary);"><strong>~R$ 450/mês (mensal)</strong></td>
+    </tr>
+   </tbody>
+  </table>
+
+  <div class="legend-block">
+   <p><strong style="color: #3498db;">Como ler a tabela:</strong> cada plano = <strong>Desenvolvimento</strong> (custo único do código) + <strong>Assessment por sócio</strong> (R$ 2.500 a R$ 6.000 -- a tabela considera o piso de R$ 2.500; valor final definido após o workshop) + <strong>Infra + APIs 12 meses</strong> (AWS, WhatsApp Cloud API e processamento).</p>
+   <p><strong style="color: #3498db;">A partir do Ano 2:</strong> apenas Infra + APIs. <strong>Zero mensalidade de plataforma.</strong></p>
+   <p style="padding-top: 6px; border-top: 1px dashed #ddd;"><strong style="color: #3498db;">Nota de Transparência:</strong> A precificação baseia-se em <strong>dados reais do primeiro sócio (ESQ Energia)</strong> e em estimativa técnica para o cenário dos demais 3 sócios. Valores podem ser refinados após o Assessment individual.</p>
+  </div>
+
+  <!-- 2.5 CONDICOES DE PAGAMENTO -->
+  <h3 class="bloco-header" style="margin-top: 28px;">2.5 Condições de Pagamento</h3>
+
+  <p style="font-size: 12px; color: #555; margin-bottom: 12px; line-height: 1.6;">
+   <strong>Parcelamento 30/30/40</strong> incide apenas sobre o <strong>Desenvolvimento</strong>. Assessment é 100% na contratação. Infra+APIs é paga diretamente pelo cliente.
+  </p>
+
+  <table style="font-size: 11px;">
+   <thead>
+    <tr>
+     <th>Plano</th>
+     <th class="text-center">Desenvolv.</th>
+     <th class="text-center">30% Assinatura</th>
+     <th class="text-center">30% Core</th>
+     <th class="text-center">40% Go-Live</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td><strong>Básico</strong></td>
+     <td class="text-center">R$ 28.500</td>
+     <td class="text-center">R$ 8.550</td>
+     <td class="text-center">R$ 8.550</td>
+     <td class="text-center"><strong style="color: var(--success);">R$ 11.400</strong></td>
+    </tr>
+    <tr>
+     <td><strong style="color: #3498db;">Médio</strong></td>
+     <td class="text-center">R$ 35.000</td>
+     <td class="text-center">R$ 10.500</td>
+     <td class="text-center">R$ 10.500</td>
+     <td class="text-center"><strong style="color: var(--success);">R$ 14.000</strong></td>
+    </tr>
+    <tr style="background: rgba(212,168,73,0.12);">
+     <td><strong style="color: var(--primary);">Full</strong> <span style="background: var(--primary); color: var(--dark); font-size: 8px; font-weight: 800; padding: 1px 5px; border-radius: 6px; text-transform: uppercase;">Recomendado</span></td>
+     <td class="text-center">R$ 37.500</td>
+     <td class="text-center">R$ 11.250</td>
+     <td class="text-center">R$ 11.250</td>
+     <td class="text-center"><strong style="color: var(--success);">R$ 15.000</strong></td>
+    </tr>
+   </tbody>
+  </table>
+
+  <p style="font-size: 10px; color: #666; margin-top: 6px; font-style: italic; line-height: 1.6;">
+   Parcelamento incide apenas sobre o Desenvolvimento, que é dividido igualmente entre os sócios. Assessment (R$ 2.500-6.000 por sócio) é cobrado 100% na contratação. Infra + APIs é paga diretamente pelo cliente conforme uso (mensal).
+  </p>
+ </div>
+
+ <div class="page-break"></div>
+
+ <!-- ================================================================ -->
+ <!-- 5. POS GO-LIVE -->
+ <!-- ================================================================ -->
+ <div id="pos-golive" class="section">
+  <h2 class="section-title">
+   <span class="section-num">7</span>
+   Pós Go-Live
+  </h2>
+
+  <h3 class="bloco-header">Evolução e Manutenção Sob Demanda (Sem Recorrência)</h3>
+
+  <div style="background: rgba(39,174,96,0.08); border-left: 3px solid var(--success); border-radius: 6px; padding: 14px 16px; margin-bottom: 14px;">
+   <p style="font-size: 12px; color: var(--secondary); margin: 0 0 8px; line-height: 1.6;">
+    <strong>Modelo sem amarração e sem mensalidade de suporte.</strong> Uma vez entregue o Core em produção, o cliente assume total autonomia sobre a plataforma. A sustentação de infraestrutura (AWS) é provisionada e paga diretamente pelo cliente.
+   </p>
+   <p style="font-size: 12px; color: #555; margin: 0; line-height: 1.6;">
+    Qualquer intervenção técnica posterior -- manutenções corretivas, integrações adicionais, evoluções funcionais ou novas features -- é tratada como <strong>projeto avulso e pontual</strong>, orçada sob demanda conforme escopo específico.
+   </p>
+  </div>
+
+  <!-- INFRA TABLE -->
+  <h4 style="font-size: 13px; margin: 20px 0 10px; color: var(--secondary);">Infraestrutura (Após Go-Live)</h4>
+  <table>
+   <thead>
+    <tr>
+     <th>Item</th>
+     <th class="text-right">Custo</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>Infra + APIs (AWS + WhatsApp + processamento)</td>
+     <td class="text-right"><strong>R$ 200 ~ 1.150/mês (mensal)</strong></td>
+    </tr>
+    <tr>
+     <td>Banco SQL Server <strong>Express</strong> (gratuito)</td>
+     <td class="text-right">R$ 0/mês (gratuito)*</td>
+    </tr>
+    <tr>
+     <td>Gateway Asaas (se contratado)</td>
+     <td class="text-right">Taxa por transação</td>
+    </tr>
+    <tr>
+     <td>API WhatsApp (se contratado)</td>
+     <td class="text-right">R$ 100-200/mês (mensal)</td>
+    </tr>
+    <tr>
+     <td>Certificado SSL</td>
+     <td class="text-right">Incluído</td>
+    </tr>
+   </tbody>
+  </table>
+
+  <p style="font-size: 10px; color: #666; margin-top: 6px; font-style: italic; line-height: 1.6;">
+   *SQL Server Express tem limite de 10 GB por banco -- atende o início da operação com folga. Ao escalar, pode ser necessário migrar para edição paga (RDS SQL Server Standard, ~R$ 1.200-1.800/mês por sócio) -- custo adicional avaliado caso a caso.
+  </p>
+
+  <!-- ROADMAP FUTURO -->
+  <h3 class="bloco-header bloco-dark" style="margin-top: 28px;">Roadmap -- Melhorias Futuras (fora do escopo atual)</h3>
+
+  <table>
+   <thead>
+    <tr>
+     <th>Item</th>
+     <th>Descrição</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td><strong>Bot Conversacional WhatsApp via n8n</strong></td>
+     <td style="font-size: 11px;">Evolução do módulo WhatsApp com fluxos automatizados de atendimento (2a via, status, FAQs, roteamento). Implementado via n8n + WhatsApp Cloud API. Escopo, prazo e custo orçados separadamente.</td>
+    </tr>
+    <tr>
+     <td><strong>Parser Automático Faturas COELBA</strong></td>
+     <td style="font-size: 11px;">Leitura e importação automática de dados das faturas da concessionária COELBA. Substituiria o input manual de produção. Escopo, prazo e custo orçados separadamente.</td>
+    </tr>
+   </tbody>
+  </table>
+ </div>
+
+ <div class="page-break"></div>
+
+ <!-- ================================================================ -->
+ <!-- 8. PROXIMOS PASSOS -->
+ <!-- ================================================================ -->
+ <div id="proximos-passos" class="section">
+  <h2 class="section-title">
+   <span class="section-num">8</span>
+   Próximos Passos
+  </h2>
+
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-top: 4px solid #3498db; border-radius: 8px; padding: 16px; text-align: center;">
+    <div style="width: 32px; height: 32px; background: #3498db; color: #fff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 8px;">1</div>
+    <h4 style="font-size: 12px; color: var(--secondary); margin-bottom: 4px;">Validação</h4>
+    <p style="font-size: 10px; color: #666;">Reunião com os sócios para alinhamento desta proposta</p>
+   </div>
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-top: 4px solid #9b59b6; border-radius: 8px; padding: 16px; text-align: center;">
+    <div style="width: 32px; height: 32px; background: #9b59b6; color: #fff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 8px;">2</div>
+    <h4 style="font-size: 12px; color: var(--secondary); margin-bottom: 4px;">Workshop Assessment</h4>
+    <p style="font-size: 10px; color: #666;">Workshop de 2h para detalhamento de requisitos e mapeamento</p>
+   </div>
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-top: 4px solid var(--primary); border-radius: 8px; padding: 16px; text-align: center;">
+    <div style="width: 32px; height: 32px; background: var(--primary); color: #fff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 8px;">3</div>
+    <h4 style="font-size: 12px; color: var(--secondary); margin-bottom: 4px;">Contrato</h4>
+    <p style="font-size: 10px; color: #666;">Assinatura do contrato e formalização</p>
+   </div>
+   <div style="background: #fff; border: 1px solid #e5e7eb; border-top: 4px solid var(--success); border-radius: 8px; padding: 16px; text-align: center;">
+    <div style="width: 32px; height: 32px; background: var(--success); color: #fff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 8px;">4</div>
+    <h4 style="font-size: 12px; color: var(--secondary); margin-bottom: 4px;">Kickoff</h4>
+    <p style="font-size: 10px; color: #666;">Setup do ambiente de desenvolvimento e início do projeto</p>
+   </div>
+  </div>
+
+  <!-- VALIDITY -->
+  <div class="info-box" style="text-align: center; border: 2px solid var(--primary); margin-top: 24px;">
+   <strong style="font-size: 14px;">PROPOSTA VÁLIDA POR 30 DIAS</strong>
+   <p style="font-size: 12px; color: #666; margin-top: 4px;">A partir de 11/04/2026</p>
+  </div>
+
+  <!-- SIGNATURES -->
+  <div class="signature-area">
+   <div class="signature-box">
+    <p><strong>CONTRATANTE</strong></p>
+    <p>_________________________</p>
+   </div>
+   <div class="signature-box">
+    <p><strong>CONTRATADA</strong></p>
+    <p>_________________________</p>
+   </div>
+  </div>
+ </div>
+
+ <!-- FOOTER -->
+ <div class="doc-footer">
+  <p>Documento Confidencial | Plataforma de Gestão de Energia Solar por Assinatura</p>
+  <p>Gerado em 11/04/2026</p>
+  <p style="margin-top: 4px;">Autoria: <strong>João Rocha</strong> & <strong>José Ambrozi</strong></p>
+ </div>
+
+</div><!-- /main-content -->
+
+<!-- SIDEBAR SCROLL ACTIVE STATE -->
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+  const links = document.querySelectorAll('.sidebar-nav a');
+  const sections = document.querySelectorAll('.section[id]');
+
+  function setActive() {
+   let current = '';
+   sections.forEach(function(section) {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 120) { current = section.getAttribute('id'); }
+   });
+   links.forEach(function(link) {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) { link.classList.add('active'); }
+   });
+  }
+
+  window.addEventListener('scroll', setActive);
+  setActive();
+
+  // Smooth scroll + close sidebar on mobile
+  links.forEach(function(link) {
+   link.addEventListener('click', function(e) {
+    e.preventDefault();
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    if (window.innerWidth <= 1024) { toggleSidebar(); }
+   });
+  });
+ });
+
+ // Mobile sidebar toggle
+ function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('open');
+ }
+</script>
+
+</body>
+</html>

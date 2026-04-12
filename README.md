@@ -1,1 +1,0 @@
-# Proposta_Plataforma_Energia

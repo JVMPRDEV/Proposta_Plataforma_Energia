@@ -7,16 +7,14 @@ window.view_ajuda = function(root) {
     {
       grupo: 'Proposta Comercial',
       itens: [
-        { icon: '📄', titulo: 'Proposta Interativa',    desc: 'Versão navegável com menu lateral, módulos, stack e investimento.', href: '../index.html', tag: 'HTML' },
-        { icon: '🖨', titulo: 'Proposta para Impressão', desc: 'Layout formal pronto para gerar PDF (Imprimir → Salvar como PDF).', href: '../proposta-impressao.html', tag: 'HTML' },
-        { icon: '📊', titulo: 'Pitch Deck',              desc: 'Apresentação comercial resumida em slides.', href: '../pitch-deck.html', tag: 'HTML' },
-        { icon: '📈', titulo: 'Comparativo de Mercado',  desc: 'Análise comparativa vs Lumi e demais SaaS de mercado.', href: '../comparativo-mercado.html', tag: 'HTML' }
+        { icon: '📊', titulo: 'Pitch Deck',              desc: 'Apresentação comercial em slides (19 slides). Para apresentar na reunião presencial.', href: '../0.Proposta/pitch-deck.html', tag: 'HTML' },
+        { icon: '📄', titulo: 'Proposta Completa',        desc: 'Documento de referência com todos os detalhes: módulos, arquitetura, comparativo, investimento e prazos.', href: '../0.Proposta/proposta-completa.html', tag: 'HTML' }
       ]
     },
     {
       grupo: 'Protótipos Navegáveis',
       itens: [
-        { icon: '🎨', titulo: 'Protótipo Completo',     desc: 'Versão completa da aplicação com todos os módulos (Core + expansões: Asaas, WhatsApp, SignalR).', href: '../prototipo/index.html', tag: 'SPA' },
+        { icon: '🎨', titulo: 'Protótipo Completo',     desc: 'Versão completa da aplicação com todos os módulos (Core + expansões: Asaas, WhatsApp, SignalR).', href: '../1.Prototipo-full/index.html', tag: 'SPA' },
         { icon: '⚡', titulo: 'Protótipo Core (esta versão)', desc: 'Apenas os módulos do Core (382h / R$ 28.500). Faturamento sem gateway, baixa manual e template do cliente.', href: 'index.html', tag: 'SPA', atual: true }
       ]
     }
@@ -54,7 +52,7 @@ window.view_ajuda = function(root) {
       `).join('')}
 
       <div style="padding:.85rem 1rem; background:var(--gray-50); border-left:3px solid var(--primary); border-radius:6px; font-size:.78rem; color:var(--gray-700);">
-        💡 Todos os arquivos estão na pasta <code>2. Proposta ESQ_Energia/</code>. Os links abrem em uma nova aba.
+        💡 Documentação na pasta <code>0.Proposta/</code>. Os links abrem em uma nova aba.
       </div>
     </div>
   `;
