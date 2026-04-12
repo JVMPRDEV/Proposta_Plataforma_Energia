@@ -292,7 +292,7 @@
 .btn-link-back { color: var(--gray-600) !important; font-weight: 600; padding-left: 0 !important; }
 .btn-link-back:hover { color: var(--primary-dark) !important; background: transparent !important; }
 
-/* Upload manual COELBA — stepper, dropzone, processing */
+/* Stepper, dropzone, processing (legacy styles kept for reuse) */
 .coelba-steps {
   display: flex;
   align-items: center;

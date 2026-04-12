@@ -16,7 +16,7 @@ window.TENANTS = [
     ucs: 27,
     socios: 'Real (1º sócio)',
     descricao: 'Operação real da ESQ Energia (dados reais do questionário assinado)',
-    parserCoelba: false,           // B1: digitação manual
+    // B1: digitação manual
     usuarioUnico: 'Pedro Esquivel',
     tema: {
       primary:      '#D4A849',
@@ -40,7 +40,7 @@ window.TENANTS = [
     ucs: 60,
     socios: 'Estimado (2º sócio)',
     descricao: 'Operação estimada para o segundo sócio da plataforma',
-    parserCoelba: true,
+    // coleta manual
     usuarioUnico: null,
     tema: {
       primary:      '#3498db',
@@ -65,7 +65,7 @@ window.TENANTS = [
     ucs: 90,
     socios: 'Estimado (3º sócio)',
     descricao: 'Operação estimada para o terceiro sócio da plataforma',
-    parserCoelba: true,
+    // coleta manual
     usuarioUnico: null,
     tema: {
       primary:      '#27ae60',
@@ -89,7 +89,7 @@ window.TENANTS = [
     ucs: 120,
     socios: 'Estimado (4º sócio)',
     descricao: 'Operação estimada para o quarto sócio da plataforma',
-    parserCoelba: true,
+    // coleta manual
     usuarioUnico: null,
     tema: {
       primary:      '#9b59b6',

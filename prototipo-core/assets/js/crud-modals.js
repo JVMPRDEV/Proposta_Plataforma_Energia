@@ -52,7 +52,7 @@
             <label>Titularidade da conta de luz (COELBA)</label>
             <select id="m_titul">
               <option value="cliente"          ${!c || c.titularidade === 'cliente' ? 'selected' : ''}>Próprio cliente (padrão)</option>
-              <option value="comercializadora" ${c && c.titularidade === 'comercializadora' ? 'selected' : ''}>Comercializadora — anexar print da COELBA</option>
+              <option value="comercializadora" ${c && c.titularidade === 'comercializadora' ? 'selected' : ''}>Comercializadora — anexar print da conta de luz</option>
             </select>
           </div>
         </div>
@@ -99,7 +99,7 @@
           </div>
           <div class="form-grid">
             <div class="form-row">
-              <label>Nº Instalação (COELBA)</label>
+              <label>Nº Instalação</label>
               <input type="text" id="m_num" value="${u ? u.numInstalacao : ''}" placeholder="00000000" />
             </div>
             <div class="form-row">
@@ -339,7 +339,7 @@
           </div>
 
           <div style="margin-top:.85rem; padding:.55rem .75rem; background:var(--gray-50); border-radius:6px; font-size:.7rem; color:var(--gray-600);">
-            ℹ A leitura será registrada com o usuário atual e o timestamp da operação. Versão Core: digitação manual (sem parser COELBA).
+            ℹ A leitura será registrada com o usuário atual e o timestamp da operação. Versão Core: entrada manual de geração.
           </div>
         </div>
         <div class="modal-footer">

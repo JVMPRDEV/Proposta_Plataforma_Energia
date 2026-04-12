@@ -165,7 +165,7 @@
           <div class="config-row"><span class="key">Contato</span><span class="val">${esc(c.contato)}</span></div>
           <div class="config-row"><span class="key">Adesão</span><span class="val">${esc(c.adesao)}</span></div>
           <div class="config-row"><span class="key">Consumo médio</span><span class="val">${fmt.kwh(c.consumoMedio)}</span></div>
-          <div class="config-row"><span class="key">Titularidade COELBA</span><span class="val">${c.titularidade === 'cliente' ? 'Próprio cliente' : 'Comercializadora (anexa COELBA)'}</span></div>
+          <div class="config-row"><span class="key">Titularidade conta de luz</span><span class="val">${c.titularidade === 'cliente' ? 'Próprio cliente' : 'Comercializadora (anexa conta de luz)'}</span></div>
         </div>
 
         <div class="card">

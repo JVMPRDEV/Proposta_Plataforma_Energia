@@ -28,7 +28,7 @@
       { id: 'n2', tipo: 'whatsapp',  titulo: 'Boleto entregue',      msg: 'BOL-2026-0118 entregue para Maria Santos via WhatsApp', ts: m(18), lida: false, link: '/whatsapp' },
       { id: 'n3', tipo: 'fatura',    titulo: 'Lote de faturas gerado', msg: '27 faturas geradas para o ciclo Mar/26', ts: m(95),  lida: false, link: '/faturamento' },
       { id: 'n4', tipo: 'alerta',    titulo: 'Inadimplência D+5',    msg: '3 clientes atingiram D+5 — régua de cobrança ativada', ts: m(180), lida: true,  link: '/cobranca' },
-      { id: 'n5', tipo: 'geracao',   titulo: 'Coleta concluída',     msg: 'Parser COELBA importou geração de 4 usinas', ts: m(360), lida: true,  link: '/geracao' },
+      { id: 'n5', tipo: 'geracao',   titulo: 'Leitura registrada',   msg: 'Geração de 4 usinas atualizada manualmente', ts: m(360), lida: true,  link: '/geracao' },
       { id: 'n6', tipo: 'sistema',   titulo: 'Backup diário',        msg: 'Snapshot do schema executado com sucesso', ts: m(720), lida: true,  link: null }
     ];
   }
@@ -246,7 +246,7 @@
       const samples = [
         { tipo: 'pagamento', titulo: 'Pagamento confirmado', msg: 'Webhook Asaas: BOL-2026-0' + Math.floor(Math.random()*999) + ' liquidado' },
         { tipo: 'whatsapp',  titulo: 'Mensagem entregue',     msg: 'Lembrete D-3 entregue a 12 clientes' },
-        { tipo: 'geracao',   titulo: 'Coleta concluída',      msg: 'Parser COELBA atualizou geração da Usina 02' },
+        { tipo: 'geracao',   titulo: 'Leitura registrada',    msg: 'Geração da Usina 02 atualizada manualmente' },
         { tipo: 'alerta',    titulo: 'Inadimplência detectada', msg: 'Cliente Carlos Mendes atingiu D+1 de atraso', link: '/cobranca' }
       ];
       api.add(samples[Math.floor(Math.random() * samples.length)]);

@@ -10,9 +10,9 @@ Cada decisão visual está rastreada a uma resposta do questionário:
 |---|---|
 | **A2** Modos Percentual e Prioridade | View Distribuição de Créditos com simulador funcional dos dois modos |
 | **A3** 3 fidelidades (sem / 1 ano / 2 anos) | Coluna "Fidelidade" em Contratos |
-| **A4 / D2** Titularidade da conta no cliente OU comercializadora | Coluna "Titularidade" em Clientes; preview de fatura anexa print COELBA quando comercializadora |
-| **A5** COELBA | Parser nomeado em Geração |
-| **B1** ESQ usa digitação manual | Card de Geração do tenant ESQ mostra "Digitação Manual" — parser só ativo nos demais tenants |
+| **A4 / D2** Titularidade da conta no cliente OU comercializadora | Coluna "Titularidade" em Clientes; preview de fatura anexa print da conta de luz quando comercializadora |
+| **A5** COELBA | Concessionária referenciada nos campos de titularidade |
+| **B1** ESQ usa digitação manual | Card de Geração mostra "Digitação Manual" com registro de leitura por usina |
 | **B5** Saldo residual fica atrelado à UC | Engine de Créditos com state machine "Gerado → Alocado → Aplicado → Excedente" |
 | **C1** Banco BTG | Header da Cobrança mostra o banco do tenant ativo; ESQ = BTG, demais com bancos diferentes (multibank) |
 | **C4** 27 clientes ativos | Tenant ESQ tem `ucs: 27` |
@@ -46,7 +46,7 @@ Cada decisão visual está rastreada a uma resposta do questionário:
 | Clientes | `#/clientes` | Tabela com busca, filtros por status, modal de cadastro |
 | Unidades Consumidoras | `#/ucs` | Tabela com tarifa, tipo, consumo médio |
 | Contratos | `#/contratos` | State machine visual + tabela de fidelidade |
-| Geração / Produção | `#/geracao` | Usinas, parser COELBA, gráfico de produção |
+| Geração / Produção | `#/geracao` | Usinas, leitura manual, gráfico de produção |
 | **Distribuição de Créditos** ⭐ | `#/creditos` | Engine de rateio com sliders ao vivo, modos % e Prioridade |
 | **Faturamento** ⭐ | `#/faturamento` | State machine, modal de geração em lote, **preview de fatura** |
 | Cobrança / Asaas | `#/cobranca` | Abas Boletos / Pix / Webhooks recebidos |
@@ -121,16 +121,16 @@ A paleta é a mesma dos demais documentos da proposta:
 3. **Trocar tenant na topbar** → "olha como os números mudam ao vivo — cada sócio tem dados totalmente isolados (multitenancy por schema)."
 4. **Clientes** → mostre a coluna **Titularidade** (Cliente / Comercializadora) — regra do questionário D2.
 5. **Distribuição de Créditos** → mexa nos sliders no **Modo Percentual**, depois alterne para **Modo Prioridade** e reordene as UCs (▲▼) — mostre o saldo sendo atendido em ordem e o **excedente** indo para a UC receptora escolhida.
-6. **Geração** → no tenant **ESQ** o card de coleta mostra "Digitação Manual" (B1 do questionário); nos demais tenants aparece "Parser COELBA · Sucesso".
-7. **Faturamento** → clique em uma fatura de cliente com titularidade da **Comercializadora** → o preview mostra o **anexo automático do print da COELBA** (D2). O preview também mostra o **banco emissor próprio** do tenant (multibank).
+6. **Geração** → o card de coleta mostra "Digitação Manual" (B1 do questionário). Clique em "Registrar leitura" em qualquer usina para registrar a produção do mês.
+7. **Faturamento** → clique em uma fatura de cliente com titularidade da **Comercializadora** → o preview mostra o **anexo automático do print da conta de luz** (D2). O preview também mostra o **banco emissor próprio** do tenant (multibank).
 8. **Cobrança** → header destaca o **banco do tenant ativo** (BTG para ESQ, Bradesco/Itaú/Santander para os demais — esse é o multibank). Percorra as abas Boletos → Pix → Webhooks.
 9. **WhatsApp** → histórico de envios (faturas, boletos, documentos) + templates HSM aprovados pela Meta (incluindo **D+5 — regra do questionário C6**). **Canal unidirecional** — bot conversacional via n8n é melhoria futura, escopo separado.
-10. **Configurações** → mostre Identity/Schema, **Banco Emissor (Multibank)**, **Régua de Cobrança com D+5**, RBAC (no ESQ aparece só Pedro — E1 do questionário), e parser COELBA condicional.
+10. **Configurações** → mostre Identity/Schema, **Banco Emissor (Multibank)**, **Régua de Cobrança com D+5**, RBAC (no ESQ aparece só Pedro — E1 do questionário), e integrações ativas.
 
 ## Limitações conhecidas (é protótipo)
 
 - Sem persistência: o que você editar volta ao estado original ao recarregar.
-- Sem backend, sem Keycloak, sem Asaas/COELBA reais.
+- Sem backend, sem Keycloak, sem Asaas real.
 - "Salvar", "Cadastrar", "Sincronizar" são botões decorativos.
 - Não há geração real de PDF — o preview de fatura é HTML.
 

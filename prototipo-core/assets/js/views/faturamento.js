@@ -55,7 +55,7 @@ window.view_faturamento = function(root) {
         <strong>Operação sem gateway de pagamento.</strong> Esta versão Core gera faturas a partir do
         <em>template fornecido pelo cliente</em>, preenchendo os campos automaticamente com dados da base
         (cliente, contrato, consumo, valores, banco emissor). Imagens fixas (logo, QR estático, print da
-        COELBA) são importadas manualmente em <a href="#/configuracoes" style="color: var(--primary-dark); font-weight: 600;">Configurações → Template de Fatura</a>.
+        conta de luz) são importadas manualmente em <a href="#/configuracoes" style="color: var(--primary-dark); font-weight: 600;">Configurações → Template de Fatura</a>.
         O envio e a baixa de pagamento são realizados manualmente.
       </div>
     </div>
@@ -562,7 +562,7 @@ function verAnexosBoleto(f) {
   const ALL = [
     { k:'qrcode',     l:'QR Code Pix',      i:'📱', d:'QR de cobrança gerado para esta fatura.' },
     { k:'codbarras',  l:'Código de barras', i:'🏷', d:'Barcode + linha digitável do boleto.' },
-    { k:'printConta', l:'Print da conta',   i:'📄', d:'Captura da fatura COELBA do mês.' }
+    { k:'printConta', l:'Print da conta',   i:'📄', d:'Captura da conta de luz do mês.' }
   ];
   const tpl = window.faturaTemplateStore.get();
   const itens = ALL.filter(x => !tpl[x.k]);
@@ -633,7 +633,7 @@ function abrirAnexosBoleto(f) {
   const ALL = [
     { k:'qrcode',     l:'QR Code Pix',      i:'📱', d:'Imagem do QR de cobrança gerada para esta fatura.', tipos:'PNG, JPG' },
     { k:'codbarras',  l:'Código de barras', i:'🏷', d:'Imagem do barcode + linha digitável do boleto.',   tipos:'PNG, JPG' },
-    { k:'printConta', l:'Print da conta',   i:'📄', d:'Captura da fatura COELBA do mês com a leitura.',   tipos:'PNG, JPG, PDF' }
+    { k:'printConta', l:'Print da conta',   i:'📄', d:'Captura da conta de luz do mês com a leitura.',   tipos:'PNG, JPG, PDF' }
   ];
 
   function render() {
@@ -920,12 +920,12 @@ function abrirPreviewFatura(f, t) {
 
           ${anexarCoelba ? `
           <div class="section" style="background: var(--warning-bg); padding: 0.75rem 1rem; border-radius: 6px; border-left: 4px solid var(--warning);">
-            <h4 style="color: #b8740a;">📎 Anexo obrigatório — Print da fatura COELBA</h4>
+            <h4 style="color: #b8740a;">📎 Anexo obrigatório — Print da conta de luz</h4>
             <p style="font-size: 0.8rem; color: var(--gray-700); margin-top: 4px;">
-              Como a conta de luz deste cliente está em nome da comercializadora, o sistema anexa automaticamente o print da fatura COELBA do mês com a leitura do consumo.
+              Como a conta de luz deste cliente está em nome da comercializadora, o sistema anexa automaticamente o print da conta de luz do mês com a leitura do consumo.
             </p>
             <div style="margin-top: 0.5rem; padding: 0.5rem; background: var(--white); border-radius: 4px; font-size: 0.78rem; color: var(--gray-600); display: flex; align-items: center; gap: 0.5rem;">
-              📄 fatura-coelba-${esc(f.competencia.toLowerCase().replace('/', '-'))}-${esc(f.clienteId)}.pdf
+              📄 conta-luz-${esc(f.competencia.toLowerCase().replace('/', '-'))}-${esc(f.clienteId)}.pdf
             </div>
           </div>
           ` : ''}

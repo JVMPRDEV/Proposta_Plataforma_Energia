@@ -169,8 +169,8 @@
       integracoes: [
         { id: 'int-1', nome: 'Gateway Asaas',        descricao: 'Conciliação de boletos e Pix',        status: 'ativo',                                categoria: 'financeiro' },
         { id: 'int-2', nome: 'WhatsApp Business API', descricao: 'Canal principal de comunicação',     status: 'ativo',                                categoria: 'comunicacao' },
-        { id: 'int-3', nome: 'Parser COELBA',         descricao: 'Leitura automática das faturas',    status: t.parserCoelba ? 'ativo' : 'inativo',   categoria: 'dados' },
-        { id: 'int-4', nome: 'SMTP',                  descricao: 'Envio transacional de e-mails',     status: 'ativo',                                categoria: 'comunicacao' }
+        { id: 'int-3', nome: 'SMTP',                  descricao: 'Envio transacional de e-mails',     status: 'ativo',                                categoria: 'comunicacao' },
+        { id: 'int-4', nome: 'Google Drive',            descricao: 'Armazenamento de documentos',       status: 'inativo',                              categoria: 'dados' }
       ],
       tema: JSON.parse(JSON.stringify(t.tema || {})),
       loginLayout: {

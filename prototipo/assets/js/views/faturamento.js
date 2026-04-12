@@ -428,12 +428,12 @@ function abrirPreviewFatura(f, t) {
 
           ${anexarCoelba ? `
           <div class="section" style="background: var(--warning-bg); padding: 0.75rem 1rem; border-radius: 6px; border-left: 4px solid var(--warning);">
-            <h4 style="color: #b8740a;">📎 Anexo obrigatório — Print da fatura COELBA</h4>
+            <h4 style="color: #b8740a;">📎 Anexo obrigatório — Print da conta de luz</h4>
             <p style="font-size: 0.8rem; color: var(--gray-700); margin-top: 4px;">
-              Como a conta de luz deste cliente está em nome da comercializadora, o sistema anexa automaticamente o print da fatura COELBA do mês com a leitura do consumo.
+              Como a conta de luz deste cliente está em nome da comercializadora, o sistema anexa automaticamente o print da conta de luz do mês com a leitura do consumo.
             </p>
             <div style="margin-top: 0.5rem; padding: 0.5rem; background: var(--white); border-radius: 4px; font-size: 0.78rem; color: var(--gray-600); display: flex; align-items: center; gap: 0.5rem;">
-              📄 fatura-coelba-${esc(f.competencia.toLowerCase().replace('/', '-'))}-${esc(f.clienteId)}.pdf
+              📄 conta-luz-${esc(f.competencia.toLowerCase().replace('/', '-'))}-${esc(f.clienteId)}.pdf
             </div>
           </div>
           ` : ''}

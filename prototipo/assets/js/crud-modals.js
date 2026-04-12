@@ -52,7 +52,7 @@
             <label>Titularidade da conta de luz (COELBA)</label>
             <select id="m_titul">
               <option value="cliente"          ${!c || c.titularidade === 'cliente' ? 'selected' : ''}>Próprio cliente (padrão)</option>
-              <option value="comercializadora" ${c && c.titularidade === 'comercializadora' ? 'selected' : ''}>Comercializadora — anexar print da COELBA</option>
+              <option value="comercializadora" ${c && c.titularidade === 'comercializadora' ? 'selected' : ''}>Comercializadora — anexar print da conta de luz</option>
             </select>
           </div>
         </div>
@@ -99,7 +99,7 @@
           </div>
           <div class="form-grid">
             <div class="form-row">
-              <label>Nº Instalação (COELBA)</label>
+              <label>Nº Instalação</label>
               <input type="text" id="m_num" value="${u ? u.numInstalacao : ''}" placeholder="00000000" />
             </div>
             <div class="form-row">
