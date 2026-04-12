@@ -15,10 +15,12 @@
  </div>
  <ul class="nav-menu">
  <li><a href="#resumo" class="active">Resumo Executivo</a></li>
- <li><a href="#modulos">Módulos do Sistema</a></li>
- <li><a href="#arquitetura">Arquitetura Técnica</a></li>
- <li><a href="#roadmap">Roadmap</a></li>
  <li><a href="#investimento">Investimento</a></li>
+ <li><a href="#diferenciais">Diferenciais da Solução</a></li>
+ <li><a href="#modulos">Módulos do Sistema</a></li>
+ <li><a href="#roadmap">Roadmap</a></li>
+ <li><a href="#pos-golive">Pós Go-Live</a></li>
+ <li><a href="#arquitetura">Arquitetura Técnica</a></li>
  <li><a href="#proximos-passos">Próximos Passos</a></li>
  </ul>
  <div class="sidebar-footer">
@@ -39,7 +41,7 @@
  </div>
  </header>
 
- <!-- Resumo Executivo -->
+ <!-- 01. Resumo Executivo -->
  <section id="resumo" class="section">
  <h2 class="section-title">
  <span class="section-number">01</span>
@@ -117,619 +119,10 @@
  </div>
  </section>
 
- <!-- Módulos -->
- <section id="modulos" class="section">
- <h2 class="section-title">
- <span class="section-number">02</span>
- Módulos do Sistema
- </h2>
-
- <div class="context-map">
- <h3>Mapa de Contextos (DDD)</h3>
- <div class="map-container">
- <div class="ddd-map">
- <div class="ddd-title">PLATAFORMA ENERGIA SOLAR</div>
- <div class="ddd-grid">
- <div class="ddd-ctx" style="grid-column: 1;">Identity &amp;<br>Multitenancy</div>
- <div class="ddd-arrow" style="grid-column: 2;">↔</div>
- <div class="ddd-ctx" style="grid-column: 3;">Cadastro<br><small>(Clientes)</small></div>
- <div class="ddd-arrow" style="grid-column: 4;">↔</div>
- <div class="ddd-ctx" style="grid-column: 5;">Geração<br><small>(Produção)</small></div>
-
- <div class="ddd-vert" style="grid-column: 1; grid-row: 2;">↓</div>
- <div class="ddd-vert" style="grid-column: 3; grid-row: 2;">↓</div>
- <div class="ddd-vert" style="grid-column: 5; grid-row: 2;">↓</div>
-
- <div class="ddd-ctx" style="grid-column: 1; grid-row: 3;">Contratos &amp;<br>Fidelidade</div>
- <div class="ddd-arrow" style="grid-column: 2; grid-row: 3;">↔</div>
- <div class="ddd-ctx" style="grid-column: 3; grid-row: 3;">Distribuição<br>de Créditos</div>
- <div class="ddd-arrow" style="grid-column: 4; grid-row: 3;">↔</div>
- <div class="ddd-ctx" style="grid-column: 5; grid-row: 3;">Faturamento<br>&amp; Cobrança</div>
-
- <div class="ddd-vert" style="grid-column: 3; grid-row: 4;">↓</div>
- <div class="ddd-vert" style="grid-column: 5; grid-row: 4;">↓</div>
-
- <div class="ddd-ctx" style="grid-column: 3; grid-row: 5;">Financeiro<br><small>(Asaas + Pix)</small></div>
- <div class="ddd-arrow" style="grid-column: 4; grid-row: 5;">↔</div>
- <div class="ddd-ctx" style="grid-column: 5; grid-row: 5;">Comunicação<br><small>(WhatsApp)</small></div>
-
- <div class="ddd-vert" style="grid-column: 3; grid-row: 6;">↓</div>
-
- <div class="ddd-ctx ddd-highlight" style="grid-column: 3; grid-row: 7;">Dashboards<br>&amp; Relatórios</div>
- </div>
- </div>
- </div>
- </div>
-
- <div class="modules-grid">
- <!-- Módulo 1 -->
- <div class="module-card">
- <div class="module-header">
- <span class="module-number">01</span>
- <h3>Identity & Multitenancy</h3>
- </div>
- <ul class="module-features">
- <li>Autenticação via Keycloak (OpenSource)</li>
- <li>SSO, OAuth 2.0 e OpenID Connect</li>
- <li>Multitenancy Multibanco (1 database dedicado por sócio — isolamento físico total)</li>
- <li>Controle de Acesso (RBAC)</li>
- <li>Subdomínio dinâmico por sócio</li>
- </ul>
- </div>
-
- <!-- Módulo 2 -->
- <div class="module-card">
- <div class="module-header">
- <span class="module-number">02</span>
- <h3>Cadastro de Clientes</h3>
- </div>
- <ul class="module-features">
- <li>CRUD completo (CPF/CNPJ)</li>
- <li>Unidades Consumidoras (UC COELBA)</li>
- <li>Importação de base existente</li>
- <li>Histórico de alterações</li>
- </ul>
- </div>
-
- <!-- Módulo 3 -->
- <div class="module-card">
- <div class="module-header">
- <span class="module-number">03</span>
- <h3>Gestão de Contratos</h3>
- </div>
- <ul class="module-features">
- <li>Sem fidelidade / 1 ano / 2 anos</li>
- <li>Regras de cancelamento</li>
- <li>Vigência e renovação</li>
- <li>Multa por quebra contratual</li>
- </ul>
- </div>
-
- <!-- Módulo 4 -->
- <div class="module-card">
- <div class="module-header">
- <span class="module-number">04</span>
- <h3>Gestão de Geração</h3>
- </div>
- <ul class="module-features">
- <li>Cadastro de usinas solares</li>
- <li>Registro manual de produção (kWh)</li>
- <li>Registro de geração via planilha ou digitação</li>
- <li>Histórico de geração</li>
- </ul>
- </div>
-
- <!-- Módulo 5 -->
- <div class="module-card">
- <div class="module-header">
- <span class="module-number">05</span>
- <h3>Distribuição de Créditos</h3>
- </div>
- <ul class="module-features">
- <li>Modo Percentual (X% por unidade)</li>
- <li>Modo Prioridade (ordem de abatimento)</li>
- <li>Créditos excedentes acumulados</li>
- <li>Engine de rateio automático</li>
- </ul>
- </div>
-
- <!-- Módulo 6 -->
- <div class="module-card">
- <div class="module-header">
- <span class="module-number">06</span>
- <h3>Faturamento & Cobrança</h3>
- </div>
- <ul class="module-features">
- <li>Geração de faturas (sem gateway no Core)</li>
- <li>Template do cliente preenchido com dados do BD</li>
- <li>Por boleto: importação de QR Code, código de barras e print da conta de luz (S3)</li>
- <li>Envio e baixa manuais</li>
- <li>Juros: 2% + 0,033%/dia</li>
- <li>Máquina de estado: Gerada → Enviada → Paga</li>
- </ul>
- </div>
-
- <!-- Módulo 7 -->
- <div class="module-card">
- <div class="module-header">
- <span class="module-number">07</span>
- <h3>Pagamento Automatizado (Asaas)</h3>
- </div>
- <ul class="module-features">
- <li>Emissão de boletos e Pix via API</li>
- <li>Webhook de baixa automática</li>
- <li>Conciliação bancária automatizada</li>
- <li>Padrão do mercado brasileiro</li>
- </ul>
- </div>
-
- <!-- Módulo 8 -->
- <div class="module-card">
- <div class="module-header">
- <span class="module-number">08</span>
- <h3>Comunicação WhatsApp</h3>
- </div>
- <ul class="module-features">
- <li>Envio de faturas e boletos (PDF anexo)</li>
- <li>Envio de documentos (relatórios, recibos)</li>
- <li>Mensagens curtas (lembretes, avisos)</li>
- <li>WhatsApp Cloud API + templates HSM</li>
- <li><em>Sem bot conversacional — canal unidirecional</em></li>
- <li><strong>Roadmap futuro:</strong> bot via n8n (escopo separado)</li>
- </ul>
- </div>
-
- <!-- Módulo 8b -->
- <div class="module-card">
- <div class="module-header">
- <span class="module-number">8b</span>
- <h3>Notificações em Tempo Real</h3>
- </div>
- <ul class="module-features">
- <li>Push in-app via <strong>SignalR</strong> (WebSocket)</li>
- <li>Sino no topbar com badge de não lidas</li>
- <li>Toast no canto + painel dropdown</li>
- <li>Eventos: pagamento, faturamento, geração, cobrança, alertas</li>
- <li>Multitenant — cada sócio só recebe os próprios eventos</li>
- </ul>
- </div>
-
- <!-- Módulo 9 -->
- <div class="module-card">
- <div class="module-header">
- <span class="module-number">09</span>
- <h3>Dashboards & Relatórios</h3>
- </div>
- <ul class="module-features">
- <li>Dashboard financeiro</li>
- <li>Relatório de produção</li>
- <li>Aging de recebíveis</li>
- <li>Exportação PDF/Excel</li>
- </ul>
- </div>
- </div>
- </section>
-
- <!-- Arquitetura -->
- <section id="arquitetura" class="section">
- <h2 class="section-title">
- <span class="section-number">03</span>
- Arquitetura Técnica
- </h2>
-
- <div class="tech-stack">
- <h3>Stack Tecnológico</h3>
- <div class="stack-grid">
- <div class="stack-item">
- <span class="stack-label">Backend</span>
- <span class="stack-value">.NET 8 (C#) + Swagger</span>
- </div>
- <div class="stack-item">
- <span class="stack-label">Frontend</span>
- <span class="stack-value">Vue 3 (SPA)</span>
- </div>
- <div class="stack-item">
- <span class="stack-label">ORM / Data Access</span>
- <span class="stack-value">NHibernate + Dapper</span>
- </div>
- <div class="stack-item">
- <span class="stack-label">Banco de Dados</span>
- <span class="stack-value">SQL Server (multibanco — 1 database por sócio) + Redis</span>
- </div>
- <div class="stack-item">
- <span class="stack-label">Autenticação</span>
- <span class="stack-value">Keycloak (SSO/OAuth 2.0)</span>
- </div>
- <div class="stack-item">
- <span class="stack-label">Reverse Proxy</span>
- <span class="stack-value">Nginx</span>
- </div>
- <div class="stack-item">
- <span class="stack-label">Real-time</span>
- <span class="stack-value">SignalR</span>
- </div>
- <div class="stack-item">
- <span class="stack-label">Infraestrutura</span>
- <span class="stack-value">Docker + AWS (EC2/ECS + RDS)</span>
- </div>
- <div class="stack-item">
- <span class="stack-label">Armazenamento de Imagens</span>
- <span class="stack-value">AWS S3 (templates, logos, QR Code, código de barras, prints da conta de luz — versionados por tenant/fatura)</span>
- </div>
- <div class="stack-item">
- <span class="stack-label">Mensageria / Eventos</span>
- <span class="stack-value">AWS SNS + SQS FIFO + Lambda (eventos de domínio com ordem garantida, deduplicação por tenant+fatura e DLQ)</span>
- </div>
- </div>
- </div>
-
- <div class="patterns-section">
- <h3>Padrões Arquiteturais</h3>
- <div class="patterns-grid">
- <div class="pattern-card">
- <h4>Monolito Modular</h4>
- <p>Aplicação única organizada em módulos independentes. Simplicidade de deploy com boa separação.</p>
- </div>
- <div class="pattern-card">
- <h4>DDD (Domain-Driven Design)</h4>
- <p>Código organizado por domínio de negócio, com contextos delimitados bem definidos.</p>
- </div>
- <div class="pattern-card">
- <h4>CQRS</h4>
- <p>NHibernate para escrita (commands) e Dapper para leitura (queries) - alta performance.</p>
- </div>
- <div class="pattern-card">
- <h4>Clean Architecture</h4>
- <p>Camadas bem definidas com inversão de dependência.</p>
- </div>
- <div class="pattern-card">
- <h4>Multitenancy Multibanco</h4>
- <p>Cada sócio com <strong>seu próprio banco de dados dedicado</strong>. Segurança, backup e restore totalmente independentes.</p>
- </div>
- <div class="pattern-card">
- <h4>Event-Driven Architecture</h4>
- <p>Arquitetura orientada a eventos: módulos comunicam-se de forma desacoplada via Domain Events e Integration Events, permitindo extensibilidade sem reescrita.</p>
- </div>
- <div class="pattern-card">
- <h4>Máquinas de Estado</h4>
- <p>Ciclos de vida críticos (Contrato, Fatura, Crédito, Cobrança) modelados como state machines explícitas — transições válidas, auditáveis e testáveis.</p>
- </div>
- <div class="pattern-card">
- <h4>API REST + Swagger</h4>
- <p>Endpoints documentados automaticamente via OpenAPI/Swagger para fácil integração.</p>
- </div>
- </div>
- </div>
-
- <!-- DECISÃO ARQUITETURAL: Segregação de Infraestrutura -->
- <div class="decision-card">
- <div class="decision-header">
- <span class="decision-tag">Decisão Arquitetural</span>
- <h3>Segregação Completa da Infraestrutura?</h3>
- <p class="decision-question">
- Uma pergunta legítima a ser feita pelos sócios: <strong>cada operação deve ter sua própria infraestrutura (banco, app, ambiente) totalmente isolada</strong>, ou todos compartilham a mesma plataforma com isolamento físico via multitenancy multibanco (1 database dedicado por sócio)?
- </p>
- </div>
- <div class="decision-columns">
- <div class="decision-col decision-pros">
- <h4>
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
- Pontos Positivos
- </h4>
- <ul>
- <li><strong>Isolamento absoluto</strong> — falha, deploy ou bug em uma operação não afeta as demais</li>
- <li><strong>Soberania total</strong> — cada sócio decide janela de manutenção, versão, backup, retenção</li>
- <li><strong>Compliance simplificado</strong> — dados nunca compartilham hardware com terceiros</li>
- <li><strong>Portabilidade</strong> — saída de um sócio não impacta os outros (basta entregar a stack dele)</li>
- </ul>
- </div>
- <div class="decision-col decision-cons">
- <h4>
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
- Pontos Negativos
- </h4>
- <ul>
- <li><strong>Custo de infra multiplicado</strong> — N ambientes em vez de 1 (banco, app, observabilidade, backups)</li>
- <li><strong>Manutenção N vezes maior</strong> — cada deploy, patch e upgrade replicado por sócio</li>
- <li><strong>Sem economia de escala</strong> — cada sócio paga o "piso fixo" da infraestrutura</li>
- <li><strong>Consolidação de indicadores</strong> torna-se um projeto de integração à parte</li>
- <li><strong>Suporte mais caro</strong> — horas de sustentação proporcionais ao número de ambientes</li>
- </ul>
- </div>
- </div>
- <div class="decision-recommendation">
- <strong>Recomendação técnica:</strong> a arquitetura proposta (Multitenancy Multibanco) já entrega <strong>isolamento físico total de dados</strong> — cada sócio tem seu <strong>próprio banco de dados dedicado</strong>, com backup e segurança totalmente independentes — preservando a economia de escala compartilhada da camada de aplicação. A segregação completa de infraestrutura permanece como opção, mediante orçamento adicional, caso algum sócio tenha exigência regulatória específica.
- </div>
- </div>
-
- <div class="cqrs-diagram">
- <h3>Arquitetura Monolito Modular + Multitenancy</h3>
- <div class="arch-diagram">
- <div class="arch-title">MONOLITO MODULAR + CQRS</div>
- <div class="arch-row">
- <div class="arch-box"><strong>NGINX</strong><small>Rev. Proxy</small></div>
- <div class="arch-box"><strong>Keycloak</strong><small>SSO / OAuth</small></div>
- <div class="arch-box"><strong>SQL Server</strong><small>Multibanco</small></div>
- </div>
- <div class="arch-down">↓ &nbsp;&nbsp; ↓ &nbsp;&nbsp; ↓</div>
- <div class="arch-api">
- <div class="arch-api-title">.NET 8 API — Monolito Modular</div>
- <div class="arch-modules">
- <span>Identity</span>
- <span>Cadastro</span>
- <span>Créditos</span>
- <span>Billing</span>
- <span>…</span>
- </div>
- <div class="arch-stack"><span>NHibernate <small>(Commands / Escrita)</small></span><span>Dapper <small>(Queries)</small></span></div>
- </div>
- <div class="arch-down">↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓</div>
- <div class="arch-row arch-row-2">
- <div class="arch-box"><strong>Redis</strong><small>Cache</small></div>
- <div class="arch-box"><strong>Swagger / OpenAPI</strong><small>Documentação</small></div>
- </div>
- <div class="arch-vantagens"><strong>Vantagens:</strong> Deploy simples · Módulos isolados · CQRS nativo</div>
- </div>
- </div>
-
- </section>
-
- <!-- Roadmap -->
- <section id="roadmap" class="section">
- <h2 class="section-title">
- <span class="section-number">04</span>
- Roadmap do Projeto
- </h2>
-
- <p class="roadmap-lead">Plano de execução dividido em <strong>5 fases sequenciais</strong> ao longo de <strong>8 sprints (~4 meses)</strong>, baseado no escopo do Core e nos módulos opcionais discutidos no Assessment. Cada fase entrega um <strong>milestone funcional</strong> e apresenta, quando aplicável, <strong>trade-offs de escopo</strong> (MVP vs. Premium) para você dosar investimento e automação.</p>
-
- <!-- FASE 1 -->
- <div class="timeline">
- <div class="timeline-item">
- <div class="timeline-marker">1</div>
- <div class="timeline-content">
- <div class="timeline-header">
- <h3>Fase 1: Foundation + Assessment</h3>
- <span class="timeline-period">Sprint 1-2</span>
- </div>
- <ul>
- <li>Setup do Projeto (estrutura, CI/CD, ambientes)</li>
- <li>Identity & Auth (Keycloak + Multitenancy Multibanco — 1 DB por sócio)</li>
- <li>Assessment Individual do(s) sócio(s)</li>
- <li>Migração de Dados (planilha atual)</li>
- </ul>
- <div class="milestone">Milestone 1: Infraestrutura e dados migrados</div>
- </div>
- </div>
-
- <!-- FASE 2 -->
- <div class="timeline-item">
- <div class="timeline-marker">2</div>
- <div class="timeline-content">
- <div class="timeline-header">
- <h3>Fase 2: Core Business</h3>
- <span class="timeline-period">Sprint 3-4</span>
- </div>
- <ul>
- <li>Cadastro de Clientes & Unidades Consumidoras</li>
- <li>Gestão de Contratos (fidelidade, vigência)</li>
- <li>Engine de Distribuição de Créditos (% e Prioridade)</li>
- <li>Gestão de Créditos Excedentes</li>
- </ul>
-
- <!-- TRADE-OFF: FATURAS -->
- <div class="tradeoff">
- <div class="tradeoff-header">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
- <span>Trade-off: Entrada de Produção/Faturas</span>
- </div>
- <div class="tradeoff-options">
- <div class="option-row option-mvp">
- <div class="option-label"><strong>Opção A (MVP):</strong> Input manual simplificado de kWh</div>
- <span class="option-price">Incluso no Core</span>
- </div>
- </div>
- </div>
-
- <div class="milestone">Milestone 2: Motor de créditos funcionando</div>
- </div>
- </div>
-
- <!-- FASE 3 -->
- <div class="timeline-item">
- <div class="timeline-marker">3</div>
- <div class="timeline-content">
- <div class="timeline-header">
- <h3>Fase 3: Billing & Cobrança</h3>
- <span class="timeline-period">Sprint 5-6</span>
- </div>
- <ul>
- <li>Geração Automática de Faturas</li>
- <li>Template de Cobrança Personalizado</li>
- <li>Controle de Juros e Multas</li>
- <li>Webhook de Baixa (confirmação de pagamento)</li>
- </ul>
-
- <!-- TRADE-OFF: INTEGRAÇÃO BANCÁRIA -->
- <div class="tradeoff">
- <div class="tradeoff-header">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
- <span>Trade-off: Integração de Pagamentos</span>
- </div>
- <div class="tradeoff-options">
- <div class="option-row option-mvp">
- <div class="option-label"><strong>Opção A (Core):</strong> Lançamento manual de recebíveis</div>
- <span class="option-price">Incluso no Core</span>
- </div>
- <div class="option-row option-premium">
- <div class="option-label"><strong>Opção B (Recomendado):</strong> Gateway Asaas (Boleto + Pix + Webhook de baixa + Conciliação automática)</div>
- <span class="option-price">+ R$ 4.000</span>
- </div>
- </div>
- <p class="tradeoff-rec"><em>Recomendação:</em> O Core já entrega faturamento e baixa manual sem custo adicional. Para automação completa de cobrança, o <strong>Asaas</strong> é o gateway padrão e único de integração nativa — é a melhor relação custo-benefício no Brasil (Pix R$ 1,99, Boleto ~R$ 2,49, API e suporte em PT-BR), com webhook de baixa automática e conciliação bancária automatizada.</p>
- </div>
-
- <div class="milestone">Milestone 3: Faturamento e cobrança automatizados</div>
- </div>
- </div>
-
- <!-- FASE 4 -->
- <div class="timeline-item">
- <div class="timeline-marker">4</div>
- <div class="timeline-content">
- <div class="timeline-header">
- <h3>Fase 4: Comunicação</h3>
- <span class="timeline-period">Sprint 7</span>
- </div>
- <ul>
- <li>Envio Automático de Faturas</li>
- <li>Lembretes de Vencimento (D-3)</li>
- <li>Notificação de Inadimplência</li>
- <li>Recibo de Pagamento</li>
- </ul>
-
- <!-- TRADE-OFF: COMUNICAÇÃO -->
- <div class="tradeoff">
- <div class="tradeoff-header">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
- <span>Trade-off: Canal de Comunicação</span>
- </div>
- <div class="tradeoff-options">
- <div class="option-row option-mvp">
- <div class="option-label"><strong>Opção A (MVP):</strong> Alertas por E-mail (templates profissionais)</div>
- <span class="option-price">Incluso no Core</span>
- </div>
- <div class="option-row option-premium">
- <div class="option-label"><strong>Opção B (Premium):</strong> WhatsApp Nativo (Cloud API oficial + templates HSM, envio unidirecional)</div>
- <span class="option-price">+ R$ 2.500</span>
- </div>
- </div>
- <p class="tradeoff-rec"><em>Recomendação:</em> E-mail funciona bem e tem custo zero de API. WhatsApp aumenta engajamento significativamente e pode ser adicionado depois. Escopo do módulo: <strong>envio de faturas, boletos, documentos e mensagens curtas</strong> via Cloud API + templates HSM. <strong>Bot conversacional (via n8n) é melhoria futura, fora do escopo deste módulo.</strong></p>
- </div>
- </div>
- </div>
-
- <!-- FASE 5 -->
- <div class="timeline-item final">
- <div class="timeline-marker">5</div>
- <div class="timeline-content">
- <div class="timeline-header">
- <h3>Fase 5: Analytics & Go-Live</h3>
- <span class="timeline-period">Sprint 8</span>
- </div>
- <ul>
- <li>Dashboard Financeiro Operacional</li>
- <li>Visão de Produção vs. Consumo</li>
- <li>Ajustes Finais (UX, performance)</li>
- <li>Deploy em Produção</li>
- </ul>
-
- <!-- EXPANSÕES FUTURAS -->
- <div class="future-expansion">
- <div class="future-header">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
- <span>Expansões Futuras (pós Go-Live)</span>
- </div>
- <ul class="future-list">
- <li>
- <div class="future-item-head">
- <strong>Relatórios Avançados</strong>
- <span class="future-price">+ R$ 2.500</span>
- </div>
- <p>Aging de recebíveis, projeções, exportação PDF/Excel, relatórios customizados.</p>
- </li>
- <li>
- <div class="future-item-head">
- <strong>Automações com n8n</strong>
- <span class="future-price future-price-tbd">A mensurar</span>
- </div>
- <p>Orquestração de fluxos, integrações com terceiros, bot conversacional WhatsApp e gatilhos automáticos. Escopo e valor a definir conforme demanda.</p>
- </li>
- </ul>
- </div>
-
- </div>
- </div>
- </div>
-
- <!-- RESUMO DE TRADE-OFFS -->
- <div class="roadmap-summary">
- <h4 class="roadmap-summary-title">Resumo: MVP vs. Full Platform</h4>
- <div class="roadmap-summary-table-wrap">
- <table class="roadmap-summary-table">
- <thead>
- <tr>
- <th>Funcionalidade</th>
- <th>MVP (Core)</th>
- <th>Full Platform</th>
- </tr>
- </thead>
- <tbody>
- <tr>
- <td>Entrada de Produção</td>
- <td class="cell-mvp">Input Manual</td>
- <td class="cell-full">Input Manual (mesmo do Core)</td>
- </tr>
- <tr>
- <td>Pagamentos</td>
- <td class="cell-mvp">Baixa Manual</td>
- <td class="cell-full">Asaas Automatizado <span class="delta">+R$ 4.000</span></td>
- </tr>
- <tr>
- <td>Comunicação</td>
- <td class="cell-mvp">E-mail</td>
- <td class="cell-full">WhatsApp <span class="delta">+R$ 2.500</span></td>
- </tr>
- <tr>
- <td>Notificações</td>
- <td class="cell-mvp cell-empty">—</td>
- <td class="cell-full">Tempo real / SignalR <span class="delta">+R$ 1.500</span></td>
- </tr>
- <tr>
- <td>Relatórios</td>
- <td class="cell-mvp">Dashboard Básico</td>
- <td class="cell-full">Avançados <span class="delta">+R$ 2.500</span></td>
- </tr>
- <tr class="row-total">
- <td>TOTAL Desenvolvimento (1 Sócio)</td>
- <td class="cell-mvp">R$ 28.500</td>
- <td class="cell-full">R$ 37.500</td>
- </tr>
- </tbody>
- </table>
- </div>
- </div>
-
- <div class="timeline-visual" style="margin-top: 3rem;">
- <h3>Cronograma Visual</h3>
- <div class="gantt-simple">
- <div class="gantt-row">
- <span class="gantt-label">Mês 1</span>
- <div class="gantt-bar phase1">Foundation + Keycloak</div>
- </div>
- <div class="gantt-row">
- <span class="gantt-label">Mês 2</span>
- <div class="gantt-bar phase2">Core Business (Engine)</div>
- </div>
- <div class="gantt-row">
- <span class="gantt-label">Mês 3</span>
- <div class="gantt-bar phase3">Billing + Gateway</div>
- </div>
- <div class="gantt-row">
- <span class="gantt-label">Mês 4</span>
- <div class="gantt-bar phase4">Comunicação + Go-Live</div>
- </div>
- </div>
- <p style="font-size: 0.85rem; color: #666; margin-top: 1rem; text-align: center;">
- * Módulos de expansão (Asaas, WhatsApp, Relatórios) podem ser desenvolvidos em paralelo ou após o Go-Live
- </p>
- </div>
- </section>
-
- <!-- Investimento -->
+ <!-- 02. Investimento -->
  <section id="investimento" class="section">
  <h2 class="section-title">
- <span class="section-number">05</span>
+ <span class="section-number">02</span>
  Investimento
  </h2>
 
@@ -1164,9 +557,520 @@
  </div>
  </div>
  </div>
+ </section>
 
- <!-- BLOCO 3: EVOLUÇÃO E MANUTENÇÃO SOB DEMANDA -->
- <div class="pricing-options" style="margin-top: 3rem;">
+ <!-- 03. Diferenciais da Solução -->
+ <section id="diferenciais" class="section differentials">
+ <h2 class="section-title">
+ <span class="section-number">03</span>
+ Diferenciais da Solução
+ </h2>
+
+ <div class="diff-grid">
+ <div class="diff-item">
+ <span class="diff-icon">M</span>
+ <h4>Multitenancy</h4>
+ <p>Pronto para escalar com novos sócios/operações</p>
+ </div>
+ <div class="diff-item">
+ <span class="diff-icon">C</span>
+ <h4>CQRS</h4>
+ <p>Performance em leitura sem impactar escrita</p>
+ </div>
+ <div class="diff-item">
+ <span class="diff-icon">D</span>
+ <h4>DDD</h4>
+ <p>Código organizado por domínio de negócio</p>
+ </div>
+ <div class="diff-item">
+ <span class="diff-icon">A</span>
+ <h4>Pagamento Automatizado (Asaas)</h4>
+ <p>Boleto, Pix e baixa automática via webhook</p>
+ </div>
+ <div class="diff-item">
+ <span class="diff-icon">E</span>
+ <h4>Créditos Inteligentes</h4>
+ <p>Motor de rateio percentual/prioridade</p>
+ </div>
+ <div class="diff-item">
+ <span class="diff-icon">W</span>
+ <h4>WhatsApp Nativo</h4>
+ <p>Envio de faturas, boletos e documentos via Cloud API oficial</p>
+ </div>
+ <div class="diff-item">
+ <span class="diff-icon">$</span>
+ <h4>Rentabilização como SaaS</h4>
+ <p>Possibilidade de rentabilizar o SaaS — oferecer a plataforma a outros operadores como nova fonte de receita</p>
+ </div>
+ </div>
+ </section>
+
+ <!-- 04. Módulos do Sistema -->
+ <section id="modulos" class="section">
+ <h2 class="section-title">
+ <span class="section-number">04</span>
+ Módulos do Sistema
+ </h2>
+
+ <div class="context-map">
+ <h3>Mapa de Contextos (DDD)</h3>
+ <div class="map-container">
+ <div class="ddd-map">
+ <div class="ddd-title">PLATAFORMA ENERGIA SOLAR</div>
+ <div class="ddd-grid">
+ <div class="ddd-ctx" style="grid-column: 1;">Identity &amp;<br>Multitenancy</div>
+ <div class="ddd-arrow" style="grid-column: 2;">↔</div>
+ <div class="ddd-ctx" style="grid-column: 3;">Cadastro<br><small>(Clientes)</small></div>
+ <div class="ddd-arrow" style="grid-column: 4;">↔</div>
+ <div class="ddd-ctx" style="grid-column: 5;">Geração<br><small>(Produção)</small></div>
+
+ <div class="ddd-vert" style="grid-column: 1; grid-row: 2;">↓</div>
+ <div class="ddd-vert" style="grid-column: 3; grid-row: 2;">↓</div>
+ <div class="ddd-vert" style="grid-column: 5; grid-row: 2;">↓</div>
+
+ <div class="ddd-ctx" style="grid-column: 1; grid-row: 3;">Contratos &amp;<br>Fidelidade</div>
+ <div class="ddd-arrow" style="grid-column: 2; grid-row: 3;">↔</div>
+ <div class="ddd-ctx" style="grid-column: 3; grid-row: 3;">Distribuição<br>de Créditos</div>
+ <div class="ddd-arrow" style="grid-column: 4; grid-row: 3;">↔</div>
+ <div class="ddd-ctx" style="grid-column: 5; grid-row: 3;">Faturamento<br>&amp; Cobrança</div>
+
+ <div class="ddd-vert" style="grid-column: 3; grid-row: 4;">↓</div>
+ <div class="ddd-vert" style="grid-column: 5; grid-row: 4;">↓</div>
+
+ <div class="ddd-ctx" style="grid-column: 3; grid-row: 5;">Financeiro<br><small>(Asaas + Pix)</small></div>
+ <div class="ddd-arrow" style="grid-column: 4; grid-row: 5;">↔</div>
+ <div class="ddd-ctx" style="grid-column: 5; grid-row: 5;">Comunicação<br><small>(WhatsApp)</small></div>
+
+ <div class="ddd-vert" style="grid-column: 3; grid-row: 6;">↓</div>
+
+ <div class="ddd-ctx ddd-highlight" style="grid-column: 3; grid-row: 7;">Dashboards<br>&amp; Relatórios</div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <div class="modules-grid">
+ <!-- Módulo 1 - Core -->
+ <div class="module-card" style="border-left: 4px solid #27ae60;">
+ <div class="module-header">
+ <span class="module-number">01</span>
+ <h3>Identity & Multitenancy</h3>
+ </div>
+ <ul class="module-features">
+ <li>Autenticação via Keycloak (OpenSource)</li>
+ <li>SSO, OAuth 2.0 e OpenID Connect</li>
+ <li>Multitenancy Multibanco (1 database dedicado por sócio — isolamento físico total)</li>
+ <li>Controle de Acesso (RBAC)</li>
+ <li>Subdomínio dinâmico por sócio</li>
+ </ul>
+ </div>
+
+ <!-- Módulo 2 - Core -->
+ <div class="module-card" style="border-left: 4px solid #27ae60;">
+ <div class="module-header">
+ <span class="module-number">02</span>
+ <h3>Cadastro de Clientes</h3>
+ </div>
+ <ul class="module-features">
+ <li>CRUD completo (CPF/CNPJ)</li>
+ <li>Unidades Consumidoras (UC COELBA)</li>
+ <li>Importação de base existente</li>
+ <li>Histórico de alterações</li>
+ </ul>
+ </div>
+
+ <!-- Módulo 3 - Core -->
+ <div class="module-card" style="border-left: 4px solid #27ae60;">
+ <div class="module-header">
+ <span class="module-number">03</span>
+ <h3>Gestão de Contratos</h3>
+ </div>
+ <ul class="module-features">
+ <li>Sem fidelidade / 1 ano / 2 anos</li>
+ <li>Regras de cancelamento</li>
+ <li>Vigência e renovação</li>
+ <li>Multa por quebra contratual</li>
+ </ul>
+ </div>
+
+ <!-- Módulo 4 - Core -->
+ <div class="module-card" style="border-left: 4px solid #27ae60;">
+ <div class="module-header">
+ <span class="module-number">04</span>
+ <h3>Gestão de Geração</h3>
+ </div>
+ <ul class="module-features">
+ <li>Cadastro de usinas solares</li>
+ <li>Registro manual de produção (kWh)</li>
+ <li>Registro de geração via planilha ou digitação</li>
+ <li>Histórico de geração</li>
+ </ul>
+ </div>
+
+ <!-- Módulo 5 - Core -->
+ <div class="module-card" style="border-left: 4px solid #27ae60;">
+ <div class="module-header">
+ <span class="module-number">05</span>
+ <h3>Distribuição de Créditos</h3>
+ </div>
+ <ul class="module-features">
+ <li>Modo Percentual (X% por unidade)</li>
+ <li>Modo Prioridade (ordem de abatimento)</li>
+ <li>Créditos excedentes acumulados</li>
+ <li>Engine de rateio automático</li>
+ </ul>
+ </div>
+
+ <!-- Módulo 6 - Core -->
+ <div class="module-card" style="border-left: 4px solid #27ae60;">
+ <div class="module-header">
+ <span class="module-number">06</span>
+ <h3>Faturamento & Cobrança</h3>
+ </div>
+ <ul class="module-features">
+ <li>Geração de faturas (sem gateway no Core)</li>
+ <li>Template do cliente preenchido com dados do BD</li>
+ <li>Por boleto: importação de QR Code, código de barras e print da conta de luz (S3)</li>
+ <li>Envio e baixa manuais</li>
+ <li>Juros: 2% + 0,033%/dia</li>
+ <li>Máquina de estado: Gerada → Enviada → Paga</li>
+ </ul>
+ </div>
+
+ <!-- Módulo 7 - Core -->
+ <div class="module-card" style="border-left: 4px solid #27ae60;">
+ <div class="module-header">
+ <span class="module-number">09</span>
+ <h3>Dashboards & Relatórios</h3>
+ </div>
+ <ul class="module-features">
+ <li>Dashboard financeiro</li>
+ <li>Relatório de produção</li>
+ <li>Aging de recebíveis</li>
+ <li>Exportação PDF/Excel</li>
+ </ul>
+ </div>
+
+ <!-- Módulo 8 - Expansion -->
+ <div class="module-card" style="border-left: 4px solid #3498db;">
+ <div class="module-header">
+ <span class="module-number">07</span>
+ <h3>Pagamento Automatizado (Asaas)</h3>
+ </div>
+ <ul class="module-features">
+ <li>Emissão de boletos e Pix via API</li>
+ <li>Webhook de baixa automática</li>
+ <li>Conciliação bancária automatizada</li>
+ <li>Padrão do mercado brasileiro</li>
+ </ul>
+ </div>
+
+ <!-- Módulo 9 - Expansion -->
+ <div class="module-card" style="border-left: 4px solid #3498db;">
+ <div class="module-header">
+ <span class="module-number">08</span>
+ <h3>Comunicação WhatsApp</h3>
+ </div>
+ <ul class="module-features">
+ <li>Envio de faturas e boletos (PDF anexo)</li>
+ <li>Envio de documentos (relatórios, recibos)</li>
+ <li>Mensagens curtas (lembretes, avisos)</li>
+ <li>WhatsApp Cloud API + templates HSM</li>
+ <li><em>Sem bot conversacional — canal unidirecional</em></li>
+ <li><strong>Roadmap futuro:</strong> bot via n8n (escopo separado)</li>
+ </ul>
+ </div>
+
+ <!-- Módulo 10 - Expansion -->
+ <div class="module-card" style="border-left: 4px solid #3498db;">
+ <div class="module-header">
+ <span class="module-number">8b</span>
+ <h3>Notificações em Tempo Real</h3>
+ </div>
+ <ul class="module-features">
+ <li>Push in-app via <strong>SignalR</strong> (WebSocket)</li>
+ <li>Sino no topbar com badge de não lidas</li>
+ <li>Toast no canto + painel dropdown</li>
+ <li>Eventos: pagamento, faturamento, geração, cobrança, alertas</li>
+ <li>Multitenant — cada sócio só recebe os próprios eventos</li>
+ </ul>
+ </div>
+ </div>
+
+ <!-- Legenda Core vs Expansão -->
+ <div style="display: flex; gap: 2rem; align-items: center; margin-top: 1.5rem; padding: 0.85rem 1.25rem; background: #f8f9fa; border-radius: 8px; font-size: 0.88rem;">
+ <div style="display: flex; align-items: center; gap: 0.5rem;">
+ <span style="display: inline-block; width: 16px; height: 16px; background: #27ae60; border-radius: 3px;"></span>
+ <span style="color: #444;"><strong>Core</strong> — incluso no plano Básico</span>
+ </div>
+ <div style="display: flex; align-items: center; gap: 0.5rem;">
+ <span style="display: inline-block; width: 16px; height: 16px; background: #3498db; border-radius: 3px;"></span>
+ <span style="color: #444;"><strong>Expansão</strong> — módulos opcionais</span>
+ </div>
+ </div>
+ </section>
+
+ <!-- 05. Roadmap do Projeto -->
+ <section id="roadmap" class="section">
+ <h2 class="section-title">
+ <span class="section-number">05</span>
+ Roadmap do Projeto
+ </h2>
+
+ <p class="roadmap-lead">Plano de execução dividido em <strong>5 fases sequenciais</strong> ao longo de <strong>8 sprints (~4 meses)</strong>, baseado no escopo do Core e nos módulos opcionais discutidos no Assessment. Cada fase entrega um <strong>milestone funcional</strong> e apresenta, quando aplicável, <strong>trade-offs de escopo</strong> (MVP vs. Premium) para você dosar investimento e automação.</p>
+
+ <!-- FASE 1 -->
+ <div class="timeline">
+ <div class="timeline-item">
+ <div class="timeline-marker">1</div>
+ <div class="timeline-content">
+ <div class="timeline-header">
+ <h3>Fase 1: Foundation + Assessment</h3>
+ <span class="timeline-period">Sprint 1-2</span>
+ </div>
+ <ul>
+ <li>Setup do Projeto (estrutura, CI/CD, ambientes)</li>
+ <li>Identity & Auth (Keycloak + Multitenancy Multibanco — 1 DB por sócio)</li>
+ <li>Assessment Individual do(s) sócio(s)</li>
+ <li>Migração de Dados (planilha atual)</li>
+ </ul>
+ <div class="milestone">Milestone 1: Infraestrutura e dados migrados</div>
+ </div>
+ </div>
+
+ <!-- FASE 2 -->
+ <div class="timeline-item">
+ <div class="timeline-marker">2</div>
+ <div class="timeline-content">
+ <div class="timeline-header">
+ <h3>Fase 2: Core Business</h3>
+ <span class="timeline-period">Sprint 3-4</span>
+ </div>
+ <ul>
+ <li>Cadastro de Clientes & Unidades Consumidoras</li>
+ <li>Gestão de Contratos (fidelidade, vigência)</li>
+ <li>Engine de Distribuição de Créditos (% e Prioridade)</li>
+ <li>Gestão de Créditos Excedentes</li>
+ </ul>
+
+ <!-- TRADE-OFF: FATURAS -->
+ <div class="tradeoff">
+ <div class="tradeoff-header">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+ <span>Trade-off: Entrada de Produção/Faturas</span>
+ </div>
+ <div class="tradeoff-options">
+ <div class="option-row option-mvp">
+ <div class="option-label"><strong>Opção A (MVP):</strong> Input manual simplificado de kWh</div>
+ <span class="option-price">Incluso no Core</span>
+ </div>
+ </div>
+ </div>
+
+ <div class="milestone">Milestone 2: Motor de créditos funcionando</div>
+ </div>
+ </div>
+
+ <!-- FASE 3 -->
+ <div class="timeline-item">
+ <div class="timeline-marker">3</div>
+ <div class="timeline-content">
+ <div class="timeline-header">
+ <h3>Fase 3: Billing & Cobrança</h3>
+ <span class="timeline-period">Sprint 5-6</span>
+ </div>
+ <ul>
+ <li>Geração Automática de Faturas</li>
+ <li>Template de Cobrança Personalizado</li>
+ <li>Controle de Juros e Multas</li>
+ <li>Webhook de Baixa (confirmação de pagamento)</li>
+ </ul>
+
+ <!-- TRADE-OFF: INTEGRAÇÃO BANCÁRIA -->
+ <div class="tradeoff">
+ <div class="tradeoff-header">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+ <span>Trade-off: Integração de Pagamentos</span>
+ </div>
+ <div class="tradeoff-options">
+ <div class="option-row option-mvp">
+ <div class="option-label"><strong>Opção A (Core):</strong> Lançamento manual de recebíveis</div>
+ <span class="option-price">Incluso no Core</span>
+ </div>
+ <div class="option-row option-premium">
+ <div class="option-label"><strong>Opção B (Recomendado):</strong> Gateway Asaas (Boleto + Pix + Webhook de baixa + Conciliação automática)</div>
+ <span class="option-price">+ R$ 4.000</span>
+ </div>
+ </div>
+ <p class="tradeoff-rec"><em>Recomendação:</em> O Core já entrega faturamento e baixa manual sem custo adicional. Para automação completa de cobrança, o <strong>Asaas</strong> é o gateway padrão e único de integração nativa — é a melhor relação custo-benefício no Brasil (Pix R$ 1,99, Boleto ~R$ 2,49, API e suporte em PT-BR), com webhook de baixa automática e conciliação bancária automatizada.</p>
+ </div>
+
+ <div class="milestone">Milestone 3: Faturamento e cobrança automatizados</div>
+ </div>
+ </div>
+
+ <!-- FASE 4 -->
+ <div class="timeline-item">
+ <div class="timeline-marker">4</div>
+ <div class="timeline-content">
+ <div class="timeline-header">
+ <h3>Fase 4: Comunicação</h3>
+ <span class="timeline-period">Sprint 7</span>
+ </div>
+ <ul>
+ <li>Envio Automático de Faturas</li>
+ <li>Lembretes de Vencimento (D-3)</li>
+ <li>Notificação de Inadimplência</li>
+ <li>Recibo de Pagamento</li>
+ </ul>
+
+ <!-- TRADE-OFF: COMUNICAÇÃO -->
+ <div class="tradeoff">
+ <div class="tradeoff-header">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+ <span>Trade-off: Canal de Comunicação</span>
+ </div>
+ <div class="tradeoff-options">
+ <div class="option-row option-mvp">
+ <div class="option-label"><strong>Opção A (MVP):</strong> Alertas por E-mail (templates profissionais)</div>
+ <span class="option-price">Incluso no Core</span>
+ </div>
+ <div class="option-row option-premium">
+ <div class="option-label"><strong>Opção B (Premium):</strong> WhatsApp Nativo (Cloud API oficial + templates HSM, envio unidirecional)</div>
+ <span class="option-price">+ R$ 2.500</span>
+ </div>
+ </div>
+ <p class="tradeoff-rec"><em>Recomendação:</em> E-mail funciona bem e tem custo zero de API. WhatsApp aumenta engajamento significativamente e pode ser adicionado depois. Escopo do módulo: <strong>envio de faturas, boletos, documentos e mensagens curtas</strong> via Cloud API + templates HSM. <strong>Bot conversacional (via n8n) é melhoria futura, fora do escopo deste módulo.</strong></p>
+ </div>
+ </div>
+ </div>
+
+ <!-- FASE 5 -->
+ <div class="timeline-item final">
+ <div class="timeline-marker">5</div>
+ <div class="timeline-content">
+ <div class="timeline-header">
+ <h3>Fase 5: Analytics & Go-Live</h3>
+ <span class="timeline-period">Sprint 8</span>
+ </div>
+ <ul>
+ <li>Dashboard Financeiro Operacional</li>
+ <li>Visão de Produção vs. Consumo</li>
+ <li>Ajustes Finais (UX, performance)</li>
+ <li>Deploy em Produção</li>
+ </ul>
+
+ <!-- EXPANSÕES FUTURAS -->
+ <div class="future-expansion">
+ <div class="future-header">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+ <span>Expansões Futuras (pós Go-Live)</span>
+ </div>
+ <ul class="future-list">
+ <li>
+ <div class="future-item-head">
+ <strong>Relatórios Avançados</strong>
+ <span class="future-price">+ R$ 2.500</span>
+ </div>
+ <p>Aging de recebíveis, projeções, exportação PDF/Excel, relatórios customizados.</p>
+ </li>
+ <li>
+ <div class="future-item-head">
+ <strong>Automações com n8n</strong>
+ <span class="future-price future-price-tbd">A mensurar</span>
+ </div>
+ <p>Orquestração de fluxos, integrações com terceiros, bot conversacional WhatsApp e gatilhos automáticos. Escopo e valor a definir conforme demanda.</p>
+ </li>
+ </ul>
+ </div>
+
+ </div>
+ </div>
+ </div>
+
+ <!-- RESUMO DE TRADE-OFFS -->
+ <div class="roadmap-summary">
+ <h4 class="roadmap-summary-title">Resumo: MVP vs. Full Platform</h4>
+ <div class="roadmap-summary-table-wrap">
+ <table class="roadmap-summary-table">
+ <thead>
+ <tr>
+ <th>Funcionalidade</th>
+ <th>MVP (Core)</th>
+ <th>Full Platform</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>Entrada de Produção</td>
+ <td class="cell-mvp">Input Manual</td>
+ <td class="cell-full">Input Manual (mesmo do Core)</td>
+ </tr>
+ <tr>
+ <td>Pagamentos</td>
+ <td class="cell-mvp">Baixa Manual</td>
+ <td class="cell-full">Asaas Automatizado <span class="delta">+R$ 4.000</span></td>
+ </tr>
+ <tr>
+ <td>Comunicação</td>
+ <td class="cell-mvp">E-mail</td>
+ <td class="cell-full">WhatsApp <span class="delta">+R$ 2.500</span></td>
+ </tr>
+ <tr>
+ <td>Notificações</td>
+ <td class="cell-mvp cell-empty">—</td>
+ <td class="cell-full">Tempo real / SignalR <span class="delta">+R$ 1.500</span></td>
+ </tr>
+ <tr>
+ <td>Relatórios</td>
+ <td class="cell-mvp">Dashboard Básico</td>
+ <td class="cell-full">Avançados <span class="delta">+R$ 2.500</span></td>
+ </tr>
+ <tr class="row-total">
+ <td>TOTAL Desenvolvimento (1 Sócio)</td>
+ <td class="cell-mvp">R$ 28.500</td>
+ <td class="cell-full">R$ 37.500</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <div class="timeline-visual" style="margin-top: 3rem;">
+ <h3>Cronograma Visual</h3>
+ <div class="gantt-simple">
+ <div class="gantt-row">
+ <span class="gantt-label">Mês 1</span>
+ <div class="gantt-bar phase1">Foundation + Keycloak</div>
+ </div>
+ <div class="gantt-row">
+ <span class="gantt-label">Mês 2</span>
+ <div class="gantt-bar phase2">Core Business (Engine)</div>
+ </div>
+ <div class="gantt-row">
+ <span class="gantt-label">Mês 3</span>
+ <div class="gantt-bar phase3">Billing + Gateway</div>
+ </div>
+ <div class="gantt-row">
+ <span class="gantt-label">Mês 4</span>
+ <div class="gantt-bar phase4">Comunicação + Go-Live</div>
+ </div>
+ </div>
+ <p style="font-size: 0.85rem; color: #666; margin-top: 1rem; text-align: center;">
+ * Módulos de expansão (Asaas, WhatsApp, Relatórios) podem ser desenvolvidos em paralelo ou após o Go-Live
+ </p>
+ </div>
+ </section>
+
+ <!-- 06. Pós Go-Live -->
+ <section id="pos-golive" class="section">
+ <h2 class="section-title">
+ <span class="section-number">06</span>
+ Pós Go-Live
+ </h2>
+
+ <!-- Evolução e Manutenção Sob Demanda (extracted from old BLOCO 3) -->
+ <div class="pricing-options">
  <h3 class="bloco-title">
  <span class="bloco-badge">Bloco 3</span>
  Evolução e Manutenção Sob Demanda <span class="bloco-title-suffix">(Sem Recorrência)</span>
@@ -1222,55 +1126,10 @@
  </p>
  </div>
  </div>
- </section>
 
- <!-- Diferenciais -->
- <section class="section differentials">
- <h2 class="section-title">
- <span class="section-number">06</span>
- Diferenciais da Solução
- </h2>
-
- <div class="diff-grid">
- <div class="diff-item">
- <span class="diff-icon">M</span>
- <h4>Multitenancy</h4>
- <p>Pronto para escalar com novos sócios/operações</p>
- </div>
- <div class="diff-item">
- <span class="diff-icon">C</span>
- <h4>CQRS</h4>
- <p>Performance em leitura sem impactar escrita</p>
- </div>
- <div class="diff-item">
- <span class="diff-icon">D</span>
- <h4>DDD</h4>
- <p>Código organizado por domínio de negócio</p>
- </div>
- <div class="diff-item">
- <span class="diff-icon">A</span>
- <h4>Pagamento Automatizado (Asaas)</h4>
- <p>Boleto, Pix e baixa automática via webhook</p>
- </div>
- <div class="diff-item">
- <span class="diff-icon">E</span>
- <h4>Créditos Inteligentes</h4>
- <p>Motor de rateio percentual/prioridade</p>
- </div>
- <div class="diff-item">
- <span class="diff-icon">W</span>
- <h4>WhatsApp Nativo</h4>
- <p>Envio de faturas, boletos e documentos via Cloud API oficial</p>
- </div>
- </div>
- </section>
-
- <!-- Roadmap / Melhorias Futuras -->
- <section id="roadmap" class="section">
- <h2 class="section-title">
- <span class="section-number">06b</span>
- Roadmap / Melhorias Futuras
- </h2>
+ <!-- Roadmap / Melhorias Futuras (merged from old section 06b) -->
+ <div style="margin-top: 3rem;">
+ <h3 style="margin-bottom: 1rem; color: var(--secondary);">Roadmap / Melhorias Futuras</h3>
  <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.25rem; line-height: 1.7;">
  Funcionalidades fora do escopo dos planos atuais (Básico / Médio / Full), mapeadas como
  <strong>desenvolvimentos independentes</strong> a serem orçados e contratados separadamente após o Go-Live.
@@ -1292,12 +1151,177 @@
  </p>
  </div>
  </div>
+ </div>
  </section>
 
- <!-- Próximos Passos -->
- <section id="proximos-passos" class="section">
+ <!-- 07. Arquitetura Técnica -->
+ <section id="arquitetura" class="section">
  <h2 class="section-title">
  <span class="section-number">07</span>
+ Arquitetura Técnica
+ </h2>
+
+ <div class="tech-stack">
+ <h3>Stack Tecnológico</h3>
+ <div class="stack-grid">
+ <div class="stack-item">
+ <span class="stack-label">Backend</span>
+ <span class="stack-value">.NET 8 (C#) + Swagger</span>
+ </div>
+ <div class="stack-item">
+ <span class="stack-label">Frontend</span>
+ <span class="stack-value">Vue 3 (SPA)</span>
+ </div>
+ <div class="stack-item">
+ <span class="stack-label">ORM / Data Access</span>
+ <span class="stack-value">NHibernate + Dapper</span>
+ </div>
+ <div class="stack-item">
+ <span class="stack-label">Banco de Dados</span>
+ <span class="stack-value">SQL Server (multibanco — 1 database por sócio) + Redis</span>
+ </div>
+ <div class="stack-item">
+ <span class="stack-label">Autenticação</span>
+ <span class="stack-value">Keycloak (SSO/OAuth 2.0)</span>
+ </div>
+ <div class="stack-item">
+ <span class="stack-label">Reverse Proxy</span>
+ <span class="stack-value">Nginx</span>
+ </div>
+ <div class="stack-item">
+ <span class="stack-label">Real-time</span>
+ <span class="stack-value">SignalR</span>
+ </div>
+ <div class="stack-item">
+ <span class="stack-label">Infraestrutura</span>
+ <span class="stack-value">Docker + AWS (EC2/ECS + RDS)</span>
+ </div>
+ <div class="stack-item">
+ <span class="stack-label">Armazenamento de Imagens</span>
+ <span class="stack-value">AWS S3 (templates, logos, QR Code, código de barras, prints da conta de luz — versionados por tenant/fatura)</span>
+ </div>
+ <div class="stack-item">
+ <span class="stack-label">Mensageria / Eventos</span>
+ <span class="stack-value">AWS SNS + SQS FIFO + Lambda (eventos de domínio com ordem garantida, deduplicação por tenant+fatura e DLQ)</span>
+ </div>
+ </div>
+ </div>
+
+ <div class="patterns-section">
+ <h3>Padrões Arquiteturais</h3>
+ <div class="patterns-grid">
+ <div class="pattern-card">
+ <h4>Monolito Modular</h4>
+ <p>Aplicação única organizada em módulos independentes. Simplicidade de deploy com boa separação.</p>
+ </div>
+ <div class="pattern-card">
+ <h4>DDD (Domain-Driven Design)</h4>
+ <p>Código organizado por domínio de negócio, com contextos delimitados bem definidos.</p>
+ </div>
+ <div class="pattern-card">
+ <h4>CQRS</h4>
+ <p>NHibernate para escrita (commands) e Dapper para leitura (queries) - alta performance.</p>
+ </div>
+ <div class="pattern-card">
+ <h4>Clean Architecture</h4>
+ <p>Camadas bem definidas com inversão de dependência.</p>
+ </div>
+ <div class="pattern-card">
+ <h4>Multitenancy Multibanco</h4>
+ <p>Cada sócio com <strong>seu próprio banco de dados dedicado</strong>. Segurança, backup e restore totalmente independentes.</p>
+ </div>
+ <div class="pattern-card">
+ <h4>Event-Driven Architecture</h4>
+ <p>Arquitetura orientada a eventos: módulos comunicam-se de forma desacoplada via Domain Events e Integration Events, permitindo extensibilidade sem reescrita.</p>
+ </div>
+ <div class="pattern-card">
+ <h4>Máquinas de Estado</h4>
+ <p>Ciclos de vida críticos (Contrato, Fatura, Crédito, Cobrança) modelados como state machines explícitas — transições válidas, auditáveis e testáveis.</p>
+ </div>
+ <div class="pattern-card">
+ <h4>API REST + Swagger</h4>
+ <p>Endpoints documentados automaticamente via OpenAPI/Swagger para fácil integração.</p>
+ </div>
+ </div>
+ </div>
+
+ <!-- DECISÃO ARQUITETURAL: Segregação de Infraestrutura -->
+ <div class="decision-card">
+ <div class="decision-header">
+ <span class="decision-tag">Decisão Arquitetural</span>
+ <h3>Segregação Completa da Infraestrutura?</h3>
+ <p class="decision-question">
+ Uma pergunta legítima a ser feita pelos sócios: <strong>cada operação deve ter sua própria infraestrutura (banco, app, ambiente) totalmente isolada</strong>, ou todos compartilham a mesma plataforma com isolamento físico via multitenancy multibanco (1 database dedicado por sócio)?
+ </p>
+ </div>
+ <div class="decision-columns">
+ <div class="decision-col decision-pros">
+ <h4>
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+ Pontos Positivos
+ </h4>
+ <ul>
+ <li><strong>Isolamento absoluto</strong> — falha, deploy ou bug em uma operação não afeta as demais</li>
+ <li><strong>Soberania total</strong> — cada sócio decide janela de manutenção, versão, backup, retenção</li>
+ <li><strong>Compliance simplificado</strong> — dados nunca compartilham hardware com terceiros</li>
+ <li><strong>Portabilidade</strong> — saída de um sócio não impacta os outros (basta entregar a stack dele)</li>
+ </ul>
+ </div>
+ <div class="decision-col decision-cons">
+ <h4>
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+ Pontos Negativos
+ </h4>
+ <ul>
+ <li><strong>Custo de infra multiplicado</strong> — N ambientes em vez de 1 (banco, app, observabilidade, backups)</li>
+ <li><strong>Manutenção N vezes maior</strong> — cada deploy, patch e upgrade replicado por sócio</li>
+ <li><strong>Sem economia de escala</strong> — cada sócio paga o "piso fixo" da infraestrutura</li>
+ <li><strong>Consolidação de indicadores</strong> torna-se um projeto de integração à parte</li>
+ <li><strong>Suporte mais caro</strong> — horas de sustentação proporcionais ao número de ambientes</li>
+ </ul>
+ </div>
+ </div>
+ <div class="decision-recommendation">
+ <strong>Recomendação técnica:</strong> a arquitetura proposta (Multitenancy Multibanco) já entrega <strong>isolamento físico total de dados</strong> — cada sócio tem seu <strong>próprio banco de dados dedicado</strong>, com backup e segurança totalmente independentes — preservando a economia de escala compartilhada da camada de aplicação. A segregação completa de infraestrutura permanece como opção, mediante orçamento adicional, caso algum sócio tenha exigência regulatória específica.
+ </div>
+ </div>
+
+ <div class="cqrs-diagram">
+ <h3>Arquitetura Monolito Modular + Multitenancy</h3>
+ <div class="arch-diagram">
+ <div class="arch-title">MONOLITO MODULAR + CQRS</div>
+ <div class="arch-row">
+ <div class="arch-box"><strong>NGINX</strong><small>Rev. Proxy</small></div>
+ <div class="arch-box"><strong>Keycloak</strong><small>SSO / OAuth</small></div>
+ <div class="arch-box"><strong>SQL Server</strong><small>Multibanco</small></div>
+ </div>
+ <div class="arch-down">↓ &nbsp;&nbsp; ↓ &nbsp;&nbsp; ↓</div>
+ <div class="arch-api">
+ <div class="arch-api-title">.NET 8 API — Monolito Modular</div>
+ <div class="arch-modules">
+ <span>Identity</span>
+ <span>Cadastro</span>
+ <span>Créditos</span>
+ <span>Billing</span>
+ <span>…</span>
+ </div>
+ <div class="arch-stack"><span>NHibernate <small>(Commands / Escrita)</small></span><span>Dapper <small>(Queries)</small></span></div>
+ </div>
+ <div class="arch-down">↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓</div>
+ <div class="arch-row arch-row-2">
+ <div class="arch-box"><strong>Redis</strong><small>Cache</small></div>
+ <div class="arch-box"><strong>Swagger / OpenAPI</strong><small>Documentação</small></div>
+ </div>
+ <div class="arch-vantagens"><strong>Vantagens:</strong> Deploy simples · Módulos isolados · CQRS nativo</div>
+ </div>
+ </div>
+
+ </section>
+
+ <!-- 08. Próximos Passos -->
+ <section id="proximos-passos" class="section">
+ <h2 class="section-title">
+ <span class="section-number">08</span>
  Próximos Passos
  </h2>
 
