@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Valores e Investimento — Plataforma de Energia Solar</title>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+ <style>
+ :root {
+  --primary: #D4A849;
+  --primary-dark: #B8923D;
+  --secondary: #2C3E50;
+  --success: #27ae60;
+  --danger: #e74c3c;
+  --warning: #f39c12;
+  --dark: #1a1a2e;
+  --gray: #6c757d;
+  --light: #f8f9fa;
+  --white: #ffffff;
+  --basico: #27ae60;
+  --medio: #3498db;
+  --full: #D4A849;
+  --lumi: #e74c3c;
+ }
+
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+
+ body {
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background: var(--white);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+ }
+
+ /* ===== PRINT BUTTON ===== */
+ .print-btn {
+  position: fixed;
+  top: 20px; right: 20px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 200;
+  transition: background .2s;
+ }
+ .print-btn:hover { background: var(--primary-dark); }
+
+ /* ===== HEADER ===== */
+ .doc-header {
+  text-align: center;
+  padding: 36px 20px 32px;
+  margin-bottom: 36px;
+  background: linear-gradient(135deg, var(--secondary) 0%, #34495e 100%);
+  color: #fff;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+ }
+ .doc-header::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, #f0c674 50%, var(--primary) 100%);
+ }
+ .doc-header h1 { font-size: 26px; color: #fff; margin-bottom: 6px; letter-spacing: 0.5px; }
+ .doc-header .subtitle {
+  font-size: 13px; color: var(--primary); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1.2px;
+ }
+ .doc-header .meta { margin-top: 18px; font-size: 11px; color: rgba(255,255,255,0.78); }
+ .doc-header .meta strong { color: #fff; }
+ .doc-header .badge {
+  display: inline-block; background: rgba(212,168,73,0.2); color: var(--primary);
+  padding: 3px 12px; border-radius: 20px; font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; margin-top: 10px;
+ }
+
+ /* ===== SECTIONS ===== */
+ .section { margin-bottom: 40px; }
+ .section-title {
+  font-size: 18px; color: var(--secondary);
+  padding-bottom: 12px; margin-bottom: 18px;
+  display: flex; align-items: center; gap: 12px;
+  position: relative; border-bottom: 1px solid #e5e7eb;
+ }
+ .section-title::after {
+  content: ''; position: absolute; left: 0; bottom: -1px;
+  width: 70px; height: 3px; background: var(--primary); border-radius: 2px;
+ }
+ .section-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; background: var(--secondary); color: #fff;
+  font-size: 13px; font-weight: 700; border-radius: 8px; flex-shrink: 0;
+ }
+
+ /* ===== CARDS (Plan Overview) ===== */
+ .plan-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 16px;
+ }
+ .plan-card {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+ }
+ .plan-card.basico { border-color: var(--basico); }
+ .plan-card.medio { border-color: var(--medio); }
+ .plan-card.full { border-color: var(--full); }
+ .plan-card-header {
+  padding: 16px;
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+ }
+ .plan-card.basico .plan-card-header { background: var(--basico); }
+ .plan-card.medio .plan-card-header { background: var(--medio); }
+ .plan-card.full .plan-card-header { background: var(--full); color: var(--dark); }
+ .plan-card-body {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+ }
+ .plan-card-body .line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 12px;
+ }
+ .plan-card-body .line:last-child { border-bottom: none; }
+ .plan-card-body .line .label { color: #555; }
+ .plan-card-body .line .value { font-weight: 700; color: #333; }
+ .plan-card-body .line.highlight { background: rgba(39,174,96,0.06); border-radius: 6px; padding: 8px 6px; margin: 4px -6px; }
+ .plan-card-body .line.highlight .value { color: var(--success); font-size: 14px; }
+ .plan-card-footer {
+  padding: 12px 16px;
+  background: var(--light);
+  text-align: center;
+  font-size: 11px;
+  color: #666;
+  border-top: 1px solid #e5e7eb;
+  margin-top: auto;
+ }
+
+ /* ===== TABLES ===== */
+ table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: 12px;
+ }
+ table thead th {
+  background: var(--secondary);
+  color: #fff;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+ }
+ table tbody td {
+  padding: 9px 12px;
+  border-bottom: 1px solid #eee;
+ }
+ table tbody tr:hover { background: #f9f9f9; }
+ .text-center { text-align: center !important; }
+ .text-right { text-align: right !important; }
+
+ .col-basico { background: rgba(39,174,96,0.12) !important; }
+ .col-medio { background: rgba(52,152,219,0.12) !important; }
+ .col-full { background: rgba(212,168,73,0.15) !important; }
+ th.col-basico { background: var(--success) !important; color: #fff !important; }
+ th.col-medio { background: #3498db !important; color: #fff !important; }
+ th.col-full { background: var(--primary) !important; color: #1a1a2e !important; }
+ .col-lumi { background: rgba(231,76,60,0.08) !important; }
+
+ .tag-basico { color: var(--basico); font-weight: 700; }
+ .tag-medio { color: var(--medio); font-weight: 700; }
+ .tag-full { color: var(--full); font-weight: 700; }
+ .tag-lumi { color: var(--lumi); font-weight: 700; }
+
+ /* ===== SUMMARY BOX ===== */
+ .summary-box {
+  background: linear-gradient(135deg, var(--secondary) 0%, #34495e 100%);
+  color: #fff;
+  border-radius: 10px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+ }
+ .summary-box::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 5px;
+  background: var(--primary);
+ }
+ .summary-box h3 {
+  font-size: 16px;
+  margin-bottom: 18px;
+  color: var(--primary);
+ }
+ .summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+ }
+ .summary-item {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 14px;
+ }
+ .summary-item .label { font-size: 11px; color: rgba(255,255,255,0.65); margin-bottom: 4px; }
+ .summary-item .value { font-size: 18px; font-weight: 700; color: var(--primary); }
+ .summary-item .detail { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+ /* ===== ECONOMY BADGE ===== */
+ .economy-badge {
+  display: inline-block;
+  background: rgba(39,174,96,0.15);
+  color: var(--success);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 12px;
+ }
+ .economy-badge-lg {
+  display: inline-block;
+  background: var(--success);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 4px 14px;
+  border-radius: 20px;
+ }
+
+ /* ===== INFO NOTE ===== */
+ .info-note {
+  background: #f0f7ff;
+  border-left: 4px solid var(--medio);
+  padding: 12px 16px;
+  font-size: 11px;
+  color: #555;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  line-height: 1.7;
+ }
+
+ /* ===== CHECK MARKERS ===== */
+ .check { color: var(--success); font-weight: 700; }
+ .cross { color: #ccc; }
+
+ /* ===== FOOTER ===== */
+ .doc-footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 2px solid #e5e7eb;
+  font-size: 11px;
+  color: #666;
+  line-height: 1.8;
+ }
+ .doc-footer .note {
+  background: #fef9ee;
+  border-left: 4px solid var(--primary);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 20px;
+  font-size: 10px;
+  line-height: 1.7;
+ }
+ .signatures {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 40px;
+  padding-top: 20px;
+ }
+ .sig-block { text-align: center; }
+ .sig-line { border-top: 1px solid #999; padding-top: 8px; margin-top: 60px; }
+ .sig-block .name { font-weight: 700; color: var(--secondary); font-size: 12px; }
+ .sig-block .role { font-size: 10px; color: #888; }
+ .authorship {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 10px;
+  color: #999;
+ }
+
+ /* ===== PRINT ===== */
+ .page-break { page-break-after: always; }
+
+ @media print {
+  @page {
+   size: A4;
+   margin: 18mm 15mm 18mm 15mm;
+  }
+  body {
+   padding: 0;
+   max-width: 100%;
+   font-size: 11px;
+  }
+  .print-btn { display: none !important; }
+  .doc-header { break-inside: avoid; }
+  .section { break-inside: avoid; }
+  .plan-cards { break-inside: avoid; }
+  table { break-inside: avoid; font-size: 10px; }
+  .summary-box { break-inside: avoid; }
+  .page-break { break-after: page; }
+ }
+
+ @media (max-width: 768px) {
+  body { padding: 1rem; }
+  .plan-cards { grid-template-columns: 1fr; }
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+  .signatures { grid-template-columns: 1fr; }
+ }
+ </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<!-- ================================================================ -->
+<!-- HEADER -->
+<!-- ================================================================ -->
+<header class="doc-header">
+ <h1>Valores e Investimento</h1>
+ <div class="subtitle">Plataforma de Gestao de Energia Solar</div>
+ <div class="meta">
+  <strong>Abril 2026</strong> &middot; Validade: 30 dias<br>
+  Todos os custos detalhados em um unico documento
+ </div>
+ <span class="badge">Documento Financeiro</span>
+</header>
+
+<!-- ================================================================ -->
+<!-- 1. VISAO GERAL DOS PLANOS -->
+<!-- ================================================================ -->
+<div class="section">
+ <h2 class="section-title">
+  <span class="section-num">1</span>
+  Visao Geral dos Planos
+ </h2>
+
+ <div class="plan-cards">
+  <!-- BASICO -->
+  <div class="plan-card basico">
+   <div class="plan-card-header">Basico</div>
+   <div class="plan-card-body">
+    <div class="line">
+     <span class="label">Desenvolvimento</span>
+     <span class="value">R$ 28.500</span>
+    </div>
+    <div class="line">
+     <span class="label">Assessment (por socio)</span>
+     <span class="value">R$ 2.500 a R$ 6.000</span>
+    </div>
+    <div class="line">
+     <span class="label">Infra+APIs (mensal, 1 socio)</span>
+     <span class="value">~R$ 200</span>
+    </div>
+    <div class="line highlight">
+     <span class="label">Total 1o ano (1 socio)</span>
+     <span class="value">R$ 33.400</span>
+    </div>
+    <div class="line highlight">
+     <span class="label">Total 1o ano (4 socios)</span>
+     <span class="value">R$ 45.100</span>
+    </div>
+   </div>
+   <div class="plan-card-footer">Ano 2+: apenas Infra+APIs (~R$ 200/mes por socio)</div>
+  </div>
+
+  <!-- MEDIO -->
+  <div class="plan-card medio">
+   <div class="plan-card-header">Medio</div>
+   <div class="plan-card-body">
+    <div class="line">
+     <span class="label">Desenvolvimento</span>
+     <span class="value">R$ 35.000</span>
+    </div>
+    <div class="line">
+     <span class="label">Assessment (por socio)</span>
+     <span class="value">R$ 2.500 a R$ 6.000</span>
+    </div>
+    <div class="line">
+     <span class="label">Infra+APIs (mensal, 1 socio)</span>
+     <span class="value">~R$ 350</span>
+    </div>
+    <div class="line highlight">
+     <span class="label">Total 1o ano (1 socio)</span>
+     <span class="value">R$ 41.700</span>
+    </div>
+    <div class="line highlight">
+     <span class="label">Total 1o ano (4 socios)</span>
+     <span class="value">R$ 55.800</span>
+    </div>
+   </div>
+   <div class="plan-card-footer">Ano 2+: apenas Infra+APIs (~R$ 350/mes por socio)</div>
+  </div>
+
+  <!-- FULL -->
+  <div class="plan-card full">
+   <div class="plan-card-header">Full <span style="background:rgba(0,0,0,0.2); font-size:9px; padding:2px 8px; border-radius:10px; margin-left:6px; text-transform:uppercase; letter-spacing:0.5px;">Recomendado</span></div>
+   <div class="plan-card-body">
+    <div class="line">
+     <span class="label">Desenvolvimento</span>
+     <span class="value">R$ 37.500</span>
+    </div>
+    <div class="line">
+     <span class="label">Assessment (por socio)</span>
+     <span class="value">R$ 2.500 a R$ 6.000</span>
+    </div>
+    <div class="line">
+     <span class="label">Infra+APIs (mensal, 1 socio)</span>
+     <span class="value">~R$ 450</span>
+    </div>
+    <div class="line highlight">
+     <span class="label">Total 1o ano (1 socio)</span>
+     <span class="value">R$ 45.400</span>
+    </div>
+    <div class="line highlight">
+     <span class="label">Total 1o ano (4 socios)</span>
+     <span class="value">R$ 61.300</span>
+    </div>
+   </div>
+   <div class="plan-card-footer">Ano 2+: apenas Infra+APIs (~R$ 450/mes por socio)</div>
+  </div>
+ </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 2. DECOMPOSICAO DO DESENVOLVIMENTO -->
+<!-- ================================================================ -->
+<div class="section">
+ <h2 class="section-title">
+  <span class="section-num">2</span>
+  Decomposicao do Desenvolvimento
+ </h2>
+
+ <table>
+  <thead>
+   <tr>
+    <th style="width:36%;">Modulo</th>
+    <th class="text-center" style="width:10%;">Horas</th>
+    <th class="text-center col-basico" style="width:18%;">Basico</th>
+    <th class="text-center col-medio" style="width:18%;">Medio</th>
+    <th class="text-center col-full" style="width:18%;">Full</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr><td colspan="5" style="background:var(--light); font-weight:700; font-size:11px; color:var(--secondary); padding:8px 12px;">CORE</td></tr>
+   <tr>
+    <td>Identity &amp; Multitenancy</td>
+    <td class="text-center">32h</td>
+    <td class="text-center col-basico"><span class="check">&#10003;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr>
+    <td>Cadastro de Clientes e UCs</td>
+    <td class="text-center">44h</td>
+    <td class="text-center col-basico"><span class="check">&#10003;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr>
+    <td>Contratos e Tarifacao</td>
+    <td class="text-center">38h</td>
+    <td class="text-center col-basico"><span class="check">&#10003;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr>
+    <td>Gestao de Geracao</td>
+    <td class="text-center">50h</td>
+    <td class="text-center col-basico"><span class="check">&#10003;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr>
+    <td>Rateio de Creditos</td>
+    <td class="text-center">56h</td>
+    <td class="text-center col-basico"><span class="check">&#10003;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr>
+    <td>Faturamento e Cobranca</td>
+    <td class="text-center">40h</td>
+    <td class="text-center col-basico"><span class="check">&#10003;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr>
+    <td>Dashboard e Indicadores</td>
+    <td class="text-center">50h</td>
+    <td class="text-center col-basico"><span class="check">&#10003;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr style="font-weight:600; background:#f8f9fa;">
+    <td>Subtotal Core</td>
+    <td class="text-center">310h</td>
+    <td class="text-center col-basico">310h</td>
+    <td class="text-center col-medio">310h</td>
+    <td class="text-center col-full">310h</td>
+   </tr>
+
+   <tr><td colspan="5" style="background:var(--light); font-weight:700; font-size:11px; color:var(--secondary); padding:8px 12px;">INFRA &amp; PROCESSOS</td></tr>
+   <tr>
+    <td>DevOps / CI/CD / Ambientes</td>
+    <td class="text-center">32h</td>
+    <td class="text-center col-basico"><span class="check">&#10003;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr>
+    <td>Testes e Qualidade</td>
+    <td class="text-center">40h</td>
+    <td class="text-center col-basico"><span class="check">&#10003;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr style="font-weight:600; background:#f8f9fa;">
+    <td>Subtotal Infra</td>
+    <td class="text-center">72h</td>
+    <td class="text-center col-basico">72h</td>
+    <td class="text-center col-medio">72h</td>
+    <td class="text-center col-full">72h</td>
+   </tr>
+
+   <tr><td colspan="5" style="background:var(--light); font-weight:700; font-size:11px; color:var(--secondary); padding:8px 12px;">MODULOS DE EXPANSAO</td></tr>
+   <tr>
+    <td>Gateway Financeiro (Asaas)</td>
+    <td class="text-center">53h</td>
+    <td class="text-center col-basico"><span class="cross">&mdash;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr>
+    <td>Notificacoes WhatsApp</td>
+    <td class="text-center">33h</td>
+    <td class="text-center col-basico"><span class="cross">&mdash;</span></td>
+    <td class="text-center col-medio"><span class="cross">&mdash;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr>
+    <td>Real-Time (SignalR)</td>
+    <td class="text-center">20h</td>
+    <td class="text-center col-basico"><span class="cross">&mdash;</span></td>
+    <td class="text-center col-medio"><span class="cross">&mdash;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr>
+    <td>Relatorios Avancados</td>
+    <td class="text-center">33h</td>
+    <td class="text-center col-basico"><span class="cross">&mdash;</span></td>
+    <td class="text-center col-medio"><span class="check">&#10003;</span></td>
+    <td class="text-center col-full"><span class="check">&#10003;</span></td>
+   </tr>
+   <tr style="font-weight:600; background:#f8f9fa;">
+    <td>Subtotal Expansao</td>
+    <td class="text-center">139h</td>
+    <td class="text-center col-basico">0h</td>
+    <td class="text-center col-medio">86h</td>
+    <td class="text-center col-full">139h</td>
+   </tr>
+
+   <tr style="font-weight:700; background:var(--secondary); color:#fff;">
+    <td style="color:#fff;">TOTAL</td>
+    <td class="text-center">521h</td>
+    <td class="text-center" style="color:var(--basico); font-size:13px;">382h</td>
+    <td class="text-center" style="color:var(--medio); font-size:13px;">468h</td>
+    <td class="text-center" style="color:var(--primary); font-size:13px;">521h</td>
+   </tr>
+   <tr style="font-weight:700; background:#f0f0f0;">
+    <td>VALOR DO DESENVOLVIMENTO</td>
+    <td class="text-center"></td>
+    <td class="text-center tag-basico" style="font-size:14px;">R$ 28.500</td>
+    <td class="text-center tag-medio" style="font-size:14px;">R$ 35.000</td>
+    <td class="text-center tag-full" style="font-size:14px;">R$ 37.500</td>
+   </tr>
+  </tbody>
+ </table>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================================================================ -->
+<!-- 3. INFRA + APIS - CUSTO MENSAL -->
+<!-- ================================================================ -->
+<div class="section">
+ <h2 class="section-title">
+  <span class="section-num">3</span>
+  Infra + APIs — Custo Mensal
+ </h2>
+
+ <table>
+  <thead>
+   <tr>
+    <th style="width:25%;">Plano</th>
+    <th class="text-center" style="width:18.75%;">1 Socio</th>
+    <th class="text-center" style="width:18.75%;">2 Socios</th>
+    <th class="text-center" style="width:18.75%;">3 Socios</th>
+    <th class="text-center" style="width:18.75%;">4 Socios</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><strong class="tag-basico">Basico</strong></td>
+    <td class="text-center col-basico">R$ 200</td>
+    <td class="text-center col-basico">R$ 350</td>
+    <td class="text-center col-basico">R$ 450</td>
+    <td class="text-center col-basico">R$ 550</td>
+   </tr>
+   <tr>
+    <td><strong class="tag-medio">Medio</strong></td>
+    <td class="text-center col-medio">R$ 350</td>
+    <td class="text-center col-medio">R$ 550</td>
+    <td class="text-center col-medio">R$ 750</td>
+    <td class="text-center col-medio">R$ 900</td>
+   </tr>
+   <tr>
+    <td><strong class="tag-full">Full</strong></td>
+    <td class="text-center col-full">R$ 450</td>
+    <td class="text-center col-full">R$ 700</td>
+    <td class="text-center col-full">R$ 950</td>
+    <td class="text-center col-full">R$ 1.150</td>
+   </tr>
+  </tbody>
+ </table>
+
+ <div class="info-note">
+  <strong>Incluso:</strong> SQL Server Express (R$ 0) &middot; Certificado SSL (incluido)<br>
+  <strong>Variavel:</strong> Gateway Asaas cobra taxa por transacao (planos Medio e Full)<br>
+  <strong>Nota:</strong> Valores mensais estimados. Custo real depende do volume de uso. O cliente paga diretamente ao provedor.
+ </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 4. CONDICOES DE PAGAMENTO -->
+<!-- ================================================================ -->
+<div class="section">
+ <h2 class="section-title">
+  <span class="section-num">4</span>
+  Condicoes de Pagamento
+ </h2>
+
+ <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+  <div style="background:#f0f7ff; border-radius:8px; padding:16px; border-left:4px solid var(--medio);">
+   <div style="font-size:12px; font-weight:700; color:var(--secondary); margin-bottom:6px;">Assessment</div>
+   <div style="font-size:12px; color:#555;">100% na contratacao (por socio)<br><strong>R$ 2.500 a R$ 6.000</strong> por socio</div>
+  </div>
+  <div style="background:#f0fff4; border-radius:8px; padding:16px; border-left:4px solid var(--success);">
+   <div style="font-size:12px; font-weight:700; color:var(--secondary); margin-bottom:6px;">Desenvolvimento</div>
+   <div style="font-size:12px; color:#555;">Parcelado <strong>30 / 30 / 40</strong><br>Atrelado a entregas</div>
+  </div>
+ </div>
+
+ <h3 style="font-size:14px; color:var(--secondary); margin-bottom:12px;">Parcelas por Plano</h3>
+
+ <table>
+  <thead>
+   <tr>
+    <th>Plano</th>
+    <th class="text-center">Desenvolv.</th>
+    <th class="text-center">30% Assinatura</th>
+    <th class="text-center">30% Core</th>
+    <th class="text-center">40% Go-Live</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><strong class="tag-basico">Basico</strong></td>
+    <td class="text-center">R$ 28.500</td>
+    <td class="text-center">R$ 8.550</td>
+    <td class="text-center">R$ 8.550</td>
+    <td class="text-center"><strong style="color:var(--success);">R$ 11.400</strong></td>
+   </tr>
+   <tr>
+    <td><strong class="tag-medio">Medio</strong></td>
+    <td class="text-center">R$ 35.000</td>
+    <td class="text-center">R$ 10.500</td>
+    <td class="text-center">R$ 10.500</td>
+    <td class="text-center"><strong style="color:var(--success);">R$ 14.000</strong></td>
+   </tr>
+   <tr style="background:rgba(212,168,73,0.08);">
+    <td><strong class="tag-full">Full</strong> <span style="background:var(--primary); color:var(--dark); font-size:8px; font-weight:800; padding:1px 5px; border-radius:6px; text-transform:uppercase;">Recomendado</span></td>
+    <td class="text-center">R$ 37.500</td>
+    <td class="text-center">R$ 11.250</td>
+    <td class="text-center">R$ 11.250</td>
+    <td class="text-center"><strong style="color:var(--success);">R$ 15.000</strong></td>
+   </tr>
+  </tbody>
+ </table>
+
+ <h3 style="font-size:14px; color:var(--secondary); margin:20px 0 12px;">Custo por Socio (4 socios dividindo o Desenvolvimento)</h3>
+
+ <table>
+  <thead>
+   <tr>
+    <th>Plano</th>
+    <th class="text-center">Desenvolv. / Socio</th>
+    <th class="text-center">30% Assinatura</th>
+    <th class="text-center">30% Core</th>
+    <th class="text-center">40% Go-Live</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><strong class="tag-basico">Basico</strong></td>
+    <td class="text-center">R$ 7.125</td>
+    <td class="text-center">R$ 2.137,50</td>
+    <td class="text-center">R$ 2.137,50</td>
+    <td class="text-center">R$ 2.850</td>
+   </tr>
+   <tr>
+    <td><strong class="tag-medio">Medio</strong></td>
+    <td class="text-center">R$ 8.750</td>
+    <td class="text-center">R$ 2.625</td>
+    <td class="text-center">R$ 2.625</td>
+    <td class="text-center">R$ 3.500</td>
+   </tr>
+   <tr style="background:rgba(212,168,73,0.08);">
+    <td><strong class="tag-full">Full</strong></td>
+    <td class="text-center">R$ 9.375</td>
+    <td class="text-center">R$ 2.812,50</td>
+    <td class="text-center">R$ 2.812,50</td>
+    <td class="text-center">R$ 3.750</td>
+   </tr>
+  </tbody>
+ </table>
+
+ <div class="info-note">
+  Parcelamento incide apenas sobre o Desenvolvimento, que e dividido igualmente entre os socios.
+  Assessment (R$ 2.500 a R$ 6.000 por socio) e cobrado 100% na contratacao.
+  Infra + APIs e paga diretamente pelo cliente conforme uso (mensal).
+ </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================================================================ -->
+<!-- 5. COMPARATIVO VS LUMI (VALORES) -->
+<!-- ================================================================ -->
+<div class="section">
+ <h2 class="section-title">
+  <span class="section-num">5</span>
+  Comparativo vs Lumi (Valores)
+ </h2>
+
+ <h3 style="font-size:14px; color:var(--secondary); margin-bottom:12px;">Decomposicao Lumi</h3>
+
+ <table style="margin-bottom:20px;">
+  <thead>
+   <tr>
+    <th>Item Lumi</th>
+    <th class="text-center">Valor</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td>Parametrizacao</td>
+    <td class="text-center tag-lumi">R$ 10.000</td>
+   </tr>
+   <tr>
+    <td>White Label (opcional)</td>
+    <td class="text-center tag-lumi">R$ 12.000</td>
+   </tr>
+   <tr>
+    <td>Mensalidade (R$ 4.302/mes x 12)</td>
+    <td class="text-center tag-lumi">R$ 51.624</td>
+   </tr>
+   <tr style="font-weight:700; background:rgba(231,76,60,0.08);">
+    <td><strong>Total 1o Ano Lumi</strong></td>
+    <td class="text-center tag-lumi" style="font-size:15px;">R$ 73.624</td>
+   </tr>
+  </tbody>
+ </table>
+
+ <h3 style="font-size:14px; color:var(--secondary); margin-bottom:12px;">Comparativo 1o Ano (4 socios)</h3>
+
+ <table>
+  <thead>
+   <tr>
+    <th></th>
+    <th class="text-center col-lumi" style="background:rgba(231,76,60,0.15); color:#fff;">Lumi</th>
+    <th class="text-center" style="background:var(--basico); color:#fff;">Basico</th>
+    <th class="text-center" style="background:var(--medio); color:#fff;">Medio</th>
+    <th class="text-center" style="background:var(--full); color:var(--dark);">Full</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td><strong>Total 1o Ano</strong></td>
+    <td class="text-center col-lumi" style="font-weight:700;">R$ 73.624</td>
+    <td class="text-center col-basico" style="font-weight:700;">R$ 45.100</td>
+    <td class="text-center col-medio" style="font-weight:700;">R$ 55.800</td>
+    <td class="text-center col-full" style="font-weight:700;">R$ 61.300</td>
+   </tr>
+   <tr>
+    <td><strong>Economia</strong></td>
+    <td class="text-center">&mdash;</td>
+    <td class="text-center col-basico"><span class="economy-badge">R$ 28.524 (39%)</span></td>
+    <td class="text-center col-medio"><span class="economy-badge">R$ 17.824 (24%)</span></td>
+    <td class="text-center col-full"><span class="economy-badge">R$ 12.324 (17%)</span></td>
+   </tr>
+  </tbody>
+ </table>
+</div>
+
+<!-- ================================================================ -->
+<!-- 6. PROJECAO 5 ANOS (ACUMULADO) -->
+<!-- ================================================================ -->
+<div class="section">
+ <h2 class="section-title">
+  <span class="section-num">6</span>
+  Projecao 5 Anos (Acumulado)
+ </h2>
+
+ <table>
+  <thead>
+   <tr>
+    <th class="text-center" style="width:10%;">Ano</th>
+    <th class="text-center col-lumi" style="width:22.5%; background:rgba(231,76,60,0.15); color:#fff;">Lumi (acum.)</th>
+    <th class="text-center" style="width:22.5%; background:var(--basico); color:#fff;">Basico (acum.)</th>
+    <th class="text-center" style="width:22.5%; background:var(--medio); color:#fff;">Medio (acum.)</th>
+    <th class="text-center" style="width:22.5%; background:var(--full); color:var(--dark);">Full (acum.)</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr>
+    <td class="text-center"><strong>1</strong></td>
+    <td class="text-center col-lumi">R$ 73.624</td>
+    <td class="text-center col-basico">R$ 45.100</td>
+    <td class="text-center col-medio">R$ 55.800</td>
+    <td class="text-center col-full">R$ 61.300</td>
+   </tr>
+   <tr>
+    <td class="text-center"><strong>2</strong></td>
+    <td class="text-center col-lumi">R$ 125.248</td>
+    <td class="text-center col-basico">R$ 51.700</td>
+    <td class="text-center col-medio">R$ 66.600</td>
+    <td class="text-center col-full">R$ 75.100</td>
+   </tr>
+   <tr>
+    <td class="text-center"><strong>3</strong></td>
+    <td class="text-center col-lumi">R$ 176.872</td>
+    <td class="text-center col-basico">R$ 58.300</td>
+    <td class="text-center col-medio">R$ 77.400</td>
+    <td class="text-center col-full">R$ 88.900</td>
+   </tr>
+   <tr>
+    <td class="text-center"><strong>4</strong></td>
+    <td class="text-center col-lumi">R$ 228.496</td>
+    <td class="text-center col-basico">R$ 64.900</td>
+    <td class="text-center col-medio">R$ 88.200</td>
+    <td class="text-center col-full">R$ 102.700</td>
+   </tr>
+   <tr>
+    <td class="text-center"><strong>5</strong></td>
+    <td class="text-center col-lumi">R$ 280.120</td>
+    <td class="text-center col-basico">R$ 71.500</td>
+    <td class="text-center col-medio">R$ 99.000</td>
+    <td class="text-center col-full">R$ 116.500</td>
+   </tr>
+   <tr style="font-weight:700; background:#f0fff4;">
+    <td class="text-center" style="font-size:11px;">Economia<br>5 anos</td>
+    <td class="text-center">&mdash;</td>
+    <td class="text-center col-basico"><span class="economy-badge-lg">R$ 208.620</span></td>
+    <td class="text-center col-medio"><span class="economy-badge-lg">R$ 181.120</span></td>
+    <td class="text-center col-full"><span class="economy-badge-lg">R$ 163.620</span></td>
+   </tr>
+  </tbody>
+ </table>
+
+ <div class="info-note">
+  Projecao considera 4 socios, custos de infra mensais constantes e mensalidade Lumi de R$ 4.302/mes.
+  Ano 2+ da nossa plataforma inclui apenas Infra+APIs (sem mensalidade de software).
+ </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================================================================ -->
+<!-- 7. RESUMO EXECUTIVO DE VALORES -->
+<!-- ================================================================ -->
+<div class="section">
+ <h2 class="section-title">
+  <span class="section-num">7</span>
+  Resumo Executivo de Valores
+ </h2>
+
+ <div class="summary-box">
+  <h3>Numeros-Chave</h3>
+  <div class="summary-grid">
+   <div class="summary-item">
+    <div class="label">Menor entrada</div>
+    <div class="value">R$ 33.400</div>
+    <div class="detail">Basico, 1 socio, 1o ano completo</div>
+   </div>
+   <div class="summary-item">
+    <div class="label">Menor custo por socio</div>
+    <div class="value">R$ 11.275</div>
+    <div class="detail">Basico, 4 socios</div>
+   </div>
+   <div class="summary-item">
+    <div class="label">Maior economia em 5 anos</div>
+    <div class="value">R$ 208.620</div>
+    <div class="detail">Basico vs Lumi</div>
+   </div>
+   <div class="summary-item">
+    <div class="label">Custo por UC</div>
+    <div class="value">R$ 0</div>
+    <div class="detail">Todos os planos</div>
+   </div>
+   <div class="summary-item">
+    <div class="label">Ano 2+ (mensal)</div>
+    <div class="value">R$ 200 — R$ 1.150</div>
+    <div class="detail">Apenas Infra+APIs</div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- FOOTER -->
+<!-- ================================================================ -->
+<footer class="doc-footer">
+ <div class="note">
+  <strong>Nota de Transparencia:</strong> Todos os valores apresentados neste documento sao baseados em dados fornecidos pela ESQ Energia e estimativas de mercado para infraestrutura cloud.
+  Os custos de Infra+APIs sao estimativas e podem variar conforme volume de uso. O SQL Server Express e gratuito e adequado para o porte inicial da operacao.
+  Valores de Lumi baseados em cotacao publica disponivel no mercado.
+ </div>
+
+ <div class="note" style="border-left-color:var(--secondary); background:#f5f6f8;">
+  <strong>SQL Server Express:</strong> Versao gratuita do SQL Server, adequada para bases de dados de ate 10 GB por banco.
+  Cada socio possui seu proprio banco de dados dedicado, garantindo isolamento total dos dados.
+ </div>
+
+ <div class="signatures">
+  <div class="sig-block">
+   <div class="sig-line">
+    <div class="name">CONTRATANTE</div>
+    <div class="role">ESQ Energia</div>
+   </div>
+  </div>
+  <div class="sig-block">
+   <div class="sig-line">
+    <div class="name">CONTRATADA</div>
+    <div class="role">Desenvolvimento de Software</div>
+   </div>
+  </div>
+ </div>
+
+ <div class="authorship">
+  Elaborado por <strong>Joao Rocha</strong> &amp; <strong>Jose Ambrozi</strong><br>
+  Abril 2026
+ </div>
+</footer>
+
+</body>
+</html>

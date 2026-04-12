@@ -8,7 +8,8 @@ window.view_ajuda = function(root) {
       grupo: 'Proposta Comercial',
       itens: [
         { icon: '📊', titulo: 'Pitch Deck',              desc: 'Apresentação comercial em slides (19 slides). Para apresentar na reunião presencial.', href: '../0.Proposta/pitch-deck.html', tag: 'HTML' },
-        { icon: '📄', titulo: 'Proposta Completa',        desc: 'Documento de referência com todos os detalhes: módulos, arquitetura, comparativo, investimento e prazos.', href: '../0.Proposta/proposta-completa.html', tag: 'HTML' }
+        { icon: '📄', titulo: 'Proposta Completa',        desc: 'Documento de referência com todos os detalhes: módulos, arquitetura, comparativo, investimento e prazos.', href: '../0.Proposta/proposta-completa.html', tag: 'HTML' },
+        { icon: '💰', titulo: 'Valores e Investimento',   desc: 'Documento exclusivo de custos: planos, decomposição, infra, pagamento, comparativo vs Lumi e projeção 5 anos.', href: '../0.Proposta/valores.html', tag: 'HTML' }
       ]
     },
     {
